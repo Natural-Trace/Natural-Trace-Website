@@ -30,7 +30,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/styles.css">
+{# ?v= is a content hash, set in .eleventy.js. Without it a returning
+   visitor keeps the stylesheet they cached last time, which is how a fixed
+   layout can stay broken on screen after a deploy. #}
+<link rel="stylesheet" href="/assets/css/styles.css?v={{ assetVersions.css }}">
 </head>
 <body class="{% if page.url == sitePathPrefix or page.url == '/' %}page-home hero-is-light{% endif %}">
 
@@ -49,7 +52,7 @@
 
 {% include "partials/consent.njk" %}
 
-<script src="/assets/js/main.js"></script>
+<script src="/assets/js/main.js?v={{ assetVersions.js }}"></script>
 {# The Netlify Identity widget used to load here, on every page of the site, to
    catch an invite link and bounce the visitor to /admin. It went with
    git-gateway on 7 Aug 2026. Editors now sign in with GitHub at /admin itself,

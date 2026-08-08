@@ -1,5 +1,28 @@
 const yaml = require("js-yaml");
+const fs = require("node:fs");
+const crypto = require("node:crypto");
 const { HtmlBasePlugin } = require("@11ty/eleventy");
+
+/* Cache busting for the stylesheet and the script.
+ *
+ * Both were linked at a plain path, so a browser that had seen the site before
+ * kept serving its cached copy after a deploy. On 8 Aug that meant a hero fix
+ * was live on the server, correct in the file, and still broken on screen for
+ * anyone who had visited before: the page HTML was the new one, the stylesheet
+ * next to it was three commits old. It looks exactly like a bug that will not
+ * die, and no amount of checking the source finds it.
+ *
+ * The hash is of the file contents, so the URL only changes when the file
+ * does. Unchanged assets stay cached, changed ones cannot be.
+ */
+function assetVersion(file) {
+  try {
+    return crypto.createHash("sha1").update(fs.readFileSync(file)).digest("hex").slice(0, 10);
+  } catch {
+    // Missing file is the build's problem to report, not this helper's.
+    return "dev";
+  }
+}
 
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(HtmlBasePlugin);
@@ -9,6 +32,12 @@ module.exports = function(eleventyConfig) {
   // Expose pathPrefix as global data for JS use in templates
   const prefix = process.env.PATH_PREFIX || "/";
   eleventyConfig.addGlobalData("sitePathPrefix", prefix);
+
+  // Read once per build, not once per page.
+  eleventyConfig.addGlobalData("assetVersions", {
+    css: assetVersion("src/assets/css/styles.css"),
+    js: assetVersion("src/assets/js/main.js"),
+  });
 
   // Date filter for templates
   eleventyConfig.addFilter("date", (dateObj, format) => {
