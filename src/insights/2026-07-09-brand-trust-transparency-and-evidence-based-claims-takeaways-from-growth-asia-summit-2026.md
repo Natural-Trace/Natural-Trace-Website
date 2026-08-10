@@ -3,7 +3,6 @@ title: "Brand Trust, Transparency and Evidence-Based Claims: Takeaways from
   Growth Asia Summit 2026"
 date: 2026-07-09T20:13:00.000+08:00
 author: Alrik Tan
-image: https://media.licdn.com/dms/image/v2/D5622AQF63zGiAG2nNg/feedshare-shrink_800/B56Z9El7QPGUAc-/0/1783562223272?e=1785369600&v=beta&t=JRN2KoUJIZ5tI0YS-G0FIGDxIfGRr8GeFrl8SlBzZoo
 summary: Key takeaways from the Growth Asia Summit 2026 in Singapore on consumer
   trust, supply chain transparency, clean label verification, and the growing
   demand for evidence-based product claims in the nutraceutical and functional
