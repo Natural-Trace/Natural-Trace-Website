@@ -138,7 +138,6 @@ collections:
           - {label: "Value Prop: Label", name: "vp_label", widget: "string"}
           - {label: "Value Prop: Headline", name: "vp_title", widget: "string"}
           - {label: "Value Prop: Subcopy", name: "vp_subtitle", widget: "text"}
-          - {label: "Value Prop: Problem Label", name: "vp_problem_label", widget: "string"}
           - {label: "Value Prop: Value Label", name: "vp_value_label", widget: "string"}
           - label: "Value Prop: Cards"
             name: "vp_cards"
@@ -146,7 +145,8 @@ collections:
             summary: "{{fields.title}}"
             fields:
               - {label: "Card Title", name: "title", widget: "string"}
-              - {label: "Customer Problem", name: "problem", widget: "text"}
+              - {label: "Icon", name: "icon", widget: "select", options: ["target", "factory", "origin", "search", "shield"], hint: "The symbol in the circle beside the heading. target is a bullseye, origin is a diamond, search is a magnifying glass."}
+              - {label: "Customer Problem", name: "problem", widget: "text", hint: "Shown without a label above it, so write it as a sentence that reads as the problem."}
               - {label: "Our value", name: "value", widget: "text"}
 
           - {label: "How It Works: Label", name: "how_label", widget: "string"}

@@ -49,6 +49,16 @@
   </div>
 </section>
 
+{#- Value proposition icons. Drawn to match the set in the design, and
+    kept here rather than as five image files so they inherit colour, stay
+    sharp at any size and cost no extra requests. -#}
+{%- set vpIcons = {
+  "target": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="12" cy="12" r="1"/></svg>',
+  "factory": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 20V10l5.5 3.4V10L14 13.4V6.6h3.2L18 20z"/><path d="M2.5 20h19"/></svg>',
+  "origin": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.2 20.2 12 12 20.8 3.8 12z"/><path d="M12 8.4 15.6 12 12 15.6 8.4 12z"/></svg>',
+  "search": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10.6" cy="10.6" r="6.4"/><path d="M15.4 15.4 20.4 20.4"/></svg>',
+  "shield": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3.2 19 6v5.6c0 4-2.9 7.4-7 9.2-4.1-1.8-7-5.2-7-9.2V6z"/><path d="M9.2 12.1l2 2 3.6-3.9"/></svg>'
+} -%}
 <!-- Section 3: Value Proposition -->
 <section class="valueprop" id="value">
   <div class="container">
@@ -57,13 +67,17 @@
       <h2 class="section-title">{{ home.vp_title }}</h2>
       <p class="section-subtitle">{{ home.vp_subtitle }}</p>
     </div>
-    <div class="vp-grid">
+    <div class="vp-grid vp-grid-centred">
       {% for card in home.vp_cards %}
       <article class="vp-card">
-        <span class="vp-num">{% if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
-        <h3>{{ card.title }}</h3>
+        <div class="vp-card-head">
+          <span class="vp-icon" aria-hidden="true">{{ vpIcons[card.icon] | safe }}</span>
+          <h3>{{ card.title }}</h3>
+        </div>
+        {# The problem needs no label. It reads as the problem, and the card is
+           shorter without it, which is the point of the layout. "Our value"
+           below stays, because that line is the answer and wants marking. #}
         <div class="vp-block">
-          <span class="vp-block-label">{{ home.vp_problem_label }}</span>
           <p>{{ card.problem }}</p>
         </div>
         <div class="vp-block is-value">
