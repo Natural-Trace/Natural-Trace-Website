@@ -67,7 +67,10 @@
       <h2 class="section-title">{{ home.vp_title }}</h2>
       <p class="section-subtitle">{{ home.vp_subtitle }}</p>
     </div>
-    <div class="vp-grid vp-grid-centred">
+    {# tabindex and a label because on a phone this is a scrollable region.
+       Anything a pointer can scroll has to be reachable from a keyboard. #}
+    <div class="vp-grid vp-grid-centred" tabindex="0" role="group"
+         aria-label="{{ home.vp_title }}">
       {% for card in home.vp_cards %}
       <article class="vp-card">
         <div class="vp-card-head">
@@ -87,6 +90,7 @@
       </article>
       {% endfor %}
     </div>
+    <p class="vp-swipe-hint">Swipe to see all five</p>
     <p class="section-more"><a href="/naturaltag/#how-it-works">See how it works, four steps from ingredient to evidence</a></p>
   </div>
 </section>

@@ -540,7 +540,16 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
   nav.scrolled .nav-links li{border-bottom-color:rgba(0,0,0,.06)}
   nav.scrolled .nav-links a{color:var(--dark)!important}
   .nav-toggle{display:block}
-  .services-grid,.industries-grid,.mission-grid,.mission-values-grid{grid-template-columns:1fr}
+  .services-grid,.mission-grid,.mission-values-grid{grid-template-columns:1fr}
+  /* Industry tiles on the homepage stay two across on a phone. One per row read
+     as four separate screens for what is really one row of choices.
+
+     Homepage only, deliberately. The Industries page runs the same markup but
+     with much longer descriptions, and at half width the title is pushed out of
+     the top of the card. There the cards are the content of the page rather
+     than a signpost to it, so full width is the right call anyway. */
+  .page-home .industries-grid{grid-template-columns:repeat(2,1fr);gap:.9rem}
+  body:not(.page-home) .industries-grid{grid-template-columns:1fr}
   .pipeline-steps{grid-template-columns:1fr}
   .detection-methods-grid{grid-template-columns:1fr}
   .about-highlights{grid-template-columns:1fr}
@@ -1127,3 +1136,42 @@ section[id],[id].anchor-target{scroll-margin-top:96px}
 .vp-card .vp-block p{font-size:.86rem;line-height:1.6}
 .vp-card .vp-block.is-value{padding-top:.85rem;border-top:1px solid rgba(26,30,46,.1)}
 .vp-card:hover .vp-icon{color:var(--sage-dark)}
+
+/* Value cards on a phone.
+
+   Five cards stacked ran to 3,479px, four full screens, a third of the whole
+   homepage. They are five parallel options rather than five sequential points,
+   so reading them one after another down a column is the wrong shape. They
+   swipe sideways instead, one at a time, with the next one peeking to show
+   there is more.
+
+   Scroll snap does all of it in CSS. No script, so nothing to break, and the
+   cards stay in the page for search engines and for anyone who lands here with
+   scripting off.
+
+   The container is focusable and named, because a scrollable region a mouse can
+   reach has to be reachable from a keyboard too. */
+.vp-swipe-hint{display:none}
+@media(max-width:720px){
+  .vp-grid-centred{
+    display:flex;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    gap:.9rem;
+    /* Bleed to the screen edges so a card can sit centred with its neighbour
+       showing, then pad the ends back so the first and last still align. */
+    margin-inline:calc(50% - 50vw);
+    padding:.25rem 1.5rem 1.25rem;
+    scrollbar-width:none;
+  }
+  .vp-grid-centred::-webkit-scrollbar{display:none}
+  .vp-grid-centred > .vp-card{
+    flex:0 0 82%;
+    scroll-snap-align:center;
+  }
+  .vp-grid-centred:focus-visible{outline:2px solid var(--sage);outline-offset:4px;border-radius:18px}
+  /* A quiet instruction, shown only where the swipe exists. */
+  .vp-swipe-hint{display:block;text-align:center;font-size:.82rem;color:var(--muted);margin-top:-.35rem}
+}
