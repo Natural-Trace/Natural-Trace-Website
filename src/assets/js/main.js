@@ -219,7 +219,7 @@ function filterFaq(cat) {
 
 /* ===== Compatibility Quiz ===== */
 (function() {
-  var state = { step: 0, category: null, formulations: [], temp: null, ph: null, additives: [] };
+  var state = { step: 0, category: null, formulations: [], temp: null, ph: null };
 
   var categories = [
     { id: 'vitamins', name: 'Vitamins & Minerals', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><rect x="14" y="6" width="12" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/><line x1="14" y1="20" x2="26" y2="20" stroke="currentColor" stroke-width="2"/></svg>' },
@@ -288,7 +288,7 @@ function filterFaq(cat) {
   var phOptions = (model && model.ph) || [
     { label: 'pH 5 to 9' }, { label: 'pH 3 to 5, or 9 to 11' }, { label: 'Below pH 3, or above pH 11' }
   ];
-  var additiveOptions = (model && model.additives) || [];
+  var formulationRisk = (model && model.formulationRisk) || {};
 
   function el(id) { return document.getElementById(id); }
 
@@ -395,52 +395,8 @@ function filterFaq(cat) {
       el('compatNext3').classList.remove('visible');
       showScreen('compatStep3');
       updateProgress(3);
-    } else if (step === 4) {
-      renderAdditives();
-      el('compatNext4').classList.remove('visible');
-      showScreen('compatStep4');
-      updateProgress(4);
     }
   };
-
-  function renderAdditives() {
-    var grid = el('compatAdditives');
-    if (!grid) return;
-    grid.innerHTML = '';
-    state.additives = [];
-    additiveOptions.forEach(function(opt, i) {
-      var card = document.createElement('div');
-      card.className = 'compat-card';
-      card.setAttribute('data-idx', i);
-      card.innerHTML = '<span class="compat-card-label">' + opt.label + '</span>';
-      card.onclick = function() {
-        /* "None of these" is exclusive both ways. Selecting it clears the rest,
-           and selecting anything else clears it. Without that the answer can be
-           "none of these, and also bleach", which the scorer would have to
-           guess at. */
-        if (opt.exclusive) {
-          grid.querySelectorAll('.compat-card').forEach(function(x) { x.classList.remove('selected'); });
-          card.classList.add('selected');
-          state.additives = [i];
-        } else {
-          additiveOptions.forEach(function(o, j) {
-            if (o.exclusive) {
-              var ex = grid.querySelector('[data-idx="' + j + '"]');
-              if (ex) ex.classList.remove('selected');
-              var k = state.additives.indexOf(j);
-              if (k >= 0) state.additives.splice(k, 1);
-            }
-          });
-          card.classList.toggle('selected');
-          var idx = state.additives.indexOf(i);
-          if (idx >= 0) { state.additives.splice(idx, 1); } else { state.additives.push(i); }
-        }
-        if (state.additives.length > 0) { el('compatNext4').classList.add('visible'); }
-        else { el('compatNext4').classList.remove('visible'); }
-      };
-      grid.appendChild(card);
-    });
-  }
 
   /* The verdict.
 
@@ -468,7 +424,20 @@ function filterFaq(cat) {
 
     note(tempOptions[state.temp], 'Temperature: ');
     note(phOptions[state.ph], 'pH: ');
-    state.additives.forEach(function(i) { note(additiveOptions[i], ''); });
+    /* Worst of the selected forms, not an average. A product made in four
+       formats is only as straightforward as its hardest one. */
+    var order = { low: 0, medium: 1, high: 2 };
+    var worstForm = null, worstName = '';
+    (state.formulations || []).forEach(function(fid) {
+      var r = formulationRisk[fid];
+      if (!r) return;
+      if (worstForm === null || order[r] > order[worstForm]) {
+        worstForm = r;
+        var f = formulations.find(function(x) { return x.id === fid; });
+        worstName = f ? f.name : fid;
+      }
+    });
+    if (worstForm) note({ risk: worstForm, label: worstName }, 'Product form: ');
 
     var key = 'compatible';
     if (counts.high > 0 || counts.medium > 1) { key = 'testing'; }
@@ -516,8 +485,8 @@ function filterFaq(cat) {
   };
 
   function updateProgress(step) {
-    el('compatStepLabel').textContent = 'Step ' + step + ' of 4';
-    el('compatProgressFill').style.width = (step * 25) + '%';
+    el('compatStepLabel').textContent = 'Step ' + step + ' of 3';
+    el('compatProgressFill').style.width = (step * 33) + '%';
   }
 
   // Initialize

@@ -216,8 +216,6 @@ collections:
           - {label: "Quiz: pH Label", name: "compat_step3_ph_label", widget: "string"}
           - {label: "Quiz: Next Button", name: "compat_btn_next", widget: "string"}
           - {label: "Quiz: Back Button", name: "compat_btn_back", widget: "string"}
-          - {label: "Quiz: Step 4 Question", name: "compat_step4_question", widget: "string"}
-          - {label: "Quiz: Step 4 Hint", name: "compat_step4_hint", widget: "string"}
           - {label: "Quiz: Confirm Title", name: "compat_confirm_title", widget: "string", required: false, hint: "No longer shown. Kept so the old wording is not lost if the verdict is ever switched off."}
           - {label: "Quiz: Confirm Description", name: "compat_confirm_desc", widget: "text", required: false, hint: "No longer shown. See above."}
           - {label: "Quiz: Result CTA", name: "compat_result_cta", widget: "string"}
@@ -249,17 +247,24 @@ collections:
             fields:
               - {label: "What the visitor sees", name: "label", widget: "string"}
               - {label: "Risk", name: "risk", widget: "select", options: ["low", "medium", "high"]}
-          - label: "Scoring: Ingredients Screened For"
-            name: "compat_additive_options"
-            widget: "list"
-            label_singular: "ingredient"
+          - label: "Scoring: Risk by Product Form"
+            name: "compat_formulation_risk"
+            widget: "object"
             collapsed: true
-            summary: "{{fields.label}} — {{fields.risk}}"
-            hint: "From sections 3.2 and 3.3 of the compatibility guide. Tick Exclusive on the None of these option only."
+            hint: "Low, medium or high for each form the quiz offers. These are the old quiz's own rankings re-expressed, and unlike the pH and temperature bands they have no cited source. Changing one changes what the site tells a prospect."
             fields:
-              - {label: "What the visitor sees", name: "label", widget: "string"}
-              - {label: "Risk", name: "risk", widget: "select", options: ["low", "medium", "high"]}
-              - {label: "Exclusive", name: "exclusive", widget: "boolean", required: false, default: false, hint: "Selecting this option clears every other one. Only the None of these option should have it."}
+              - {label: "Compressed Tablet", name: "tablet", widget: "select", options: ["low", "medium", "high"]}
+              - {label: "Hard Capsule", name: "capsule", widget: "select", options: ["low", "medium", "high"]}
+              - {label: "Chewable", name: "chewable", widget: "select", options: ["low", "medium", "high"]}
+              - {label: "Powder / Sachet", name: "powder", widget: "select", options: ["low", "medium", "high"]}
+              - {label: "Effervescent", name: "effervescent", widget: "select", options: ["low", "medium", "high"]}
+              - {label: "Drops", name: "drops", widget: "select", options: ["low", "medium", "high"]}
+              - {label: "Softgel", name: "softgel", widget: "select", options: ["low", "medium", "high"]}
+              - {label: "Bar", name: "bar", widget: "select", options: ["low", "medium", "high"]}
+              - {label: "Gummy", name: "gummy", widget: "select", options: ["low", "medium", "high"]}
+              - {label: "Liquid / Syrup", name: "liquid", widget: "select", options: ["low", "medium", "high"]}
+              - {label: "Lozenge", name: "lozenge", widget: "select", options: ["low", "medium", "high"]}
+              - {label: "RTD Beverage", name: "rtd", widget: "select", options: ["low", "medium", "high"]}
           - label: "Result: Compatible"
             name: "compat_outcomes"
             widget: "object"

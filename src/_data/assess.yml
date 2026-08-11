@@ -42,9 +42,6 @@ compat_result_cta_url: "/contact/"
 # the same. Every entry is marked CLAIM REVIEW until that is confirmed.
 # --------------------------------------------------------------------------
 
-compat_step4_question: "Does your formulation contain any of these?"
-compat_step4_hint: "Select any that apply, or None of these"
-
 # Guide section 3.1. The bands are the guide's, not rounded or reinterpreted.  # CLAIM REVIEW
 compat_ph_options:
   - label: "pH 5 to 9"
@@ -68,21 +65,40 @@ compat_temp_options:
   - label: "Not sure"
     risk: medium
 
-# Guide sections 3.2 and 3.3.                                                   # CLAIM REVIEW
-compat_additive_options:
-  - label: "None of these"
-    risk: low
-    exclusive: true
-  - label: "Hydrogen peroxide or peracetic acid"
-    risk: high
-  - label: "Chlorine bleach or hypochlorite"
-    risk: high
-  - label: "Copper compounds"
-    risk: medium
-  - label: "Active enzymes, for example bromelain, papain or a digestive blend"
-    risk: medium
-  - label: "Crude fermentation material"
-    risk: medium
+# Guide sections 3.2 and 3.3 screen for oxidisers and for nucleases as well.
+# There is no question for them. A fourth step asking what is in the
+# formulation was built on 11 Aug and taken out the same day: it is a question
+# a visitor should not have to answer to get a first read, and the formulation
+# risk below already carries most of the same signal, since the formats that
+# tend to involve a peroxide wash or an enzyme system are the same ones scored
+# medium and high. Anything genuinely unusual comes out in the conversation
+# that every verdict ends in.
+
+# Risk by product form.
+#
+# These are the old quiz's own numbers, re-expressed. Until 30 July the quiz
+# scored each form out of 100 (tablet and capsule 95, chewable and powder 88,
+# effervescent and drops 78, softgel and bar 68, gummy and liquid 55, lozenge
+# and RTD 40) and added negative modifiers for temperature and pH to reach a
+# percentage. The percentage is gone, the ranking is kept: 80 and above is low,
+# 55 to 79 is medium, below 55 is high.
+#
+# Unlike the pH and temperature bands, these have no cited source. They encode
+# a sensible judgement, that heat and water and long time in solution are
+# harder on DNA than a dry compressed tablet, and they are still a judgement.  # CLAIM REVIEW
+compat_formulation_risk:
+  tablet: low
+  capsule: low
+  chewable: low
+  powder: low
+  effervescent: medium
+  drops: medium
+  softgel: medium
+  bar: medium
+  gummy: medium
+  liquid: medium
+  lozenge: high
+  rtd: high
 
 # Three verdicts, and they are the three the guide already uses when Natural
 # Trace answers a client in writing: compatible, compatible with conditions,
@@ -103,5 +119,5 @@ compat_outcomes:
     title: "This one needs testing"
     body: "More than one thing you have described can affect DNA, so we would not want to tell you it is compatible without seeing it. Send us a sample and we will run the assessment and give you a straight answer."
 
-compat_result_note: "This is a first screen based on four answers, not a laboratory result. Compatibility is confirmed on your own formulation."
+compat_result_note: "This is a first screen based on three answers, not a laboratory result. Compatibility is confirmed on your own formulation."
 compat_result_factors_label: "What drove this"

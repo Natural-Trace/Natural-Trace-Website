@@ -72,21 +72,6 @@ summary: "Check in 60 seconds whether Natural Trace is compatible with your prod
         </div>
         <div class="compat-next-wrap" id="compatNext3">
           <button class="compat-back" onclick="compatGoStep(2)">{{ assess.compat_btn_back }}</button>
-          <button class="compat-next" onclick="compatGoStep(4)">{{ assess.compat_btn_next }}</button>
-        </div>
-      </div>
-
-      {# Step 4. The guide screens for oxidisers and for nucleases as well as
-         for pH and heat, and a supplement can carry both: a peroxide wash, or
-         an enzyme blend that is the product. Asking only about pH and
-         temperature would have missed the two that a formulator is most likely
-         to have and least likely to think of. #}
-      <div class="compat-screen" id="compatStep4">
-        <p class="compat-q">{{ assess.compat_step4_question }}</p>
-        <p style="color:var(--muted);font-size:.82rem;margin-top:-.75rem;margin-bottom:1rem">{{ assess.compat_step4_hint }}</p>
-        <div class="compat-grid compat-grid-3" id="compatAdditives"></div>
-        <div class="compat-next-wrap" id="compatNext4">
-          <button class="compat-back" onclick="compatGoStep(3)">{{ assess.compat_btn_back }}</button>
           <button class="compat-next" onclick="compatShowResult()">{{ assess.compat_btn_next }}</button>
         </div>
       </div>
@@ -114,7 +99,7 @@ summary: "Check in 60 seconds whether Natural Trace is compatible with your prod
 {
   "ph": {{ assess.compat_ph_options | dump | safe }},
   "temp": {{ assess.compat_temp_options | dump | safe }},
-  "additives": {{ assess.compat_additive_options | dump | safe }},
+  "formulationRisk": {{ assess.compat_formulation_risk | dump | safe }},
   "outcomes": {{ assess.compat_outcomes | dump | safe }},
   "factorsLabel": {{ assess.compat_result_factors_label | dump | safe }}
 }
