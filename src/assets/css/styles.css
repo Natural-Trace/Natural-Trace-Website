@@ -427,7 +427,17 @@ nav.scrolled .nav-toggle span{background:var(--dark)}
 .industry-card{position:relative;border-radius:16px;overflow:hidden;height:340px;cursor:pointer}
 .industry-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
 .industry-card:hover img{transform:scale(1.1)}
-.industry-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.05) 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;transition:background .4s}
+/* The scrim behind the tile label. It used to fade out by 60% of the height,
+   which was fine over the dark stock photographs that were here before.
+   Kirsty's pictures are bright: pale powders, white sacks, a cream bench. The
+   labels measured as low as 1.2:1 against them, which is unreadable, and worst
+   on the Industries page where the description below the title pushes the
+   title further up the card and out of the dark end of the gradient.
+
+   These stops are measured rather than chosen. White text needs the pixel
+   behind it no brighter than about rgb(118,118,118) to clear WCAG AA, and the
+   brightest thing under any of these eight labels was rgb(233,234,229). */
+.industry-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.82) 42%,rgba(0,0,0,.34) 68%,rgba(0,0,0,0) 88%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;transition:background .4s}
 .industry-card:hover .industry-card-overlay{background:linear-gradient(to top,rgba(107,114,73,.85) 0%,rgba(0,0,0,.1) 60%)}
 .industry-card h3{font-family:'Montserrat',sans-serif;color:#fff;font-size:1.05rem;font-weight:700;transform:translateY(0);transition:transform .4s}
 .industry-card p{color:rgba(255,255,255,.7);font-size:.8rem;margin-top:.25rem;opacity:0;transform:translateY(10px);transition:all .4s .1s}
@@ -583,6 +593,15 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
      than a signpost to it, so full width is the right call anyway. */
   .page-home .industries-grid{grid-template-columns:repeat(2,1fr);gap:.9rem}
   body:not(.page-home) .industries-grid{grid-template-columns:1fr}
+  /* Two across on a phone means a 148px card, and "Nutraceuticals & Dietary
+     Supplements" takes three lines in it. That pushes the first line most of
+     the way up the card, past the top of the scrim, where it measured 2.7:1
+     against a pale bench. The scrim has to reach wherever the text reaches, so
+     here it carries most of the way to the top. */
+  .page-home .industry-card-overlay{
+    background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.86) 55%,rgba(0,0,0,.66) 80%,rgba(0,0,0,.3) 100%);
+    padding:1rem;
+  }
   .pipeline-steps{grid-template-columns:1fr}
   .detection-methods-grid{grid-template-columns:1fr}
   .about-highlights{grid-template-columns:1fr}
@@ -1153,7 +1172,13 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
    or it dissolves into the background. A pale hairline and a deep shadow do
    that without putting a visible card behind it. */
 .hero.hero-lab .hero-visual{
-  position:relative;right:auto;top:auto;width:100%;height:auto;aspect-ratio:5/4;
+  position:relative;right:auto;top:auto;width:100%;height:auto;
+  /* Kirsty's product shot is 2:3 portrait. The frame was 5:4 landscape,
+     left over from the previous image, and object-fit:cover would have
+     taken the top off the bottle and the capsules off the bottom. 3:4 is
+     close enough to the source to crop only the empty margins, and it
+     still sits shorter than the copy column beside it. */
+  aspect-ratio:3/4;
   border-radius:16px;overflow:hidden;
   /* Solid ground behind the picture. Without it a transparent PNG, or the
      moment before the photograph loads, shows the lab background through the

@@ -52,6 +52,19 @@ const TARGETS = [
     'hero coda': '.hero-lab .hero-ticks-coda',
     'hero outline button': '.hero-lab .btn-outline-dark',
     'nav link': 'nav:not(.scrolled) .nav-links a',
+    /* Every industry tile, not one of them. The label sits on whatever the
+       bottom of that particular photograph happens to be, so one tile passing
+       says nothing about the other three. */
+    'industry tile 1': '.industries-grid .industry-card:nth-child(1) h3',
+    'industry tile 2': '.industries-grid .industry-card:nth-child(2) h3',
+    'industry tile 3': '.industries-grid .industry-card:nth-child(3) h3',
+    'industry tile 4': '.industries-grid .industry-card:nth-child(4) h3',
+  } },
+  { url: '/industries/', selectors: {
+    'industry tile 1': '.industries-grid .industry-card:nth-child(1) h3',
+    'industry tile 2': '.industries-grid .industry-card:nth-child(2) h3',
+    'industry tile 3': '.industries-grid .industry-card:nth-child(3) h3',
+    'industry tile 4': '.industries-grid .industry-card:nth-child(4) h3',
   } },
 ];
 
@@ -135,13 +148,14 @@ for (const target of TARGETS) {
       for (const [name, sel] of Object.entries(sels)) {
         for (const el of document.querySelectorAll(sel)) {
           const r = el.getBoundingClientRect();
-          if (r.width < 4 || r.height < 4 || r.top > innerHeight) continue;
+          if (r.width < 4 || r.height < 4) continue;
           const cs = getComputedStyle(el);
           out.push({
             name, colour: cs.color,
             size: parseFloat(cs.fontSize), weight: parseInt(cs.fontWeight, 10) || 400,
-            x: Math.round(r.left), y: Math.round(Math.max(0, r.top)),
-            w: Math.round(r.width), h: Math.round(Math.min(r.height, innerHeight - r.top)),
+            /* Document coordinates, to match the full page screenshot. */
+            x: Math.round(r.left + scrollX), y: Math.round(Math.max(0, r.top + scrollY)),
+            w: Math.round(r.width), h: Math.round(r.height),
           });
           break;   /* one representative per selector is enough */
         }
@@ -156,9 +170,14 @@ for (const target of TARGETS) {
       }
       .hero-lab .btn{background:transparent!important;border-color:transparent!important;box-shadow:none!important}
       .hero-lab .hero-ticks li::before{border-color:transparent!important}
+      /* The tile label has to go, but the gradient over the photograph has to
+         stay: that gradient is the background the label is read against. */
+      .industry-card h3, .industry-card p{color:transparent!important;-webkit-text-fill-color:transparent!important}
     ` });
     await page.waitForTimeout(300);
-    const shot = await page.screenshot({ clip: { x: 0, y: 0, width: w, height: h } });
+    /* Full page, because the industry tiles are well below the fold and a
+       viewport clip would simply miss them. */
+    const shot = await page.screenshot({ fullPage: true });
     await page.close();
 
     console.log(`\n${target.url}  ${tag} ${w}x${h}`);
