@@ -20,3 +20,88 @@ compat_confirm_title: "Thanks, we have what we need"
 compat_confirm_desc: "Compatibility depends on your specific formulation and process conditions. Send this through and one of our scientists will review it with you."
 compat_result_cta: "Talk to our team"
 compat_result_cta_url: "/contact/"
+
+# --------------------------------------------------------------------------
+# The verdict.
+#
+# Until 11 Aug the quiz collected four answers and then showed the same
+# "thanks, we have what we need" screen whatever anyone chose. It was a form
+# wearing a quiz's clothes.
+#
+# Everything below is lifted from the NaturalTag Chemical Compatibility Guide
+# v1.2, April 2026, classification "For Client Use". Section numbers are cited
+# on each rule. Nothing here is invented: the bands, the thresholds and the
+# three verdict names are the ones Natural Trace already gives clients in
+# writing, so the website and that document say the same thing.
+#
+# ONE THING NEEDS SIGNING OFF BEFORE THIS GOES LIVE. The guide is written for
+# agricultural sprays. Its screening criteria are about DNA chemistry, pH,
+# oxidisers, nucleases and heat, which apply to any matrix. Its product table
+# is fungicides, which does not. Applying the criteria to nutraceutical
+# manufacturing is a reasonable extension of the chemistry and an extension all
+# the same. Every entry is marked CLAIM REVIEW until that is confirmed.
+# --------------------------------------------------------------------------
+
+compat_step4_question: "Does your formulation contain any of these?"
+compat_step4_hint: "Select any that apply, or None of these"
+
+# Guide section 3.1. The bands are the guide's, not rounded or reinterpreted.  # CLAIM REVIEW
+compat_ph_options:
+  - label: "pH 5 to 9"
+    risk: low
+  - label: "pH 3 to 5, or 9 to 11"
+    risk: medium
+  - label: "Below pH 3, or above pH 11"
+    risk: high
+  - label: "Not sure"
+    risk: medium
+
+# Guide section 3.4: above 60 degrees, contact Natural Trace. That is the only
+# temperature threshold the guide states, so it is the only one used here.      # CLAIM REVIEW
+compat_temp_options:
+  - label: "Below 60°C"
+    risk: low
+  - label: "60 to 100°C"
+    risk: medium
+  - label: "Above 100°C"
+    risk: high
+  - label: "Not sure"
+    risk: medium
+
+# Guide sections 3.2 and 3.3.                                                   # CLAIM REVIEW
+compat_additive_options:
+  - label: "None of these"
+    risk: low
+    exclusive: true
+  - label: "Hydrogen peroxide or peracetic acid"
+    risk: high
+  - label: "Chlorine bleach or hypochlorite"
+    risk: high
+  - label: "Copper compounds"
+    risk: medium
+  - label: "Active enzymes, for example bromelain, papain or a digestive blend"
+    risk: medium
+  - label: "Crude fermentation material"
+    risk: medium
+
+# Three verdicts, and they are the three the guide already uses when Natural
+# Trace answers a client in writing: compatible, compatible with conditions,
+# not compatible. The bottom band here is named for the action rather than the
+# outcome, because a website cannot tell anyone their product will not work
+# without having tested it.
+compat_outcomes:
+  compatible:
+    label: "Compatible"
+    title: "Your product looks compatible"
+    body: "Nothing you have described falls outside the conditions NaturalTag is used in today. The next step is a compatibility assessment on your actual formulation, which is how every project starts."
+  conditions:
+    label: "Compatible with conditions"
+    title: "Most likely compatible"
+    body: "One thing you have described sits outside the straightforward range. It does not rule NaturalTag out, and products like yours are in use, but the dose or the point in the process where the tag goes in may need adjusting. Our scientists will tell you which."
+  testing:
+    label: "Testing required"
+    title: "This one needs testing"
+    body: "More than one thing you have described can affect DNA, so we would not want to tell you it is compatible without seeing it. Send us a sample and we will run the assessment and give you a straight answer."
+
+compat_result_note: "This is a first screen based on four answers, not a laboratory result. Compatibility is confirmed on your own formulation."
+compat_result_factors_label: "What drove this"

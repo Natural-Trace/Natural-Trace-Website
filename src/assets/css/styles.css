@@ -653,30 +653,20 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
 .compat-next:hover{background:var(--sage-dark)}
 .compat-back{background:none;border:none;color:var(--muted);font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;margin-right:1rem;transition:color .3s}
 .compat-back:hover{color:var(--dark)}
-.compat-result{text-align:center;padding:2rem 0}
-.compat-score-wrap{position:relative;width:180px;height:180px;margin:0 auto 1.5rem}
-.compat-score-svg{width:180px;height:180px;transform:rotate(-90deg)}
-.compat-score-bg{fill:none;stroke:rgba(107,114,73,.12);stroke-width:10}
-.compat-score-fill{fill:none;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1.5s ease}
-.compat-score-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-size:3rem;color:var(--dark)}
-.compat-verdict{font-family:'Montserrat',sans-serif;font-size:1.6rem;margin-bottom:.5rem;letter-spacing:.02em;opacity:0;transform:translateY(10px);transition:all .5s ease .8s}
-.compat-verdict.visible{opacity:1;transform:translateY(0)}
-.compat-rec{color:var(--muted);font-size:.9rem;margin-bottom:2rem;opacity:0;transition:opacity .5s ease 1.2s}
-.compat-rec.visible{opacity:1}
-.compat-rec-card{background:var(--offwhite);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;text-align:left;opacity:0;transform:translateY(10px);transition:all .5s ease 1.5s}
-.compat-rec-card.visible{opacity:1;transform:translateY(0)}
-.compat-rec-card h4{font-family:'Montserrat',sans-serif;font-size:.95rem;font-weight:700;color:var(--dark);margin-bottom:.4rem}
-.compat-rec-card p{font-size:.85rem;color:var(--muted);line-height:1.5}
-.compat-actions{display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;opacity:0;transition:opacity .5s ease 1.8s}
-.compat-actions.visible{opacity:1}
-.compat-restart{background:none;border:2px solid var(--sage);color:var(--sage);font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:600;padding:.7rem 1.5rem;border-radius:10px;cursor:pointer;transition:all .3s}
-.compat-restart:hover{background:var(--sage);color:#fff}
-.compat-risk{display:inline-block;font-size:.65rem;font-weight:700;padding:.2rem .5rem;border-radius:6px;margin-top:.4rem;text-transform:uppercase;letter-spacing:.03em}
-.compat-risk-low{background:rgba(76,175,80,.12);color:#2e7d32}
-.compat-risk-med{background:rgba(255,152,0,.12);color:#e65100}
-.compat-risk-high{background:rgba(244,67,54,.12);color:#c62828}
-.compat-confetti{position:absolute;width:8px;height:8px;border-radius:2px;pointer-events:none;animation:compatConfettiFall 2.5s ease-out forwards}
-@keyframes compatConfettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1)}100%{opacity:0;transform:translateY(400px) rotate(720deg) scale(.3)}}
+/* Twenty-four rules were deleted here on 11 Aug 2026: a 180px scoring ring
+   with a 3rem percentage in the middle, a verdict line, three risk pills, a
+   recommendation card, a restart button and a confetti animation.
+
+   None of the markup for any of it still existed. It was the result screen of
+   an earlier version of this quiz, the one that showed a number like "80%
+   compatible", and it is what Kirsty was remembering in the 11 Aug meeting
+   when she asked to move away from a fixed percentage. The markup had gone;
+   the stylesheet had not.
+
+   It was not harmless. The old .compat-badge carried opacity:0 and only
+   became visible with a .visible class that nothing added any more. The new
+   verdict badge, several hundred lines below, reused that class name, was
+   styled correctly, was in the page, and could not be seen. */
 @media(max-width:768px){
   .compat-quiz{padding:1.5rem}
   .compat-grid{grid-template-columns:repeat(2,1fr)}
@@ -1308,3 +1298,23 @@ section[id],[id].anchor-target{scroll-margin-top:96px}
   /* A quiet instruction, shown only where the swipe exists. */
   .vp-swipe-hint{display:block;text-align:center;font-size:.82rem;color:var(--muted);margin-top:-.35rem}
 }
+
+/* Compatibility verdict.
+
+   Three states, and the colour carries meaning, so it cannot be the only thing
+   that does. Each badge says its verdict in words as well: someone who cannot
+   tell sage from amber still reads "Testing required". */
+.compat-badge{
+  display:inline-block;font-family:'Montserrat',sans-serif;font-size:.72rem;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:.45rem 1rem;border-radius:999px;margin-bottom:1rem;
+}
+.compat-badge-compatible{background:rgba(107,114,73,.16);color:var(--sage-dark);border:1px solid rgba(107,114,73,.35)}
+.compat-badge-conditions{background:rgba(162,147,73,.16);color:#7A6D2E;border:1px solid rgba(162,147,73,.4)}
+.compat-badge-testing{background:rgba(59,102,107,.14);color:var(--teal);border:1px solid rgba(59,102,107,.34)}
+.compat-factors{text-align:left;max-width:420px;margin:1.5rem auto 0;padding:1rem 1.25rem;background:var(--offwhite);border-radius:12px}
+.compat-factors h4{font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.compat-factors ul{list-style:none;padding:0;margin:0}
+.compat-factors li{font-size:.88rem;color:var(--text);line-height:1.6;padding-left:1.1rem;position:relative}
+.compat-factors li::before{content:'';position:absolute;left:0;top:.6rem;width:5px;height:5px;border-radius:50%;background:var(--sage)}
+.compat-result-note{font-size:.8rem;color:var(--muted);max-width:440px;margin:1.5rem auto 1.75rem;line-height:1.6}

@@ -72,18 +72,50 @@ summary: "Check in 60 seconds whether Natural Trace is compatible with your prod
         </div>
         <div class="compat-next-wrap" id="compatNext3">
           <button class="compat-back" onclick="compatGoStep(2)">{{ assess.compat_btn_back }}</button>
-          <button class="compat-next" onclick="compatShowConfirm()">{{ assess.compat_btn_next }}</button>
+          <button class="compat-next" onclick="compatGoStep(4)">{{ assess.compat_btn_next }}</button>
         </div>
       </div>
 
-      <!-- Confirmation Screen -->
-      <div class="compat-screen" id="compatConfirm">
+      {# Step 4. The guide screens for oxidisers and for nucleases as well as
+         for pH and heat, and a supplement can carry both: a peroxide wash, or
+         an enzyme blend that is the product. Asking only about pH and
+         temperature would have missed the two that a formulator is most likely
+         to have and least likely to think of. #}
+      <div class="compat-screen" id="compatStep4">
+        <p class="compat-q">{{ assess.compat_step4_question }}</p>
+        <p style="color:var(--muted);font-size:.82rem;margin-top:-.75rem;margin-bottom:1rem">{{ assess.compat_step4_hint }}</p>
+        <div class="compat-grid compat-grid-3" id="compatAdditives"></div>
+        <div class="compat-next-wrap" id="compatNext4">
+          <button class="compat-back" onclick="compatGoStep(3)">{{ assess.compat_btn_back }}</button>
+          <button class="compat-next" onclick="compatShowResult()">{{ assess.compat_btn_next }}</button>
+        </div>
+      </div>
+
+      {# Result. Three outcomes, named the way the compatibility guide names them
+         when Natural Trace answers a client in writing, so the site and that
+         document do not contradict each other. #}
+      <div class="compat-screen" id="compatResult">
         <div class="compat-welcome">
-          <h3>{{ assess.compat_confirm_title }}</h3>
-          <p>{{ assess.compat_confirm_desc }}</p>
+          <div id="compatResultBadge" class="compat-badge"></div>
+          <h3 id="compatResultTitle"></h3>
+          <p id="compatResultBody"></p>
+          <div id="compatResultFactors" class="compat-factors"></div>
+          <p class="compat-result-note">{{ assess.compat_result_note }}</p>
           <a class="compat-cta" href="{{ assess.compat_result_cta_url }}" style="text-decoration:none;display:inline-block">{{ assess.compat_result_cta }}</a>
         </div>
       </div>
     </div>
   </div>
 </section>
+{# The bands, the risk levels and the outcome copy all live in
+   src/_data/assess.yml. They are claims about what NaturalTag tolerates, so
+   they belong with the rest of the content and not buried in a script. #}
+<script type="application/json" id="compatModel">
+{
+  "ph": {{ assess.compat_ph_options | dump | safe }},
+  "temp": {{ assess.compat_temp_options | dump | safe }},
+  "additives": {{ assess.compat_additive_options | dump | safe }},
+  "outcomes": {{ assess.compat_outcomes | dump | safe }},
+  "factorsLabel": {{ assess.compat_result_factors_label | dump | safe }}
+}
+</script>

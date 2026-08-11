@@ -216,10 +216,76 @@ collections:
           - {label: "Quiz: pH Label", name: "compat_step3_ph_label", widget: "string"}
           - {label: "Quiz: Next Button", name: "compat_btn_next", widget: "string"}
           - {label: "Quiz: Back Button", name: "compat_btn_back", widget: "string"}
-          - {label: "Quiz: Confirm Title", name: "compat_confirm_title", widget: "string"}
-          - {label: "Quiz: Confirm Description", name: "compat_confirm_desc", widget: "text"}
+          - {label: "Quiz: Step 4 Question", name: "compat_step4_question", widget: "string"}
+          - {label: "Quiz: Step 4 Hint", name: "compat_step4_hint", widget: "string"}
+          - {label: "Quiz: Confirm Title", name: "compat_confirm_title", widget: "string", required: false, hint: "No longer shown. Kept so the old wording is not lost if the verdict is ever switched off."}
+          - {label: "Quiz: Confirm Description", name: "compat_confirm_desc", widget: "text", required: false, hint: "No longer shown. See above."}
           - {label: "Quiz: Result CTA", name: "compat_result_cta", widget: "string"}
           - {label: "Quiz: Result CTA URL", name: "compat_result_cta_url", widget: "string"}
+          - {label: "Quiz: Result Small Print", name: "compat_result_note", widget: "text"}
+          - {label: "Quiz: \"What drove this\" Heading", name: "compat_result_factors_label", widget: "string"}
+
+          # The scoring. These are claims about what NaturalTag tolerates, taken
+          # from the NaturalTag Chemical Compatibility Guide v1.2. Changing a
+          # band or a risk level changes what the site tells a prospect about
+          # their product, so it is not a wording edit.
+          - label: "Scoring: pH Bands"
+            name: "compat_ph_options"
+            widget: "list"
+            label_singular: "band"
+            collapsed: true
+            summary: "{{fields.label}} — {{fields.risk}}"
+            hint: "From section 3.1 of the compatibility guide. Do not change a band without checking it against that document."
+            fields:
+              - {label: "What the visitor sees", name: "label", widget: "string"}
+              - {label: "Risk", name: "risk", widget: "select", options: ["low", "medium", "high"]}
+          - label: "Scoring: Temperature Bands"
+            name: "compat_temp_options"
+            widget: "list"
+            label_singular: "band"
+            collapsed: true
+            summary: "{{fields.label}} — {{fields.risk}}"
+            hint: "From section 3.4 of the compatibility guide. 60°C is the threshold that document states."
+            fields:
+              - {label: "What the visitor sees", name: "label", widget: "string"}
+              - {label: "Risk", name: "risk", widget: "select", options: ["low", "medium", "high"]}
+          - label: "Scoring: Ingredients Screened For"
+            name: "compat_additive_options"
+            widget: "list"
+            label_singular: "ingredient"
+            collapsed: true
+            summary: "{{fields.label}} — {{fields.risk}}"
+            hint: "From sections 3.2 and 3.3 of the compatibility guide. Tick Exclusive on the None of these option only."
+            fields:
+              - {label: "What the visitor sees", name: "label", widget: "string"}
+              - {label: "Risk", name: "risk", widget: "select", options: ["low", "medium", "high"]}
+              - {label: "Exclusive", name: "exclusive", widget: "boolean", required: false, default: false, hint: "Selecting this option clears every other one. Only the None of these option should have it."}
+          - label: "Result: Compatible"
+            name: "compat_outcomes"
+            widget: "object"
+            collapsed: true
+            fields:
+              - label: "Compatible"
+                name: "compatible"
+                widget: "object"
+                fields:
+                  - {label: "Badge", name: "label", widget: "string"}
+                  - {label: "Heading", name: "title", widget: "string"}
+                  - {label: "Body", name: "body", widget: "text"}
+              - label: "Compatible with conditions"
+                name: "conditions"
+                widget: "object"
+                fields:
+                  - {label: "Badge", name: "label", widget: "string"}
+                  - {label: "Heading", name: "title", widget: "string"}
+                  - {label: "Body", name: "body", widget: "text"}
+              - label: "Testing required"
+                name: "testing"
+                widget: "object"
+                fields:
+                  - {label: "Badge", name: "label", widget: "string"}
+                  - {label: "Heading", name: "title", widget: "string"}
+                  - {label: "Body", name: "body", widget: "text"}
 
       # ABOUT
       - name: "about"

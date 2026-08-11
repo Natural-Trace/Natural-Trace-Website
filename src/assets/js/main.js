@@ -219,7 +219,7 @@ function filterFaq(cat) {
 
 /* ===== Compatibility Quiz ===== */
 (function() {
-  var state = { step: 0, category: null, formulations: [], temp: null, ph: null };
+  var state = { step: 0, category: null, formulations: [], temp: null, ph: null, additives: [] };
 
   var categories = [
     { id: 'vitamins', name: 'Vitamins & Minerals', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><rect x="14" y="6" width="12" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/><line x1="14" y1="20" x2="26" y2="20" stroke="currentColor" stroke-width="2"/></svg>' },
@@ -231,7 +231,7 @@ function filterFaq(cat) {
     { id: 'sports', name: 'Sports Nutrition', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><circle cx="20" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="2"/><line x1="8" y1="20" x2="32" y2="20" stroke="currentColor" stroke-width="2"/><line x1="20" y1="8" x2="20" y2="32" stroke="currentColor" stroke-width="2"/></svg>' },
     { id: 'immune', name: 'Immune Support', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><path d="M20 8 L22 16 L30 16 L24 21 L26 29 L20 24 L14 29 L16 21 L10 16 L18 16Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>' },
     { id: 'weight', name: 'Weight Management', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><rect x="10" y="14" width="20" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15 14 V10 Q20 6, 25 10 V14" fill="none" stroke="currentColor" stroke-width="2"/></svg>' },
-    { id: 'children', name: 'Children\'s Supplements', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><circle cx="20" cy="14" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 34 Q12 24, 20 22 Q28 24, 28 34" fill="none" stroke="currentColor" stroke-width="2"/></svg>' },
+    { id: 'ingredients', name: 'Specialty Food Ingredients', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><path d="M8 26 L20 10 L32 26Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><line x1="8" y1="30" x2="32" y2="30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' },
     { id: 'specialty', name: 'Specialty Health', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><path d="M14 18 Q20 10, 26 18 Q26 26, 20 32 Q14 26, 14 18Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>' },
     { id: 'functional', name: 'Functional Foods', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><path d="M12 28 Q12 16, 20 12 Q28 16, 28 28Z" fill="none" stroke="currentColor" stroke-width="2"/><line x1="20" y1="12" x2="20" y2="8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' }
   ];
@@ -261,24 +261,34 @@ function filterFaq(cat) {
     sports: ['powder','capsule','bar','rtd','tablet'],
     immune: ['tablet','capsule','gummy','effervescent','lozenge','liquid'],
     weight: ['powder','capsule','bar','rtd','liquid'],
-    children: ['gummy','chewable','liquid','drops','powder'],
+    ingredients: ['powder','liquid','capsule','tablet','bar','rtd'],
     specialty: ['capsule','tablet','softgel','liquid','gummy'],
     functional: ['powder','liquid','bar','rtd','gummy','capsule']
   };
 
-  var tempOptions = [
-    { label: 'Below 40°C' },
-    { label: '40-65°C' },
-    { label: '65-100°C' },
-    { label: 'Above 100°C' }
-  ];
+  /* The temperature and pH bands used to be written here: below 40, 40-65,
+     65-100, above 100, and neutral / mildly acidic / very acidic / alkaline.
+     They were not the bands the compatibility guide screens on, and two of
+     them straddled a threshold, so "very acidic, pH under 4" covered both a pH
+     the guide calls medium risk and one it calls high. There was no honest way
+     to score an answer like that. The bands now match the guide exactly and
+     come from src/_data/assess.yml with the rest of the content.
 
-  var phOptions = [
-    { label: 'Neutral (pH 5-8)' },
-    { label: 'Mildly Acidic (pH 4-5)' },
-    { label: 'Very Acidic (pH < 4)' },
-    { label: 'Alkaline (pH > 8)' }
+     Everything degrades gracefully. No model in the page, and the quiz behaves
+     as it did before: it collects the answers and thanks you for them. */
+  var model = null;
+  try {
+    var raw = document.getElementById('compatModel');
+    if (raw) model = JSON.parse(raw.textContent);
+  } catch (e) { model = null; }
+
+  var tempOptions = (model && model.temp) || [
+    { label: 'Below 60°C' }, { label: '60 to 100°C' }, { label: 'Above 100°C' }
   ];
+  var phOptions = (model && model.ph) || [
+    { label: 'pH 5 to 9' }, { label: 'pH 3 to 5, or 9 to 11' }, { label: 'Below pH 3, or above pH 11' }
+  ];
+  var additiveOptions = (model && model.additives) || [];
 
   function el(id) { return document.getElementById(id); }
 
@@ -385,17 +395,129 @@ function filterFaq(cat) {
       el('compatNext3').classList.remove('visible');
       showScreen('compatStep3');
       updateProgress(3);
+    } else if (step === 4) {
+      renderAdditives();
+      el('compatNext4').classList.remove('visible');
+      showScreen('compatStep4');
+      updateProgress(4);
     }
   };
 
-  window.compatShowConfirm = function() {
+  function renderAdditives() {
+    var grid = el('compatAdditives');
+    if (!grid) return;
+    grid.innerHTML = '';
+    state.additives = [];
+    additiveOptions.forEach(function(opt, i) {
+      var card = document.createElement('div');
+      card.className = 'compat-card';
+      card.setAttribute('data-idx', i);
+      card.innerHTML = '<span class="compat-card-label">' + opt.label + '</span>';
+      card.onclick = function() {
+        /* "None of these" is exclusive both ways. Selecting it clears the rest,
+           and selecting anything else clears it. Without that the answer can be
+           "none of these, and also bleach", which the scorer would have to
+           guess at. */
+        if (opt.exclusive) {
+          grid.querySelectorAll('.compat-card').forEach(function(x) { x.classList.remove('selected'); });
+          card.classList.add('selected');
+          state.additives = [i];
+        } else {
+          additiveOptions.forEach(function(o, j) {
+            if (o.exclusive) {
+              var ex = grid.querySelector('[data-idx="' + j + '"]');
+              if (ex) ex.classList.remove('selected');
+              var k = state.additives.indexOf(j);
+              if (k >= 0) state.additives.splice(k, 1);
+            }
+          });
+          card.classList.toggle('selected');
+          var idx = state.additives.indexOf(i);
+          if (idx >= 0) { state.additives.splice(idx, 1); } else { state.additives.push(i); }
+        }
+        if (state.additives.length > 0) { el('compatNext4').classList.add('visible'); }
+        else { el('compatNext4').classList.remove('visible'); }
+      };
+      grid.appendChild(card);
+    });
+  }
+
+  /* The verdict.
+
+     Worst case wins, and a second medium is enough to move a product down a
+     band. That is deliberate. Two separate things that each stress DNA are not
+     the same risk as one, and the guide's own answer to a flagged product is to
+     test it rather than to reason about it.
+
+     There is no "not compatible" outcome. Not because it cannot happen: the
+     guide is explicit that below pH 3 the tag is likely incompatible. It is
+     because a website that has never seen the formulation is not in a position
+     to say so, and because the honest version of that answer is the same
+     action either way, which is send us a sample. The bottom band says the
+     thing that stresses DNA is there and that it needs testing. */
+  function verdict() {
+    var factors = [];
+    var counts = { low: 0, medium: 0, high: 0 };
+
+    function note(opt, prefix) {
+      if (!opt) return;
+      var risk = opt.risk || 'low';
+      counts[risk] = (counts[risk] || 0) + 1;
+      if (risk !== 'low') factors.push(prefix + opt.label);
+    }
+
+    note(tempOptions[state.temp], 'Temperature: ');
+    note(phOptions[state.ph], 'pH: ');
+    state.additives.forEach(function(i) { note(additiveOptions[i], ''); });
+
+    var key = 'compatible';
+    if (counts.high > 0 || counts.medium > 1) { key = 'testing'; }
+    else if (counts.medium === 1) { key = 'conditions'; }
+    return { key: key, factors: factors };
+  }
+
+  window.compatShowResult = function() {
+    var out = verdict();
+    var outcomes = (model && model.outcomes) || {};
+    var o = outcomes[out.key];
     el('compatProgress').style.display = 'none';
-    showScreen('compatConfirm');
+
+    if (!o) {
+      /* No model, so no verdict. Falls back to the screen that was here
+         before rather than showing an empty result. */
+      showScreen('compatResult');
+      return;
+    }
+
+    var badge = el('compatResultBadge');
+    badge.textContent = o.label;
+    badge.className = 'compat-badge compat-badge-' + out.key;
+    el('compatResultTitle').textContent = o.title;
+    el('compatResultBody').textContent = o.body;
+
+    var fx = el('compatResultFactors');
+    fx.innerHTML = '';
+    if (out.factors.length) {
+      /* Naming what moved the answer is the difference between a verdict and a
+         fortune. Someone who is told "needs testing" and shown "pH 3 to 5" can
+         act on it, or tell us we asked the wrong question. */
+      var h = document.createElement('h4');
+      h.textContent = (model && model.factorsLabel) || 'What drove this';
+      fx.appendChild(h);
+      var ul = document.createElement('ul');
+      out.factors.forEach(function(f) {
+        var li = document.createElement('li');
+        li.textContent = f;
+        ul.appendChild(li);
+      });
+      fx.appendChild(ul);
+    }
+    showScreen('compatResult');
   };
 
   function updateProgress(step) {
-    el('compatStepLabel').textContent = 'Step ' + step + ' of 3';
-    el('compatProgressFill').style.width = (step * 33) + '%';
+    el('compatStepLabel').textContent = 'Step ' + step + ' of 4';
+    el('compatProgressFill').style.width = (step * 25) + '%';
   }
 
   // Initialize
