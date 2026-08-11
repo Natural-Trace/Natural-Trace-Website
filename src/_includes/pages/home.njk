@@ -7,7 +7,13 @@
    tint, the gradient and the blend mode are all in CSS, which is why the
    picture can be swapped for any landscape photograph without anyone having
    to think about contrast. #}
-<section class="hero hero-lab" style="--hero-bg:url('{{ home.hero_bg_image }}')">
+{# The url filter is not decoration. HtmlBasePlugin rewrites src and href for
+   the path prefix; it does not look inside a style attribute. Without the
+   filter this emitted a root-absolute /assets/... which resolves correctly on
+   a site served from the root and 404s on natural-trace.github.io, so the
+   background was missing in production only and looked fine in every local
+   preview. Same failure class as the nav bug on 11 Aug. #}
+<section class="hero hero-lab" style="--hero-bg:url('{{ home.hero_bg_image | url }}')">
   <div class="hero-content">
     <div class="hero-copy">
       <h1>

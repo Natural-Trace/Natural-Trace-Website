@@ -17,6 +17,13 @@ eleventyExcludeFromCollections: true
 </head>
 <body>
 <p>This page has moved. <a href="{{ rule.to }}">Continue to the new page</a>.</p>
-<script>window.location.replace("{{ rule.to }}");</script>
+{# The url filter is needed here and nowhere else on this page. HtmlBasePlugin
+   rewrites the meta refresh and the href above for the path prefix; it does
+   not look inside a script. Until 11 Aug 2026 this line shipped an unprefixed
+   path, and because it runs during parse it won a race against the zero-second
+   meta refresh: every legacy inbound link landed on GitHub's 404 page rather
+   than the page it was redirected to. Invisible locally, where the site is
+   served from the root and both forms are the same string. #}
+<script>window.location.replace("{{ rule.to | url }}");</script>
 </body>
 </html>

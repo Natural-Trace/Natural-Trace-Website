@@ -113,14 +113,19 @@ compat_outcomes:
   conditions:
     label: "Compatible with conditions"
     title: "Most likely compatible"
-    body: "One thing you have described sits outside the straightforward range. It does not rule NaturalTag out, and products like yours are in use, but the dose or the point in the process where the tag goes in may need adjusting. Our scientists will tell you which."
+    body: "Products like yours are in use with NaturalTag today. There may be an adjustment to make to the dose, or to the point in your process where the tag goes in. Our scientists will work that out with you."
   testing:
     label: "Testing required"
     title: "This one needs testing"
-    body: "More than one thing you have described can affect DNA, so we would not want to tell you it is compatible without seeing it. Send us a sample and we will run the assessment and give you a straight answer."
+    body: "We would want to look at this one properly before saying yes. Send us a sample, we will run the assessment on your actual formulation and give you a straight answer."
 
 compat_result_note: "This is a first screen based on three answers, not a laboratory result. Compatibility is confirmed on your own formulation."
-compat_result_factors_label: "What drove this"
+
+# The result screen used to carry a "What drove this" list naming the pH band,
+# temperature band or product form that moved the answer, and the two outcome
+# bodies above used to open by saying how many things were wrong. Both were
+# removed on 11 Aug 2026 on request: the screen gives a verdict and a next
+# step, not a diagnosis. The reasoning still runs, it is just not published.
 
 # --------------------------------------------------------------------------
 # What has actually been tested.

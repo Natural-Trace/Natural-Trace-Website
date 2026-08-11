@@ -221,7 +221,6 @@ collections:
           - {label: "Quiz: Result CTA", name: "compat_result_cta", widget: "string"}
           - {label: "Quiz: Result CTA URL", name: "compat_result_cta_url", widget: "string"}
           - {label: "Quiz: Result Small Print", name: "compat_result_note", widget: "text"}
-          - {label: "Quiz: \"What drove this\" Heading", name: "compat_result_factors_label", widget: "string"}
 
           # The scoring. These are claims about what NaturalTag tolerates, taken
           # from the NaturalTag Chemical Compatibility Guide v1.2. Changing a

@@ -445,32 +445,30 @@ function filterFaq(cat) {
      action either way, which is send us a sample. The bottom band says the
      thing that stresses DNA is there and that it needs testing. */
   function verdict() {
-    var factors = [];
     var counts = { low: 0, medium: 0, high: 0 };
 
-    function note(opt, prefix) {
+    /* This used to collect the labels as well and publish them under "What
+       drove this". It counts only now: the visitor gets a verdict and a next
+       step, not a list of what is wrong with their product. Removed 11 Aug
+       2026 on request. */
+    function note(opt) {
       if (!opt) return;
       var risk = opt.risk || 'low';
       counts[risk] = (counts[risk] || 0) + 1;
-      if (risk !== 'low') factors.push(prefix + opt.label);
     }
 
-    note(tempOptions[state.temp], 'Temperature: ');
-    note(phOptions[state.ph], 'pH: ');
+    note(tempOptions[state.temp]);
+    note(phOptions[state.ph]);
     /* Worst of the selected forms, not an average. A product made in four
        formats is only as straightforward as its hardest one. */
     var order = { low: 0, medium: 1, high: 2 };
-    var worstForm = null, worstName = '';
+    var worstForm = null;
     (state.formulations || []).forEach(function(fid) {
       var r = formulationRisk[fid];
       if (!r) return;
-      if (worstForm === null || order[r] > order[worstForm]) {
-        worstForm = r;
-        var f = formulations.find(function(x) { return x.id === fid; });
-        worstName = f ? f.name : fid;
-      }
+      if (worstForm === null || order[r] > order[worstForm]) worstForm = r;
     });
-    if (worstForm) note({ risk: worstForm, label: worstName }, 'Product form: ');
+    if (worstForm) note({ risk: worstForm });
 
     var key = 'compatible';
     if (counts.high > 0 || counts.medium > 1) { key = 'testing'; }
@@ -504,7 +502,7 @@ function filterFaq(cat) {
     if (proven === 'not-compatible') { key = 'testing'; }
     else if (proven === 'compatible' && key === 'conditions') { key = 'compatible'; }
 
-    return { key: key, factors: factors, proven: proven };
+    return { key: key, proven: proven };
   }
 
   window.compatShowResult = function() {
@@ -526,23 +524,6 @@ function filterFaq(cat) {
     el('compatResultTitle').textContent = o.title;
     el('compatResultBody').textContent = o.body;
 
-    var fx = el('compatResultFactors');
-    fx.innerHTML = '';
-    if (out.factors.length) {
-      /* Naming what moved the answer is the difference between a verdict and a
-         fortune. Someone who is told "needs testing" and shown "pH 3 to 5" can
-         act on it, or tell us we asked the wrong question. */
-      var h = document.createElement('h4');
-      h.textContent = (model && model.factorsLabel) || 'What drove this';
-      fx.appendChild(h);
-      var ul = document.createElement('ul');
-      out.factors.forEach(function(f) {
-        var li = document.createElement('li');
-        li.textContent = f;
-        ul.appendChild(li);
-      });
-      fx.appendChild(ul);
-    }
     var ev = el('compatResultEvidence');
     if (ev) {
       var labels = (model && model.evidenceLabels) || {};

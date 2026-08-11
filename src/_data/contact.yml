@@ -2,11 +2,13 @@ section_label: "Contact"
 title: "Contact our team"
 subtitle: "Request a compatibility assessment or talk to our team about protecting a premium ingredient, verifying manufacturing partners, or investigating suspicious products."
 
+# Countries only, no street addresses. Asked for in the 11 Aug meeting: a
+# contact page that lists one office reads as a one-office company.
 info_items:
-  - label: "Location"
-    description: "Singapore"
+  - label: "Locations"
+    description: "Singapore, Switzerland, United States"
   - label: "What We Do"
-    description: "Supply chain traceability via NaturalTag&trade; integration. We tag your product at source and verify it downstream with NaturalDetect&trade;."
+    description: "In-product authentication via NaturalTag&trade; integration. We tag your product at source and verify it downstream with NaturalDetect&trade;."
 
 form:
   title: "Send Us a Message"
@@ -21,7 +23,10 @@ form:
   company_placeholder: "Your company name"
   job_title_label: "Job Title"
   job_title_placeholder: "Your role"
-  inquiry_type_label: "Topic"
+  # The only optional field on the form, so it says so. Everything else is
+  # required on HubSpot's side and a blank value is never sent, which makes
+  # HubSpot reject the whole submission.
+  inquiry_type_label: "Topic (optional)"
   inquiry_type_placeholder: "Select a topic"
   message_label: "Message"
   message_placeholder: "Tell us about your project or requirements..."

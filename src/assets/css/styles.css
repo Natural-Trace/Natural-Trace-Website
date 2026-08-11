@@ -1349,11 +1349,6 @@ section[id],[id].anchor-target{scroll-margin-top:96px}
 .compat-badge-compatible{background:rgba(107,114,73,.16);color:var(--sage-dark);border:1px solid rgba(107,114,73,.35)}
 .compat-badge-conditions{background:rgba(162,147,73,.16);color:#7A6D2E;border:1px solid rgba(162,147,73,.4)}
 .compat-badge-testing{background:rgba(59,102,107,.14);color:var(--teal);border:1px solid rgba(59,102,107,.34)}
-.compat-factors{text-align:left;max-width:420px;margin:1.5rem auto 0;padding:1rem 1.25rem;background:var(--offwhite);border-radius:12px}
-.compat-factors h4{font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
-.compat-factors ul{list-style:none;padding:0;margin:0}
-.compat-factors li{font-size:.88rem;color:var(--text);line-height:1.6;padding-left:1.1rem;position:relative}
-.compat-factors li::before{content:'';position:absolute;left:0;top:.6rem;width:5px;height:5px;border-radius:50%;background:var(--sage)}
 .compat-result-note{font-size:.8rem;color:var(--muted);max-width:440px;margin:1.5rem auto 1.75rem;line-height:1.6}
 
 /* The tested-product line on the compatibility result. Quieter than the

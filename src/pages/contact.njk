@@ -65,8 +65,14 @@ permalink: /contact/
           </div>
           <div class="form-group">
             <label>{{ contact.form.inquiry_type_label }}</label>
-            <select name="inquiryType" required>
-              <option value="" disabled selected>{{ contact.form.inquiry_type_placeholder }}</option>
+            {# Not required, and it is the only field here that is not.
+               inquiry_type is a custom HubSpot property and is not marked
+               required on that side, confirmed 7 Aug by posting a payload with
+               it held out. submitContactToHubspot drops empty values before
+               sending, so an unanswered Topic is simply absent rather than a
+               blank that HubSpot would reject. #}
+            <select name="inquiryType">
+              <option value="" selected>{{ contact.form.inquiry_type_placeholder }}</option>
               {% for type in contact.inquiry_types %}
               <option value="{{ type.value }}">{{ type.label | safe }}</option>
               {% endfor %}

@@ -84,7 +84,11 @@ summary: "Check in 60 seconds whether Natural Trace is compatible with your prod
           <div id="compatResultBadge" class="compat-badge"></div>
           <h3 id="compatResultTitle"></h3>
           <p id="compatResultBody"></p>
-          <div id="compatResultFactors" class="compat-factors"></div>
+          {# There was a "What drove this" list here until 11 Aug 2026, naming
+             the pH band, temperature band or product form that moved the
+             answer. Removed on request: the result screen should give a verdict
+             and a next step, not a diagnosis of what is wrong with someone's
+             product. The reasoning still runs, it is just not published. #}
           {# Anything actually tested in this category and format. It is the
              only line on this screen that is a fact rather than a screen. #}
           <p id="compatResultEvidence" class="compat-evidence"></p>
@@ -108,7 +112,6 @@ summary: "Check in 60 seconds whether Natural Trace is compatible with your prod
     "compatible": {{ assess.compat_evidence_yes | dump | safe }},
     "notCompatible": {{ assess.compat_evidence_no | dump | safe }}
   },
-  "outcomes": {{ assess.compat_outcomes | dump | safe }},
-  "factorsLabel": {{ assess.compat_result_factors_label | dump | safe }}
+  "outcomes": {{ assess.compat_outcomes | dump | safe }}
 }
 </script>

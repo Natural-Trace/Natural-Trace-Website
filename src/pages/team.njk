@@ -46,7 +46,11 @@ permalink: /team/
 <!-- Team Modal -->
 <div class="team-modal-overlay" id="teamModal">
   <div class="team-modal">
-    <div class="team-modal-photo"><img id="modalPhoto" src="" alt=""></div>
+    {# No src attribute rather than src="". An empty src is resolved against the
+       current document, so the browser requested the team page again as an
+       image on every load and then reported it as a broken image. The src is
+       set by openTeamModal before the modal is shown. #}
+    <div class="team-modal-photo"><img id="modalPhoto" alt=""></div>
     <div class="team-modal-body">
       <button class="team-modal-close" onclick="closeTeamModal()">&times;</button>
       <h3 id="modalName"></h3>
