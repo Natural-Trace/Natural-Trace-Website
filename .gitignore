@@ -39,4 +39,16 @@ Thumbs.db
 /src/_data/quality_standards.yml
 /src/_data/services.yml
 /src/_data/technology.yml
-/src/assets/images/*.webp
+# Named individually rather than as /src/assets/images/*.webp, which is what
+# this was until 11 Aug. The wildcard did the job it was written for and then
+# quietly caught the new homepage hero background as well. That would have
+# deployed a site with no hero image and no error anywhere to explain it: the
+# file is on the machine it was built on, so it looks right locally and is
+# missing everywhere else. Three named files cannot do that to the next one.
+/src/assets/images/method-qpcr.webp
+/src/assets/images/method-dpcr.webp
+/src/assets/images/method-sequencing.webp
+# The 3.6MB original of the hero background. ingredients-lab.webp is the same
+# picture at 1920px and 112KB, which is what the site loads. Kept on disk in
+# case it needs re-cropping, kept out of the repo because nothing reads it.
+/src/assets/images/Ingredients Lab.webp

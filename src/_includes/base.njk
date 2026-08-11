@@ -35,7 +35,7 @@
    layout can stay broken on screen after a deploy. #}
 <link rel="stylesheet" href="/assets/css/styles.css?v={{ assetVersions.css }}">
 </head>
-<body class="{% if page.url == sitePathPrefix or page.url == '/' %}page-home hero-is-light{% endif %}">
+<body class="{% if page.url == sitePathPrefix or page.url == '/' %}page-home{% endif %}">
 
 {% include "partials/nav.njk" %}
 

@@ -1,7 +1,13 @@
-{# White hero, 8 Aug, from Kirsty's mockup. The photographic background and
-   its dark overlay are gone; hero_bg_image is left in the data and in the CMS
-   because reverting is then a template change, not a content migration. #}
-<section class="hero hero-light">
+{# Hero, 11 Aug. Kirsty's lab photograph tinted into the brand navy, which is
+   the same #1A1E2E as the How It Works section she picked out. The layout is
+   still the 8 Aug one from her white mockup; only the colours changed, which
+   is why the class carries the background name rather than a colour name. #}
+{# The background photograph comes through as a custom property rather than
+   being written into the stylesheet, so it stays editable in the CMS. The
+   tint, the gradient and the blend mode are all in CSS, which is why the
+   picture can be swapped for any landscape photograph without anyone having
+   to think about contrast. #}
+<section class="hero hero-lab" style="--hero-bg:url('{{ home.hero_bg_image }}')">
   <div class="hero-content">
     <div class="hero-copy">
       <h1>

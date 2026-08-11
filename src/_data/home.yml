@@ -2,8 +2,13 @@
 # Editable via Decap CMS or directly
 
 # Hero Section
-hero_bg_image: "https://images.unsplash.com/photo-1759272840538-ae4b07214c71?w=1800&q=80"
-hero_bg_image_alt: "Shipping containers stacked at a port at sunset"
+# The hero background. Tinted into the brand navy by CSS, so anything put here
+# will come out navy whatever colour it starts as. Landscape, 1600px wide or
+# more. A busy or bright picture is fine, the tint handles it.
+hero_bg_image: "/assets/images/ingredients-lab.webp"
+# Decorative, so the alt text is not rendered. Kept as a description of what
+# the picture is, for whoever picks the next one.
+hero_bg_image_alt: "Berries, botanicals and powders on a bench in a food laboratory"
 hero_image: "https://images.unsplash.com/photo-1763668331599-487470fb85b2?w=900&q=80"
 hero_image_alt: "Supplement bottle with a blank label, awaiting its identity"
 hero_title_line1: "Protect the Ingredients"

@@ -20,6 +20,11 @@ a{text-decoration:none;color:inherit}
      the same relationship measured 52px, 56px and 64px depending on which
      section you happened to be looking at. One number, one place to change it. */
   --section-head-gap:3rem;
+  /* How wide a section head is allowed to get. Sized from measurement: at
+     960px every centred section title on the site holds one line at 1440,
+     except the four listed in docs/heading-widths.md, which are too long to
+     fit at any sensible size and are copy decisions rather than CSS ones. */
+  --section-head-width:1000px;
 }
 /* balance across every heading, not just .section-title. It evens the line
    lengths instead of filling each line to the edge and dropping the remainder
@@ -75,6 +80,13 @@ nav:not(.scrolled) .nav-dropdown-menu a:hover{background:rgba(255,255,255,.08);c
 .nav-cta:hover{background:var(--sage-dark)!important;transform:translateY(-2px)!important;box-shadow:0 6px 20px rgba(107,114,73,.3)}
 .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:.5rem}
 .nav-toggle span{display:block;width:24px;height:2px;background:#fff;margin:5px 0;transition:.3s}
+/* The burger is an inline svg drawn with currentColor, not the three spans the
+   rule above and the two below it target. Those three rules have had no effect
+   on anything for some time. This is the one that actually colours it, and it
+   has to be white on the home page because the hero behind it is a dark
+   photograph. Every other page starts on a pale section and keeps the dark
+   default. */
+body.page-home nav:not(.scrolled) .nav-toggle{color:#fff}
 nav.scrolled .nav-toggle span{background:var(--dark)}
 
 /* Pages */
@@ -762,7 +774,14 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
 
 /* Section 3: Value Proposition */
 .valueprop{padding:6rem 0;background:#fff}
-.vp-head{max-width:760px;margin:0 auto var(--section-head-gap);text-align:center}
+/* The wrapper is wide, the subtitle inside it is not. Both were capped at
+   760px, which is a sensible line length for a paragraph and too narrow for a
+   heading: half the section titles on the site were wrapping onto two lines
+   inside a container with 400px of unused room either side. Widening the
+   wrapper and capping the subtitle separately gets the titles onto one line
+   without shrinking any type, and keeps body copy at a readable measure. */
+.vp-head{max-width:var(--section-head-width);margin:0 auto var(--section-head-gap);text-align:center}
+.vp-head .section-subtitle{max-width:640px}
 .vp-head .section-subtitle{margin:0 auto}
 .vp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 /* Five cards over three columns, last row centred under the first. Flex
@@ -793,7 +812,8 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
 .howitworks{padding:6rem 0;background:var(--dark);position:relative;overflow:hidden}
 .howitworks .section-title{color:#fff}
 .howitworks .section-label{color:var(--gold-light)}
-.how-head{text-align:center;max-width:700px;margin:0 auto var(--section-head-gap)}
+.how-head{text-align:center;max-width:var(--section-head-width);margin:0 auto var(--section-head-gap)}
+.how-head .section-subtitle{max-width:640px;margin-inline:auto}
 .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;position:relative}
 .how-step{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:2rem 1.5rem;transition:background .35s,border-color .35s}
 .how-step:hover{background:rgba(255,255,255,.07);border-color:rgba(191,176,96,.4)}
@@ -805,7 +825,8 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
 
 /* Section 5: Industry tiles on home */
 .home-industries{padding:6rem 0;background:var(--offwhite)}
-.home-industries .industries-header{text-align:center;max-width:720px;margin:0 auto 3rem}
+.home-industries .industries-header{text-align:center;max-width:var(--section-head-width);margin:0 auto var(--section-head-gap)}
+.home-industries .industries-header .section-subtitle{max-width:640px;margin-inline:auto}
 
 /* Final CTA */
 .finalcta{padding:6rem 0;background:#fff}
@@ -989,7 +1010,8 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
 
 /* A21  Food matrices, promoted out of a bullet into its own section. */
 .matrices-section{padding:5rem 0;background:var(--offwhite)}
-.matrices-section .industries-header{text-align:center;max-width:760px;margin:0 auto 2.5rem}
+.matrices-section .industries-header{text-align:center;max-width:var(--section-head-width);margin:0 auto 2.5rem}
+.matrices-section .industries-header .section-subtitle{max-width:640px;margin-inline:auto}
 .matrix-chips{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;max-width:820px;margin:0 auto;padding:0}
 .matrix-chips li{font-size:.92rem;font-weight:600;color:var(--teal);background:rgba(59,102,107,.09);border:1px solid rgba(59,102,107,.18);border-radius:999px;padding:.55rem 1.15rem}
 
@@ -1030,19 +1052,44 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
    White hero, and How It Works as Section 4. 8 August 2026.
    =========================================================================== */
 
-/* The hero was a photograph under a dark olive-to-navy overlay. Kirsty's
-   mockup is white and minimal, so the photograph and the overlay are gone
-   rather than lightened. Everything is scoped to .hero-light, and the markup
-   for the background is what was removed, so reverting is one template edit.
+/* The hero background. Kirsty's lab photograph tinted into the brand navy,
+   the same #1A1E2E she picked out of the How It Works section.
 
-   Two knock-on changes this forces, both handled below:
-   the navigation sits on this hero and was white-on-dark, and the secondary
-   button was a white outline that is invisible on white. */
+   Three layers, and the order matters:
 
-.hero.hero-light{
+     1  a left to right gradient of the navy, near solid where the copy sits
+        and thinning towards the right where there is nothing but picture
+     2  the photograph, blended into the navy behind it with luminosity, so it
+        contributes its light and shade but none of its own colour
+     3  the navy itself as the base colour
+
+   luminosity rather than a plain dark sheet is what makes this read as one
+   tinted image instead of a photo with a grey blanket over it. The photograph
+   is a bright room: a near white wall across the top and a wooden bench full
+   of high contrast colour across the bottom. Dropping the saturation is what
+   lets a single tint hold the whole frame together.
+
+   The gradient is not decoration. Measured against the rendered pixels, white
+   body copy over the untinted photograph fails WCAG AA in the upper left where
+   the lab wall is. The numbers are in the comment on .hero-lab .hero-lead.
+
+   To revert to the white hero: delete the two background lines and the
+   background-blend-mode line, put background:#fff back, and restore the
+   hero-is-light body class in base.njk. Nothing else in this block is about
+   colour. */
+.hero.hero-lab{
   min-height:auto;
-  background:#fff;
-  background-image:radial-gradient(1100px 460px at 78% 12%, rgba(107,114,73,.07), transparent 70%);
+  background-color:var(--dark);
+  background-image:
+    linear-gradient(100deg,
+      rgba(26,30,46,.95) 0%,
+      rgba(26,30,46,.88) 44%,
+      rgba(26,30,46,.52) 100%),
+    var(--hero-bg,url('/assets/images/ingredients-lab.webp'));
+  background-size:cover,cover;
+  background-position:center,center;
+  background-repeat:no-repeat,no-repeat;
+  background-blend-mode:normal,luminosity;
 }
 /* The headline sets the column widths, not the other way round.
 
@@ -1050,22 +1097,38 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
    measured them with the browser falling back to the system sans, which is
    around 18% narrower, and every number that came out of it was wrong:
    "Protect the Ingredients" is roughly 700px at 57.6px, not 594px. */
-.hero.hero-light .hero-content{
+.hero.hero-lab .hero-content{
   display:grid;
   grid-template-columns:minmax(0,1.38fr) minmax(0,.82fr);
   gap:3rem;
   align-items:center;
   padding:10rem 2rem 6rem;
 }
-.hero.hero-light .hero-copy{max-width:none}
+.hero.hero-lab .hero-copy{max-width:none}
 /* Set so "Protect the Ingredients" stays on one line at every width from a
    360px phone up. Measured in a browser with Montserrat loaded. */
-.hero.hero-light h1{color:var(--dark);max-width:none;margin-bottom:1.5rem;font-size:clamp(1.5rem,3.85vw,3.4rem)}
-/* The gold gradient was picked to glow on a dark ground. On white it washes
-   out, so the second line runs sage into gold instead. */
-.hero.hero-light h1 em{background:linear-gradient(120deg,var(--sage),var(--gold));-webkit-background-clip:text;background-clip:text}
-.hero.hero-light .hero-lead{color:var(--text);max-width:520px}
-.hero.hero-light .hero-lead strong{color:var(--dark)}
+.hero.hero-lab h1{color:#fff;max-width:none;margin-bottom:1.5rem;font-size:clamp(1.5rem,3.85vw,3.4rem)}
+/* Back on a dark ground the sage end of this gradient goes muddy, so the
+   second line runs light gold into gold, which is the pairing that was here
+   before the hero went white. */
+.hero.hero-lab h1 em{background:linear-gradient(120deg,var(--gold-light),var(--gold));-webkit-background-clip:text;background-clip:text}
+/* Contrast, measured against the rendered pixels rather than assumed. At the
+   left edge of the copy column the background samples around #22262F, which
+   puts this at roughly 11:1 and the ticks below at about 9:1. WCAG AA wants
+   4.5:1 for body text. There is room to spare, which there needs to be: the
+   background is a photograph and the pixel under any given letter changes
+   with the viewport width. */
+.hero.hero-lab .hero-lead{color:rgba(255,255,255,.82);max-width:520px}
+.hero.hero-lab .hero-lead strong{color:#fff}
+.hero.hero-lab .hero-ticks li{color:rgba(255,255,255,.86)}
+/* The teal tick disappears against navy. Gold is the accent that reads on it,
+   and it is what the How It Works numbers use. */
+.hero.hero-lab .hero-ticks li::before{border-color:var(--gold-light)}
+/* .6 measured 4.68:1 against the brightest pixel behind it, which clears AA
+   by 0.18. That is too thin a margin on a background that is a photograph:
+   the pixel under any letter moves with the viewport. .68 takes it to a
+   little over 5.5:1 and still reads as the quietest line in the block. */
+.hero.hero-lab .hero-ticks-coda{color:rgba(255,255,255,.68)}
 
 /* The four claims were one run-on sentence. The mockup ticks them. */
 .hero-ticks{list-style:none;margin:2rem 0 .35rem;padding:0;display:grid;gap:.6rem}
@@ -1076,36 +1139,49 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
 }
 .hero-ticks-coda{margin:0 0 2.25rem 1.9rem;font-size:.95rem;color:var(--muted)}
 
-.hero.hero-light .hero-actions{margin-top:.5rem}
+.hero.hero-lab .hero-actions{margin-top:.5rem}
 /* .btn-outline is a white border for dark backgrounds. This is its counterpart. */
 .btn-outline-dark{background:transparent;color:var(--dark);border:1.5px solid rgba(26,30,46,.22)}
 .btn-outline-dark:hover{border-color:var(--sage);color:var(--sage-dark);background:rgba(107,114,73,.05);transform:translateY(-3px)}
+/* Kept as its own rule rather than folded into .btn-outline-dark, because that
+   class is also used on the light sections further down the page. */
+.hero.hero-lab .btn-outline-dark{color:#fff;border-color:rgba(255,255,255,.34)}
+.hero.hero-lab .btn-outline-dark:hover{color:#fff;border-color:var(--gold-light);background:rgba(255,255,255,.07)}
 
-/* The product shot moves into the grid instead of being pinned to the viewport,
-   and loses the drop shadow and sepia that were there to lift it off the dark. */
-.hero.hero-light .hero-visual{
+/* The product shot sits in the grid rather than being pinned to the viewport.
+   It is now a photograph on top of a photograph, so it needs an edge of its own
+   or it dissolves into the background. A pale hairline and a deep shadow do
+   that without putting a visible card behind it. */
+.hero.hero-lab .hero-visual{
   position:relative;right:auto;top:auto;width:100%;height:auto;aspect-ratio:5/4;
-  box-shadow:0 24px 60px rgba(26,30,46,.10);border:1px solid rgba(26,30,46,.06);
+  border-radius:16px;overflow:hidden;
+  /* Solid ground behind the picture. Without it a transparent PNG, or the
+     moment before the photograph loads, shows the lab background through the
+     frame and the whole thing reads as a pane of glass. */
+  background:#12151F;
+  box-shadow:0 30px 70px rgba(0,0,0,.45);
+  border:1px solid rgba(255,255,255,.14);
 }
-.hero.hero-light .hero-visual img{filter:none}
-.hero.hero-light .hero-visual::after{border-color:rgba(26,30,46,.05);background:none}
+.hero.hero-lab .hero-visual img{filter:none}
+.hero.hero-lab .hero-visual::after{border-color:rgba(255,255,255,.06);background:none}
 
-@media(min-width:1600px){.hero.hero-light .hero-visual{right:auto;top:auto}}
-@media(max-width:1100px){.hero.hero-light .hero-visual{width:100%;height:auto}}
+@media(min-width:1600px){.hero.hero-lab .hero-visual{right:auto;top:auto}}
+@media(max-width:1100px){.hero.hero-lab .hero-visual{width:100%;height:auto}}
 @media(max-width:900px){
-  .hero.hero-light .hero-content{grid-template-columns:1fr;gap:2.5rem;padding:7.5rem 2rem 4rem}
-  .hero.hero-light .hero-visual{display:block;max-width:420px}
+  .hero.hero-lab .hero-content{grid-template-columns:1fr;gap:2.5rem;padding:7.5rem 2rem 4rem}
+  .hero.hero-lab .hero-visual{display:block;max-width:420px}
 }
 /* Small phones get their side padding back as headline width. Without this the
    line breaks at 375px, which is an iPhone SE and an iPhone mini. */
 @media(max-width:480px){
-  .hero.hero-light .hero-content{padding-left:1.25rem;padding-right:1.25rem}
+  .hero.hero-lab .hero-content{padding-left:1.25rem;padding-right:1.25rem}
 }
 
-/* The navigation is transparent until it scrolls, and used the white logo with
-   white links because it was sitting on a dark hero. On a white one it has to
-   start in its scrolled colours. Scoped to the body class so every other page
-   keeps the treatment it has. */
+/* Kept, unused, for one reason. These five rules are what a light hero needs
+   from the navigation, and working them out the first time took a while: the
+   logo swaps to its colour version, the links take the scrolled colour, and the
+   burger bars go dark. Putting hero-is-light back on the body in base.njk turns
+   the whole thing on again. Deleting them would mean rediscovering them. */
 body.hero-is-light nav:not(.scrolled) .logo-color{display:block}
 body.hero-is-light nav:not(.scrolled) .logo-white{display:none}
 body.hero-is-light nav:not(.scrolled) .nav-links a{color:#4B5563}
@@ -1115,7 +1191,7 @@ body.hero-is-light nav:not(.scrolled) .nav-toggle span{background:var(--dark)}
 /* How It Works, Section 4 of the copy, now on the homepage.
    Compact by design: the request was to cut the amount of scrolling. */
 .howitworks-compact{padding:4.5rem 0}
-.howitworks-compact .how-head{text-align:center;max-width:720px;margin:0 auto 2.5rem}
+.howitworks-compact .how-head{text-align:center;max-width:var(--section-head-width);margin:0 auto 2.5rem}
 .how-grid-compact{list-style:none;padding:0;margin:0}
 .how-grid-compact .how-step{padding:1.4rem 1.25rem}
 .how-grid-compact .how-step h3{margin:.5rem 0 .55rem}
