@@ -25,6 +25,11 @@ a{text-decoration:none;color:inherit}
      except the four listed in docs/heading-widths.md, which are too long to
      fit at any sensible size and are copy decisions rather than CSS ones. */
   --section-head-width:1000px;
+  /* Charcoal blue. The How It Works cards land on this by accident, four per
+   cent white over the navy, and Kirsty picked it out of that section by eye.
+   Naming it makes it a colour the site has rather than a coincidence of two
+   other values, and means the footer and Why We Exist cannot drift off it. */
+  --charcoal:#20242F;
 }
 /* balance across every heading, not just .section-title. It evens the line
    lengths instead of filling each line to the edge and dropping the remainder
@@ -548,7 +553,7 @@ nav.scrolled .nav-toggle span{background:var(--dark)}
 @media(max-width:640px){.team-modal{flex-direction:column}.team-modal-photo{width:100%;min-height:200px;max-height:240px}}
 
 /* Footer */
-footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
+footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
 .footer-brand-logo{height:40px;width:auto;margin-bottom:1rem;opacity:.7}
 .footer-brand p{font-size:.85rem;line-height:1.7;max-width:300px}
@@ -1006,11 +1011,28 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
 /* A13  More air after the opening paragraph of Our Story. */
 .vp-head + div > .challenge-lead:first-of-type{margin-bottom:2.1rem}
 
-/* A14  Why We Exist: teal instead of the navy, and a larger heading.
-        Scoped by id because the .howitworks class is also used twice on the
-        NaturalTag page, which Kirsty did not ask to change. */
-#why-we-exist{background:var(--teal)}
+/* A14  Why We Exist: a larger heading, and charcoal rather than the teal it
+        carried between 8 and 11 Aug. Scoped by id because the .howitworks
+        class is also used twice on the NaturalTag page.
+
+        The gold rounded square above Vision and Mission is gone with it. It
+        held a bullet character, so it read as a dot in a box rather than as an
+        icon, and there is nothing for it to be an icon of: the same element on
+        the homepage carries the numbers 01 to 04, which is a job. Here it was
+        decoration standing in for artwork that never arrived. Removed at the
+        11 Aug meeting, and the heading below it grows to take the space. */
+#why-we-exist{background:var(--charcoal)}
 #why-we-exist .section-title{font-size:clamp(2.2rem,4.4vw,3rem)}
+#why-we-exist .how-step h3{font-size:1.35rem;margin-bottom:.85rem;letter-spacing:-.015em}
+/* The cards are four per cent white over their section. On the navy that read
+   as a card. On charcoal it lands within a couple of steps of the background
+   and the border is doing all the work, so the fill and the edge both come up.
+   Measured rather than guessed: the card is now #2B2F3A against #20242F. */
+#why-we-exist .how-step{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.13)}
+/* Vision is two lines and Mission is six, and the grid stretches both to the
+   taller one, which left half the Vision card empty. Top aligned, each card is
+   the height of what is in it. */
+#why-we-exist .how-grid{align-items:start}
 
 /* A17  The 01-04 counters are replaced by a branded mark. A proper icon set is
         still waiting on artwork, so this is a brand shape, not a placeholder
