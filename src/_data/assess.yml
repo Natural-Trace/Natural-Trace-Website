@@ -125,26 +125,37 @@ compat_result_factors_label: "What drove this"
 # --------------------------------------------------------------------------
 # What has actually been tested.
 #
-# Built 11 Aug 2026 from productList.csv, the 30 products that have been
-# through the lab.
+# Built 11 Aug 2026 from productList.csv, the thirty products that have been
+# through the lab. Bryan confirmed on 11 Aug 2026 that every product on that
+# list worked. That confirmation is the source for every "compatible" below:
+# the CSV itself has three columns, category, type and name, and no result.
 #
-# READ THIS BEFORE FILLING IT IN. That file records what was tested. It has
-# three columns, category, type and name, and no result. It cannot tell anyone
-# which products worked, so every outcome below is "unconfirmed" except the
-# four that are written down elsewhere and cited. Marking a row compatible is
-# a claim that a specific product passed, and only someone with the data can
-# make it.
+# So these rows are a person's word, recorded and attributed, not a file
+# import. If that word needs revisiting, this is the paragraph to revisit.      # CLAIM REVIEW
 #
 # Entries are keyed on the quiz's own category and form rather than on client
 # product names, for two reasons. The quiz matches on category and form, so
 # that is the useful key. And this file builds into the public site: anything
-# typed into "products" is published, so it should only carry a name that the
-# client has agreed to be named as.
+# typed into "products" is published, so it should only carry a name the client
+# has agreed to.
 #
-# The 19 rows from the list with no nutraceutical equivalent, the coffee,
+# The nineteen rows from the list with no nutraceutical equivalent, the coffee,
 # whisky, tobacco, peanut, olive oil, balsamic, honey, wax and fungicide work,
 # are not here. The quiz asks about supplements. Those belong on the agri-food
 # side of the site if they are to appear at all.
+#
+# ONE ROW ON THAT LIST DOES NOT AGREE WITH THE PROJECT RECORD. Raspberry
+# appears twice, fresh and freeze dried. The recorded result for Hillwood
+# raspberry is 47.8% accuracy at 7.7% sensitivity, described as
+# threshold-unfixable. Raspberry is agri-food and has no category the quiz
+# offers, so nothing below depends on it, but the two statements cannot both be
+# true and the difference is worth settling before either is quoted.
+#
+# A row only fires when the visitor's category offers one of its forms. Two
+# rows written here on 11 Aug could never fire, because Vitamins & Minerals
+# did not offer drops and Specialty Health did not offer effervescent. Both
+# gaps are fixed in catFormMap in main.js. If a row is added for a
+# combination the quiz cannot offer, it is dead and nothing will say so.
 #
 # outcome: compatible | conditions | not-compatible | unconfirmed
 # --------------------------------------------------------------------------
@@ -153,68 +164,67 @@ compat_evidence:
   # Ginjer and Cumacure. Ginger and curcumin extracts.
   - category: "herbal"
     forms: ["powder", "capsule"]
-    outcome: "unconfirmed"
+    outcome: "compatible"
     ph: ""
     temperature: ""
     products: ""
-    note: "Tested. Result not recorded in the product list."
+    note: "Ginger and curcumin extract. Confirmed working, Bryan, 11 Aug 2026."
 
   # Fresh and dried flowers.
   - category: "herbal"
     forms: ["powder"]
-    outcome: "unconfirmed"
+    outcome: "compatible"
     ph: ""
     temperature: ""
     products: ""
-    note: "Botanical flower material, fresh and dried. Result not recorded."
+    note: "Botanical flower material, fresh and dried. Confirmed working, Bryan, 11 Aug 2026."
 
   # Bone Boost, Bioaktiv OPTIMSM PLUS.
   - category: "joint"
     forms: ["capsule", "powder"]
-    outcome: "unconfirmed"
+    outcome: "compatible"
     ph: ""
     temperature: ""
     products: ""
-    note: "Powder-filled capsules. Result not recorded."
+    note: "Powder-filled capsules. Confirmed working, Bryan, 11 Aug 2026."
 
   # Organic Vitamin B12 Liquid, K2+D3+Ca Syrup.
   - category: "vitamins"
     forms: ["drops", "liquid"]
-    outcome: "unconfirmed"
+    outcome: "compatible"
     ph: ""
     temperature: ""
     products: ""
-    note: "Liquid drops and syrup. Result not recorded."
+    note: "Liquid drops and a syrup. Confirmed working, Bryan, 11 Aug 2026. Worth recording the pH on these two: liquid and drops both score medium on form, and a measured pH is what turns that into a fact."
 
   # BerriQi.
   - category: "immune"
     forms: ["powder"]
-    outcome: "unconfirmed"
+    outcome: "compatible"
     ph: ""
     temperature: ""
     products: ""
-    note: "Berry powder. Result not recorded."
+    note: "Berry powder. Confirmed working, Bryan, 11 Aug 2026."
 
   # H2 tablets.
   - category: "specialty"
     forms: ["effervescent"]
-    outcome: "unconfirmed"
+    outcome: "compatible"
     ph: ""
     temperature: ""
     products: ""
-    note: "Effervescent tablet. Result not recorded. Worth confirming, because effervescent is scored medium risk on form alone and a passed test would be the evidence that overrides it."
+    note: "Effervescent tablet. Confirmed working, Bryan, 11 Aug 2026. This is the most useful row here: effervescent scores medium on form alone, and it means an effervescent product now comes back compatible rather than qualified."
 
   # Oxy-Powder.
   - category: "specialty"
     forms: ["capsule"]
-    outcome: "unconfirmed"
+    outcome: "compatible"
     ph: ""
     temperature: ""
     products: ""
-    note: "Result not recorded."
+    note: "Confirmed working, Bryan, 11 Aug 2026."
 
-  # Lecithin, oil and powder. 100% accuracy, 100% specificity, n=15 in each of
-  # the oil and powder arms, recorded in the project canon.                      # CLAIM REVIEW
+  # Lecithin, oil and powder.
   - category: "ingredients"
     forms: ["liquid", "powder"]
     outcome: "compatible"
@@ -223,7 +233,7 @@ compat_evidence:
     products: ""
     note: "Lecithin in both oil and powder form. 100% accuracy and 100% specificity, n=15 in each arm."
 
-  # Quantec IDP and Milkamune. 100% accuracy in both, n=12 and n=21.             # CLAIM REVIEW
+  # Quantec IDP and Milkamune, plus the milk powder row.
   - category: "sports"
     forms: ["powder"]
     outcome: "compatible"

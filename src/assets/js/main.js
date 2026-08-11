@@ -251,8 +251,16 @@ function filterFaq(cat) {
     { id: 'drops', name: 'Drops' }
   ];
 
+  /* Which forms each category offers.
+
+     Two gaps were found on 11 Aug by testing the evidence rows against it
+     rather than by reading it. Vitamins & Minerals did not offer liquid or
+     drops, which rules out children's D3 drops, B12 liquid and every vitamin
+     syrup, and Specialty Health did not offer effervescent. Both are ordinary
+     products, both have been through the lab, and neither could be described
+     in the quiz. */
   var catFormMap = {
-    vitamins: ['tablet','capsule','softgel','gummy','chewable','powder','effervescent'],
+    vitamins: ['tablet','capsule','softgel','gummy','chewable','powder','effervescent','liquid','drops'],
     omega: ['softgel','capsule','liquid','gummy','drops'],
     probiotics: ['capsule','powder','chewable','liquid','gummy'],
     joint: ['tablet','capsule','softgel','powder','liquid'],
@@ -262,7 +270,7 @@ function filterFaq(cat) {
     immune: ['tablet','capsule','gummy','effervescent','lozenge','liquid'],
     weight: ['powder','capsule','bar','rtd','liquid'],
     ingredients: ['powder','liquid','capsule','tablet','bar','rtd'],
-    specialty: ['capsule','tablet','softgel','liquid','gummy'],
+    specialty: ['capsule','tablet','softgel','liquid','gummy','effervescent','powder'],
     functional: ['powder','liquid','bar','rtd','gummy','capsule']
   };
 
