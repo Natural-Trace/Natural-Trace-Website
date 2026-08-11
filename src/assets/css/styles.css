@@ -1254,7 +1254,14 @@ body.hero-is-light nav:not(.scrolled) .nav-toggle span{background:var(--dark)}
    line of a section was hidden. Applies to the new "How it works" button, the
    "Contact Us" button that now points at the form, and every other in-page
    link. The value is the nav height plus a little air. */
+/* Anything that can be linked to needs to clear the fixed navigation.
+   .industry-card[id] was missing, and it is what the nav and footer point at:
+   a visitor following "Branded Ingredients" from the menu landed with the top
+   of the card cut off behind the navigation bar. 96px is the nav height plus a
+   little; the cards get more, so the section heading stays in shot and the
+   arrival reads as a page rather than as a fragment. */
 section[id],[id].anchor-target{scroll-margin-top:96px}
+.industry-card[id]{scroll-margin-top:160px}
 
 /* The food matrices grid on the NaturalTag page was pinned to three columns by
    an inline style, which no media query could override. On a phone that left
