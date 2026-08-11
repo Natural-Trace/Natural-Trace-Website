@@ -14,12 +14,28 @@ a{text-decoration:none;color:inherit}
   --dark:#1A1E2E;--offwhite:#F5F6F1;--soft-sage:#DEDFDE;
   --text:#2C3345;--muted:#6B7280;
   --shadow:0 4px 30px rgba(0,0,0,.08);--shadow-lg:0 20px 60px rgba(0,0,0,.12);
+  /* The space under a section head, before whatever the section is about.
+     Three wrappers do this job across the site (.vp-head, .how-head,
+     .industries-header) and they had drifted to 3.25rem, 3.5rem and 4rem, so
+     the same relationship measured 52px, 56px and 64px depending on which
+     section you happened to be looking at. One number, one place to change it. */
+  --section-head-gap:3rem;
 }
-h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+/* balance across every heading, not just .section-title. It evens the line
+   lengths instead of filling each line to the edge and dropping the remainder
+   onto the last one, which is what leaves a heading with one word underneath
+   it. Chrome caps it at six lines and older browsers ignore it, so the worst
+   case is today's wrapping. */
+h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
 .container{max-width:1200px;margin:0 auto;padding:0 2rem}
 .section-label{font-family:'Montserrat',sans-serif;display:block;font-size:.95rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);margin-bottom:.55rem}
 .section-title{font-size:clamp(1.9rem,3.6vw,2.6rem);color:var(--dark);line-height:1.18;margin-bottom:1.25rem;letter-spacing:-.025em}
-.section-subtitle{font-size:1.1rem;color:var(--muted);max-width:640px;line-height:1.7}
+/* balance evens the lines out instead of filling each one to the edge and
+   leaving whatever is left on the last. It is what stops a centred subtitle
+   ending on a single stranded word. Chrome only applies it to blocks of six
+   lines or fewer, which every subtitle on the site is, and browsers that do
+   not support it simply wrap as they do today. */
+.section-subtitle{font-size:1.1rem;color:var(--muted);max-width:640px;line-height:1.7;text-wrap:balance}
 
 /* Animations. Scroll-reveal was removed on 6 Aug 2026: every section now
    paints on load instead of fading in as you scroll. What is left is used by
@@ -393,7 +409,7 @@ nav.scrolled .nav-toggle span{background:var(--dark)}
 
 /* Industries */
 .industries{padding:7rem 0;background:#fff}
-.industries-header{text-align:center;margin-bottom:4rem}
+.industries-header{text-align:center;margin-bottom:var(--section-head-gap)}
 .industries-header .section-subtitle{margin:0 auto}
 .industries-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
 .industry-card{position:relative;border-radius:16px;overflow:hidden;height:340px;cursor:pointer}
@@ -430,7 +446,7 @@ nav.scrolled .nav-toggle span{background:var(--dark)}
 .contact-info-item{display:flex;align-items:flex-start;gap:1rem;padding:1.25rem;background:var(--offwhite);border-radius:12px;margin-bottom:1rem;transition:transform .3s}
 .contact-info-item:hover{transform:translateX(4px)}
 .contact-info-item-dot{width:10px;height:10px;border-radius:50%;background:var(--sage);margin-top:4px;flex-shrink:0}
-.contact-info-item h4{font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:600}
+.contact-info-item h4{font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:600;margin-bottom:.3rem}
 .contact-info-item p{font-size:.82rem;color:var(--muted);margin-bottom:0}
 .contact-image{border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg)}
 .contact-image img{width:100%;height:400px;object-fit:cover}
@@ -462,9 +478,14 @@ nav.scrolled .nav-toggle span{background:var(--dark)}
 @media(max-width:768px){#careers-internship > div{grid-template-columns:1fr !important}}
 
 .privacy-page{padding:8rem 0 5rem;background:#fff}
-.privacy-page h2{margin-bottom:2rem}
+/* Careers and Team reuse this section for the page frame but open with a
+   normal section head. Without these exclusions the head picked up legal
+   document styling: the subtitle rendered at .92rem instead of 1.1rem and the
+   title sat 2rem above it instead of 1.25rem, so those two pages had a smaller
+   subtitle further from its title than every other page on the site. */
+.privacy-page h2:not(.section-title){margin-bottom:2rem}
 .privacy-page h3{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:700;color:var(--dark);margin:2rem 0 .75rem}
-.privacy-page p,.privacy-page li{font-size:.92rem;color:var(--muted);line-height:1.8}
+.privacy-page p:not(.section-subtitle),.privacy-page li{font-size:.92rem;color:var(--muted);line-height:1.8}
 .privacy-page ul{list-style:disc;padding-left:1.5rem;margin:.5rem 0 1rem}
 .privacy-page li{margin-bottom:.35rem}
 .privacy-back{display:inline-flex;align-items:center;gap:.4rem;font-size:.85rem;font-weight:600;color:var(--teal);cursor:pointer;margin-bottom:2rem;transition:gap .3s}
@@ -741,7 +762,7 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
 
 /* Section 3: Value Proposition */
 .valueprop{padding:6rem 0;background:#fff}
-.vp-head{max-width:760px;margin:0 auto 3.25rem;text-align:center}
+.vp-head{max-width:760px;margin:0 auto var(--section-head-gap);text-align:center}
 .vp-head .section-subtitle{margin:0 auto}
 .vp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 /* Five cards over three columns, last row centred under the first. Flex
@@ -755,6 +776,12 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
 .vp-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(107,114,73,.35)}
 .vp-num{font-size:.7rem;font-weight:700;letter-spacing:.14em;color:var(--gold);margin-bottom:1rem}
 .vp-card h3{font-size:1.06rem;font-weight:700;color:var(--dark);line-height:1.3;letter-spacing:-.01em;margin:0}
+/* A card heading that is a direct child has to space itself. On the homepage
+   the heading sits inside .vp-card-head next to its icon and that wrapper
+   supplies the gap, which is why margin:0 was right there and left every card
+   on About and NaturalTag with its title resting 1px above the first bullet.
+   1.1rem matches what .vp-card-head gives, so both shapes now read the same. */
+.vp-card > h3{margin-bottom:1.1rem}
 .vp-block{margin-bottom:1rem}
 .vp-block:last-child{margin-bottom:0}
 .vp-block-label{display:block;font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
@@ -766,7 +793,7 @@ footer{background:var(--teal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
 .howitworks{padding:6rem 0;background:var(--dark);position:relative;overflow:hidden}
 .howitworks .section-title{color:#fff}
 .howitworks .section-label{color:var(--gold-light)}
-.how-head{text-align:center;max-width:700px;margin:0 auto 3.5rem}
+.how-head{text-align:center;max-width:700px;margin:0 auto var(--section-head-gap)}
 .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;position:relative}
 .how-step{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:2rem 1.5rem;transition:background .35s,border-color .35s}
 .how-step:hover{background:rgba(255,255,255,.07);border-color:rgba(191,176,96,.4)}
@@ -1091,7 +1118,7 @@ body.hero-is-light nav:not(.scrolled) .nav-toggle span{background:var(--dark)}
 .howitworks-compact .how-head{text-align:center;max-width:720px;margin:0 auto 2.5rem}
 .how-grid-compact{list-style:none;padding:0;margin:0}
 .how-grid-compact .how-step{padding:1.4rem 1.25rem}
-.how-grid-compact .how-step h3{margin:.5rem 0 .35rem}
+.how-grid-compact .how-step h3{margin:.5rem 0 .55rem}
 .how-grid-compact .how-step p{font-size:.88rem;line-height:1.55}
 
 /* The detail behind a disclosure. Native <details>, so it opens on tap and on

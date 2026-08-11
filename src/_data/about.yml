@@ -54,7 +54,13 @@ different_cards:
 # CLAIM REVIEW: every bullet in this block was flagged in the 30 July copy review
 # and has NOT been cleared. Do not publish without sign-off. See the change log.
 choose_label: "Why Customers Choose Natural Trace"
-choose_title: "Designed for Real-World Manufacturing. Backed by Science."
+# The invisible character after the hyphen in "Real-World" is a word joiner
+# (U+2060). Without it the browser breaks the compound in half and the
+# heading reads "Designed for Real- / World Manufacturing." It is zero width
+# and needs no glyph, so it costs nothing visually. If this line is ever
+# retyped in the CMS the character is lost and the split comes back, which
+# is annoying rather than harmful.
+choose_title: "Designed for Real-⁠World Manufacturing. Backed by Science."
 choose_groups:
   - title: "Made for Food & Nutraceutical Manufacturing"
     items:

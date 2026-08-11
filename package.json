@@ -7,7 +7,10 @@
     "preview": "eleventy --serve --port 8080",
     "build": "eleventy",
     "check": "eleventy && node scripts/healthcheck.mjs _site",
-    "check:external": "eleventy && node scripts/healthcheck.mjs _site --external"
+    "check:external": "eleventy && node scripts/healthcheck.mjs _site --external",
+    "check:layout": "eleventy && node scripts/layout-audit.mjs",
+    "check:spacing": "eleventy && node scripts/spacing-audit.mjs",
+    "check:cms": "node scripts/cms-audit.mjs"
   },
   "dependencies": {
     "js-yaml": "^4.1.0"
