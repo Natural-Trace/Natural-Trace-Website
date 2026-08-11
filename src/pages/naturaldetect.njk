@@ -22,9 +22,18 @@ permalink: /naturaldetect/
           <a href="{{ naturaldetect.cta_secondary_url }}" class="btn btn-line" style="cursor:pointer">{{ naturaldetect.cta_secondary }}</a>
         </div>
       </div>
+      {# A photograph if there is one, the logo panel if not. NaturalCloud is
+         still on the panel: its imagery is a video Kirsty is having made, and
+         a stand-in photograph would be worse than the mark. #}
+      {% if naturaldetect.hero_image %}
+      <div class="solution-photo">
+        <img src="{{ naturaldetect.hero_image }}" alt="{{ naturaldetect.hero_image_alt }}" loading="lazy">
+      </div>
+      {% else %}
       <div class="solution-mark">
         <img src="{{ naturaldetect.hero_logo }}" alt="{{ naturaldetect.hero_logo_alt }}" loading="lazy">
       </div>
+      {% endif %}
     </div>
   </div>
 </section>

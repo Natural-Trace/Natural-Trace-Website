@@ -21,9 +21,18 @@ permalink: /naturalcloud/
           <a href="{{ naturalcloud.cta_primary_url }}" class="btn btn-primary" style="cursor:pointer">{{ naturalcloud.cta_primary }}</a>
         </div>
       </div>
+      {# A photograph if there is one, the logo panel if not. NaturalCloud is
+         still on the panel: its imagery is a video Kirsty is having made, and
+         a stand-in photograph would be worse than the mark. #}
+      {% if naturalcloud.hero_image %}
+      <div class="solution-photo">
+        <img src="{{ naturalcloud.hero_image }}" alt="{{ naturalcloud.hero_image_alt }}" loading="lazy">
+      </div>
+      {% else %}
       <div class="solution-mark">
         <img src="{{ naturalcloud.hero_logo }}" alt="{{ naturalcloud.hero_logo_alt }}" loading="lazy">
       </div>
+      {% endif %}
     </div>
   </div>
 </section>

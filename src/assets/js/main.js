@@ -5,26 +5,50 @@
    hero. */
 
 /* Active nav state */
+/* Whether this is the home page comes from the body class the template sets,
+   not from the URL.
+
+   It used to be worked out by taking the last segment of the path, and that is
+   wrong the moment the site is not served from the root. In production it is
+   served from /Natural-Trace-Website/, so the last segment of the home page URL
+   is "Natural-Trace-Website", which is neither "home" nor empty. The navigation
+   therefore loaded in its scrolled state on the home page: a white bar on the
+   dark hero, every time, for anyone arriving from another page.
+
+   Then the scroll handler, whose own path test did match, removed the class on
+   the first scroll event and put it back at 60px. That was the flicker.
+
+   Both faults came from the same line, and neither could be reproduced locally,
+   where the site is served from the root and the last segment is empty. The
+   body class is set by base.njk from page.url against sitePathPrefix, so it is
+   right wherever the site is served from. */
 window.addEventListener('DOMContentLoaded', function() {
+  var isHome = document.body.classList.contains('page-home');
+  var navbar = document.getElementById('navbar');
+
   var path = window.location.pathname.replace(/\/$/, '');
-  var pageName = path.split('/').pop() || 'home';
+  var pageName = isHome ? 'home' : (path.split('/').pop() || 'home');
   document.querySelectorAll('.nav-links a[data-page]').forEach(function(a) {
     if (a.getAttribute('data-page') === pageName) a.classList.add('active');
   });
-  /* Set navbar scrolled state for non-home pages */
-  if (pageName !== 'home' && pageName !== '') {
-    document.getElementById('navbar').classList.add('scrolled');
+
+  /* Every page but the home page opens on a pale section, so the navigation
+     starts in its scrolled colours and stays there. */
+  if (!isHome) {
+    if (navbar) navbar.classList.add('scrolled');
+    return;
   }
-});
 
-
-
-/* Navbar scroll (only on home) */
-window.addEventListener('scroll', () => {
-  var p = window.location.pathname;
-  if (p === '/' || p.endsWith('/home/') || p.endsWith('/Natural-Trace-Website/')) {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
-  }
+  /* On the home page it follows the scroll. Registered here rather than at the
+     top level so it is never attached on a page that does not use it, and
+     passive because it only reads scrollY. */
+  var onScroll = function() {
+    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 60);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  /* A reload partway down the page restores the scroll position before this
+     runs, so the state has to be set once rather than waited for. */
+  onScroll();
 });
 
 /* Parallax hero and the scroll-driven counter were removed on 6 Aug 2026.

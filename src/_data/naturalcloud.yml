@@ -3,6 +3,12 @@ label: "Solutions"
 title: "NaturalCloud™"
 hero: "Authentication Data That Works for Your Business"
 intro: "NaturalCloud™ is the digital platform that securely stores authentication records and NaturalDetect™ test results, giving companies a centralized view of verification activity across their supply chain."
+# Empty on purpose. NaturalCloud's imagery is a video Kirsty is having made,
+# and a stand-in photograph would be worse than the mark. Put a path here
+# when it arrives and the page switches from the logo panel to the picture;
+# the keys exist so the admin panel and this file agree either way.
+hero_image: ""
+hero_image_alt: ""
 hero_logo: "/assets/logos/NaturalCloud-icon.png"
 hero_logo_alt: "NaturalCloud"
 

@@ -15,9 +15,18 @@ permalink: /naturaltag/
         <p class="challenge-lead" style="margin-top:1.5rem">{{ naturaltag.intro }}</p>
         <a href="{{ naturaltag.cta_url }}" class="btn btn-primary" style="cursor:pointer">{{ naturaltag.cta_text }}</a>
       </div>
+      {# A photograph if there is one, the logo panel if not. NaturalCloud is
+         still on the panel: its imagery is a video Kirsty is having made, and
+         a stand-in photograph would be worse than the mark. #}
+      {% if naturaltag.hero_image %}
+      <div class="solution-photo">
+        <img src="{{ naturaltag.hero_image }}" alt="{{ naturaltag.hero_image_alt }}" loading="lazy">
+      </div>
+      {% else %}
       <div class="solution-mark">
         <img src="{{ naturaltag.hero_logo }}" alt="{{ naturaltag.hero_logo_alt }}" loading="lazy">
       </div>
+      {% endif %}
     </div>
   </div>
 </section>

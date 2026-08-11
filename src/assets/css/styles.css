@@ -932,6 +932,14 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
 .solution-mark{display:flex;align-items:center;justify-content:center;padding:clamp(2rem,5vw,4rem);border-radius:24px;background:linear-gradient(150deg,#FFFFFF 0%,var(--offwhite) 55%,var(--soft-sage) 100%);border:1px solid rgba(107,114,73,.14);box-shadow:var(--shadow);aspect-ratio:4/3;position:relative;overflow:hidden}
 .solution-mark::after{content:'';position:absolute;right:-90px;bottom:-90px;width:280px;height:280px;border-radius:50%;background:rgba(107,114,73,.06)}
 .solution-mark img{position:relative;width:100%;max-width:260px;height:auto;object-fit:contain}
+/* The photograph version of the same slot. Same aspect ratio and same corner
+   radius as .solution-mark, so a page with a photograph and a page still on
+   the logo panel sit at the same height and read as the same layout.
+
+   4:3 against a 3:2 source crops about eleven per cent off each side. Checked
+   on both: the vial and the instrument are central enough to survive it. */
+.solution-photo{border-radius:24px;overflow:hidden;aspect-ratio:4/3;border:1px solid rgba(26,30,46,.08);box-shadow:var(--shadow);background:var(--offwhite)}
+.solution-photo img{width:100%;height:100%;object-fit:cover;display:block}
 
 
 /* .btn-outline is white-on-dark and disappears on light sections. This is the

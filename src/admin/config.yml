@@ -412,6 +412,8 @@ collections:
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Hero Line", name: "hero", widget: "string"}
           - {label: "Intro", name: "intro", widget: "text"}
+          - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
+          - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
           - {label: "Product Logo", name: "hero_logo", widget: "image"}
           - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
           - {label: "Why Heading", name: "why_title", widget: "string"}
@@ -442,6 +444,8 @@ collections:
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Hero Line", name: "hero", widget: "string"}
           - {label: "Intro", name: "intro", widget: "text"}
+          - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
+          - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
           - {label: "Product Logo", name: "hero_logo", widget: "image"}
           - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
           - {label: "Features Heading", name: "features_title", widget: "string"}
@@ -460,6 +464,8 @@ collections:
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Hero Line", name: "hero", widget: "string"}
           - {label: "Intro", name: "intro", widget: "text"}
+          - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
+          - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
           - {label: "Product Logo", name: "hero_logo", widget: "image"}
           - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
           - {label: "Benefits Heading", name: "features_title", widget: "string"}
