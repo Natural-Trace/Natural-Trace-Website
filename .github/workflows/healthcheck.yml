@@ -15,7 +15,15 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    # Every job gets a ceiling. The deploy that ran for 3h40m on 11 Aug
+    # had none, and that is what turned a failure into an outage.
+    timeout-minutes: 15
     steps:
+      # Pinned to v6 on 11 Aug 2026. v4 declares runs.using: node20, which
+      # GitHub deprecated and is already force-running on node24, with a
+      # warning on every build. Confirmed from action.yml at the v6 tag on both
+      # actions: runs.using is node24, so this is the version that stops being
+      # forced. The forcing is a warning today and will not be forever.
       - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6

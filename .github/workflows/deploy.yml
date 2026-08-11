@@ -1,27 +1,63 @@
 name: Deploy to GitHub Pages
 
+# Publishes the site by pushing the built files to a gh-pages branch, which
+# GitHub Pages serves directly.
+#
+# This replaced the artifact-and-deployment-API route on 11 Aug 2026. Both are
+# called "GitHub Pages" and they are not the same mechanism:
+#
+#   Branch route   the workflow runs `git push`. GitHub notices the branch
+#                  changed and copies the files to its CDN. One moving part,
+#                  and it is ordinary git.
+#
+#   Actions route  the workflow uploads the site as an artifact, calls the
+#                  Pages deployment API to create a deployment, then polls that
+#                  API waiting for a status. Three moving parts, two of them
+#                  specific to Pages.
+#
+# The Actions route hung twice. On 6 Aug 2026 it aborted after ten minutes with
+# "Timeout reached", caused by a missing actions: read permission. On 11 Aug it
+# hung for over three and a half hours with no timeout at all, with that
+# permission in place, and blocked every later deploy because the concurrency
+# group would not release. The build job passed in thirteen seconds both times.
+# Only the step that talks to the deployment API ever failed.
+#
+# So this is not a workaround kept until the real one is fixed. It is the route
+# with fewer things in it that can fail, doing the same job. The old workflow is
+# preserved as deploy-actions-api.yml.disabled if it is ever wanted back; see
+# the note at the top of that file for how to switch.
+#
+# Repo setting this depends on:
+#   Settings > Pages > Source > Deploy from a branch, branch gh-pages, / (root)
+
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-# actions: read is required by actions/deploy-pages v4 and above. Without it the
-# deploy job cannot read the build job's artifact, and it hangs until it aborts
-# with "Timeout reached". That is exactly how run #21 failed on 6 Aug 2026.
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-  actions: read
+  contents: write
 
+# Latest push wins. A superseded run is force-pushing an older build over a
+# newer one, so cancelling it is not just an optimisation, it prevents the
+# site going backwards when two commits land close together.
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: pages-deploy
+  cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
+    # Nothing here should take five minutes. The reason this exists at all is
+    # that a job with no timeout ran for 3h40m and held the queue shut behind
+    # it. A deploy that is going to fail should fail while someone is still
+    # looking at it.
+    timeout-minutes: 10
+
     steps:
+      # Pinned to v6. v4 declares runs.using: node20, which GitHub deprecated
+      # and is already force-running on node24, with a warning on every build.
+      # Confirmed from action.yml at the v6 tag: runs.using is node24.
       - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
@@ -35,27 +71,30 @@ jobs:
           NODE_ENV: production
           PATH_PREFIX: /Natural-Trace-Website/
 
-      - uses: actions/upload-pages-artifact@v5
-        with:
-          path: _site
+      # A branch-served Pages site is run through Jekyll unless this file is
+      # present, and Jekyll silently drops every directory starting with an
+      # underscore. The artifact route did not need this; a branch deploy does.
+      # Without it the site builds, deploys, and quietly loses pages.
+      - run: touch _site/.nojekyll
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v5
-        with:
-          # GitHub was not rejecting our deployments, it was taking longer than
-          # deploy-pages was willing to wait. Runs #21 and #22 both sat at
-          # deployment_queued for about four minutes, moved to
-          # deployment_in_progress, and were still in progress when the action
-          # hit its 10 minute default and cancelled them. Nothing was ever
-          # published. 30 minutes gives the Pages pipeline room to finish.
-          timeout: 1800000
-          # One status poll every 15 seconds instead of every 5. The default
-          # wrote 240 lines of "Current status" into the log for a single run.
-          reporting_interval: 15000
+      # Fail loudly rather than publishing an empty site. If the build produced
+      # nothing, force-pushing that over a working site is worse than not
+      # deploying at all.
+      - name: Check the build produced something
+        run: |
+          test -f _site/index.html || { echo "No _site/index.html, refusing to publish"; exit 1; }
+          count=$(find _site -name 'index.html' | wc -l)
+          echo "$count pages built"
+          test "$count" -gt 20 || { echo "Only $count pages, expected more than 20, refusing to publish"; exit 1; }
+
+      - name: Push the built site to gh-pages
+        run: |
+          cd _site
+          git init -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Build from ${GITHUB_SHA}"
+          git push --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

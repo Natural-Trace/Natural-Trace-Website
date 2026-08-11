@@ -1,0 +1,67 @@
+# DISABLED. This file has no .yml extension, so GitHub ignores it entirely.
+#
+# This is the artifact-and-deployment-API route, which was the deploy from
+# 9 July to 11 Aug 2026. It hung twice, the second time for over three and a
+# half hours with no timeout, holding the concurrency group shut behind it. The
+# branch route in deploy.yml replaced it.
+#
+# To go back:
+#   1. rename this file to deploy-actions-api.yml
+#   2. rename deploy.yml to something ending .disabled, or delete it
+#   3. Settings > Pages > Source > GitHub Actions
+#
+# Do not leave both enabled. They would race, and the last one to finish wins.
+#
+# If you do restore it, add timeout-minutes to the deploy job. Its absence is
+# what turned a failure into a four hour outage.
+
+name: Deploy to GitHub Pages (Actions API route)
+
+on:
+  workflow_dispatch:
+
+# actions: read is required by actions/deploy-pages v4 and above. Without it the
+# deploy job cannot read the build job's artifact, and it hangs until it aborts
+# with "Timeout reached". That is exactly how run #21 failed on 6 Aug 2026.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  actions: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - run: npm install
+
+      - run: npx @11ty/eleventy
+        env:
+          NODE_ENV: production
+          PATH_PREFIX: /Natural-Trace-Website/
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
