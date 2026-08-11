@@ -30,6 +30,11 @@ a{text-decoration:none;color:inherit}
    Naming it makes it a colour the site has rather than a coincidence of two
    other values, and means the footer and Why We Exist cannot drift off it. */
   --charcoal:#20242F;
+  /* The required-field asterisk. Not a general error colour, it has no other
+     use yet. Chosen to clear 4.5:1 on both surfaces a form label sits on,
+     white and --offwhite: it measures 6.0:1 and 5.7:1. A brighter red would
+     read better as a warning and fail as text. */
+  --required:#B3261E;
 }
 /* balance across every heading, not just .section-title. It evens the line
    lengths instead of filling each line to the edge and dropping the remainder
@@ -484,6 +489,14 @@ nav.scrolled .nav-toggle span{background:var(--dark)}
 .contact-form p{font-size:.85rem;color:var(--muted);margin-bottom:2rem}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
 .form-group{margin-bottom:1rem}
+/* Required marker.
+   Written by the template next to the label of every field carrying the
+   required attribute, rather than typed into the label strings in the data
+   files. That way the marker cannot say one thing while the input does
+   another, and nobody editing copy in the CMS has to remember to type it.
+   aria-hidden because the required attribute already tells a screen reader
+   what this asterisk is telling everyone else. */
+.form-group label .req{color:var(--required);margin-left:.15rem;font-weight:700}
 .form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--dark);margin-bottom:.4rem;letter-spacing:.3px}
 .form-group input,.form-group textarea,.form-group select{width:100%;padding:.75rem 1rem;border:1.5px solid #E5E7EB;border-radius:10px;font-family:'Montserrat',sans-serif;font-size:.9rem;transition:border-color .3s,box-shadow .3s;background:#FAFAFA;outline:none;box-sizing:border-box}
 .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--sage);box-shadow:0 0 0 3px rgba(107,114,73,.1);background:#fff}

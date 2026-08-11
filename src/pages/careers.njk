@@ -61,24 +61,24 @@ permalink: /careers/
                 data-internship-subject="{{ integrations.careers.internship_subject_prefix }}">
             <div class="form-row">
               <div class="form-group">
-                <label>{{ careers.internship_form.first_name_label }}</label>
+                <label>{{ careers.internship_form.first_name_label }}<span class="req" aria-hidden="true">*</span></label>
                 <input type="text" name="firstName" required placeholder="{{ careers.internship_form.first_name_placeholder }}">
               </div>
               <div class="form-group">
-                <label>{{ careers.internship_form.last_name_label }}</label>
+                <label>{{ careers.internship_form.last_name_label }}<span class="req" aria-hidden="true">*</span></label>
                 <input type="text" name="lastName" required placeholder="{{ careers.internship_form.last_name_placeholder }}">
               </div>
             </div>
             <div class="form-group">
-              <label>{{ careers.internship_form.email_label }}</label>
+              <label>{{ careers.internship_form.email_label }}<span class="req" aria-hidden="true">*</span></label>
               <input type="email" name="email" required placeholder="{{ careers.internship_form.email_placeholder }}">
             </div>
             <div class="form-group">
-              <label>{{ careers.internship_form.university_label }}</label>
+              <label>{{ careers.internship_form.university_label }}<span class="req" aria-hidden="true">*</span></label>
               <input type="text" name="university" required placeholder="{{ careers.internship_form.university_placeholder }}">
             </div>
             <div class="form-group">
-              <label>{{ careers.internship_form.interest_label }}</label>
+              <label>{{ careers.internship_form.interest_label }}<span class="req" aria-hidden="true">*</span></label>
               <select name="interest" required>
                 <option value="" disabled selected>{{ careers.internship_form.interest_placeholder }}</option>
                 {% for area in careers.areas_of_interest %}
@@ -87,7 +87,7 @@ permalink: /careers/
               </select>
             </div>
             <div class="form-group">
-              <label>{{ careers.internship_form.message_label }}</label>
+              <label>{{ careers.internship_form.message_label }}<span class="req" aria-hidden="true">*</span></label>
               <textarea name="message" required placeholder="{{ careers.internship_form.message_placeholder }}"></textarea>
             </div>
             <button type="submit" class="form-submit">{{ careers.internship_form.submit_text }}</button>

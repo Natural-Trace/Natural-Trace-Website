@@ -34,16 +34,16 @@ permalink: /contact/
               data-fallback-subject="{{ integrations.fallback.subject_prefix }}">
           <div class="form-row">
             <div class="form-group">
-              <label>{{ contact.form.first_name_label }}</label>
+              <label>{{ contact.form.first_name_label }}<span class="req" aria-hidden="true">*</span></label>
               <input type="text" name="firstName" required placeholder="{{ contact.form.first_name_placeholder }}">
             </div>
             <div class="form-group">
-              <label>{{ contact.form.last_name_label }}</label>
+              <label>{{ contact.form.last_name_label }}<span class="req" aria-hidden="true">*</span></label>
               <input type="text" name="lastName" required placeholder="{{ contact.form.last_name_placeholder }}">
             </div>
           </div>
           <div class="form-group">
-            <label>{{ contact.form.email_label }}</label>
+            <label>{{ contact.form.email_label }}<span class="req" aria-hidden="true">*</span></label>
             <input type="email" name="email" required placeholder="{{ contact.form.email_placeholder }}">
           </div>
           {#
@@ -55,11 +55,11 @@ permalink: /contact/
           #}
           <div class="form-row">
             <div class="form-group">
-              <label>{{ contact.form.company_label }}</label>
+              <label>{{ contact.form.company_label }}<span class="req" aria-hidden="true">*</span></label>
               <input type="text" name="company" required placeholder="{{ contact.form.company_placeholder }}">
             </div>
             <div class="form-group">
-              <label>{{ contact.form.job_title_label }}</label>
+              <label>{{ contact.form.job_title_label }}<span class="req" aria-hidden="true">*</span></label>
               <input type="text" name="jobTitle" required placeholder="{{ contact.form.job_title_placeholder }}">
             </div>
           </div>
@@ -79,7 +79,7 @@ permalink: /contact/
             </select>
           </div>
           <div class="form-group">
-            <label>{{ contact.form.message_label }}</label>
+            <label>{{ contact.form.message_label }}<span class="req" aria-hidden="true">*</span></label>
             <textarea name="message" required placeholder="{{ contact.form.message_placeholder }}"></textarea>
           </div>
           <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">

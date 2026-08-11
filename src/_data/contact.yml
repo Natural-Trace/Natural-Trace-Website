@@ -23,10 +23,12 @@ form:
   company_placeholder: "Your company name"
   job_title_label: "Job Title"
   job_title_placeholder: "Your role"
-  # The only optional field on the form, so it says so. Everything else is
+  # The only optional field on the form. It is not labelled as such: required
+  # fields carry a red asterisk and optional ones carry nothing, so Topic is
+  # the one label on the form with no marker after it. Everything else is
   # required on HubSpot's side and a blank value is never sent, which makes
   # HubSpot reject the whole submission.
-  inquiry_type_label: "Topic (optional)"
+  inquiry_type_label: "Topic"
   inquiry_type_placeholder: "Select a topic"
   message_label: "Message"
   message_placeholder: "Tell us about your project or requirements..."
