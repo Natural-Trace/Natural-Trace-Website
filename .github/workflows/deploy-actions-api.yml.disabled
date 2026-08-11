@@ -12,8 +12,22 @@
 #
 # Do not leave both enabled. They would race, and the last one to finish wins.
 #
-# If you do restore it, add timeout-minutes to the deploy job. Its absence is
-# what turned a failure into a four hour outage.
+# A correction, because the first version of this file got it wrong. The 6 Aug
+# failure was NOT the missing actions: read permission. Commit d5fedb0 added
+# that and it changed nothing. e68fc91 found the actual cause: GitHub was
+# deploying successfully but slowly, and actions/deploy-pages gave up at its ten
+# minute default. The timeout and reporting_interval settings below are that
+# fix, and an earlier draft of this file dropped them while adding a ten minute
+# job ceiling, which would have reintroduced the exact bug it claimed to
+# prevent.
+#
+# The 11 Aug failure matches neither. The timeout was already 30 minutes, the
+# job ran for 3h40m, and the log showed only "Evaluating deploy.if" the whole
+# time, so it never reached the deploy step at all. It was waiting for a runner
+# or for the github-pages environment, not stuck inside the action.
+#
+# Three failures, three different causes, one component. That is the argument
+# for the branch route, rather than any single one of them.
 
 name: Deploy to GitHub Pages (Actions API route)
 
@@ -58,10 +72,28 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # 40, not 10. The action's own timeout below is 30 minutes, and a job
+    # ceiling shorter than that would cancel the deploy before the action
+    # could, which is the bug that was fixed on 6 Aug. This is the outer
+    # backstop for the case the whole job hangs before reaching the step,
+    # which is what happened on 11 Aug.
+    timeout-minutes: 40
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v5
+        with:
+          # Restored from e68fc91, 6 Aug 2026. DO NOT DROP THESE.
+          #
+          # GitHub was not rejecting the deployments, it was taking longer than
+          # deploy-pages was willing to wait. Runs #21 and #22 both sat at
+          # deployment_queued for about four minutes, moved to
+          # deployment_in_progress, and were still in progress when the action
+          # hit its 10 minute default and cancelled them. Nothing was ever
+          # published.
+          timeout: 1800000
+          # One status poll every 15 seconds instead of every 5. The default
+          # wrote 240 lines of "Current status" into the log for a single run.
+          reporting_interval: 15000
