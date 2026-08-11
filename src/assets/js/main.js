@@ -289,6 +289,7 @@ function filterFaq(cat) {
     { label: 'pH 5 to 9' }, { label: 'pH 3 to 5, or 9 to 11' }, { label: 'Below pH 3, or above pH 11' }
   ];
   var formulationRisk = (model && model.formulationRisk) || {};
+  var evidence = (model && model.evidence) || [];
 
   function el(id) { return document.getElementById(id); }
 
@@ -442,7 +443,36 @@ function filterFaq(cat) {
     var key = 'compatible';
     if (counts.high > 0 || counts.medium > 1) { key = 'testing'; }
     else if (counts.medium === 1) { key = 'conditions'; }
-    return { key: key, factors: factors };
+
+    /* Evidence beats inference.
+
+       The bands above are a screen: they reason from pH, heat and product form
+       to a likely answer. An entry in the evidence list is not a screen, it is
+       a product in this category and this format that went through the lab and
+       either worked or did not. Where one exists it should move the answer,
+       because a tested result is better information than a rule.
+
+       A pass lifts a "compatible with conditions" to compatible. It does not
+       lift a "testing required": something in that answer is at high risk or
+       two things are at medium, and one adjacent success is not enough to
+       wave that through.
+
+       A failure drops the answer to "testing required" whatever the bands
+       said. That direction is not symmetric on purpose. Being wrong about a
+       yes costs a client a failed trial; being wrong about a no costs a
+       conversation. */
+    var proven = null;
+    for (var i = 0; i < evidence.length; i++) {
+      var e = evidence[i];
+      if (e.category !== state.category) continue;
+      if (!e.forms || !e.forms.some(function(f) { return state.formulations.indexOf(f) >= 0; })) continue;
+      if (e.outcome === 'not-compatible') { proven = 'not-compatible'; break; }
+      if (e.outcome === 'compatible') { proven = 'compatible'; }
+    }
+    if (proven === 'not-compatible') { key = 'testing'; }
+    else if (proven === 'compatible' && key === 'conditions') { key = 'compatible'; }
+
+    return { key: key, factors: factors, proven: proven };
   }
 
   window.compatShowResult = function() {
@@ -480,6 +510,13 @@ function filterFaq(cat) {
         ul.appendChild(li);
       });
       fx.appendChild(ul);
+    }
+    var ev = el('compatResultEvidence');
+    if (ev) {
+      var labels = (model && model.evidenceLabels) || {};
+      if (out.proven === 'compatible') { ev.textContent = labels.compatible || ''; ev.className = 'compat-evidence compat-evidence-yes'; }
+      else if (out.proven === 'not-compatible') { ev.textContent = labels.notCompatible || ''; ev.className = 'compat-evidence compat-evidence-no'; }
+      else { ev.textContent = ''; ev.className = 'compat-evidence'; }
     }
     showScreen('compatResult');
   };

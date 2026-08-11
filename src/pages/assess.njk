@@ -85,6 +85,9 @@ summary: "Check in 60 seconds whether Natural Trace is compatible with your prod
           <h3 id="compatResultTitle"></h3>
           <p id="compatResultBody"></p>
           <div id="compatResultFactors" class="compat-factors"></div>
+          {# Anything actually tested in this category and format. It is the
+             only line on this screen that is a fact rather than a screen. #}
+          <p id="compatResultEvidence" class="compat-evidence"></p>
           <p class="compat-result-note">{{ assess.compat_result_note }}</p>
           <a class="compat-cta" href="{{ assess.compat_result_cta_url }}" style="text-decoration:none;display:inline-block">{{ assess.compat_result_cta }}</a>
         </div>
@@ -100,6 +103,11 @@ summary: "Check in 60 seconds whether Natural Trace is compatible with your prod
   "ph": {{ assess.compat_ph_options | dump | safe }},
   "temp": {{ assess.compat_temp_options | dump | safe }},
   "formulationRisk": {{ assess.compat_formulation_risk | dump | safe }},
+  "evidence": {{ assess.compat_evidence | dump | safe }},
+  "evidenceLabels": {
+    "compatible": {{ assess.compat_evidence_yes | dump | safe }},
+    "notCompatible": {{ assess.compat_evidence_no | dump | safe }}
+  },
   "outcomes": {{ assess.compat_outcomes | dump | safe }},
   "factorsLabel": {{ assess.compat_result_factors_label | dump | safe }}
 }

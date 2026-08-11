@@ -265,6 +265,66 @@ collections:
               - {label: "Liquid / Syrup", name: "liquid", widget: "select", options: ["low", "medium", "high"]}
               - {label: "Lozenge", name: "lozenge", widget: "select", options: ["low", "medium", "high"]}
               - {label: "RTD Beverage", name: "rtd", widget: "select", options: ["low", "medium", "high"]}
+          - {label: "Result: Tested and it worked", name: "compat_evidence_yes", widget: "string"}
+          - {label: "Result: Tested and it did not", name: "compat_evidence_no", widget: "text"}
+          - label: "Tested Products"
+            name: "compat_evidence"
+            widget: "list"
+            label_singular: "tested product"
+            collapsed: true
+            summary: "{{fields.category}} / {{fields.outcome}}"
+            hint: "What has actually been through the lab. A row here overrides the pH, temperature and form scoring, because a tested result beats a rule. A pass lifts \"compatible with conditions\" to \"compatible\". A failure drops any answer to \"testing required\", which is deliberately not symmetric: being wrong about a yes costs a client a failed trial, being wrong about a no costs a conversation."
+            fields:
+              - label: "Product category"
+                name: "category"
+                widget: "select"
+                hint: "Must match a category the quiz offers, or the row will never fire."
+                options:
+                  - {label: "Vitamins & Minerals", value: "vitamins"}
+                  - {label: "Omega-3 & Fish Oil", value: "omega"}
+                  - {label: "Probiotics & Gut Health", value: "probiotics"}
+                  - {label: "Joint & Bone", value: "joint"}
+                  - {label: "Collagen & Beauty", value: "collagen"}
+                  - {label: "Herbal & Botanical", value: "herbal"}
+                  - {label: "Sports Nutrition", value: "sports"}
+                  - {label: "Immune Support", value: "immune"}
+                  - {label: "Weight Management", value: "weight"}
+                  - {label: "Specialty Food Ingredients", value: "ingredients"}
+                  - {label: "Specialty Health", value: "specialty"}
+                  - {label: "Functional Foods", value: "functional"}
+              - label: "Product forms tested"
+                name: "forms"
+                widget: "select"
+                multiple: true
+                hint: "Tick every form this result covers. The row fires when a visitor picks any one of them."
+                options:
+                  - {label: "Compressed Tablet", value: "tablet"}
+                  - {label: "Hard Capsule", value: "capsule"}
+                  - {label: "Softgel", value: "softgel"}
+                  - {label: "Gummy", value: "gummy"}
+                  - {label: "Chewable", value: "chewable"}
+                  - {label: "Powder / Sachet", value: "powder"}
+                  - {label: "Liquid / Syrup", value: "liquid"}
+                  - {label: "Effervescent", value: "effervescent"}
+                  - {label: "Lozenge", value: "lozenge"}
+                  - {label: "Bar", value: "bar"}
+                  - {label: "RTD Beverage", value: "rtd"}
+                  - {label: "Drops", value: "drops"}
+              - label: "Outcome"
+                name: "outcome"
+                widget: "select"
+                default: "unconfirmed"
+                hint: "Leave on Unconfirmed until someone has the data in front of them. Compatible and Not compatible both change what a prospect is told about their own product."
+                options:
+                  - {label: "Unconfirmed — tested, result not to hand", value: "unconfirmed"}
+                  - {label: "Compatible — it worked", value: "compatible"}
+                  - {label: "Compatible with conditions", value: "conditions"}
+                  - {label: "Not compatible — it did not work", value: "not-compatible"}
+              - {label: "pH it was tested at", name: "ph", widget: "string", required: false, hint: "Free text, whatever is true. \"5.8\", \"3.2 to 4.1\", \"not measured\"."}
+              - {label: "Temperature it was tested at", name: "temperature", widget: "string", required: false, hint: "Free text. \"ambient\", \"up to 80°C\", \"retort, 121°C\"."}
+              - {label: "Product name", name: "products", widget: "string", required: false, hint: "OPTIONAL, AND PUBLISHED. This file builds into the live site. Only put a client's product name here if they have agreed to be named."}
+              - {label: "Internal note", name: "note", widget: "text", required: false, hint: "Not shown on the site. Accuracy, sample size, anything the next person needs."}
+
           - label: "Result: Compatible"
             name: "compat_outcomes"
             widget: "object"

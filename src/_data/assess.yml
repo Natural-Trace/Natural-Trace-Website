@@ -121,3 +121,116 @@ compat_outcomes:
 
 compat_result_note: "This is a first screen based on three answers, not a laboratory result. Compatibility is confirmed on your own formulation."
 compat_result_factors_label: "What drove this"
+
+# --------------------------------------------------------------------------
+# What has actually been tested.
+#
+# Built 11 Aug 2026 from productList.csv, the 30 products that have been
+# through the lab.
+#
+# READ THIS BEFORE FILLING IT IN. That file records what was tested. It has
+# three columns, category, type and name, and no result. It cannot tell anyone
+# which products worked, so every outcome below is "unconfirmed" except the
+# four that are written down elsewhere and cited. Marking a row compatible is
+# a claim that a specific product passed, and only someone with the data can
+# make it.
+#
+# Entries are keyed on the quiz's own category and form rather than on client
+# product names, for two reasons. The quiz matches on category and form, so
+# that is the useful key. And this file builds into the public site: anything
+# typed into "products" is published, so it should only carry a name that the
+# client has agreed to be named as.
+#
+# The 19 rows from the list with no nutraceutical equivalent, the coffee,
+# whisky, tobacco, peanut, olive oil, balsamic, honey, wax and fungicide work,
+# are not here. The quiz asks about supplements. Those belong on the agri-food
+# side of the site if they are to appear at all.
+#
+# outcome: compatible | conditions | not-compatible | unconfirmed
+# --------------------------------------------------------------------------
+compat_evidence:
+
+  # Ginjer and Cumacure. Ginger and curcumin extracts.
+  - category: "herbal"
+    forms: ["powder", "capsule"]
+    outcome: "unconfirmed"
+    ph: ""
+    temperature: ""
+    products: ""
+    note: "Tested. Result not recorded in the product list."
+
+  # Fresh and dried flowers.
+  - category: "herbal"
+    forms: ["powder"]
+    outcome: "unconfirmed"
+    ph: ""
+    temperature: ""
+    products: ""
+    note: "Botanical flower material, fresh and dried. Result not recorded."
+
+  # Bone Boost, Bioaktiv OPTIMSM PLUS.
+  - category: "joint"
+    forms: ["capsule", "powder"]
+    outcome: "unconfirmed"
+    ph: ""
+    temperature: ""
+    products: ""
+    note: "Powder-filled capsules. Result not recorded."
+
+  # Organic Vitamin B12 Liquid, K2+D3+Ca Syrup.
+  - category: "vitamins"
+    forms: ["drops", "liquid"]
+    outcome: "unconfirmed"
+    ph: ""
+    temperature: ""
+    products: ""
+    note: "Liquid drops and syrup. Result not recorded."
+
+  # BerriQi.
+  - category: "immune"
+    forms: ["powder"]
+    outcome: "unconfirmed"
+    ph: ""
+    temperature: ""
+    products: ""
+    note: "Berry powder. Result not recorded."
+
+  # H2 tablets.
+  - category: "specialty"
+    forms: ["effervescent"]
+    outcome: "unconfirmed"
+    ph: ""
+    temperature: ""
+    products: ""
+    note: "Effervescent tablet. Result not recorded. Worth confirming, because effervescent is scored medium risk on form alone and a passed test would be the evidence that overrides it."
+
+  # Oxy-Powder.
+  - category: "specialty"
+    forms: ["capsule"]
+    outcome: "unconfirmed"
+    ph: ""
+    temperature: ""
+    products: ""
+    note: "Result not recorded."
+
+  # Lecithin, oil and powder. 100% accuracy, 100% specificity, n=15 in each of
+  # the oil and powder arms, recorded in the project canon.                      # CLAIM REVIEW
+  - category: "ingredients"
+    forms: ["liquid", "powder"]
+    outcome: "compatible"
+    ph: ""
+    temperature: ""
+    products: ""
+    note: "Lecithin in both oil and powder form. 100% accuracy and 100% specificity, n=15 in each arm."
+
+  # Quantec IDP and Milkamune. 100% accuracy in both, n=12 and n=21.             # CLAIM REVIEW
+  - category: "sports"
+    forms: ["powder"]
+    outcome: "compatible"
+    ph: ""
+    temperature: ""
+    products: ""
+    note: "Dairy protein powders. 100% accuracy and 100% specificity, n=12 and n=21."
+
+compat_evidence_yes: "We have tested a product in this category and format, and it worked."
+compat_evidence_no: "We have tested a product in this category and format and it did not work, which is why this needs a look rather than a yes."
