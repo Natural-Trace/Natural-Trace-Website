@@ -8,14 +8,24 @@ label: "About Natural Trace"
 # whatever the algorithm picks at a given window width does not. The <br> is
 # suppressed below 700px, where the column is too narrow to honour it.
 title: "Protecting the Future of<br>Premium Ingredients"
-# &nbsp; keeps "prove its" together so the orphaned "its" moves up to the first
-# line. <strong> is styled in the stylesheet, not here, so the emphasis stays
-# one decision in one place.
-# Note the conflict: Kirsty's 12 Aug document asks for this line to be the same
-# weight and colour as the surrounding text, which is the opposite of adding
-# emphasis. Bryan's instruction is the later one and wins, but she should be
-# told rather than left to find it.
-subtitle: "Every premium ingredient should be able to prove&nbsp;its <strong>authenticity</strong>."
+# Kirsty's two requests for this line: same weight and colour as the text
+# around it, and do not let it split over two lines.
+#
+# The first was already true and is now true again: it is 400 weight in
+# #2C3345, the same as the paragraph beneath it. The bold sage "authenticity"
+# that sat here on 12 Aug has been taken out.
+#
+# The second needed three words cut. Measured: the sentence set 508px, and the
+# narrowest this column ever gets while the hero is still two columns is 450px,
+# at a 1000px window. "be able to" is the only part of the sentence carrying no
+# meaning, and without it the line sets 426px, so it holds one line at every
+# desktop width with 24px to spare. On a phone the column is 281px and no
+# sentence of this length fits on one line at any readable size, so it wraps
+# there; the non-breaking space keeps "prove its" together so "its" cannot end
+# up alone at the start of the second line.
+#
+# Putting "be able to" back will bring the two-line split back with it.
+subtitle: "Every premium ingredient should prove&nbsp;its authenticity."
 intro: "Natural Trace helps food and nutraceutical companies protect the value of their premium ingredients through in-product authentication."
 disciplines: "Life science · Food Science · Bioinformatics"
 intro_secondary: "Combining food science, molecular biology and digital technology, we help businesses verify authenticity, strengthen customer trust and protect commercial value throughout global supply chains."
