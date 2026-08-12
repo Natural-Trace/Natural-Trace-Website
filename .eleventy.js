@@ -101,6 +101,15 @@ module.exports = function(eleventyConfig) {
       .sort((a, b) => a.date - b.date)
   );
 
+  /* Newest few, for the quiet strip on the home page. Pinned articles are not
+     news, so they are not eligible: the strip says what happened recently. */
+  eleventyConfig.addCollection("insightsLatest", collection =>
+    collection.getFilteredByGlob("src/insights/**/*.md")
+      .filter(i => !i.data.pinned)
+      .sort((a, b) => b.date - a.date)
+      .slice(0, 3)
+  );
+
   /*
    * Tag archives, but only for tags that have earned one.
    *

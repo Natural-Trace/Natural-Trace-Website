@@ -189,6 +189,8 @@ collections:
               - {label: "Logo", name: "image", widget: "image", media_folder: "/src/assets/partners", public_folder: "/assets/partners", hint: "Trim the empty space around the logo before uploading, or it renders smaller than the ones beside it. PNG with a transparent background is best."}
               - {label: "Company name", name: "alt", widget: "string", hint: "Read aloud by screen readers, and shown if the image fails to load."}
 
+          - {label: "Latest from Insights: heading", name: "insights_title", widget: "string", hint: "The small label above the three most recent articles near the bottom of the home page. The articles themselves are pulled automatically, so publishing one updates this section with no work here."}
+          - {label: "Latest from Insights: link text", name: "insights_link", widget: "string", hint: "Goes to the Insights page."}
           - {label: "Final CTA: Headline", name: "final_cta_title", widget: "string"}
           - {label: "Final CTA: Text", name: "final_cta_text", widget: "text"}
           - {label: "Final CTA: Primary Button", name: "final_cta_primary", widget: "string"}

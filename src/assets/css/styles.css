@@ -726,6 +726,86 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
 .insights-header h1{font-family:'Montserrat',sans-serif;font-size:clamp(2rem,5vw,3.2rem);color:var(--dark);margin-bottom:.75rem}
 .insights-subtitle{font-size:1rem;color:var(--muted);max-width:600px;margin:0 auto}
 .insights-grid{display:flex;flex-direction:column;gap:2.5rem;max-width:800px;margin:0 auto}
+
+/* ---------------------------------------------------------------------------
+   Insights pagination.
+
+   Numbered rather than a Load More button, so every page is a real URL that
+   can be linked, bookmarked and indexed, and 2022 is one click away instead of
+   eight presses.
+--------------------------------------------------------------------------- */
+.insights-page-of{font-size:.42em;font-weight:400;color:var(--muted);vertical-align:middle;letter-spacing:0}
+.insights-pager{
+  display:flex;align-items:center;justify-content:center;gap:1.25rem;
+  max-width:800px;margin:3.5rem auto 0;padding-top:2rem;
+  border-top:1px solid var(--soft-sage);
+  font-family:'Montserrat',sans-serif;font-size:.85rem}
+.insights-pager-numbers{display:flex;align-items:center;gap:.35rem;list-style:none;margin:0;padding:0}
+.insights-pager-num{
+  display:flex;align-items:center;justify-content:center;
+  /* 40px, because this is a touch target and anything smaller is a coin toss
+     on a phone. */
+  min-width:40px;height:40px;padding:0 .5rem;border-radius:10px;
+  color:var(--text);text-decoration:none;transition:background .2s,color .2s}
+a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
+.insights-pager-num.is-current{background:var(--sage);color:#fff;font-weight:700}
+.insights-pager-step{
+  display:inline-flex;align-items:center;gap:.4rem;min-height:40px;
+  color:var(--sage);text-decoration:none;font-weight:600;white-space:nowrap}
+.insights-pager-step:hover{color:var(--dark)}
+/* Kept in the layout rather than removed, so the numbers stay centred on the
+   first and last pages instead of sliding sideways as you page through. */
+.insights-pager-step.is-off{color:var(--soft-sage);pointer-events:none}
+@media(max-width:560px){
+  .insights-pager{gap:.5rem;font-size:.8rem}
+  /* The words go and the arrows stay. Newer and Older cost more width than
+     they are worth next to numbered buttons on a 360px screen. */
+  .insights-pager-step{font-size:0;gap:0}
+  .insights-pager-step [aria-hidden]{font-size:1.15rem}
+}
+
+/* ---------------------------------------------------------------------------
+   Latest from Insights, on the home page.
+
+   The brief was recent news visible without being the highlight of the page,
+   so this is the quietest block on it: no cards, no images, no borders around
+   anything. Three dates and three headlines on a single rule, sitting between
+   the industries and the closing call to action.
+
+   Cards were the obvious answer and the wrong one. They are the loudest
+   pattern on this site, and three photographs directly above the final call to
+   action would pull the eye straight past it.
+--------------------------------------------------------------------------- */
+.home-insights{padding:3.5rem 0 1rem;background:#fff}
+.home-insights .container{max-width:1000px}
+.home-insights-head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+  padding-bottom:.9rem;border-bottom:1px solid var(--soft-sage)}
+.home-insights-head h2{
+  font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0}
+.home-insights-all{
+  font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:600;
+  color:var(--sage);text-decoration:none;white-space:nowrap}
+.home-insights-all:hover{color:var(--dark);text-decoration:underline;text-underline-offset:3px}
+.home-insights-list{list-style:none;margin:0;padding:0}
+.home-insights-list li{
+  display:flex;align-items:baseline;gap:1.25rem;
+  padding:.85rem 0;border-bottom:1px solid rgba(222,223,222,.55)}
+.home-insights-list li:last-child{border-bottom:0}
+.home-insights-list time{
+  flex:0 0 auto;min-width:8.5rem;font-size:.78rem;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+.home-insights-list a{
+  color:var(--text);text-decoration:none;font-size:.94rem;line-height:1.5;
+  transition:color .2s}
+.home-insights-list a:hover{color:var(--sage);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:600px){
+  /* The date goes above the headline rather than beside it. Sharing a line
+     leaves roughly 12 characters for a headline that averages sixty. */
+  .home-insights-list li{flex-direction:column;align-items:flex-start;gap:.2rem}
+  .home-insights-list time{min-width:0}
+}
 .insight-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);transition:box-shadow .3s}
 .insight-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1)}
 .insight-card-image img{width:100%;height:280px;object-fit:cover;display:block}

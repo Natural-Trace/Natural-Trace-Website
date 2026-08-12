@@ -167,6 +167,12 @@ trust_logos:
 # url / image / alt block above. See the README in that folder.
 
 # Final Call to Action
+# Latest from Insights, the quiet strip above the closing call to action.
+# Three most recent dated articles, pulled automatically. Nothing to maintain
+# here beyond these two lines of copy: publishing an article updates it.
+insights_title: "Latest from Insights"
+insights_link: "All insights"
+
 final_cta_title: "Ready to protect your products with confidence?"
 final_cta_text: "Whether you're protecting a premium ingredient, verifying manufacturing partners or investigating suspicious products, Natural Trace can help."
 final_cta_primary: "Request a Compatibility Assessment"

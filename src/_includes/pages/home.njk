@@ -190,6 +190,40 @@
   </div>
 </div>
 
+{#-
+  Latest from Insights.
+
+  Deliberately the quietest thing on this page. It sits after everything the
+  page is actually for and before the call to action, it is text rather than
+  cards, and it carries no images: three dates and three headlines on one rule.
+
+  The brief was that recent news should be visible without becoming the main
+  event, and a card grid here would have become the main event. Cards are the
+  loudest pattern on the site, and three photographs directly above the closing
+  call to action would pull the eye straight past it.
+
+  Renders nothing at all when there are no articles, rather than an empty box
+  announcing that we have not written anything.
+-#}
+{% if collections.insightsLatest.length %}
+<section class="home-insights" aria-labelledby="home-insights-title">
+  <div class="container">
+    <div class="home-insights-head">
+      <h2 id="home-insights-title">{{ home.insights_title }}</h2>
+      <a class="home-insights-all" href="/insights/">{{ home.insights_link }}</a>
+    </div>
+    <ul class="home-insights-list">
+      {% for post in collections.insightsLatest %}
+      <li>
+        <time datetime="{{ post.date | date('%Y-%m-%d') }}">{{ post.date | date('%B %d, %Y') }}</time>
+        <a href="{{ post.url }}">{{ post.data.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}
+
 <!-- Final Call to Action -->
 <section class="finalcta">
   <div class="container">
