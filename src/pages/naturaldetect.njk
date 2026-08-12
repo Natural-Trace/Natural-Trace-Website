@@ -27,7 +27,7 @@ permalink: /naturaldetect/
          a stand-in photograph would be worse than the mark. #}
       {% if naturaldetect.hero_image %}
       <div class="solution-photo">
-        <img src="{{ naturaldetect.hero_image }}" alt="{{ naturaldetect.hero_image_alt }}" loading="lazy">
+        <img src="{{ naturaldetect.hero_image }}" alt="{{ naturaldetect.hero_image_alt }}" loading="lazy"{% if naturaldetect.hero_image_position %} style="object-position:{{ naturaldetect.hero_image_position }}"{% endif %}>
       </div>
       {% else %}
       <div class="solution-mark">

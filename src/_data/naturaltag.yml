@@ -9,6 +9,12 @@ intro: "NaturalTag™ is a food-grade, in-product authentication tag made from i
 # what NaturalCloud still uses while its video is being made.
 hero_image: "/assets/images/naturaltag-product.webp"
 hero_image_alt: "A gloved hand holding a labelled vial of NaturalTag in front of a stainless steel fermentation vessel"
+# Where the crop sits. The photograph is 3:2 and the panel is 4:3, so about
+# 12% of the width is cut. Centred, that left the vial at 41% across and
+# Kirsty asked for it centred. Pushed hard left it sits at 47%, which is as
+# close to the middle as this frame allows: to do better the vial would have
+# to be nearer the middle of the original photograph.
+hero_image_position: "0% 50%"
 hero_logo: "/assets/logos/NaturalTag-icon.png"
 hero_logo_alt: "NaturalTag, carrying the Natural Trace mark"
 

@@ -423,6 +423,17 @@ collections:
           - {label: "Intro", name: "intro", widget: "text"}
           - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
           - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
+          - label: "Product Photograph: Which part to keep"
+            name: "hero_image_position"
+            widget: "select"
+            required: false
+            hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
+            options:
+              - {label: "Middle", value: "50% 50%"}
+              - {label: "Left", value: "0% 50%"}
+              - {label: "Right", value: "100% 50%"}
+              - {label: "Top", value: "50% 0%"}
+              - {label: "Bottom", value: "50% 100%"}
           - {label: "Product Logo", name: "hero_logo", widget: "image"}
           - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
           - {label: "Why Heading", name: "why_title", widget: "string"}
@@ -455,6 +466,17 @@ collections:
           - {label: "Intro", name: "intro", widget: "text"}
           - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
           - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
+          - label: "Product Photograph: Which part to keep"
+            name: "hero_image_position"
+            widget: "select"
+            required: false
+            hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
+            options:
+              - {label: "Middle", value: "50% 50%"}
+              - {label: "Left", value: "0% 50%"}
+              - {label: "Right", value: "100% 50%"}
+              - {label: "Top", value: "50% 0%"}
+              - {label: "Bottom", value: "50% 100%"}
           - {label: "Product Logo", name: "hero_logo", widget: "image"}
           - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
           - {label: "Features Heading", name: "features_title", widget: "string"}
@@ -475,6 +497,17 @@ collections:
           - {label: "Intro", name: "intro", widget: "text"}
           - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
           - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
+          - label: "Product Photograph: Which part to keep"
+            name: "hero_image_position"
+            widget: "select"
+            required: false
+            hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
+            options:
+              - {label: "Middle", value: "50% 50%"}
+              - {label: "Left", value: "0% 50%"}
+              - {label: "Right", value: "100% 50%"}
+              - {label: "Top", value: "50% 0%"}
+              - {label: "Bottom", value: "50% 100%"}
           - {label: "Product Logo", name: "hero_logo", widget: "image"}
           - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
           - {label: "Hero video", name: "hero_video", widget: "file", required: false, hint: "Plays on a loop in the panel, with no sound and no play button. Setting this hides the hero image and the logo below. Clear it to go back to them. MP4, around 1280px wide."}

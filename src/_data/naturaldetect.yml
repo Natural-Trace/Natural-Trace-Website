@@ -8,6 +8,9 @@ intro: "NaturalDetect™ is a proprietary PCR-based laboratory test that confirm
 # which says more than a symbol of looking closely at something.
 hero_image: "/assets/images/naturaldetect.webp"
 hero_image_alt: "A gloved hand loading a PCR tube strip into a qPCR instrument, its screen showing amplification curves mid-run"
+# Which part of the photograph stays in frame when the 4:3 panel trims it.
+# Middle unless someone has a reason.
+hero_image_position: "50% 50%"
 hero_logo: "/assets/logos/NaturalDetect-icon.png"
 hero_logo_alt: "NaturalDetect"
 

@@ -20,7 +20,10 @@ permalink: /naturaltag/
          a stand-in photograph would be worse than the mark. #}
       {% if naturaltag.hero_image %}
       <div class="solution-photo">
-        <img src="{{ naturaltag.hero_image }}" alt="{{ naturaltag.hero_image_alt }}" loading="lazy">
+        {# object-position lets an editor move the crop without a new file.
+           The NaturalTag photograph is 3:2 and this panel is 4:3, so 12% of the
+           width is cropped; centred, that put the vial at 41% across. #}
+        <img src="{{ naturaltag.hero_image }}" alt="{{ naturaltag.hero_image_alt }}" loading="lazy"{% if naturaltag.hero_image_position %} style="object-position:{{ naturaltag.hero_image_position }}"{% endif %}>
       </div>
       {% else %}
       <div class="solution-mark">

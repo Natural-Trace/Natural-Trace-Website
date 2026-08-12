@@ -49,7 +49,7 @@ permalink: /naturalcloud/
       </div>
       {% elif naturalcloud.hero_image %}
       <div class="solution-photo">
-        <img src="{{ naturalcloud.hero_image }}" alt="{{ naturalcloud.hero_image_alt }}" loading="lazy">
+        <img src="{{ naturalcloud.hero_image }}" alt="{{ naturalcloud.hero_image_alt }}" loading="lazy"{% if naturalcloud.hero_image_position %} style="object-position:{{ naturalcloud.hero_image_position }}"{% endif %}>
       </div>
       {% else %}
       <div class="solution-mark">

@@ -9,6 +9,9 @@ intro: "NaturalCloud™ is the digital platform that securely stores authenticat
 # the keys exist so the admin panel and this file agree either way.
 hero_image: ""
 hero_image_alt: ""
+# Which part of the photograph stays in frame when the 4:3 panel trims it.
+# Middle unless someone has a reason.
+hero_image_position: "50% 50%"
 
 # The heatmap recording of the portal, added 12 Aug 2026. Set this and the
 # panel plays it instead of showing the logo mark; empty it and the mark comes
