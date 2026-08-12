@@ -1,0 +1,69 @@
+---
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+---
+{#-
+  RSS 2.0 for the Insights articles.
+
+  Two reasons this exists, and the second is the one that pays for it.
+
+  A news section without a feed is a news section nobody can subscribe to. That
+  is the ordinary reason and it has been true since the section was built.
+
+  The other is that a feed is the join between writing an article once and it
+  appearing everywhere else. Buffer, Zapier, Make and every other scheduler
+  takes an RSS URL as a trigger: point one of them here and a new article turns
+  into a LinkedIn post on its own, with the headline, the summary and a link
+  back. Nobody writes anything twice, and the article stays the canonical
+  version on a domain we own rather than a post inside somebody else's product.
+
+  RSS 2.0 rather than Atom because the schedulers all read it and several of
+  them still do not read Atom properly.
+
+  Absolute URLs throughout. A feed is read somewhere else by definition, so a
+  relative link in it is a link to nothing.
+-#}
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>{{ site.name }} Insights</title>
+    <link>{{ site.url }}/insights/</link>
+    <description>{{ site.tagline }}</description>
+    <language>en</language>
+    <atom:link href="{{ site.url }}/feed.xml" rel="self" type="application/rss+xml"/>
+    {%- set sorted = collections.insights | reverse -%}
+    {%- if sorted | length %}
+    <lastBuildDate>{{ sorted[0].date | rssDate }}</lastBuildDate>
+    {%- endif %}
+    {%- for post in sorted %}
+    <item>
+      <title>{{ post.data.title }}</title>
+      <link>{{ site.url }}{{ post.url }}</link>
+      {#- The guid is what a scheduler uses to decide whether it has seen an
+          item before. It has to be stable: if it changes, the same article is
+          posted to LinkedIn a second time. The URL contains the publication
+          date and the slug, neither of which changes after publishing. -#}
+      <guid isPermaLink="true">{{ site.url }}{{ post.url }}</guid>
+      <pubDate>{{ post.date | rssDate }}</pubDate>
+      {%- if post.data.author %}
+      <dc:creator>{{ post.data.author }}</dc:creator>
+      {%- endif %}
+      <description>{{ post.data.summary }}</description>
+      {%- for tag in post.data.tags %}
+      <category>{{ tag }}</category>
+      {%- endfor %}
+      {#- Several schedulers will attach the enclosure image to the social post
+          rather than relying on the link preview, which is the difference
+          between a post with a picture and a post with a grey box. -#}
+      {#- Not every image field holds a site-relative path. Two of the older
+          articles still point at pbs.twimg.com, and prefixing site.url to
+          those produced a URL with two schemes in it, which every reader
+          would have silently dropped. Absolute stays absolute. -#}
+      {%- if post.data.image %}
+      {%- set imgSrc = post.data.image if "://" in post.data.image else site.url + post.data.image %}
+      <enclosure url="{{ imgSrc }}" type="image/{{ post.data.image | imageType }}" length="0"/>
+      {%- endif %}
+    </item>
+    {%- endfor %}
+  </channel>
+</rss>

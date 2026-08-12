@@ -26,6 +26,10 @@
 <meta name="twitter:card" content="summary_large_image">
 {% if layout == "layouts/post.njk" and author %}<meta name="author" content="{{ author }}">{% endif %}
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+{#- Feed discovery. Without this, a reader or a scheduler pointed at the site
+    has to be told the feed URL by hand; with it, pasting natural-trace.com is
+    enough for anything that speaks RSS to find /feed.xml on its own. -#}
+<link rel="alternate" type="application/rss+xml" title="{{ site.name }} Insights" href="{{ site.url }}/feed.xml">
 <link rel="icon" type="image/png" href="/assets/logos/NT icon without logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

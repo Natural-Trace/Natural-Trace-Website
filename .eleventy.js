@@ -53,6 +53,30 @@ module.exports = function(eleventyConfig) {
     return d.toLocaleDateString();
   });
 
+  // RFC 822 dates, which is what RSS 2.0 requires and nothing else on this
+  // site needs. Written out by hand rather than taken from toUTCString(),
+  // which produces "GMT" where the spec asks for a numeric offset. Several
+  // feed readers accept both; the ones that do not fail silently, and a
+  // scheduler that cannot parse the date treats every item as new and posts
+  // the whole archive to LinkedIn at once.
+  eleventyConfig.addFilter("rssDate", dateObj => {
+    const d = new Date(dateObj);
+    const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    const months = ["Jan","Feb","Mar","Apr","May","Jun",
+                    "Jul","Aug","Sep","Oct","Nov","Dec"];
+    const p = n => String(n).padStart(2, "0");
+    return `${days[d.getUTCDay()]}, ${p(d.getUTCDate())} ${months[d.getUTCMonth()]} `
+      + `${d.getUTCFullYear()} ${p(d.getUTCHours())}:${p(d.getUTCMinutes())}:`
+      + `${p(d.getUTCSeconds())} +0000`;
+  });
+
+  // Enclosure MIME type from the filename. jpg and jpeg are the same type and
+  // the migrated archive contains both spellings.
+  eleventyConfig.addFilter("imageType", path => {
+    const ext = String(path).split(".").pop().toLowerCase();
+    return ext === "jpg" ? "jpeg" : ext;
+  });
+
   // Per-page SEO lookup from src/_data/seo.yml, keyed by URL
   eleventyConfig.addFilter("seoLookup", (pages, url) =>
     (pages || []).find(p => p.url === url) || {}
