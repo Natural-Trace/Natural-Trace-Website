@@ -360,8 +360,8 @@ collections:
         file: "src/_data/about.yml"
         fields:
           - {label: "Label", name: "label", widget: "string"}
-          - {label: "Headline", name: "title", widget: "string"}
-          - {label: "Sub-headline", name: "subtitle", widget: "text"}
+          - {label: "Headline", name: "title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line. The break is ignored on phones."}
+          - {label: "Sub-headline", name: "subtitle", widget: "text", hint: "Wrap a word in <strong> to emphasise it. Type &nbsp; between two words to stop them being split across a line break."}
           - {label: "Intro", name: "intro", widget: "text"}
           - {label: "Disciplines Line", name: "disciplines", widget: "string"}
           - {label: "Secondary Intro", name: "intro_secondary", widget: "text"}

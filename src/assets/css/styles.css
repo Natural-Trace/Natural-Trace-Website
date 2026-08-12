@@ -1357,6 +1357,18 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
         text, which made the line read as a caption rather than as part of the
         opening statement. Same weight as before, the colour is what changes. */
 .section-subtitle-strong{color:var(--text)}
+/* Emphasis inside a sub-headline. Sage rather than a heavier grey, because at
+   this size a weight change alone barely registers against a line that is
+   already 1.1rem. #535A38 on the two surfaces this line sits on measures 7.4:1
+   and 7.9:1, so it clears 4.5:1 with room rather than by a hair. */
+.section-subtitle strong{font-weight:700;color:var(--sage-dark)}
+
+/* A headline break the editor sets, not the browser. Suppressed on phones,
+   where the column is too narrow for a chosen break to be an improvement on
+   the one the browser would have made anyway. */
+@media(max-width:700px){
+  .section-title br{display:none}
+}
 
 /* A12  Long headings were breaking wherever the box happened to end. */
 .section-title{text-wrap:balance}

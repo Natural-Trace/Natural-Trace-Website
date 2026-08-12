@@ -2,8 +2,20 @@
 
 # Hero
 label: "About Natural Trace"
-title: "Protecting the Future of Premium Ingredients"
-subtitle: "Every premium ingredient should be able to prove its authenticity."
+# The break is set here rather than left to the browser. Balanced wrapping was
+# putting a long line between two short ones, which is the shape Bryan flagged
+# on 12 Aug. Two lines with the noun phrase kept whole reads as a decision;
+# whatever the algorithm picks at a given window width does not. The <br> is
+# suppressed below 700px, where the column is too narrow to honour it.
+title: "Protecting the Future of<br>Premium Ingredients"
+# &nbsp; keeps "prove its" together so the orphaned "its" moves up to the first
+# line. <strong> is styled in the stylesheet, not here, so the emphasis stays
+# one decision in one place.
+# Note the conflict: Kirsty's 12 Aug document asks for this line to be the same
+# weight and colour as the surrounding text, which is the opposite of adding
+# emphasis. Bryan's instruction is the later one and wins, but she should be
+# told rather than left to find it.
+subtitle: "Every premium ingredient should be able to prove&nbsp;its <strong>authenticity</strong>."
 intro: "Natural Trace helps food and nutraceutical companies protect the value of their premium ingredients through in-product authentication."
 disciplines: "Life science · Food Science · Bioinformatics"
 intro_secondary: "Combining food science, molecular biology and digital technology, we help businesses verify authenticity, strengthen customer trust and protect commercial value throughout global supply chains."
