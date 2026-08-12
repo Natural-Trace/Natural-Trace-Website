@@ -65,6 +65,10 @@ cta:
   title: "Start Your First Test Today"
   subtitle: "Schedule a consultation, discuss a compatibility project, or explore our testing capabilities."
   primary_text: "Contact Us"
-  primary_href: "#contact-form"   # the form is higher up this same page
+  # Was "#contact-form", which is the whole section and therefore the top of
+  # the page. Clicking it scrolled 844px up and landed on the introduction,
+  # which is why it was reported as not working: it moved, but not to anything
+  # the button had promised. "#contactForm" is the form itself.
+  primary_href: "#contactForm"
   secondary_text: "View Services"
   secondary_href: "/naturaltag/"   # was /services/, which is only a redirect to here

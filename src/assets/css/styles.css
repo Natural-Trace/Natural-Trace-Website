@@ -12,7 +12,13 @@ a{text-decoration:none;color:inherit}
   --gold:#A29349;--gold-light:#BFB060;
   --teal:#3B666B;--teal-light:#4D8489;
   --dark:#1A1E2E;--offwhite:#F5F6F1;--soft-sage:#DEDFDE;
-  --text:#2C3345;--muted:#6B7280;
+  --text:#2C3345;
+  /* Was #6B7280. Kirsty asked for the grey text to be darker for readability
+     and it was independently failing: 4.45:1 against --offwhite where small
+     text needs 4.5, and 4.15:1 on the --offwhite cards. #565C6B measures
+     6.16, 6.69 and 5.74 on the three surfaces this colour actually lands on.
+     One token, so every muted line on the site moves together. */
+  --muted:#565C6B;
   --shadow:0 4px 30px rgba(0,0,0,.08);--shadow-lg:0 20px 60px rgba(0,0,0,.12);
   /* The space under a section head, before whatever the section is about.
      Three wrappers do this job across the site (.vp-head, .how-head,
@@ -43,8 +49,15 @@ a{text-decoration:none;color:inherit}
    case is today's wrapping. */
 h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
 .container{max-width:1200px;margin:0 auto;padding:0 2rem}
-.section-label{font-family:'Montserrat',sans-serif;display:block;font-size:.95rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);margin-bottom:.55rem}
-.section-title{font-size:clamp(1.9rem,3.6vw,2.6rem);color:var(--dark);line-height:1.18;margin-bottom:1.25rem;letter-spacing:-.025em}
+.section-label{font-family:'Montserrat',sans-serif;display:block;font-size:1.02rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);margin-bottom:.6rem}
+/* One scale, not seventeen overrides.
+   Kirsty's 12 August list asks for a larger heading seventeen times: The
+   Challenge, About Natural Trace, Industries, Careers, FAQ, Our Story, Why We
+   Exist, Why Customers Choose, What Makes Us Different and the rest. They are
+   all this rule. Raising it once keeps the site a system; seventeen local
+   overrides is how a stylesheet stops having a scale at all.
+   Roughly +14% at both ends of the clamp. */
+.section-title{font-size:clamp(2.15rem,4.1vw,3rem);color:var(--dark);line-height:1.18;margin-bottom:1.25rem;letter-spacing:-.025em}
 /* balance evens the lines out instead of filling each one to the edge and
    leaving whatever is left on the last. It is what stops a centred subtitle
    ending on a single stranded word. Chrome only applies it to blocks of six
@@ -587,7 +600,10 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
 .footer-brand-logo{height:40px;width:auto;margin-bottom:1rem;opacity:.7}
 .footer-brand p{font-size:.85rem;line-height:1.7;max-width:300px}
-.footer-col h4{font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.25);margin-bottom:1.25rem}
+/* White at 25% on the charcoal measured 2.27:1, the worst on the site and a
+   long way under the 4.5 small text needs. 55% measures 5.68 and still reads
+   as a quiet label rather than a heading competing with the links below it. */
+.footer-col h4{font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.55);margin-bottom:1.25rem}
 .footer-col ul{list-style:none}
 .footer-col li{margin-bottom:.6rem}
 .footer-col a{font-size:.9rem;color:rgba(255,255,255,.5);transition:color .2s,padding-left .2s;cursor:pointer}
@@ -867,7 +883,12 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 .insight-card-image img{width:100%;height:280px;object-fit:cover;display:block}
 .insight-card-content{padding:1.5rem 1.75rem 1.75rem}
 .insight-card-content time{font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
-.insight-card-content h2{font-family:'Montserrat',sans-serif;font-size:1.4rem;color:var(--dark);margin:.5rem 0 .6rem;line-height:1.3}
+/* .6rem measured as a 3px ink gap to the summary below on a phone, which is
+   not a gap, it is a collision. The margin was set when the Insights index
+   held three cards; it holds nineteen now and the fault repeats down the whole
+   page. Measured from ink rather than from the box, which is why the number
+   looks larger than the gap it produces. */
+.insight-card-content h2{font-family:'Montserrat',sans-serif;font-size:1.4rem;color:var(--dark);margin:.5rem 0 .95rem;line-height:1.3}
 .insight-card-content h2 a{color:inherit;text-decoration:none}
 .insight-card-content h2 a:hover{color:var(--sage)}
 .insight-card-content p{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:.75rem}
@@ -916,6 +937,13 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
   .insight-featured-image img{max-height:300px}
 }
 .insight-body{font-family:'Montserrat',-apple-system,sans-serif;font-size:.95rem;line-height:1.85;color:var(--text)}
+/* h1 as well as h2. Two of the migrated WordPress articles open the body with
+   an h1 rather than a paragraph, and .insight-body only ever styled h2 and h3,
+   so those two got browser defaults and their headline sat 4px off the
+   paragraph under it. The article already has an h1 in its header, so this is
+   a second one inside the prose; it is set to match h2 rather than compete
+   with the title above. */
+.insight-body h1{font-family:'Montserrat',sans-serif;font-size:1.65rem;color:var(--dark);margin:2rem 0 .85rem;line-height:1.25}
 .insight-body h2{font-family:'Montserrat',sans-serif;font-size:1.5rem;color:var(--dark);margin:2rem 0 .75rem}
 .insight-body h3{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:700;color:var(--dark);margin:1.5rem 0 .5rem}
 .insight-body p{margin-bottom:1.25rem}
@@ -1011,9 +1039,14 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 .challenge{padding:6rem 0;background:var(--offwhite)}
 .challenge-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:4rem;align-items:center}
 .challenge-lead{font-size:1.02rem;line-height:1.85;color:var(--text);margin-bottom:2rem}
-.challenge-sub{font-size:.72rem;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--sage);margin-bottom:1rem}
+.challenge-sub{font-size:.8rem;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--sage);margin-bottom:1.1rem}
 .challenge-list{list-style:none;display:grid;gap:.7rem}
-.challenge-list li{position:relative;padding-left:1.6rem;font-size:.93rem;line-height:1.6;color:var(--muted)}
+/* "'Naturaldetect features' text too small". This list is that block, and the
+   same rule sets the Challenge list on the home page and the feature lists on
+   NaturalTag and NaturalCloud, so all four move together. Body copy beside it
+   is 1.02rem; these were .93 and grey, which is why they read as a footnote to
+   the paragraph rather than as the product's features. */
+.challenge-list li{position:relative;padding-left:1.6rem;font-size:1.02rem;line-height:1.7;color:var(--text)}
 .challenge-list li::before{content:'';position:absolute;left:0;top:.55rem;width:7px;height:7px;border-radius:2px;background:var(--gold)}
 .challenge-close{margin-top:2rem;padding:1.25rem 1.5rem;border-left:3px solid var(--sage);background:#fff;border-radius:0 12px 12px 0;font-size:.95rem;line-height:1.7;color:var(--dark);box-shadow:var(--shadow)}
 /* The callout is usually the last thing in its section, where the section's own
@@ -1266,7 +1299,7 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 /* .finalcta p already sets margin:0 auto 2rem, and (0,1,1) beats (0,1,0), so a
    bare .finalcta-alt rule was being ignored and the link sat flush against the
    buttons. Matching the element as well takes it to (0,2,1). */
-.finalcta p.finalcta-alt{margin:2.75rem auto 0;font-size:1.05rem}
+.finalcta p.finalcta-alt{margin:2.75rem auto 0;font-size:1.22rem}
 .finalcta-alt a{color:rgba(255,255,255,.72);border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:2px;transition:color .25s ease,border-color .25s ease}
 .finalcta-alt a:hover{color:#fff;border-bottom-color:rgba(255,255,255,.7)}
 
@@ -1322,7 +1355,15 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 .matrix-chips li{font-size:.92rem;font-weight:600;color:var(--teal);background:rgba(59,102,107,.09);border:1px solid rgba(59,102,107,.18);border-radius:999px;padding:.55rem 1.15rem}
 
 /* A26  Keeps "Product Authentication" together on the Careers heading. */
+/* Keeps a phrase together when there is room for it, and gets out of the way
+   when there is not. "Product Authentication" is held on one line in the
+   Careers heading on Kirsty's request; once that heading grew by 14% in the
+   12 August type pass, the phrase needed 437px inside a 343px phone and pushed
+   the page sideways by 47. It can never fit at that width, so below 560px the
+   rule releases rather than overflowing. A heading that wraps is a heading; a
+   heading that overflows is a horizontal scrollbar. */
 .nowrap{white-space:nowrap}
+@media(max-width:560px){.nowrap{white-space:normal}}
 
 /* A27  The three solution pages shared one hero. Each now carries its product
         colour, as a tint behind it and on the eyebrow, rather than a full
@@ -1541,7 +1582,10 @@ body.hero-is-light #navbar:not(.scrolled) .nav-toggle span{background:var(--dark
    of the card cut off behind the navigation bar. 96px is the nav height plus a
    little; the cards get more, so the section heading stays in shot and the
    arrival reads as a page rather than as a fragment. */
-section[id],[id].anchor-target{scroll-margin-top:96px}
+/* form[id] is here because the contact CTA points at the form itself. Without
+   it the form's first field lands under the fixed navigation, which is the
+   same fault the industry cards had. */
+section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
 .industry-card[id]{scroll-margin-top:160px}
 
 /* The food matrices grid on the NaturalTag page was pinned to three columns by
