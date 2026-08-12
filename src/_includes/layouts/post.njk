@@ -41,9 +41,12 @@ layout: base.njk
     </div>
 
     {% if image %}
-    <div class="insight-featured-image">
-      <img src="{{ image }}" alt="{{ title }}">
-    </div>
+    <figure class="insight-featured-image">
+      {#- alt falls back to the headline, which is better than nothing and
+          worse than a real description, so the CMS offers a field for it. -#}
+      <img src="{{ image }}" alt="{{ image_alt or title }}">
+      {% if image_caption %}<figcaption>{{ image_caption }}</figcaption>{% endif %}
+    </figure>
     {% endif %}
 
     <div class="insight-body">

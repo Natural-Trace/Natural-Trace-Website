@@ -35,7 +35,11 @@ vision_label: "Our Vision"
 vision_text: "A world where every great product comes with a trusted provenance story"
 mission_label: "Our Mission"
 mission_text: "To become the global leader for in-product authentication for food and nutraceutical ingredients."
-mission_body: "By making authentication practical and commercially scalable, we help businesses protect premium ingredients, verify authorised manufacturing and build trust throughout global supply chains."
+# Emptied on Kirsty's 12 Aug request: the paragraph under Our Mission said
+# again, at length, what the mission statement above it had already said.
+# Kept as a field rather than deleted so the panel can put something back
+# here without a developer.
+mission_body: ""
 
 # What Makes Us Different
 different_label: "What Makes Us Different"

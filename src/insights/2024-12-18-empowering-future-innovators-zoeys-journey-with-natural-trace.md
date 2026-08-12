@@ -3,6 +3,9 @@ layout: layouts/post.njk
 title: 'Empowering Future Innovators: Zoey’s Journey with Natural Trace'
 date: 2024-12-18T11:30:45+08:00
 author: 'Natural Trace'
+image: /assets/images/insights/zoey.webp
+image_caption: 'Zoey Wong – Natural Trace Intern now Laboratory Technician sharing her experience in biotechnology and food traceability'
+image_alt: 'Natural Trace Intern now Laboratory Technician, Zoey Wong sitting in Laboratory'
 summary: 'As we approach the end of the year, we took the opportunity to sit down with our outstanding intern-turned-Laboratory Technician, Zoey Wong, to reflect on her journey with Natural Trace. Zoey shared her insights and experiences from her internship, providing a firsthand look at what it’s like to be part of a company that not'
 tags:
   - 'News'
@@ -19,7 +22,13 @@ tags:
 # so it had been broken on natural-trace.com for some time and the migration
 # did not lose it.
 #
-# Substituted with Zoey-7-1-1.jpeg from the same December 2024 upload folder.
+# Bryan supplied zoey.webp on 12 Aug 2026 and it is now the header image, so
+# this article has a banner like every other one. The inline right-floated
+# figure was removed with it: it was the same photograph, and carrying it
+# twice on one page is not a layout, it is an accident. Its caption and its
+# alt text moved into the front matter above rather than being thrown away.
+#
+# Before that, substituted with Zoey-7-1-1.jpeg from the same upload folder.
 # That was a filename match until somebody opened it: it is a photograph of a
 # woman in a lab coat at a biosafety cabinet with a tube rack and gloves,
 # which is what the alt text on the original describes. The width and height
@@ -35,7 +44,6 @@ tags:
 #   an intellectual property claim: ...a few months learning about food fraud and Natural Trace’s patented technology, I truly believe that Natural Trace would become...
 ---
 {% raw %}
-<figure id="attachment_7674" aria-describedby="caption-attachment-7674" class="wp-caption alignright"><img decoding="async" class="size-medium wp-image-7674" src="/assets/images/insights/empowering-future-innovators-zoeys-journey-with-natural-trace.jpeg" alt="Natural Trace Intern now Laboratory Technician, Zoey Wong sitting in Laboratory" /><figcaption id="caption-attachment-7674" class="wp-caption-text">Zoey Wong &#8211; Natural Trace Intern now Laboratory Technician sharing her experience in biotechnology and food traceability</figcaption></figure>
 <p><span style="font-weight: 400;">As we approach the end of the year, we took the opportunity to sit down with our outstanding intern-turned-Laboratory Technician, Zoey Wong, to reflect on her journey with Natural Trace. Zoey shared her insights and experiences from her internship, providing a firsthand look at what it’s like to be part of a company that not only drives technological innovation but also nurtures the next generation of leaders in biotechnology:</span></p>
 <p><span style="font-weight: 400;">“My internship experience at Natural Trace was an immensely fruitful one. During my 3 month work at Natural Trace, I was immersed in laboratory based projects and research work on industry trends that provided me new insights on emerging traceability technology. The food traceability industry was completely unknown to me prior to joining Natural Trace and I was not aware that food safety and authenticity was an increasing problem all around the world that needed an immediate solution. </span></p>
 <p><span style="font-weight: 400;">Despite initial nerves due to having to adjust to a new and unfamiliar environment, the team was incredibly welcoming. CL, the CEO of Natural Trace, was excited to have me on the team and our conversations managed to ease some of my worries. My co-worker and mentor, Alrik, was patient in teaching me about laboratory techniques such as DNA detection methods and other molecular approaches for food traceability. The laboratory projects that I worked on first-hand boosted my confidence and equipped me with the necessary skills to undertake research work independently. </span></p>

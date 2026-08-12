@@ -58,7 +58,11 @@ permalink: /about/
       <div class="how-step">
         <h3>{{ about.mission_label }}</h3>
         <p>{{ about.mission_text }}</p>
-        <p style="margin-top:.75rem">{{ about.mission_body }}</p>
+        {#- Only when it has something in it. The field was emptied on 12 Aug
+            rather than deleted, so without this guard the section renders an
+            empty paragraph and 0.75rem of unexplained space under the mission
+            statement. -#}
+        {% if about.mission_body %}<p style="margin-top:.75rem">{{ about.mission_body }}</p>{% endif %}
       </div>
     </div>
   </div>

@@ -17,7 +17,7 @@ hero_title_line2: "Behind Your Brand"
 # Kirsty's sign-off. Rendered in bold at the start of the hero lead paragraph,
 # directly under the headline.
 hero_slogan: "In-Product Authentication for Food & Nutraceutical Ingredients"
-hero_desc: "Natural Trace gives every ingredient a unique, detectable identity."
+hero_desc: "Natural Trace gives every ingredient a unique, detectable identity, verifiable throughout the supply chain."
 # Rendered as a single sentence: items joined with commas and "and", then the
 # coda after a comma. Kirsty wrote these as five short lines; the fifth is a
 # coda, not a peer, which is why it read as an orphan when set as a list.
@@ -30,7 +30,12 @@ hero_claims:
   - "Protect branded ingredients"
   - "Confirm authorised manufacturing"
   - "Investigate suspicious products"
-hero_claims_coda: "all through the supply chain"
+# Emptied on Kirsty's 12 Aug request. It used to trail the four ticks as
+# "...all through the supply chain", saying the same thing the description
+# above now says in a full sentence. The template only renders this line
+# when it has a value, so an empty string removes it cleanly and it can be
+# brought back from the panel without touching code.
+hero_claims_coda: ""
 hero_cta: "Request a Compatibility Assessment"
 hero_cta_url: "/contact/"
 hero_cta_secondary: "How it works"

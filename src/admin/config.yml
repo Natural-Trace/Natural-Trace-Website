@@ -845,7 +845,9 @@ collections:
       - {label: "Date", name: "date", widget: "datetime", hint: "Articles are listed newest first. Post-dating one does not hide it."}
       - {label: "Author", name: "author", widget: "string", default: "Natural Trace Team"}
       - {label: "Pin to the top of Insights", name: "pinned", widget: "boolean", default: false, required: false, hint: "Pinned articles sit above the rest regardless of date. Use sparingly, or nothing stands out."}
-      - {label: "Header image", name: "image", widget: "image", required: false, hint: "Shown at the top of the article and on its card. Landscape works best, around 1200px wide."}
+      - {label: "Header image", name: "image", widget: "image", required: false, hint: "Shown at the top of the article and on its card. Landscape works best, around 1200px wide. A tall or square image is cropped to a banner rather than filling the screen, so it will still look right."}
+      - {label: "Header image caption", name: "image_caption", widget: "string", required: false, hint: "Optional line under the header image. Leave empty for no caption."}
+      - {label: "Header image description", name: "image_alt", widget: "string", required: false, hint: "For screen readers and for when the image fails to load. Describe what is in the picture. Leave empty and the headline is used."}
       - {label: "Summary", name: "summary", widget: "text", hint: "The paragraph on the article's card. Also used as the Google description unless you set one below."}
       - {label: "Article", name: "body", widget: "markdown"}
       - {label: "Tags", name: "tags", widget: "list", required: false, field: {label: "Tag", name: "tag", widget: "string"}}
