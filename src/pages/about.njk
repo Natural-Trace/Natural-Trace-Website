@@ -113,13 +113,18 @@ permalink: /about/
       <span class="section-label">{{ about.choose_label }}</span>
       <h2 class="section-title">{{ about.choose_title }}</h2>
     </div>
-    <div class="vp-grid about-grid-2" style="max-width:900px;margin:0 auto">
+    {# The width and the row alignment are in the stylesheet now, not in style
+       attributes here. The old inline max-width:900px left the longer heading
+       23px of room on a 390px card, which held on this machine and wrapped on
+       Bryan's: Windows sets Montserrat a few per cent wider than Linux does,
+       and 23px is inside that margin. #}
+    <div class="vp-grid about-grid-2 choose-grid">
       {% for group in about.choose_groups %}
       <article class="vp-card delay-{{ loop.index }}">
         {# safe: these titles carry &nbsp; around their ampersand so the
            heading cannot break with the & stranded at the end of a line. #}
         <h3>{{ group.title | safe }}</h3>
-        <ul class="sol-list" style="grid-template-columns:1fr;margin-top:0">
+        <ul class="sol-list">
           {% for item in group.items %}<li>{{ item }}</li>{% endfor %}
         </ul>
       </article>

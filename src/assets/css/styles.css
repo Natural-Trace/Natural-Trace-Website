@@ -1300,6 +1300,45 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 }
 /* About page reuses .vp-grid for 2-up and 4-up blocks: keep those even */
 .about-grid-2 .vp-card,.about-grid-2 .vp-card:nth-child(4),.about-grid-2 .vp-card:nth-child(5){grid-column:span 3}
+
+/* Why Customers Choose: two cards whose bullet lists must start on the same
+   line as each other.
+
+   They did not, and the reason matters more than the fix. The grid was capped
+   at 900px in a style attribute, which left the longer of the two headings
+   367px of text in 390px of card. That is 23px of slack, and Windows sets
+   Montserrat a few per cent wider than Linux does, so the heading held on one
+   line here and wrapped to two on Bryan's screen. Every measurement in this
+   file taken on Linux is optimistic by about that much; anything relying on
+   less than a tenth of the line to spare is not actually fixed.
+
+   1040px gives the same heading roughly 70px of room, which survives the
+   difference. Below 980px the cards stack full width and the cap is moot. */
+.choose-grid{max-width:1040px;margin-inline:auto}
+
+/* And the alignment is made structural rather than left to luck. Both cards
+   share the grid's rows, so the heading row is as tall as the taller heading
+   and both lists start at the top of the second row whatever the copy does or
+   whichever machine renders it. Setting the row gap here because taking the
+   card off flex would otherwise hand the spacing to the grid's 1.5rem. */
+.choose-grid{grid-template-rows:auto auto}
+@supports (grid-template-rows:subgrid){
+  .choose-grid .vp-card{display:grid;grid-template-rows:subgrid;grid-row:span 2;align-content:start;row-gap:1.35rem}
+}
+.choose-grid .sol-list{grid-template-columns:1fr;margin-top:0}
+/* Stacks at 1060px rather than the 980px the rest of the value grids use.
+   Between those two widths the container, not the 1040px cap, sets the grid,
+   and the card falls to roughly 400px against a heading that needs 367px. That
+   is the same thin margin that caused this, so the band where it is thin is
+   the band that stacks. Full width, one card per row, no heading anywhere near
+   wrapping. */
+@media(max-width:1060px){
+  /* One card per row, so a shared row would pair a card with nothing. Back to
+     the ordinary flex card. */
+  .choose-grid{grid-template-rows:none;grid-template-columns:1fr}
+  .choose-grid .vp-card{display:flex;grid-row:auto;grid-column:1 / -1}
+  .choose-grid .sol-list{margin-top:1.35rem}
+}
 @media(max-width:980px){.about-grid-2 .vp-card,.about-grid-2 .vp-card:nth-child(4),.about-grid-2 .vp-card:nth-child(5){grid-column:span 1}}
 
 /* Solutions pages: product logo panel in place of a stock photo */
