@@ -60,18 +60,35 @@ h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
 
 /* Nav */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0);-webkit-backdrop-filter:blur(0);backdrop-filter:blur(0);transition:all .4s;border-bottom:1px solid transparent}
-nav.scrolled{background:rgba(255,255,255,.95);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom-color:rgba(0,0,0,.06);box-shadow:0 2px 20px rgba(0,0,0,.06)}
+/* #navbar, not nav.
+
+   This was a bare element selector, which meant every <nav> on the site was
+   position:fixed, top:0, z-index:1000. There was only ever one, so it worked,
+   until the Insights pager was added as <nav class="insights-pager"> because
+   that is what a pagination control is. It was immediately pinned to the top
+   of the window over the site header, at every scroll position, on both
+   Insights pages.
+
+   Neither the layout audit nor the contrast audit saw it. Both measure text
+   against text and background, and a control sitting on top of the header is
+   neither overflowing nor overlapping any text they check.
+
+   Scoped to the id, which is what every one of these twenty-one rules always
+   meant. The alternative was to stop using <nav> for the pager, which would
+   have fixed the symptom by giving up the correct element and left the trap
+   set for whoever adds the next one. */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0);-webkit-backdrop-filter:blur(0);backdrop-filter:blur(0);transition:all .4s;border-bottom:1px solid transparent}
+#navbar.scrolled{background:rgba(255,255,255,.95);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom-color:rgba(0,0,0,.06);box-shadow:0 2px 20px rgba(0,0,0,.06)}
 .nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:80px;position:relative}
 .nav-logo img{height:44px;width:auto}
-nav:not(.scrolled) .logo-color{display:none}nav:not(.scrolled) .logo-white{display:block}nav.scrolled .logo-color{display:block}nav.scrolled .logo-white{display:none}.logo-color,.logo-white{transition:opacity .4s}
+#navbar:not(.scrolled) .logo-color{display:none}#navbar:not(.scrolled) .logo-white{display:block}#navbar.scrolled .logo-color{display:block}#navbar.scrolled .logo-white{display:none}.logo-color,.logo-white{transition:opacity .4s}
 .nav-links{display:flex;align-items:center;gap:2.25rem;list-style:none}
 .nav-links a{font-size:.88rem;font-weight:500;transition:color .3s,transform .2s;position:relative;cursor:pointer}
-nav:not(.scrolled) .nav-links a{color:rgba(255,255,255,.8)}
-nav.scrolled .nav-links a{color:#4B5563}
+#navbar:not(.scrolled) .nav-links a{color:rgba(255,255,255,.8)}
+#navbar.scrolled .nav-links a{color:#4B5563}
 .nav-links a:hover{transform:translateY(-1px)}
-nav:not(.scrolled) .nav-links a:hover{color:#fff}
-nav.scrolled .nav-links a:hover{color:var(--sage)}
+#navbar:not(.scrolled) .nav-links a:hover{color:#fff}
+#navbar.scrolled .nav-links a:hover{color:var(--sage)}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gold);transition:width .3s}
 .nav-links a:hover::after{width:100%}
 .nav-links a.active::after{width:100%}
@@ -82,9 +99,9 @@ nav.scrolled .nav-links a:hover{color:var(--sage)}
 .nav-dropdown-menu a{display:block;padding:.55rem 1.25rem;font-size:.82rem!important;font-weight:500!important;color:var(--text)!important;transition:all .2s!important;white-space:nowrap}
 .nav-dropdown-menu a:hover{background:var(--offwhite);color:var(--sage)!important}
 .nav-dropdown-menu a::after{display:none!important}
-nav:not(.scrolled) .nav-dropdown-menu{background:rgba(30,34,50,.95);border:1px solid rgba(255,255,255,.08)}
-nav:not(.scrolled) .nav-dropdown-menu a{color:rgba(255,255,255,.7)!important}
-nav:not(.scrolled) .nav-dropdown-menu a:hover{background:rgba(255,255,255,.08);color:#fff!important}
+#navbar:not(.scrolled) .nav-dropdown-menu{background:rgba(30,34,50,.95);border:1px solid rgba(255,255,255,.08)}
+#navbar:not(.scrolled) .nav-dropdown-menu a{color:rgba(255,255,255,.7)!important}
+#navbar:not(.scrolled) .nav-dropdown-menu a:hover{background:rgba(255,255,255,.08);color:#fff!important}
 .nav-cta{background:var(--sage)!important;color:#fff!important;padding:.6rem 1.5rem!important;border-radius:8px;font-weight:600!important;font-size:.85rem!important;transition:all .3s!important;border:none}
 .nav-cta::after{display:none!important}
 .nav-cta:hover{background:var(--sage-dark)!important;transform:translateY(-2px)!important;box-shadow:0 6px 20px rgba(107,114,73,.3)}
@@ -96,8 +113,8 @@ nav:not(.scrolled) .nav-dropdown-menu a:hover{background:rgba(255,255,255,.08);c
    has to be white on the home page because the hero behind it is a dark
    photograph. Every other page starts on a pale section and keeps the dark
    default. */
-body.page-home nav:not(.scrolled) .nav-toggle{color:#fff}
-nav.scrolled .nav-toggle span{background:var(--dark)}
+body.page-home #navbar:not(.scrolled) .nav-toggle{color:#fff}
+#navbar.scrolled .nav-toggle span{background:var(--dark)}
 
 /* Pages */
 .page{display:none;opacity:0;transition:opacity .4s ease}
@@ -597,9 +614,9 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
   .nav-links li{margin:0;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.1)}
   .nav-links li:last-child{border-bottom:none}
   .nav-links a{color:#fff!important;font-size:1rem}
-  nav.scrolled .nav-links{background:rgba(255,255,255,.98);box-shadow:0 4px 20px rgba(0,0,0,.1)}
-  nav.scrolled .nav-links li{border-bottom-color:rgba(0,0,0,.06)}
-  nav.scrolled .nav-links a{color:var(--dark)!important}
+  #navbar.scrolled .nav-links{background:rgba(255,255,255,.98);box-shadow:0 4px 20px rgba(0,0,0,.1)}
+  #navbar.scrolled .nav-links li{border-bottom-color:rgba(0,0,0,.06)}
+  #navbar.scrolled .nav-links a{color:var(--dark)!important}
   .nav-toggle{display:block}
   .services-grid,.mission-grid,.mission-values-grid{grid-template-columns:1fr}
   /* Industry tiles on the homepage stay two across on a phone. One per row read
@@ -1439,11 +1456,11 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
    logo swaps to its colour version, the links take the scrolled colour, and the
    burger bars go dark. Putting hero-is-light back on the body in base.njk turns
    the whole thing on again. Deleting them would mean rediscovering them. */
-body.hero-is-light nav:not(.scrolled) .logo-color{display:block}
-body.hero-is-light nav:not(.scrolled) .logo-white{display:none}
-body.hero-is-light nav:not(.scrolled) .nav-links a{color:#4B5563}
-body.hero-is-light nav:not(.scrolled) .nav-links a:hover{color:var(--sage)}
-body.hero-is-light nav:not(.scrolled) .nav-toggle span{background:var(--dark)}
+body.hero-is-light #navbar:not(.scrolled) .logo-color{display:block}
+body.hero-is-light #navbar:not(.scrolled) .logo-white{display:none}
+body.hero-is-light #navbar:not(.scrolled) .nav-links a{color:#4B5563}
+body.hero-is-light #navbar:not(.scrolled) .nav-links a:hover{color:var(--sage)}
+body.hero-is-light #navbar:not(.scrolled) .nav-toggle span{background:var(--dark)}
 
 /* How It Works, Section 4 of the copy, now on the homepage.
    Compact by design: the request was to cut the amount of scrolling. */
