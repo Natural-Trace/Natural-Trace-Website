@@ -844,7 +844,16 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
 .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;position:relative}
 .how-step{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:2rem 1.5rem;transition:background .35s,border-color .35s}
 .how-step:hover{background:rgba(255,255,255,.07);border-color:rgba(191,176,96,.4)}
-.how-step-num{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--dark);font-size:.95rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem}
+/* The step number.
+   Was a 44px filled gold badge until 11 Aug 2026. The badge was the loudest
+   thing in the section: four saturated gold squares pulling the eye before
+   any of the four step names, which are what the section is actually for.
+   Set as type instead, large and quiet. The numeral still gives the sequence
+   and no longer competes with the words next to it. The colour is gold at
+   55% over the navy, which is decoration rather than text: the step name and
+   body carry all the meaning, so this does not need to meet a text contrast
+   floor and should not be darkened to try. */
+.how-step-num{font-size:2.6rem;font-weight:600;line-height:1;letter-spacing:-.03em;color:rgba(191,176,96,.55);margin-bottom:.7rem}
 .how-step h3{color:#fff;font-size:1.02rem;font-weight:700;margin-bottom:.6rem;letter-spacing:-.01em}
 .how-step p{color:rgba(255,255,255,.62);font-size:.88rem;line-height:1.65}
 
@@ -1098,6 +1107,12 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
 
 @media(max-width:900px){
   .how-grid{grid-template-columns:repeat(2,1fr)}
+  /* The numeral does not scale with the card. At two across on a phone the
+     card is roughly a third of its desktop width while a 2.6rem numeral is
+     still 2.6rem, so it stops being a quiet marker and becomes the biggest
+     thing on the screen, twice the size of the step name it belongs to.
+     Measured at 390px: numeral 41.6px against a 17px heading. */
+  .how-step-num{font-size:1.9rem;margin-bottom:.5rem}
 }
 
 /* ===========================================================================
