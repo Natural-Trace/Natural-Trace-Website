@@ -116,16 +116,41 @@ const stripTags = html => decodeEntities(String(html).replace(/<[^>]*>/g, '')).r
    front matter leaves Eleventy to guess, and it guesses UTC. For a post
    published at 09:00 Singapore time that shifts the displayed date back a day.
 
-   The offset is not assumed. It is the difference between the two timestamps,
-   which is exact and needs no knowledge of where the site is hosted. */
-function isoWithOffset(post) {
-  const local = post.date, gmt = post.date_gmt;
-  if (!gmt) return local;
-  const mins = Math.round((Date.parse(local + 'Z') - Date.parse(gmt + 'Z')) / 60000);
+   The offset is the difference between the two, which needs no knowledge of
+   where the site is hosted. But it is taken once, from the whole archive,
+   rather than per post.
+
+   The first real run is why. Fifteen posts derived +08:00 and the May 2022 one
+   derived -05:00, because that post's two timestamps disagree in the database:
+   almost certainly imported, or published before the site's timezone was set.
+   A per-post offset faithfully reproduces that inconsistency and writes a date
+   that is thirteen hours out. A site has one timezone, so a post that
+   disagrees with the other fifteen is bad data, not a second timezone.
+
+   The wall clock is kept exactly as WordPress shows it and the archive's own
+   offset is attached, so the date on the page is the date in the WordPress
+   admin. Outliers are listed in the report rather than silently corrected. */
+function offsetOf(post) {
+  if (!post.date_gmt) return null;
+  return Math.round((Date.parse(post.date + 'Z') - Date.parse(post.date_gmt + 'Z')) / 60000);
+}
+
+function formatOffset(mins) {
   const sign = mins < 0 ? '-' : '+';
   const a = Math.abs(mins);
   const pad = n => String(n).padStart(2, '0');
-  return `${local}${sign}${pad(a / 60 | 0)}:${pad(a % 60)}`;
+  return `${sign}${pad(a / 60 | 0)}:${pad(a % 60)}`;
+}
+
+function modalOffset(posts) {
+  const tally = new Map();
+  for (const p of posts) {
+    const o = offsetOf(p);
+    if (o === null) continue;
+    tally.set(o, (tally.get(o) || 0) + 1);
+  }
+  if (!tally.size) return 0;
+  return [...tally.entries()].sort((a, b) => b[1] - a[1])[0][0];
 }
 
 /* Quoted YAML for anything going into front matter. Single quotes, because a
@@ -194,7 +219,7 @@ async function downloadImage(url, basename) {
   if (!DRY) {
     if (FORCE || !(await exists(target))) {
       const res = await fetch(url);
-      if (!res.ok) throw new Error(`image ${url} responded ${res.status}`);
+      if (!res.ok) throw new Error(`responded ${res.status}`);
       await writeFile(target, Buffer.from(await res.arrayBuffer()));
       log(`    image  ${filename}  ${(res.headers.get('content-length') / 1024 | 0) || '?'}KB`);
     } else {
@@ -203,6 +228,27 @@ async function downloadImage(url, basename) {
   }
   downloaded.set(url, publicPath);
   return publicPath;
+}
+
+/* One image must not be able to end a sixteen article migration.
+
+   The first real run died on article eight of sixteen and wrote no report,
+   because an image inside the body did not come back and the throw went
+   straight past everything. Nine articles were never looked at, and the only
+   evidence of why was a stack trace in a terminal.
+
+   A missing image is now recorded and the original URL is left in place, so
+   the page still shows the picture for as long as the old domain answers, and
+   the report says exactly which ones need attention before cutover. */
+const imageFailures = [];
+async function tryDownload(url, basename, context) {
+  try {
+    return await downloadImage(url, basename);
+  } catch (err) {
+    log(`    image FAILED  ${url}  ${err.message}`);
+    imageFailures.push({ url, context, reason: err.message });
+    return null;
+  }
 }
 
 /* Body HTML.
@@ -219,8 +265,11 @@ async function processBody(html, slug) {
     .map(m => m[1]);
   let n = 0;
   for (const url of [...new Set(srcs)]) {
-    const local = await downloadImage(url, `${slug}-${++n}`);
-    body = body.split(url).join(local);
+    const local = await tryDownload(url, `${slug}-${++n}`, slug);
+    /* Left pointing at the old domain when the download failed. A broken
+       relative path shows nothing; the original at least still works today
+       and is listed in the report as something to fix before cutover. */
+    if (local) body = body.split(url).join(local);
   }
 
   /* srcset points at the same images at other sizes. Nothing here serves those
@@ -257,10 +306,21 @@ if (!DRY) {
   await mkdir(IMAGE_DIR, { recursive: true });
 }
 
+const ARCHIVE_OFFSET = modalOffset(posts);
+const offsetOutliers = posts
+  .filter(p => offsetOf(p) !== null && offsetOf(p) !== ARCHIVE_OFFSET)
+  .map(p => ({ slug: p.slug, date: p.date.slice(0, 10), derived: formatOffset(offsetOf(p)) }));
+log(`Archive timezone offset ${formatOffset(ARCHIVE_OFFSET)}`
+  + `${offsetOutliers.length ? `, with ${offsetOutliers.length} post(s) disagreeing` : ''}\n`);
+
 const report = [];
+const postFailures = [];
 let written = 0, skipped = 0;
 
 for (const post of posts) {
+ /* Per post, so one bad article costs one article rather than the run.
+    Whatever went wrong is recorded and the loop carries on to the next. */
+ try {
   const slug = post.slug;
   const date = post.date.slice(0, 10);
   const filename = `${date}-${slug}.md`;
@@ -278,10 +338,7 @@ for (const post of posts) {
 
   const media = post._embedded?.['wp:featuredmedia']?.[0];
   let image = null;
-  if (media?.source_url) {
-    try { image = await downloadImage(media.source_url, slug); }
-    catch (err) { log(`    featured image failed: ${err.message}`); }
-  }
+  if (media?.source_url) image = await tryDownload(media.source_url, slug, `${slug} (featured)`);
 
   const { body, offsite } = await processBody(post.content?.rendered || '', slug);
   /* The summary becomes the page's meta description, so a thin one is a real
@@ -306,7 +363,7 @@ for (const post of posts) {
     '---',
     'layout: layouts/post.njk',
     `title: ${yamlString(title)}`,
-    `date: ${isoWithOffset(post)}`,
+    `date: ${post.date}${formatOffset(ARCHIVE_OFFSET)}`,
     `author: 'Natural Trace'`,
     summary ? `summary: ${yamlString(summary)}` : null,
     image ? `image: ${image}` : null,
@@ -341,6 +398,13 @@ for (const post of posts) {
   log(`    wrote ${filename}${claims.length ? `  (${claims.length} claim flag(s))` : ''}\n`);
   written++;
   report.push({ date, slug, filename, title, status: 'migrated', claims, offsite, image });
+ } catch (err) {
+   log(`    FAILED  ${err.message}\n`);
+   postFailures.push({ slug: post.slug, date: post.date.slice(0, 10), reason: err.message });
+   report.push({ date: post.date.slice(0, 10), slug: post.slug, filename: '-',
+     title: decodeEntities(post.title?.rendered || post.slug),
+     status: `FAILED: ${err.message}`, claims: [], offsite: [] });
+ }
 }
 
 /* ------------------------------------------------------------------------ */
@@ -373,6 +437,35 @@ const lines = [
   '',
   ...flagged.flatMap(r => [`### ${r.title}`, '', `\`${r.filename}\``, '',
     ...r.claims.map(c => `- **${c.why}** ...${c.quote}...`), '']),
+  '## Things that went wrong',
+  '',
+  (postFailures.length || imageFailures.length)
+    ? 'Fix these and run again. Articles already migrated are skipped, so a'
+      + ' second run only picks up what is missing.'
+    : 'Nothing. Every article and every image came across.',
+  '',
+  ...(postFailures.length ? ['### Articles that failed', '',
+    ...postFailures.map(f => `- \`${f.slug}\` (${f.date}): ${f.reason}`), ''] : []),
+  ...(imageFailures.length ? ['### Images that failed', '',
+    'The article still points at the old domain for these, so the page looks'
+      + ' right today and breaks at cutover. Each needs downloading by hand into'
+      + ' `src/assets/images/insights/` and the `src` updating, or the image'
+      + ' removing from the article.', '',
+    ...imageFailures.map(f => `- ${f.context}: ${f.url}\n    - ${f.reason}`), ''] : []),
+  '## Timezone',
+  '',
+  `Every date was written with the offset ${formatOffset(ARCHIVE_OFFSET)}, which is what`
+    + ` most of the archive derives from its own timestamps.`,
+  '',
+  offsetOutliers.length
+    ? 'These posts derive a different offset, meaning their two timestamps'
+      + ' disagree in the WordPress database. Their wall clock time was kept as'
+      + ' WordPress displays it, so the date on the page matches the date in the'
+      + ' admin. Worth an eye, not worth a panic.'
+    : 'No post disagreed.',
+  '',
+  ...offsetOutliers.map(o => `- \`${o.slug}\` (${o.date}) derives ${o.derived}`),
+  '',
   '## Images still hosted elsewhere',
   '',
   offsiteAll.length
@@ -403,4 +496,10 @@ log('---');
 log(`${written} written, ${skipped} skipped, ${downloaded.size} image(s) downloaded`);
 log(`${flagged.length} article(s) carry a claim flag`);
 if (offsiteAll.length) log(`${offsiteAll.length} article(s) still load an image from another server`);
+if (postFailures.length) log(`${postFailures.length} article(s) FAILED`);
+if (imageFailures.length) log(`${imageFailures.length} image(s) FAILED`);
 log(DRY ? 'Dry run: nothing was written.' : `Report: ${REPORT}`);
+
+/* Non-zero when anything failed, so a partial migration cannot be mistaken for
+   a finished one by anyone reading the last line of the output. */
+if (postFailures.length || imageFailures.length) process.exitCode = 1;
