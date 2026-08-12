@@ -42,15 +42,26 @@ permalink: /about/
   </div>
 </section>
 
-<section class="howitworks" id="why-we-exist">
+{# The photograph is a custom property so it stays a CMS field, and it goes
+   through the url filter because HtmlBasePlugin rewrites src and href
+   attributes and does not look inside a style attribute. Without the filter
+   this emits a root-absolute path that resolves at the site root and 404s on
+   the project-page prefix, so the background would be missing in production
+   and correct in every local preview. Third time this has bitten; see the
+   homepage hero and the CTA watermark.
+
+   is-photo is what turns the treatment on. With no image the class is absent
+   and the section is the flat charcoal it was before. #}
+<section class="howitworks{% if about.why_bg_image %} howitworks-photo{% endif %}" id="why-we-exist"
+  {%- if about.why_bg_image %} style="--why-bg:url('{{ about.why_bg_image | url }}')"{% endif %}>
   <div class="container">
     <div class="how-head">
       <span class="section-label">{{ about.why_label }}</span>
       <h2 class="section-title">{{ about.why_title }}</h2>
     </div>
-    <div style="max-width:760px;margin:0 auto">
+    <div class="why-body">
       {% for para in about.why_body %}
-      <p  style="color:rgba(255,255,255,.72);font-size:.98rem;line-height:1.85;margin-bottom:1.15rem">{{ para }}</p>
+      <p>{{ para }}</p>
       {% endfor %}
     </div>
     <div class="how-grid" style="grid-template-columns:repeat(2,1fr);margin-top:3.5rem;max-width:900px;margin-left:auto;margin-right:auto">

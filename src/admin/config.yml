@@ -375,6 +375,7 @@ collections:
           - {label: "Story: Paragraphs", name: "story_body", widget: "list", field: {label: "Paragraph", name: "para", widget: "text"}}
           - {label: "Why We Exist: Label", name: "why_label", widget: "string"}
           - {label: "Why We Exist: Headline", name: "why_title", widget: "string"}
+          - {label: "Why We Exist: Background Image", name: "why_bg_image", widget: "image", required: false, hint: "Sits behind the section, tinted to the brand navy so white text stays readable. A wide landscape photograph works best. Leave empty for a plain dark background."}
           - {label: "Why We Exist: Paragraphs", name: "why_body", widget: "list", field: {label: "Paragraph", name: "para", widget: "text"}}
           - {label: "Vision Label", name: "vision_label", widget: "string"}
           - {label: "Vision Text", name: "vision_text", widget: "text"}

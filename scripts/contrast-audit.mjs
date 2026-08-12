@@ -66,6 +66,22 @@ const TARGETS = [
     'industry tile 3': '.industries-grid .industry-card:nth-child(3) h3',
     'industry tile 4': '.industries-grid .industry-card:nth-child(4) h3',
   } },
+  /* Why We Exist became a photograph on 12 Aug. Every paragraph is listed
+     rather than the block, because the picture is a field under a sky and the
+     paragraph sitting on the sky is not the paragraph sitting on the soil.
+     The vision and mission cards are four per cent white, so what is behind
+     them still reaches the text through the card. */
+  { url: '/about/', selectors: {
+    'why label': '#why-we-exist .section-label',
+    'why headline': '#why-we-exist .section-title',
+    'why para 1': '#why-we-exist .why-body p:nth-child(1)',
+    'why para 2': '#why-we-exist .why-body p:nth-child(2)',
+    'why para 3': '#why-we-exist .why-body p:nth-child(3)',
+    'vision heading': '#why-we-exist .how-step:nth-child(1) h3',
+    'vision text': '#why-we-exist .how-step:nth-child(1) p',
+    'mission heading': '#why-we-exist .how-step:nth-child(2) h3',
+    'mission text': '#why-we-exist .how-step:nth-child(2) p',
+  } },
 ];
 
 const VIEWPORTS = [[1440, 950, 'desktop'], [1024, 768, 'laptop'], [390, 844, 'phone']];
@@ -163,7 +179,15 @@ for (const target of TARGETS) {
       return out;
     }, target.selectors);
 
+    /* Every selector this target measures, hidden by construction.
+       This used to be a hand-written list, and adding /about/ to TARGETS
+       without also adding its selectors here made all nine of its probes
+       measure their own letters: the white headline reported rgb(255,255,255)
+       behind it and "failed" at 1.00:1. A hand-maintained parallel list is a
+       bug waiting for the next person, so it is derived now. */
+    const measured = Object.values(target.selectors).join(',');
     await page.addStyleTag({ content: `
+      ${measured}{color:transparent!important;-webkit-text-fill-color:transparent!important}
       .hero-lab .hero-copy, .hero-lab .hero-copy *, nav .nav-links a{
         color:transparent!important;-webkit-text-fill-color:transparent!important;
         background-image:none!important;

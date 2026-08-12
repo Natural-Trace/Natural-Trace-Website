@@ -52,3 +52,7 @@ Thumbs.db
 # picture at 1920px and 112KB, which is what the site loads. Kept on disk in
 # case it needs re-cropping, kept out of the repo because nothing reads it.
 /src/assets/images/Ingredients Lab.webp
+
+# Stale git lock files parked here by the Cowork device bridge, which cannot
+# unlink. Safe to delete the folder.
+_gitlocks/

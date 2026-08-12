@@ -19,8 +19,11 @@ subtitle: "Every premium ingredient should be able to prove&nbsp;its <strong>aut
 intro: "Natural Trace helps food and nutraceutical companies protect the value of their premium ingredients through in-product authentication."
 disciplines: "Life science · Food Science · Bioinformatics"
 intro_secondary: "Combining food science, molecular biology and digital technology, we help businesses verify authenticity, strengthen customer trust and protect commercial value throughout global supply chains."
-hero_image: "https://images.unsplash.com/photo-1651525670054-279c154bc3b6?w=900&q=80"
-hero_image_alt: "Automated food production line"
+# Bryan's ingredient photograph, replacing the stock apple imagery Kirsty asked
+# to be rid of. It is in the repo rather than hotlinked from Unsplash, so it
+# cannot be pulled, rate-limited or re-licensed out from under the page.
+hero_image: "/assets/images/about-ingredients.webp"
+hero_image_alt: "Botanical powders and capsules in petri dishes and a glass jar on a stainless steel laboratory bench"
 hero_cta: "Meet Our Team"
 hero_cta_url: "/team/"
 
@@ -37,6 +40,13 @@ story_body:
 # Why We Exist
 why_label: "Why We Exist"
 why_title: "Science that Protects Commercial Value"
+# The background photograph, tinted the way the homepage hero is tinted rather
+# than laid down raw: the section is white text on a dark field and a bright
+# sky behind it would take the contrast below readable. Clearing this field
+# returns the section to the flat charcoal it had before, which is what the
+# 11 August meeting asked for, so the two requests can both be honoured
+# without a developer.
+why_bg_image: "/assets/images/kirsty/vision.webp"
 why_body:
   - "Global supply chains have become increasingly complex. Documentation records what should have happened. Natural Trace adds evidence that proves it."
   - "We exist to help companies protect the value behind differentiated ingredients through objective, science-based verification."

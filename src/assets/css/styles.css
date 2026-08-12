@@ -1052,8 +1052,18 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 /* Section 2: The Challenge */
 .challenge{padding:6rem 0;background:var(--offwhite)}
 .challenge-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:4rem;align-items:center}
-.challenge-lead{font-size:1.02rem;line-height:1.85;color:var(--text);margin-bottom:2rem}
-.challenge-sub{font-size:.8rem;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--sage);margin-bottom:1.1rem}
+/* 1.02rem to 1.08rem, 16.3px to 17.3px. Kirsty asked for the Our Story text to
+   be larger. This is the class that sets it, and it also sets the About intro,
+   the homepage challenge lead and the three technology page leads, so the
+   whole family moves together rather than Our Story drifting off on its own.
+   Same principle as the 12 Aug type pass. */
+.challenge-lead{font-size:1.08rem;line-height:1.8;color:var(--text);margin-bottom:2rem}
+/* The "Life science · Food Science · Bioinformatics" line, and the equivalent
+   eyebrow on the homepage and the two technology pages. .8rem was 12.8px,
+   which is below the 14px floor the rest of the site keeps to. Letterspacing
+   comes down from 2.2px to 1.9px because tracking that suited 12.8px sets too
+   loose at 15px. */
+.challenge-sub{font-size:.94rem;font-weight:700;letter-spacing:1.9px;text-transform:uppercase;color:var(--sage);margin-bottom:1.1rem}
 .challenge-list{list-style:none;display:grid;gap:.7rem}
 /* "'Naturaldetect features' text too small". This list is that block, and the
    same rule sets the Challenge list on the home page and the feature lists on
@@ -1112,6 +1122,38 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 .howitworks{padding:6rem 0;background:var(--dark);position:relative;overflow:hidden}
 .howitworks .section-title{color:#fff}
 .howitworks .section-label{color:var(--gold-light)}
+
+/* Why We Exist over a photograph, at Kirsty's request, using the homepage hero
+   treatment she pointed at.
+
+   background-blend-mode:luminosity is what does the work. It keeps the
+   photograph's light and shade and takes its hue and saturation from the navy
+   underneath, so a bright green field and a blue sky become one navy duotone
+   instead of two competing colours behind white text. The flat 88% scrim on
+   top is not the hero's directional gradient: this section is centred text
+   rather than a left-hand column, so there is no side that can afford to be
+   lighter.
+
+   The class only appears when an image is set, so clearing the CMS field
+   returns the flat charcoal the 11 August meeting asked for. */
+.howitworks.howitworks-photo{
+  background-color:var(--charcoal);
+  background-image:
+    linear-gradient(rgba(32,36,47,.87),rgba(32,36,47,.87)),
+    var(--why-bg);
+  background-size:cover,cover;
+  /* Weighted low. The vision photograph is half sky, and sky is the brightest
+     thing in it even after the duotone, so framing on the crop rows keeps the
+     scrim doing less work for the same contrast. */
+  background-position:center,center 78%;
+  background-repeat:no-repeat,no-repeat;
+  background-blend-mode:normal,luminosity;
+}
+/* Was three inline styles on a loop in about.njk, which meant the body copy of
+   a whole section could not be changed without editing a template. */
+.why-body{max-width:760px;margin:0 auto}
+.why-body p{color:rgba(255,255,255,.82);font-size:1.02rem;line-height:1.85;margin-bottom:1.15rem}
+.why-body p:last-child{margin-bottom:0}
 .how-head{text-align:center;max-width:var(--section-head-width);margin:0 auto var(--section-head-gap)}
 .how-head .section-subtitle{max-width:640px;margin-inline:auto}
 .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;position:relative}
@@ -1386,7 +1428,11 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
         the homepage carries the numbers 01 to 04, which is a job. Here it was
         decoration standing in for artwork that never arrived. Removed at the
         11 Aug meeting, and the heading below it grows to take the space. */
-#why-we-exist{background:var(--charcoal)}
+/* background-color, not the background shorthand. The shorthand resets
+   background-image to none, and because this is an ID it beat the photograph
+   rule further up the file with no warning: the section rendered flat charcoal
+   and the CMS field looked like it did nothing. */
+#why-we-exist{background-color:var(--charcoal)}
 #why-we-exist .section-title{font-size:clamp(2.2rem,4.4vw,3rem)}
 #why-we-exist .how-step h3{font-size:1.35rem;margin-bottom:.85rem;letter-spacing:-.015em}
 /* The cards are four per cent white over their section. On the navy that read
@@ -1394,6 +1440,11 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
    and the border is doing all the work, so the fill and the edge both come up.
    Measured rather than guessed: the card is now #2B2F3A against #20242F. */
 #why-we-exist .how-step{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.13)}
+/* The card body copy is .62 white everywhere else, which was fine over a flat
+   section. Over the photograph the card sits on a lighter backdrop and .62
+   measured 3.76:1 where 14px needs 4.5. .82 measures well clear. Scoped to this
+   section so the homepage steps, which are still on flat navy, do not move. */
+#why-we-exist .how-step p{color:rgba(255,255,255,.82)}
 /* Vision is two lines and Mission is six, and the grid stretches both to the
    taller one, which left half the Vision card empty. Top aligned, each card is
    the height of what is in it. */
