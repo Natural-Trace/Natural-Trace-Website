@@ -77,6 +77,21 @@ module.exports = function(eleventyConfig) {
     return ext === "jpg" ? "jpeg" : ext;
   });
 
+  /* A <br> an editor typed into a headline is a chosen break, and the
+     stylesheet hides those below 700px because the column is too narrow there
+     for a chosen break to beat the browser's.
+     Hiding a <br> joins the words either side of it. "Your Product is
+     Unique.<br>Can You Prove It's Yours?" set as "Unique.Can You Prove" on a
+     phone, and "Protecting the Future of<br>Premium Ingredients" as
+     "ofPremium". Both shipped, because the desktop rendering is correct and
+     that is where a headline gets looked at.
+     Putting a space in the field would fix it and would depend on every editor
+     remembering. This guarantees one. A trailing space before a line break is
+     collapsed by the browser, so nothing moves where the break is shown. */
+  eleventyConfig.addFilter("softBreak", value =>
+    typeof value === "string" ? value.replace(/\s*<br\s*\/?>/gi, " <br>") : value
+  );
+
   // Per-page SEO lookup from src/_data/seo.yml, keyed by URL
   eleventyConfig.addFilter("seoLookup", (pages, url) =>
     (pages || []).find(p => p.url === url) || {}

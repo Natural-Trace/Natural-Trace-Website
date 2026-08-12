@@ -1088,6 +1088,49 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 .challenge-media img{width:100%;height:100%;object-fit:cover}
 .challenge-media::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,30,46,0) 45%,rgba(26,30,46,.55) 100%)}
 
+/* The Challenge, rebuilt to Kirsty's 12 Aug layout: one centred column ending
+   in three beats and a chevron into the section that answers them. */
+.challenge-compact{padding:6rem 0 4.5rem}
+.challenge-head{text-align:center;max-width:var(--section-head-width);margin:0 auto 3rem}
+.challenge-head .section-subtitle{max-width:620px;margin-inline:auto;text-wrap:balance}
+
+/* Three across on a real screen, stacked below. A grid rather than flex so the
+   three columns are equal whatever the sentences do: the middle point is half
+   the length of the other two, and with flex it would have taken half the room
+   and left the outer two cramped. */
+.challenge-points{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;max-width:940px;margin:0 auto;padding:0}
+.challenge-point{display:flex;align-items:flex-start;gap:.9rem;padding:0 1.6rem}
+/* The dividers are borders on the items rather than separate elements, so they
+   disappear on their own when the list stacks. */
+.challenge-point + .challenge-point{border-left:1px solid var(--soft-sage)}
+.challenge-point p{font-size:.95rem;line-height:1.55;color:var(--text);margin:0}
+.challenge-point-icon{flex:0 0 auto;width:2.9rem;height:2.9rem;border-radius:50%;
+  display:grid;place-items:center;background:rgba(107,114,73,.09);color:var(--sage-dark)}
+.challenge-point-icon svg{width:1.4rem;height:1.4rem;display:block}
+/* One point carries the turn. Two would be none. */
+.challenge-point.is-emphasis p{color:var(--sage-dark);font-weight:600}
+.challenge-point.is-emphasis .challenge-point-icon{background:var(--sage-dark);color:#fff}
+
+/* The chevron sits on a rule that runs the width of the points above it. */
+.challenge-turn{position:relative;max-width:940px;margin:3.25rem auto 0;text-align:center}
+.challenge-turn::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:var(--soft-sage)}
+.challenge-turn-link{position:relative;display:inline-grid;place-items:center;
+  width:2.6rem;height:2.6rem;border-radius:50%;background:var(--sage);color:#fff;
+  transition:background .25s ease,transform .25s ease}
+.challenge-turn-link svg{width:1.15rem;height:1.15rem;display:block}
+.challenge-turn-link:hover{background:var(--sage-dark);transform:translateY(2px)}
+.challenge-turn-link:focus-visible{outline:2px solid var(--sage-dark);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.challenge-turn-link{transition:none}
+  .challenge-turn-link:hover{transform:none}}
+
+@media(max-width:900px){
+  .challenge-points{grid-template-columns:1fr;gap:1.5rem;max-width:520px}
+  .challenge-point{padding:0}
+  .challenge-point + .challenge-point{border-left:0}
+  .challenge-turn{max-width:520px;margin-top:2.5rem}
+}
+
 /* Section 3: Value Proposition */
 .valueprop{padding:6rem 0;background:#fff}
 /* The wrapper is wide, the subtitle inside it is not. Both were capped at
@@ -1771,6 +1814,17 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
    heading, the "Customer problem" label is gone because the sentence under it
    was already the problem, and the cards sit on a soft neutral rather than
    white so they read as one block on a white page. */
+/* A photograph across the top of a value card.
+   The card's padding moves to .vp-card-body so the picture can reach the card's
+   edges, rather than being pulled out with negative margins that would have to
+   be kept in step with the padding by hand. width and height are on the img so
+   the browser reserves the right box before the file arrives and the cards
+   below do not jump as the five pictures load. */
+.vp-card-photo{padding:0;overflow:hidden}
+.vp-photo{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;display:block}
+.vp-card-photo .vp-card-body{padding:1.5rem}
+.vp-card-photo .vp-card-head{margin-bottom:.9rem}
+
 .vp-card-head{display:flex;align-items:flex-start;gap:.85rem;margin-bottom:1.1rem}
 .vp-card-head h3{min-width:0;overflow-wrap:anywhere}
 .vp-icon{

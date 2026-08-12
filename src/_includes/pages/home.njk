@@ -48,23 +48,53 @@
   </div>
 </section>
 
+{#- Icons for the three challenge beats. Drawn here for the same reasons as the
+    value icons below: they inherit colour, stay sharp at any size and cost no
+    extra request.
+
+    The microscope is eyepiece, tube, stage, arm and base. Four simpler
+    drawings were rendered at the size this is actually used, 22px, and three
+    of them read as a lamp.
+
+    No comments inside the object literal below. Nunjucks will not parse a
+    comment inside an expression, and writing the comment delimiters anywhere
+    inside another comment ends it early. Both were tried; both broke the
+    build. -#}
+{%- set challengeIcons = {
+  "document": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.2 2.8H6.6a1.6 1.6 0 0 0-1.6 1.6v15.2a1.6 1.6 0 0 0 1.6 1.6h10.8a1.6 1.6 0 0 0 1.6-1.6V7.6z"/><path d="M14.2 2.8v4.8H19"/><path d="M8.4 12.4h7.2M8.4 16h4.8"/></svg>',
+  "microscope": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.4 3.2h4v5.4h-4z"/><path d="M11.4 8.6v3"/><path d="M7.6 11.6h7.6"/><path d="M11.4 11.6v2.6"/><path d="M5 20.6h14"/><path d="M8.4 20.6a5 5 0 0 1 8.6-3.5"/></svg>',
+  "question": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9.2 9.1a2.9 2.9 0 1 1 4 2.7c-.8.4-1.2 1-1.2 1.9v.5"/><path d="M12 17.6h.01"/></svg>'
+} -%}
 <!-- Section 2: The Challenge -->
-<section class="challenge" id="challenge">
+{#- Rebuilt 12 Aug to Kirsty's layout. It was a two-column block: a photograph
+    on the right and, on the left, a lead paragraph, a labelled list of six
+    statements and a closing sentence. Three of those four elements were making
+    the same argument at different lengths.
+
+    It is one centred column now, ending in three short beats, the last of which
+    is the question the rest of the page answers. The chevron under it is a real
+    link to the section that answers it rather than an ornament, because it is
+    drawn as a button and anything drawn as a button should do something. -#}
+<section class="challenge challenge-compact" id="challenge">
   <div class="container">
-    <div class="challenge-grid">
-      <div class="challenge-text">
-        <span class="section-label">{{ home.challenge_label }}</span>
-        <h2 class="section-title">{{ home.challenge_title }}</h2>
-        <p class="challenge-lead">{{ home.challenge_lead }}</p>
-        <p class="challenge-sub">{{ home.challenge_list_label }}</p>
-        <ul class="challenge-list">
-          {% for item in home.challenge_list %}<li>{{ item }}</li>{% endfor %}
-        </ul>
-        <p class="challenge-close">{{ home.challenge_close }}</p>
-      </div>
-      <div class="challenge-media">
-        <img src="{{ home.challenge_image }}" alt="{{ home.challenge_image_alt }}" loading="lazy">
-      </div>
+    <div class="challenge-head">
+      <span class="section-label">{{ home.challenge_label }}</span>
+      {# safe: the headline carries a <br> so it breaks where an editor put it. #}
+      <h2 class="section-title">{{ home.challenge_title | softBreak | safe }}</h2>
+      {% if home.challenge_subtitle %}<p class="section-subtitle">{{ home.challenge_subtitle }}</p>{% endif %}
+    </div>
+    <ul class="challenge-points">
+      {% for point in home.challenge_points %}
+      <li class="challenge-point{% if point.emphasis %} is-emphasis{% endif %}">
+        <span class="challenge-point-icon" aria-hidden="true">{{ challengeIcons[point.icon] | safe }}</span>
+        <p>{{ point.text }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="challenge-turn">
+      <a class="challenge-turn-link" href="#value" aria-label="{{ home.vp_title }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9.5 12 15.5 18 9.5"/></svg>
+      </a>
     </div>
   </div>
 </section>
@@ -91,21 +121,35 @@
        Anything a pointer can scroll has to be reachable from a keyboard. #}
     <div class="vp-grid vp-grid-centred" tabindex="0" role="group"
          aria-label="{{ home.vp_title }}">
+      {#- A photograph across the top of the card, at Kirsty's request on 12 Aug.
+          When one is set it replaces the icon rather than joining it: her layout
+          has one image per card, and an icon beside the heading under a
+          photograph is two marks doing one job. Clear the image in the panel
+          and the icon comes back, so the section works either way.
+
+          The padding moves to an inner wrapper on photo cards so the picture
+          can reach the card's edges without negative margins that would have to
+          be kept in step with the card's padding by hand. -#}
       {% for card in home.vp_cards %}
-      <article class="vp-card">
-        <div class="vp-card-head">
-          <span class="vp-icon" aria-hidden="true">{{ vpIcons[card.icon] | safe }}</span>
-          <h3>{{ card.title }}</h3>
-        </div>
-        {# The problem needs no label. It reads as the problem, and the card is
-           shorter without it, which is the point of the layout. "Our value"
-           below stays, because that line is the answer and wants marking. #}
-        <div class="vp-block">
-          <p>{{ card.problem }}</p>
-        </div>
-        <div class="vp-block is-value">
-          <span class="vp-block-label">{{ home.vp_value_label }}</span>
-          <p>{{ card.value }}</p>
+      <article class="vp-card{% if card.image %} vp-card-photo{% endif %}">
+        {% if card.image %}
+        <img class="vp-photo" src="{{ card.image }}" alt="{{ card.image_alt }}" loading="lazy" width="800" height="450">
+        {% endif %}
+        <div class="vp-card-body">
+          <div class="vp-card-head">
+            {% if not card.image %}<span class="vp-icon" aria-hidden="true">{{ vpIcons[card.icon] | safe }}</span>{% endif %}
+            <h3>{{ card.title }}</h3>
+          </div>
+          {# The problem needs no label. It reads as the problem, and the card is
+             shorter without it, which is the point of the layout. "Our value"
+             below stays, because that line is the answer and wants marking. #}
+          <div class="vp-block">
+            <p>{{ card.problem }}</p>
+          </div>
+          <div class="vp-block is-value">
+            <span class="vp-block-label">{{ home.vp_value_label }}</span>
+            <p>{{ card.value }}</p>
+          </div>
         </div>
       </article>
       {% endfor %}

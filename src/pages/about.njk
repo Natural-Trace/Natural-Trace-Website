@@ -13,7 +13,7 @@ permalink: /about/
         {# safe on both: the headline carries a <br> and the sub-headline carries
            a <strong> and a non-breaking space, the same arrangement the Story
            headline below already uses. #}
-        <h2 class="section-title">{{ about.title | safe }}</h2>
+        <h2 class="section-title">{{ about.title | softBreak | safe }}</h2>
         <p class="section-subtitle section-subtitle-strong">{{ about.subtitle | safe }}</p>
         <p class="challenge-lead" style="margin-top:1.5rem">{{ about.intro }}</p>
         <p class="challenge-sub">{{ about.disciplines }}</p>
@@ -31,7 +31,7 @@ permalink: /about/
   <div class="container">
     <div class="vp-head">
       <span class="section-label">{{ about.story_label }}</span>
-      <h2 class="section-title">{{ about.story_title | safe }}</h2>
+      <h2 class="section-title">{{ about.story_title | softBreak | safe }}</h2>
     </div>
     <div style="max-width:780px;margin:0 auto">
       <p class="challenge-close" style="margin-top:0;font-size:1.1rem;font-weight:600">{{ about.story_question }}</p>

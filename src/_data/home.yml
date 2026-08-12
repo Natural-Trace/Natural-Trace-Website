@@ -49,19 +49,28 @@ hero_cta_secondary_url: "#how-it-works"
 
 # Section 2: The Challenge
 challenge_label: "The Challenge"
-challenge_title: "Your Product is Unique. Can You Prove It's Yours?"
-challenge_lead: "Traditional ingredient and botanical testing can be inconclusive. Packaging can be replaced. Documentation can be copied. Certificates can be separated from the product. Natural Trace incorporates authentication directly into the product itself, so proof remains with it throughout its journey."
-challenge_list_label: "Why Authentication Matters Today"
-challenge_list:
-  - "Ingredients can be difficult to verify after production."
-  - "Global supply chains are becoming more complex."
-  - "Premium ingredients are increasingly targeted for substitution and misuse."
-  - "Brand owners need confidence beyond documentation."
-  - "Customers and regulators expect stronger proof of authenticity."
-  - "Manufacturing networks are expanding globally."
-challenge_close: "Natural Trace incorporates a detectable authentication tag directly into the product, allowing proof of authenticity to travel wherever your product goes."
-challenge_image: "https://images.unsplash.com/photo-1710141530542-f792450e736e?w=900&q=80"
-challenge_image_alt: "Bulk ingredient sacks stacked in a distribution warehouse"
+challenge_title: "Your Product is Unique.<br>Can You Prove It's Yours?"
+challenge_subtitle: "Premium ingredients move through complex supply chains, often passing between multiple suppliers, manufacturers and markets."
+# Three beats, not six bullets and two paragraphs.
+#
+# Kirsty asked for shorter wording and sent a layout for it on 12 Aug. The
+# section used to carry a lead paragraph, a labelled list of six statements and
+# a closing sentence, all saying the same thing at three different lengths. The
+# lead said documentation can be copied and testing can be inconclusive; the
+# list said supply chains are complex; the close said Natural Trace puts the
+# proof in the product. That is these three points.
+#
+# The third is the turn the whole section exists to make, so it is marked and
+# reads as a question rather than a statement. Only one point should carry
+# emphasis: two is no emphasis at all.
+challenge_points:
+  - icon: "document"
+    text: "Documentation can tell you where it should have come from."
+  - icon: "microscope"
+    text: "Traditional testing is often inconclusive."
+  - icon: "question"
+    text: "But can the product itself prove it's yours?"
+    emphasis: true
 
 # Section 3: Value Proposition
 vp_label: "Our Value"
@@ -70,22 +79,32 @@ vp_subtitle: "Independent, scientific evidence that confirms what's really in yo
 vp_value_label: "Our value"
 vp_cards:
   - title: "Verify Ingredient Authenticity"
+    image: "/assets/images/botanicals.webp"
+    image_alt: "Botanical extracts, capsules and dried herbs arranged on a pale surface"
     icon: "target"
     problem: "Ingredients can be substituted, diluted, adulterated, or falsely labelled before they reach you."
     value: "Confirm an ingredient or finished product is genuine by detecting its embedded identity, not just its label."
   - title: "Confirm Authorized Manufacturing"
+    image: "/assets/images/usecase-manufacturing.webp"
+    image_alt: "Supplement bottles moving along an automated filling line"
     icon: "factory"
     problem: "Contract manufacturers may overproduce, substitute materials, use undeclared facilities, or divert product into unauthorized channels."
     value: "Verify what was actually produced, with which materials, by which authorized partner, and that production stayed within the approved process."
   - title: "Verify Origin, Beyond Paperwork"
+    image: "/assets/images/mission.webp"
+    image_alt: "Hands holding a provenance card in front of crates of fresh produce"
     icon: "origin"
     problem: "Documents can be lost, altered, or disconnected from the physical product as it moves through the supply chain."
     value: "Confirm the true origin, custody, movement, and destination of the physical product itself."
   - title: "Investigate with Objective Evidence"
+    image: "/assets/images/naturaldetect.webp"
+    image_alt: "A gloved hand loading a sample strip into a qPCR instrument"
     icon: "search"
     problem: "Suspicious or counterfeit products are hard to prove without independent, scientific proof."
     value: "Support investigations and enforcement with objective scientific evidence, not assumptions."
   - title: "Protect Brand & Commercial Value"
+    image: "/assets/images/supplements-1.webp"
+    image_alt: "Coloured capsules and softgels scattered on a white surface"
     icon: "shield"
     problem: "Counterfeit, diverted, or grey-market products erode revenue, reputation, and customer trust."
     value: "Distinguish genuine products from unauthorized ones and strengthen confidence across the supply chain."

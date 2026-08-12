@@ -128,13 +128,17 @@ collections:
           - {label: "Secondary CTA URL", name: "hero_cta_secondary_url", widget: "string"}
 
           - {label: "Challenge: Label", name: "challenge_label", widget: "string"}
-          - {label: "Challenge: Headline", name: "challenge_title", widget: "string"}
-          - {label: "Challenge: Lead Paragraph", name: "challenge_lead", widget: "text"}
-          - {label: "Challenge: List Heading", name: "challenge_list_label", widget: "string"}
-          - {label: "Challenge: List", name: "challenge_list", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
-          - {label: "Challenge: Closing Statement", name: "challenge_close", widget: "text"}
-          - {label: "Challenge: Image", name: "challenge_image", widget: "image"}
-          - {label: "Challenge: Image Alt", name: "challenge_image_alt", widget: "string"}
+          - {label: "Challenge: Headline", name: "challenge_title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line."}
+          - {label: "Challenge: Subtitle", name: "challenge_subtitle", widget: "text", required: false}
+          - label: "Challenge: Points"
+            name: "challenge_points"
+            widget: "list"
+            summary: "{{fields.text}}"
+            hint: "Three reads best. They sit side by side, so keep each one to a single short sentence."
+            fields:
+              - {label: "Point", name: "text", widget: "text"}
+              - {label: "Icon", name: "icon", widget: "select", options: ["document", "microscope", "question"], hint: "document is a certificate, microscope is laboratory testing, question is the turn."}
+              - {label: "Highlight this one", name: "emphasis", widget: "boolean", required: false, default: false, hint: "Fills the circle and colours the text. Use it on one point only: two highlighted points is the same as none."}
 
           - {label: "Value Prop: Label", name: "vp_label", widget: "string"}
           - {label: "Value Prop: Headline", name: "vp_title", widget: "string"}
@@ -146,7 +150,9 @@ collections:
             summary: "{{fields.title}}"
             fields:
               - {label: "Card Title", name: "title", widget: "string"}
-              - {label: "Icon", name: "icon", widget: "select", options: ["target", "factory", "origin", "search", "shield"], hint: "The symbol in the circle beside the heading. target is a bullseye, origin is a diamond, search is a magnifying glass."}
+              - {label: "Card Image", name: "image", widget: "image", required: false, hint: "Sits across the top of the card and is cropped to a wide banner, so a landscape picture works best. Leave it empty and the icon below is shown instead."}
+              - {label: "Card Image Description", name: "image_alt", widget: "string", required: false, hint: "For screen readers and for when the picture fails to load. Describe what is in it."}
+              - {label: "Icon", name: "icon", widget: "select", options: ["target", "factory", "origin", "search", "shield"], hint: "Only used when the card has no image. target is a bullseye, origin is a diamond, search is a magnifying glass."}
               - {label: "Customer Problem", name: "problem", widget: "text", hint: "Shown without a label above it, so write it as a sentence that reads as the problem."}
               - {label: "Our value", name: "value", widget: "text"}
 
