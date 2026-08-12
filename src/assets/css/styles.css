@@ -698,8 +698,19 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
 }
 
 /* FAQ Page */
-/* FAQ Page */
-.faq-page-hero{padding:8rem 0 4rem;background:var(--teal);text-align:center}
+/* The header band is charcoal, not teal.
+   Kirsty's 12 August requests ask for the navy replaced with Natural Trace
+   teal and then, on the next line, for the header background back to a dark
+   colour. The second supersedes the first: teal was tried on this band and she
+   wants it back. Bryan confirmed the hex, which the document gave as #2024f,
+   five digits and not a colour.
+
+   It is also the more legible of the two, by some distance. Against teal the
+   subtitle measured 3.44:1 and the eyebrow 1.95:1, where small text needs 4.5.
+   Against charcoal they are 6.47:1 and 4.74:1. Both of those were failing in
+   production and neither was caught, because contrast-audit.mjs only measures
+   pages with photographs behind the text and this band is a flat colour. */
+.faq-page-hero{padding:8rem 0 4rem;background:var(--charcoal);text-align:center}
 .faq-page-hero h1{color:#fff;font-size:clamp(2.5rem,5vw,3.5rem);margin-bottom:1rem}
 .faq-page-hero p{color:rgba(255,255,255,.6);font-size:1.1rem;max-width:600px;margin:0 auto}
 .faq-section{padding:4rem 0 5rem;background:var(--offwhite)}
