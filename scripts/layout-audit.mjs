@@ -253,13 +253,37 @@ function inspect() {
       if (b.ink.top >= a.ink.bottom - 1) break;
       if (a.parent === b.parent) continue;
       if (a.parent.contains(b.parent) || b.parent.contains(a.parent)) continue;
-      const ox = Math.min(a.ink.right, b.ink.right) - Math.max(a.ink.left, b.ink.left);
-      const oy = Math.min(a.ink.bottom, b.ink.bottom) - Math.max(a.ink.top, b.ink.top);
-      if (ox <= 1 || oy <= 1) continue;
-      const smaller = Math.min(
-        (a.ink.right - a.ink.left) * (a.ink.bottom - a.ink.top),
-        (b.ink.right - b.ink.left) * (b.ink.bottom - b.ink.top));
-      if (smaller > 0 && (ox * oy) / smaller > 0.2) {
+      /* ink is the union of a run's line boxes, which is the right shape for
+         the cheap rejection above and the wrong shape for the answer. A run of
+         inline text wrapping over four lines has a union box the full width of
+         the column and four lines tall, so two adjacent spans inside one
+         flowing paragraph always appear to overlap while no glyph touches any
+         other.
+
+         That went unnoticed until the migrated WordPress articles arrived:
+         they are full of <span style="font-weight: 400"> wrappers, which are
+         the first long multi-line inline runs on this site, and the audit
+         reported thirteen overlaps on pages that render perfectly.
+
+         So the union boxes only nominate a pair. The verdict comes from the
+         line boxes, which is where the glyphs actually are. */
+      const ux = Math.min(a.ink.right, b.ink.right) - Math.max(a.ink.left, b.ink.left);
+      const uy = Math.min(a.ink.bottom, b.ink.bottom) - Math.max(a.ink.top, b.ink.top);
+      if (ux <= 1 || uy <= 1) continue;
+
+      let worst = 0, worstPair = null;
+      for (const ra of a.rects) {
+        for (const rb of b.rects) {
+          const ox = Math.min(ra.right, rb.right) - Math.max(ra.left, rb.left);
+          const oy = Math.min(ra.bottom, rb.bottom) - Math.max(ra.top, rb.top);
+          if (ox <= 1 || oy <= 1) continue;
+          const smaller = Math.min(ra.width * ra.height, rb.width * rb.height);
+          if (smaller <= 0) continue;
+          const share = (ox * oy) / smaller;
+          if (share > worst) { worst = share; worstPair = [ra, rb]; }
+        }
+      }
+      if (worst > 0.2 && worstPair) {
         findings.push({ kind: 'OVERLAP', el: describe(a.parent), by: describe(b.parent),
           text: a.text.slice(0, 40) + '  //  ' + b.text.slice(0, 40) });
       }

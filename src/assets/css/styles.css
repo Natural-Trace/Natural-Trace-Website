@@ -762,6 +762,71 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
 .insight-body li{margin-bottom:.5rem}
 .insight-body a{color:var(--sage);text-decoration:underline;text-underline-offset:2px}
 .insight-body a:hover{color:var(--dark)}
+
+/* ---------------------------------------------------------------------------
+   Migrated WordPress article bodies.
+
+   The sixteen articles brought over from natural-trace.com on 12 August 2026
+   carry the markup WordPress and its editors produced, which is the price of
+   migrating them faithfully rather than retyping them. The layout audit found
+   44 faults across nine of them on the first build. All of them are here.
+
+   None of this is styling the articles. It is stopping other people's markup
+   from breaking a 760px column.
+--------------------------------------------------------------------------- */
+
+/* Bare URLs used as their own link text. Several articles cite sources by
+   pasting the address, and a 90 character URL has nowhere to break: one of
+   them ran 519px past the right edge of a 390px phone, taking the page's
+   horizontal scroll with it. anywhere rather than break-word because
+   break-word will not break inside a long unspaced token, which is exactly
+   what a URL is. */
+.insight-body{overflow-wrap:break-word}
+.insight-body a{overflow-wrap:anywhere}
+
+/* Images, however they were inserted. WordPress writes width and height
+   attributes and sometimes an inline width on the figure, all sized for a
+   wider column than this one. */
+.insight-body img{max-width:100%;height:auto;display:block}
+.insight-body figure{max-width:100%;margin:1.75rem 0}
+.insight-body figure[style]{width:auto!important}
+
+/* Captions. */
+.insight-body figcaption,.insight-body .wp-caption-text{
+  font-size:.82rem;line-height:1.5;color:var(--muted);margin-top:.6rem}
+
+/* Floated images. The editor's alignright and alignleft assume a wide column
+   and a desktop; in a 760px measure they collide with the text beside them,
+   which is what the audit reported as overlap. Floated above 700px with a
+   sensible cap, stacked below it. */
+@media(min-width:701px){
+  .insight-body .alignright{float:right;margin:.4rem 0 1.25rem 1.75rem;max-width:44%}
+  .insight-body .alignleft{float:left;margin:.4rem 1.75rem 1.25rem 0;max-width:44%}
+}
+@media(max-width:700px){
+  .insight-body .alignright,.insight-body .alignleft{float:none;margin:1.75rem 0;max-width:100%}
+}
+.insight-body .aligncenter{margin-inline:auto}
+/* A float has no height, so without this the next heading rides up beside it
+   and the article looks like two documents shuffled together. */
+.insight-body p:last-child::after{content:'';display:block;clear:both}
+
+/* LinkedIn's own classes, which arrived by way of the editor.
+
+   Two articles were assembled by pasting from LinkedIn's article reader, so
+   they carry ember-view, reader-text-block__paragraph and app-aware-link, plus
+   the ember IDs that go with them. Those class names mean nothing here, but
+   they are not inert: one empty reader-text-block paragraph measured 522px
+   past the right edge. Neutralised rather than stripped from the source,
+   because editing the markup means editing the articles, and these were
+   migrated on the promise that nothing in them was rewritten. */
+.insight-body .reader-text-block__paragraph,.insight-body .ember-view{
+  max-width:100%;overflow-wrap:anywhere}
+
+/* Anything else wide enough to push the page sideways. */
+.insight-body table{display:block;overflow-x:auto;max-width:100%}
+.insight-body pre{overflow-x:auto;max-width:100%}
+.insight-body iframe,.insight-body video{max-width:100%}
 .insight-body blockquote{border-left:3px solid var(--sage);padding:.75rem 1.25rem;margin:1.5rem 0;background:rgba(107,114,73,.04);border-radius:0 8px 8px 0;font-style:italic;color:var(--muted)}
 .insight-body strong{color:var(--dark)}
 .insight-footer{display:flex;justify-content:space-between;align-items:center;margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.06)}

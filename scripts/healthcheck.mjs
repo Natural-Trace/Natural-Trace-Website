@@ -85,6 +85,20 @@ for (const f of pages) {
 
 // ── 4b. every redirect target resolves, and no stub leaks into the sitemap
 const sitemap = await readFile(join(ROOT, 'sitemap.xml'), 'utf8').catch(() => '');
+/* Paths, not raw XML.
+   This used to test sitemap.includes(from + '</loc>'), which is a substring
+   match on the whole document and therefore matches any longer URL ending the
+   same way. The moment the migrated archive gave the Insights tag pages real
+   content, /insights/tag/news/ started matching the /tag/news/ redirect stub
+   and the build failed on a page that was completely fine.
+
+   The first half of that condition, sitemap.includes('<loc>'), compared the
+   document against an empty template string and was always true. It never
+   tested anything. */
+const sitemapPaths = new Set(
+  [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)]
+    .map(m => { try { return new URL(m[1]).pathname; } catch { return m[1]; } })
+);
 let stubs = 0;
 for (const f of pages) {
   const html = await readFile(f, 'utf8');
@@ -95,7 +109,12 @@ for (const f of pages) {
   const target = m[1].split('#')[0];
   const abs = join(ROOT, target);
   if (!existsSync(abs) && !existsSync(join(abs, 'index.html'))) note(`redirect ${from} points at missing ${m[1]}`);
-  if (sitemap.includes(`<loc>${''}` ) && sitemap.includes(from + '</loc>')) note(`redirect stub in sitemap: ${from}`);
+  /* A stub is a page that only exists to bounce; listing it in the sitemap
+     asks a search engine to index a redirect. Compared as whole paths, and
+     with the path prefix allowed for, since the sitemap carries absolute URLs
+     and this walks the built directory. */
+  const prefixed = [from, (process.env.PATH_PREFIX || '/').replace(/\/$/, '') + from];
+  if (prefixed.some(x => sitemapPaths.has(x))) note(`redirect stub in sitemap: ${from}`);
 }
 console.log(`  ${stubs} redirect stubs`);
 
