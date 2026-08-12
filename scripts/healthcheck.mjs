@@ -64,6 +64,28 @@ for (const f of pages) {
     if (!ok) note(`broken link on ${page}: ${raw}`);
   }
 
+  /* ── 2b. images set through CSS, not through a src attribute.
+     Three backgrounds on this site are handed to the stylesheet as custom
+     properties: the homepage hero, the call-to-action watermark and the Why We
+     Exist photograph. The loop above only looks at href and src, so a custom
+     property pointing at a file that does not exist passed every check and
+     rendered as a blank section, with the CMS field appearing to do nothing.
+     That is exactly what happened on 12 Aug: the Why We Exist background was
+     written as /assets/images/kirsty/vision.webp after the kirsty folder had
+     already been flattened away in fa5e925.
+
+     Query strings and fragments are stripped the same way as above, and remote
+     URLs join the external list rather than being resolved on disk. */
+  for (const m of html.matchAll(/--[\w-]+\s*:\s*url\((['"]?)([^'")]+)\1\)/g)) {
+    const raw = m[2].trim();
+    if (/^(data:|#)/.test(raw)) continue;
+    if (/^https?:\/\//.test(raw) || raw.startsWith('//')) { externals.add(raw.replace(/^\/\//, 'https://')); continue; }
+    const clean = raw.split(/[?#]/)[0];
+    if (!clean) continue;
+    const abs = clean.startsWith('/') ? join(ROOT, clean) : join(dirname(f), clean);
+    if (!existsSync(abs)) note(`broken CSS background on ${page}: ${raw}`);
+  }
+
   // ── 3. SEO basics. Redirect stubs are noindex by design, so they are exempt.
   // data-hold="site" is the site-wide search hold, not a page that is meant to
   // stay out of the index. Keep checking those pages, or the hold would quietly

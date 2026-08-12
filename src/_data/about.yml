@@ -56,7 +56,7 @@ why_title: "Science that Protects Commercial Value"
 # returns the section to the flat charcoal it had before, which is what the
 # 11 August meeting asked for, so the two requests can both be honoured
 # without a developer.
-why_bg_image: "/assets/images/kirsty/vision.webp"
+why_bg_image: "/assets/images/vision.webp"
 why_body:
   - "Global supply chains have become increasingly complex. Documentation records what should have happened. Natural Trace adds evidence that proves it."
   - "We exist to help companies protect the value behind differentiated ingredients through objective, science-based verification."
