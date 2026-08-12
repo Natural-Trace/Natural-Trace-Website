@@ -12,6 +12,11 @@ hero_image_alt: ""
 # Which part of the photograph stays in frame when the 4:3 panel trims it.
 # Middle unless someone has a reason.
 hero_image_position: "50% 50%"
+# The product mark, blended into the hero background. Only its shape is used;
+# the colour comes from the stylesheet, so it always sits tonally on this
+# page's tint. That means a flat single-colour graphic on a transparent
+# background works and a photograph does not. Clear it to remove the mark.
+hero_mark: "/assets/logos/NaturalCloud-icon.png"
 
 # The heatmap recording of the portal, added 12 Aug 2026. Set this and the
 # panel plays it instead of showing the logo mark; empty it and the mark comes

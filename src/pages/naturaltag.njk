@@ -5,7 +5,18 @@ summary: "NaturalTag™ is a food-grade, in-product authentication tag made from
 permalink: /naturaltag/
 ---
 
-<section class="challenge hero-tag" style="padding-top:9rem">
+{# The product mark, blended into the hero rather than sitting in a panel.
+   Kirsty asked for the product icons to be somewhere on the page once the
+   hero panel became a photograph. Same technique as the call-to-action
+   watermark: the icon is a mask, so the colour comes from the stylesheet
+   and the mark sits tonally on this page's own tint instead of being
+   stamped on it in whatever colour the file happens to be.
+
+   The class only appears when a mark is set, so clearing the field in the
+   panel removes it. The url filter is required: HtmlBasePlugin does not
+   look inside a style attribute. #}
+<section class="challenge hero-tag{% if naturaltag.hero_mark %} solution-hero-mark{% endif %}"
+  style="padding-top:9rem{% if naturaltag.hero_mark %};--hero-mark:url('{{ naturaltag.hero_mark | url }}'){% endif %}">
   <div class="container">
     <div class="challenge-grid">
       <div class="challenge-text">

@@ -15,6 +15,11 @@ hero_image_alt: "A gloved hand holding a labelled vial of NaturalTag in front of
 # close to the middle as this frame allows: to do better the vial would have
 # to be nearer the middle of the original photograph.
 hero_image_position: "0% 50%"
+# The product mark, blended into the hero background. Only its shape is used;
+# the colour comes from the stylesheet, so it always sits tonally on this
+# page's tint. That means a flat single-colour graphic on a transparent
+# background works and a photograph does not. Clear it to remove the mark.
+hero_mark: "/assets/logos/NaturalTag-icon.png"
 hero_logo: "/assets/logos/NaturalTag-icon.png"
 hero_logo_alt: "NaturalTag, carrying the Natural Trace mark"
 

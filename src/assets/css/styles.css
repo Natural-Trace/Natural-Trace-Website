@@ -10,6 +10,10 @@ a{text-decoration:none;color:inherit}
 :root{
   --sage:#6B7249;--sage-dark:#535A38;--sage-light:#8A9360;
   --gold:#A29349;--gold-light:#BFB060;
+  /* Gold that can hold text. --gold and --gold-light are surface colours: on
+     the pale gold tint of the NaturalCloud hero neither of them clears 4.5:1
+     at body size. This one is measured, not eyeballed. */
+  --gold-ink:#6B6025;
   --teal:#3B666B;--teal-light:#4D8489;
   --dark:#1A1E2E;--offwhite:#F5F6F1;--soft-sage:#DEDFDE;
   --text:#2C3345;
@@ -1582,12 +1586,55 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 /* A27  The three solution pages shared one hero. Each now carries its product
         colour, as a tint behind it and on the eyebrow, rather than a full
         colour block that would fight the photography below. */
+/* The product mark blended into the hero, at Kirsty's request: once the hero
+   panel became a photograph, the NaturalTag, NaturalDetect and NaturalCloud
+   icons had nowhere left to be.
+
+   Same technique as the call-to-action watermark. The icon is used as a mask
+   rather than as a background image, so the fill is a colour this stylesheet
+   controls: the mark is a fixed percentage of the page's own brand colour over
+   the page's own tint, which is what makes it read as part of the background
+   rather than as a logo dropped on top of it.
+
+   Behind the text, not beside it. There is no clear space in this hero large
+   enough for a mark at a size worth having, and a dark tint under dark text on
+   a light background raises contrast slightly rather than lowering it. It was
+   measured all the same; see the contrast audit, which now covers these three
+   pages for exactly this reason.
+
+   Inside @supports because the fallback here is not benign. The call-to-action
+   mark degrades to the circle it replaced; this one would degrade to a filled
+   square across a quarter of the hero. */
+@supports ((mask-image:url(#m)) or (-webkit-mask-image:url(#m))){
+  .solution-hero-mark{position:relative;overflow:hidden}
+  .solution-hero-mark > .container{position:relative;z-index:1}
+  .solution-hero-mark::after{content:'';position:absolute;left:-7%;top:50%;transform:translateY(-50%);
+    width:clamp(240px,30vw,440px);aspect-ratio:1;z-index:0;pointer-events:none;
+    -webkit-mask:var(--hero-mark) no-repeat center/contain;mask:var(--hero-mark) no-repeat center/contain}
+  .hero-tag.solution-hero-mark::after{background:rgba(107,114,73,.11)}
+  .hero-detect.solution-hero-mark::after{background:rgba(59,102,107,.11)}
+  .hero-cloud.solution-hero-mark::after{background:rgba(162,147,73,.14)}
+  /* Off the left edge on a phone the mark is mostly gone and what is left is a
+     stripe. Centred behind the copy instead, and quieter. */
+  @media(max-width:820px){
+    .solution-hero-mark::after{left:50%;transform:translate(-50%,-50%);width:min(70vw,320px)}
+    .hero-tag.solution-hero-mark::after{background:rgba(107,114,73,.08)}
+    .hero-detect.solution-hero-mark::after{background:rgba(59,102,107,.08)}
+    .hero-cloud.solution-hero-mark::after{background:rgba(162,147,73,.1)}
+  }
+}
 .hero-tag{background:linear-gradient(180deg,rgba(107,114,73,.13),var(--offwhite) 78%)}
 .hero-tag .section-label{color:var(--sage-dark)}
 .hero-detect{background:linear-gradient(180deg,rgba(59,102,107,.13),var(--offwhite) 78%)}
 .hero-detect .section-label{color:var(--teal)}
 .hero-cloud{background:linear-gradient(180deg,rgba(162,147,73,.15),var(--offwhite) 78%)}
-.hero-cloud .section-label{color:#8A7C33}
+/* --gold-ink, not --gold. The NaturalCloud hero is gold text on a gold tint,
+   and #8A7C33 measured 3.62:1 against it where 18px text needs 4.5. It has
+   been failing since the hero was given its brand colour on 11 Aug; it only
+   surfaced when the technology pages were added to the contrast audit on
+   12 Aug, and it fails identically with the new background mark removed, so
+   the mark is not the cause. */
+.hero-cloud .section-label{color:var(--gold-ink)}
 
 /* A28 A32 A33  The one line that says what each product does was set at the
         same size and grey as ordinary supporting text. */
@@ -1596,7 +1643,7 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 .hero-cloud .section-subtitle{font-size:1.45rem;line-height:1.45;font-weight:700;max-width:720px}
 .hero-tag .section-subtitle{color:var(--sage-dark)}
 .hero-detect .section-subtitle{color:var(--teal)}
-.hero-cloud .section-subtitle{color:#8A7C33}
+.hero-cloud .section-subtitle{color:var(--gold-ink)}
 
 /* A22  Education sat in a flex column above the bullets and was being fed bare
         list items by the script, so the first line rendered unlike everything

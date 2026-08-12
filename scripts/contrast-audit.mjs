@@ -71,6 +71,29 @@ const TARGETS = [
      paragraph sitting on the sky is not the paragraph sitting on the soil.
      The vision and mission cards are four per cent white, so what is behind
      them still reaches the text through the card. */
+  /* The three technology heroes carry a product mark blended into the
+     background from 12 Aug. It is a light tint under dark text, which raises
+     contrast rather than lowering it, but "it should be fine" is what was said
+     about the About page before its probes were added and three real failures
+     turned up. */
+  { url: '/naturaltag/', selectors: {
+    'hero label': '.hero-tag .section-label',
+    'hero headline': '.hero-tag .section-title',
+    'hero subtitle': '.hero-tag .section-subtitle',
+    'hero lead': '.hero-tag .challenge-lead',
+  } },
+  { url: '/naturaldetect/', selectors: {
+    'hero label': '.hero-detect .section-label',
+    'hero headline': '.hero-detect .section-title',
+    'hero subtitle': '.hero-detect .section-subtitle',
+    'hero lead': '.hero-detect .challenge-lead',
+  } },
+  { url: '/naturalcloud/', selectors: {
+    'hero label': '.hero-cloud .section-label',
+    'hero headline': '.hero-cloud .section-title',
+    'hero subtitle': '.hero-cloud .section-subtitle',
+    'hero lead': '.hero-cloud .challenge-lead',
+  } },
   { url: '/about/', selectors: {
     'why label': '#why-we-exist .section-label',
     'why headline': '#why-we-exist .section-title',
