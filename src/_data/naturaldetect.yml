@@ -6,7 +6,7 @@ intro: "NaturalDetect™ is a proprietary PCR-based laboratory test that confirm
 # Kirsty's photograph, 11 Aug. Also the answer to the magnifying glass she
 # asked to be rid of: this is the actual instrument doing the actual test,
 # which says more than a symbol of looking closely at something.
-hero_image: "/assets/images/kirsty/naturaldetect.webp"
+hero_image: "/assets/images/naturaldetect.webp"
 hero_image_alt: "A gloved hand loading a PCR tube strip into a qPCR instrument, its screen showing amplification curves mid-run"
 hero_logo: "/assets/logos/NaturalDetect-icon.png"
 hero_logo_alt: "NaturalDetect"

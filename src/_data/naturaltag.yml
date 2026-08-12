@@ -7,7 +7,7 @@ intro: "NaturalTag™ is a food-grade, in-product authentication tag made from i
 # Kirsty's product photograph, 11 Aug. When this is set the hero shows the
 # photograph; when it is empty it falls back to the logo panel below, which is
 # what NaturalCloud still uses while its video is being made.
-hero_image: "/assets/images/kirsty/naturaltag-product.webp"
+hero_image: "/assets/images/naturaltag-product.webp"
 hero_image_alt: "A gloved hand holding a labelled vial of NaturalTag in front of a stainless steel fermentation vessel"
 hero_logo: "/assets/logos/NaturalTag-icon.png"
 hero_logo_alt: "NaturalTag, carrying the Natural Trace mark"
