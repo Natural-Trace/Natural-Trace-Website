@@ -1413,6 +1413,18 @@ section[id],[id].anchor-target{scroll-margin-top:96px}
     scroll-snap-type:x mandatory;
     -webkit-overflow-scrolling:touch;
     gap:.9rem;
+    /* This line is the whole reason the carousel worked or did not.
+
+       .vp-grid-centred carries justify-content:center for the desktop layout,
+       where it centres a row of three. Left in place here it centres 1458px of
+       cards inside a 342px scroll container, which splits the 1116px of
+       overflow evenly across both ends. Overflow past the right edge is
+       scrollable. Overflow past the left edge is not: scrollLeft cannot go
+       below zero. So exactly half of it, 558px, sat permanently off the left
+       of the screen and the first card could not be reached by any amount of
+       swiping. Measured at 390px: scrollLeft 0 with card one at x -535, and
+       cards two, three and four the only ones ever visible. */
+    justify-content:flex-start;
     /* Bleed to the screen edges so a card can sit centred with its neighbour
        showing, then pad the ends back so the first and last still align. */
     margin-inline:calc(50% - 50vw);

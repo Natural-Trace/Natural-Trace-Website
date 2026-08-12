@@ -13,13 +13,22 @@ tags:
 # pointed at natural-trace.com, which is the domain being moved away from.
 # Original URL: https://natural-trace.com/empowering-future-innovators-zoeys-journey-with-natural-trace/
 #
+# The photograph in this article was replaced on 12 Aug 2026. The file the
+# article referenced, Zoey-7-e1734491230892-248x300.jpeg, is gone from the
+# WordPress media library, and so is the full size original it was cut from.
+# It had been broken on natural-trace.com for some time; the migration did not
+# lose it. Substituted with Zoey-7-1-1.jpeg from the same December 2024 upload
+# folder, which Bryan confirmed is the same photograph. The caption is
+# unchanged. This is the only edit made to the words or the markup of any
+# migrated article.
+#
 # CLAIM REVIEW: 2 phrase(s) here predate the 30 July 2026 copy
 # review and are not signed off. Listed in _migration-report.md.
 #   a superlative: ...and look at what it’s like to be part of a company that not only drives technological innovation but also nurtures the next...
 #   an intellectual property claim: ...a few months learning about food fraud and Natural Trace’s patented technology, I truly believe that Natural Trace would become...
 ---
 {% raw %}
-<figure id="attachment_7674" aria-describedby="caption-attachment-7674" style="width: 248px" class="wp-caption alignright"><img decoding="async" class="size-medium wp-image-7674" src="https://natural-trace.com/wp-content/uploads/2024/12/Zoey-7-e1734491230892-248x300.jpeg" alt="Natural Trace Intern now Laboratory Technician, Zoey Wong sitting in Laboratory" width="248" height="300" /><figcaption id="caption-attachment-7674" class="wp-caption-text">Zoey Wong &#8211; Natural Trace Intern now Laboratory Technician sharing her experience in biotechnology and food traceability</figcaption></figure>
+<figure id="attachment_7674" aria-describedby="caption-attachment-7674" class="wp-caption alignright"><img decoding="async" class="size-medium wp-image-7674" src="/assets/images/insights/empowering-future-innovators-zoeys-journey-with-natural-trace.jpeg" alt="Natural Trace Intern now Laboratory Technician, Zoey Wong sitting in Laboratory" /><figcaption id="caption-attachment-7674" class="wp-caption-text">Zoey Wong &#8211; Natural Trace Intern now Laboratory Technician sharing her experience in biotechnology and food traceability</figcaption></figure>
 <p><span style="font-weight: 400;">As we approach the end of the year, we took the opportunity to sit down with our outstanding intern-turned-Laboratory Technician, Zoey Wong, to reflect on her journey with Natural Trace. Zoey shared her insights and experiences from her internship, providing a firsthand look at what it’s like to be part of a company that not only drives technological innovation but also nurtures the next generation of leaders in biotechnology:</span></p>
 <p><span style="font-weight: 400;">“My internship experience at Natural Trace was an immensely fruitful one. During my 3 month work at Natural Trace, I was immersed in laboratory based projects and research work on industry trends that provided me new insights on emerging traceability technology. The food traceability industry was completely unknown to me prior to joining Natural Trace and I was not aware that food safety and authenticity was an increasing problem all around the world that needed an immediate solution. </span></p>
 <p><span style="font-weight: 400;">Despite initial nerves due to having to adjust to a new and unfamiliar environment, the team was incredibly welcoming. CL, the CEO of Natural Trace, was excited to have me on the team and our conversations managed to ease some of my worries. My co-worker and mentor, Alrik, was patient in teaching me about laboratory techniques such as DNA detection methods and other molecular approaches for food traceability. The laboratory projects that I worked on first-hand boosted my confidence and equipped me with the necessary skills to undertake research work independently. </span></p>
