@@ -106,8 +106,20 @@ permalink: /contact/
   </div>
 </section>
 
-<section class="cta-section">
-  <div class="cta-bg"></div>
+{#- The photograph is blended into the panel rather than laid over it, at
+    Kirsty's request on 12 Aug. It used to be a .cta-bg div holding an Unsplash
+    URL hard-coded in the stylesheet at 8% opacity: not editable, and not ours.
+
+    background-blend-mode:luminosity keeps the picture's light and shade and
+    takes its colour from the sage underneath, so a shelf of coloured capsules
+    becomes one tone with the panel instead of a photograph showing through it.
+    Same treatment as Why We Exist on the About page.
+
+    The url filter is required. HtmlBasePlugin does not look inside a style
+    attribute, so without it the background is missing on the project-page
+    prefix and correct in every local preview. -#}
+<section class="cta-section{% if contact.cta.background_image %} cta-section-photo{% endif %}"
+  {%- if contact.cta.background_image %} style="--cta-bg:url('{{ contact.cta.background_image | url }}')"{% endif %}>
   <div class="cta-shape cta-shape-1"></div>
   <div class="cta-shape cta-shape-2"></div>
   <div class="container">

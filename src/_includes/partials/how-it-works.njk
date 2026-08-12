@@ -1,0 +1,46 @@
+{#- How It Works, rendered on both the homepage and the NaturalTag page.
+
+    Two copies on screen, one copy in the CMS. Kirsty asked for it on the
+    NaturalTag page as well as the homepage on 12 Aug, and Bryan chose to keep
+    both. The obvious way to do that is to paste the section into the second
+    template, and the obvious way is wrong: the four steps would then have two
+    sets of words to keep in step, and the pair would drift the first time
+    anyone edited one of them. This partial is the section; both pages include
+    it; the words stay in home.yml and are edited once.
+
+    Compact on purpose. Four steps across one row and the detail behind a
+    disclosure, so the section costs roughly one screen instead of four.
+
+    <details> and <summary> rather than a hover or a scripted panel: they work
+    with a tap, they work from a keyboard, a screen reader announces the open
+    and closed state, and the text is in the page whether or not it is showing.
+    A hover would fail all four.
+
+    The id is the same on both pages, which is fine because they are separate
+    documents, and it is what /naturaltag/#how-it-works and /#how-it-works both
+    depend on. -#}
+<section class="howitworks howitworks-compact" id="how-it-works">
+  <div class="container">
+    <div class="how-head">
+      <span class="section-label">{{ home.how_label }}</span>
+      <h2 class="section-title">{{ home.how_title }}</h2>
+    </div>
+    <ol class="how-grid how-grid-compact">
+      {% for step in home.how_steps %}
+      <li class="how-step">
+        <div class="how-step-num">{{ step.num }}</div>
+        <h3>{{ step.title }}</h3>
+        <p>{{ step.description }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+    {% if home.how_features %}
+    <details class="how-more">
+      <summary>{{ home.how_features_label }}</summary>
+      <ul class="how-facts">
+        {% for feature in home.how_features %}<li>{{ feature }}</li>{% endfor %}
+      </ul>
+    </details>
+    {% endif %}
+  </div>
+</section>

@@ -524,15 +524,44 @@ body.page-home #navbar:not(.scrolled) .nav-toggle{color:#fff}
 .industry-card:hover p{opacity:1;transform:translateY(0)}
 
 /* CTA */
-.cta-section{padding:7rem 0;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--sage-dark) 0%,var(--sage) 50%,var(--sage-dark) 100%)}
-.cta-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1585435557343-3b092031a831?w=1600&q=80');background-size:cover;background-position:center;opacity:.08}
+/* The middle stop was --sage. Pure white on --sage measures 5.13:1, which is
+   fine for the heading and leaves nothing for anything set below full white,
+   and the label and subcopy on this panel are not full white. Darker through
+   the middle, so 18px text has somewhere to go. */
+.cta-section{padding:7rem 0;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--sage-dark) 0%,#5A613C 50%,var(--sage-dark) 100%)}
+/* The photograph blended into the panel, at Kirsty's request.
+   This replaced a .cta-bg div carrying an Unsplash URL hard-coded here at 8%
+   opacity. Three things wrong with that: the picture was a third party's to
+   withdraw, nobody could change it without editing the stylesheet, and an
+   8% overlay of a full-colour photograph on a green panel is a smudge rather
+   than a texture.
+
+   luminosity keeps the picture's light and shade and takes its colour from the
+   sage beneath, so the capsules read as one tone with the panel. The scrim is
+   the panel's own gradient at 92%, which is what leaves the photograph its 8%
+   without letting it bring its own colours. Measured against the white text
+   on top; see the contrast audit, which now covers this page. */
+.cta-section-photo{
+  background-color:var(--sage-dark);
+  background-image:
+    linear-gradient(135deg,rgba(83,90,56,.96) 0%,rgba(90,97,60,.945) 50%,rgba(83,90,56,.96) 100%),
+    var(--cta-bg);
+  background-size:cover,cover;
+  background-position:center,center;
+  background-repeat:no-repeat,no-repeat;
+  background-blend-mode:normal,luminosity;
+}
 .cta-shape{position:absolute;border-radius:50%;opacity:.08;background:#fff}
 .cta-shape-1{width:300px;height:300px;top:-100px;left:-80px}
 .cta-shape-2{width:200px;height:200px;bottom:-60px;right:-40px;animation-delay:3s}
 .cta-inner{position:relative;z-index:2;text-align:center;max-width:700px;margin:0 auto}
-.cta-inner .section-label{color:rgba(255,255,255,.5)}
+/* .5 and .6 white measured 2.52:1 and 2.94:1 on this panel where 18px text
+   needs 4.5, and had done since the panel was built. It was invisible because
+   the contrast audit did not visit this page until the photograph was added on
+   12 Aug. Both are near-white now, and the panel below them is darker. */
+.cta-inner .section-label{color:#fff}
 .cta-inner h2{font-size:clamp(2rem,4vw,2.8rem);color:#fff;margin-bottom:1.25rem;letter-spacing:-.005em;line-height:1.25;text-wrap:balance}
-.cta-inner p{font-size:1.1rem;color:rgba(255,255,255,.6);margin-bottom:2.5rem;line-height:1.7}
+.cta-inner p{font-size:1.1rem;color:rgba(255,255,255,.93);margin-bottom:2.5rem;line-height:1.7}
 .cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 .btn-white{background:#fff;color:var(--sage-dark);padding:.9rem 2.5rem;border-radius:10px;font-weight:700;border:none}
 .btn-white:hover{background:#F0F0F0;transform:translateY(-3px);box-shadow:0 10px 35px rgba(0,0,0,.15)}

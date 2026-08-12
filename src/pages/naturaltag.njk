@@ -64,10 +64,18 @@ permalink: /naturaltag/
   </div>
 </section>
 
-<!-- How It Works. Moved here from the home page on 6 Aug 2026. Anchor id kept
-     as how-it-works so /naturaltag/#how-it-works lands on it. -->
-{# How It Works moved to the homepage on 8 Aug at Kirsty's request.
-   The content now lives in _data/home.yml. #}
+{#- How It Works, back on this page from 12 Aug, alongside the copy on the
+    homepage rather than instead of it. Both render from partials/how-it-works
+    and both read _data/home.yml, so there is one set of words and two places
+    it appears.
+
+    It left this page on 8 Aug when Kirsty said Section 4 was missing from the
+    homepage. What nobody noticed was that the homepage's own "See how it
+    works" link still pointed at /naturaltag/#how-it-works, an anchor that had
+    gone with it, so for four days that link landed at the top of this page and
+    left the reader to find the section themselves. The healthcheck now
+    resolves fragments as well as paths. -#}
+{% include "partials/how-it-works.njk" %}
 
 <section class="howitworks">
   <div class="container">

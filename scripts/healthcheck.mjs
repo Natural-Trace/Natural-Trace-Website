@@ -67,6 +67,8 @@ function decodePath(p) {
 }
 
 const externals = new Set();
+/* Collected while walking the pages, resolved once every page has been read. */
+const fragmentLinks = [];
 for (const f of pages) {
   const html = await readFile(f, 'utf8');
   const page = '/' + relative(ROOT, f).replace(/index\.html$/, '').replace(/\\/g, '/');
@@ -81,7 +83,17 @@ for (const f of pages) {
     if (!clean) continue;
     const abs = clean.startsWith('/') ? join(ROOT, clean) : join(dirname(f), clean);
     const ok = existsSync(abs) || existsSync(join(abs, 'index.html')) || existsSync(`${abs}.html`);
-    if (!ok) note(`broken link on ${page}: ${raw}`);
+    if (!ok) { note(`broken link on ${page}: ${raw}`); continue; }
+
+    /* The page exists. Does the part after the # exist on it?
+       This is not pedantry. How It Works moved off the NaturalTag page on
+       8 Aug and the homepage's "See how it works" link kept pointing at
+       /naturaltag/#how-it-works, an anchor that had gone with it. The link
+       resolved, the page loaded, and the reader landed at the top of a page
+       that no longer contained what they clicked for. Nothing complained,
+       because the file was still there. The nav alone carries seven of these. */
+    const frag = raw.split('#')[1];
+    if (frag) fragmentLinks.push({ page, raw, frag: decodePath(frag), abs });
   }
 
   /* ── 2b. images set through CSS, not through a src attribute.
@@ -123,6 +135,18 @@ for (const f of pages) {
   for (const s of html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)) {
     try { JSON.parse(s[1]); } catch (e) { note(`invalid JSON-LD on ${page}: ${e.message.slice(0, 60)}`); }
   }
+}
+
+// ── 4c. every #fragment resolves to an id on the page it points at
+for (const { page, raw, frag, abs } of fragmentLinks) {
+  const target = existsSync(join(abs, 'index.html')) ? join(abs, 'index.html')
+    : existsSync(`${abs}.html`) ? `${abs}.html` : abs;
+  if (!target.endsWith('.html')) continue;          // a link to a PDF or an image
+  const html = await readFile(target, 'utf8').catch(() => '');
+  /* id="x", id='x' and the bare id=x an editor might paste. name= too, which
+     is still legal as an anchor target. */
+  const found = new RegExp(`(?:id|name)=["']?${frag.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["'\\s>]`).test(html);
+  if (!found) note(`link to a missing anchor on ${page}: ${raw}`);
 }
 
 // ── 4b. every redirect target resolves, and no stub leaks into the sitemap

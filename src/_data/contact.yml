@@ -63,6 +63,11 @@ error:
 cta:
   section_label: "Get Started"
   title: "Start Your First Test Today"
+  # Blended into the sage panel, not laid on top of it: only the picture's
+  # light and shade survive and the colour comes from the panel. That means a
+  # photograph with strong shapes works and a busy or pale one disappears.
+  # Clear this field for a plain gradient.
+  background_image: "/assets/images/supplements-1.webp"
   subtitle: "Schedule a consultation, discuss a compatibility project, or explore our testing capabilities."
   primary_text: "Contact Us"
   # Was "#contact-form", which is the whole section and therefore the top of

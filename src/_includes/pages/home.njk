@@ -155,43 +155,12 @@
       {% endfor %}
     </div>
     <p class="vp-swipe-hint">Swipe to see all five</p>
-    <p class="section-more"><a href="/naturaltag/#how-it-works">See how it works, four steps from ingredient to evidence</a></p>
+    <p class="section-more"><a href="#how-it-works">See how it works, four steps from ingredient to evidence</a></p>
   </div>
 </section>
 
 <!-- Section 4: How It Works -->
-{# Compact on purpose. Four steps across one row, and the detail behind a
-   disclosure, so the section costs roughly one screen instead of four.
-
-   <details> and <summary> are used rather than a hover or a scripted panel:
-   they work with a tap, they work from a keyboard, a screen reader announces
-   the open and closed state, and the text is in the page whether or not it is
-   showing. A hover would fail all four. #}
-<section class="howitworks howitworks-compact" id="how-it-works">
-  <div class="container">
-    <div class="how-head">
-      <span class="section-label">{{ home.how_label }}</span>
-      <h2 class="section-title">{{ home.how_title }}</h2>
-    </div>
-    <ol class="how-grid how-grid-compact">
-      {% for step in home.how_steps %}
-      <li class="how-step">
-        <div class="how-step-num">{{ step.num }}</div>
-        <h3>{{ step.title }}</h3>
-        <p>{{ step.description }}</p>
-      </li>
-      {% endfor %}
-    </ol>
-    {% if home.how_features %}
-    <details class="how-more">
-      <summary>{{ home.how_features_label }}</summary>
-      <ul class="how-facts">
-        {% for feature in home.how_features %}<li>{{ feature }}</li>{% endfor %}
-      </ul>
-    </details>
-    {% endif %}
-  </div>
-</section>
+{% include "partials/how-it-works.njk" %}
 
 <!-- Section 5: Industry Tiles -->
 <section class="home-industries" id="industries">

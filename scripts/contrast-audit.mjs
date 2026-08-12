@@ -94,6 +94,14 @@ const TARGETS = [
     'hero subtitle': '.hero-cloud .section-subtitle',
     'hero lead': '.hero-cloud .challenge-lead',
   } },
+  /* The "Start Your First Test Today" panel took a blended photograph on
+     12 Aug. White text on a green panel with a picture in it is precisely the
+     case this script exists for. */
+  { url: '/contact/', selectors: {
+    'cta label': '.cta-section .section-label',
+    'cta heading': '.cta-inner h2',
+    'cta subcopy': '.cta-inner p',
+  } },
   { url: '/about/', selectors: {
     'why label': '#why-we-exist .section-label',
     'why headline': '#why-we-exist .section-title',

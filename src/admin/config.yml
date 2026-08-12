@@ -734,6 +734,7 @@ collections:
             fields:
               - {label: "Section Label", name: "section_label", widget: "string"}
               - {label: "Heading", name: "title", widget: "string"}
+              - {label: "Background photograph", name: "background_image", widget: "image", required: false, hint: "Blended into the green panel: only its light and shade survive and the colour comes from the panel. A picture with strong shapes works, a pale or busy one disappears. Leave empty for a plain gradient."}
               - {label: "Subcopy", name: "subtitle", widget: "text"}
               - {label: "Primary button text", name: "primary_text", widget: "string"}
               - {label: "Primary button link", name: "primary_href", widget: "string"}
