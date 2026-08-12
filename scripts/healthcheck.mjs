@@ -30,7 +30,14 @@ async function walk(dir, out = []) {
 }
 
 const files = await walk(ROOT);
-const pages = files.filter((f) => f.endsWith('.html') && !f.includes(`${ROOT}/admin/`));
+/* Separators normalised before the admin folder is excluded. Windows walks
+   this tree as _site\admin\index.html, which does not contain "_site/admin/",
+   so the CMS page was skipped on Linux and checked on Windows. A check that
+   examines a different set of pages depending on who runs it is worse than one
+   that is simply wrong, because CI stays green while a developer's machine
+   reports a fault nobody else can reproduce. */
+const pages = files.filter((f) =>
+  f.endsWith('.html') && !f.replace(/\\/g, '/').includes(`${ROOT}/admin/`));
 
 // ── 1. every page must exist and carry the basics
 const REQUIRED = ['/', '/about/', '/naturaltag/', '/naturaldetect/', '/naturalcloud/',
@@ -46,6 +53,19 @@ if (!existsSync(join(ROOT, 'robots.txt'))) note('missing robots.txt');
 if (!existsSync(join(ROOT, 'llms.txt'))) note('missing llms.txt');
 
 // ── 2. internal links resolve
+/* A URL is percent-encoded; a filename on disk is not. Several assets have
+   spaces in their names, so the CMS logo went into the HTML as
+   NT%20icon%20without%20logo.png and this check looked on disk for a file
+   called exactly that. It reported a broken link against a file that was
+   sitting right there. Any asset with a space, a comma or an ampersand in its
+   name would have done the same.
+
+   Wrapped, because decodeURIComponent throws on a lone % rather than returning
+   the string, and one malformed href should not end the run. */
+function decodePath(p) {
+  try { return decodeURIComponent(p); } catch { return p; }
+}
+
 const externals = new Set();
 for (const f of pages) {
   const html = await readFile(f, 'utf8');
@@ -57,7 +77,7 @@ for (const f of pages) {
     if (/^https?:\/\//.test(raw) || raw.startsWith('//')) { externals.add(raw.replace(/^\/\//, 'https://')); continue; }
     // The site's own origin appears in canonicals and Open Graph tags. It is
     // not an outbound link and pinging it from CI tells us nothing.
-    const clean = raw.split(/[?#]/)[0];
+    const clean = decodePath(raw.split(/[?#]/)[0]);
     if (!clean) continue;
     const abs = clean.startsWith('/') ? join(ROOT, clean) : join(dirname(f), clean);
     const ok = existsSync(abs) || existsSync(join(abs, 'index.html')) || existsSync(`${abs}.html`);
@@ -80,7 +100,7 @@ for (const f of pages) {
     const raw = m[2].trim();
     if (/^(data:|#)/.test(raw)) continue;
     if (/^https?:\/\//.test(raw) || raw.startsWith('//')) { externals.add(raw.replace(/^\/\//, 'https://')); continue; }
-    const clean = raw.split(/[?#]/)[0];
+    const clean = decodePath(raw.split(/[?#]/)[0]);
     if (!clean) continue;
     const abs = clean.startsWith('/') ? join(ROOT, clean) : join(dirname(f), clean);
     if (!existsSync(abs)) note(`broken CSS background on ${page}: ${raw}`);
