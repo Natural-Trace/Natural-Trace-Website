@@ -63,7 +63,21 @@ h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02
    ending on a single stranded word. Chrome only applies it to blocks of six
    lines or fewer, which every subtitle on the site is, and browsers that do
    not support it simply wrap as they do today. */
-.section-subtitle{font-size:1.1rem;color:var(--muted);max-width:640px;line-height:1.7;text-wrap:balance}
+/* text-wrap:pretty, not balance.
+   balance makes every line in the block roughly the same length. Centred that
+   is what you want. Left-aligned in a text column it is wrong: at 1100px the
+   About hero subtitle was setting as two 250px lines inside a 502px column,
+   so the sentence ended halfway across and left a 250px hole down its right
+   side while the paragraph directly beneath it ran the full width. pretty
+   keeps the orphan control and fills each line first.
+   balance is put back below on the section heads that are actually centred. */
+.section-subtitle{font-size:1.1rem;color:var(--muted);max-width:640px;line-height:1.7;text-wrap:pretty}
+.vp-head .section-subtitle,
+.how-head .section-subtitle,
+.industries-header .section-subtitle,
+.services-header .section-subtitle,
+.detection-methods-header .section-subtitle,
+.nc-features-header .section-subtitle{text-wrap:balance}
 
 /* Animations. Scroll-reveal was removed on 6 Aug 2026: every section now
    paints on load instead of fading in as you scroll. What is left is used by
@@ -1126,7 +1140,38 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 /* Final CTA */
 .finalcta{padding:6rem 0;background:#fff}
 .finalcta-inner{background:linear-gradient(135deg,var(--sage) 0%,var(--sage-dark) 100%);border-radius:24px;padding:4rem 3rem;text-align:center;position:relative;overflow:hidden}
-.finalcta-inner::after{content:'';position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.06)}
+/* The decorative mark in the top right corner of every CTA panel.
+   Was a plain 320px circle bleeding off the corner at 6% white. Kirsty asked
+   for the Natural Trace leaf instead, treated the way the LinkedIn banner
+   treats it: the whole mark, tonal against its own background rather than
+   stamped on it in brand colour.
+
+   The shape comes from the icon used as a mask, not as a background image, so
+   the fill is a colour this stylesheet controls. Painting the PNG directly
+   would put mid-sage on sage and either disappear or read as a smudge; masking
+   means the leaf is a fixed percentage of white over whatever the panel
+   gradient is doing underneath it, which is what makes it tonal.
+
+   border-radius stays at 50% deliberately. If --cta-mark is unset, or a
+   browser has no mask support, both mask declarations drop and what is left is
+   the circle this rule started as. The icon is a circle inscribed in a square
+   image, so the radius never clips the mark when the mask does apply. */
+/* 7.5% white, not more. The headline is centred and unconstrained on the wide
+   pages, so between roughly 1000px and 1500px it runs across this corner and
+   no position avoids that. At this weight the mark reads as a watermark the
+   text passes over, which is the LinkedIn treatment; at the 10% it started on
+   it read as two things colliding. Measured at 1024, 1280 and 1440. */
+.finalcta-inner::after{content:'';position:absolute;right:1.75rem;top:1.75rem;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.075);pointer-events:none;
+  -webkit-mask:var(--cta-mark) no-repeat center/contain;mask:var(--cta-mark) no-repeat center/contain}
+@media(max-width:900px){
+  .finalcta-inner::after{right:1.25rem;top:1.25rem;width:110px;height:110px;background:rgba(255,255,255,.07)}
+}
+/* Under 560px the panel is 1.5rem of padding either side of text that wraps to
+   four or five lines, so there is no corner left the headline is not already
+   using. A watermark behind wrapped text is noise, not branding. */
+@media(max-width:560px){
+  .finalcta-inner::after{display:none}
+}
 .finalcta h2{color:#fff;font-size:clamp(1.7rem,3.2vw,2.4rem);margin-bottom:1rem;letter-spacing:-.02em;position:relative}
 .finalcta p{color:rgba(255,255,255,.85);font-size:1rem;line-height:1.75;max-width:620px;margin:0 auto 2rem;position:relative}
 .finalcta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative}

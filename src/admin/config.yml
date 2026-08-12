@@ -66,6 +66,7 @@ collections:
           - {label: "Country Code", name: "country", widget: "string"}
           - {label: "Contact Email", name: "email", widget: "string"}
           - {label: "Logo", name: "logo", widget: "image"}
+          - {label: "CTA panel watermark", name: "cta_mark", widget: "image", required: false, hint: "The faint brand mark in the top right of every green call-to-action panel. Only its shape is used, the colour comes from the panel, so use a flat single-colour graphic on a transparent background. Leave empty for a plain circle."}
           - {label: "Social Profile URLs", name: "social", widget: "list", field: {label: "URL", name: "url", widget: "string"}}
           - {label: "Allow AI crawlers", name: "allow_ai_crawlers", widget: "boolean", hint: "Lets ChatGPT, Claude, Perplexity and Google AI read the site"}
 

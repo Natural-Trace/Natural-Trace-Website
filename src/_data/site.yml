@@ -18,6 +18,15 @@ locality: "Singapore"
 country: "SG"
 email: "info@natural-trace.com"
 logo: "/assets/logos/NT icon without logo.png"
+
+# The watermark in the top right corner of every call-to-action panel.
+# It is used as a mask, not as a picture: only the shape is taken from this
+# file and the colour comes from the stylesheet, so the mark always sits
+# tonally on the panel behind it whatever colour that panel is. That also
+# means a flat single-colour graphic on a transparent background works and a
+# photograph or a multi-colour logo does not. Clear this field to fall back to
+# the plain circle.
+cta_mark: "/assets/logos/NT icon without logo.png"
 social:
   - "https://www.linkedin.com/company/natural-trace/"
   - "https://www.youtube.com/@naturaltrace8510"

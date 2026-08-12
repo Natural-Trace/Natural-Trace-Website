@@ -38,6 +38,15 @@
    visitor keeps the stylesheet they cached last time, which is how a fixed
    layout can stay broken on screen after a deploy. #}
 <link rel="stylesheet" href="/assets/css/styles.css?v={{ assetVersions.css }}">
+{%- if site.cta_mark %}
+{# The CTA watermark is set here rather than in the stylesheet so it stays a
+   CMS field. The url filter is required: HtmlBasePlugin rewrites src and href
+   attributes and does not look inside a style element, so without it this
+   emits a root-absolute /assets/... that 404s on the project-page path prefix
+   and the mark silently disappears in production only. Same failure class as
+   the hero background on 12 Aug and the redirect stubs on 11 Aug. #}
+<style>:root{--cta-mark:url('{{ site.cta_mark | url }}')}</style>
+{%- endif %}
 </head>
 <body class="{% if page.url == sitePathPrefix or page.url == '/' %}page-home{% endif %}">
 
