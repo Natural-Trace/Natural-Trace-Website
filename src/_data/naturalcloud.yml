@@ -9,6 +9,20 @@ intro: "NaturalCloud™ is the digital platform that securely stores authenticat
 # the keys exist so the admin panel and this file agree either way.
 hero_image: ""
 hero_image_alt: ""
+
+# The heatmap recording of the portal, added 12 Aug 2026. Set this and the
+# panel plays it instead of showing the logo mark; empty it and the mark comes
+# back, with no code change either way.
+#
+# It is a crop and a re-encode of "NaturalTrace Heatmap Video.mp4", which is
+# kept in assets/video as the master. The original is 3840x2160 and 3.5MB for
+# a panel that renders around 500px wide, and the top of the frame was a
+# browser window with natural-trace.trackvision.ai/admin/... in the address
+# bar. Cropped to the portal and encoded at 1280px: 216KB, 6% of the original,
+# and no internal URL on a public page.
+hero_video: "/assets/video/naturalcloud-heatmap.mp4"
+hero_video_poster: "/assets/video/naturalcloud-heatmap-poster.webp"
+hero_video_alt: "The NaturalCloud portal showing NaturalTag test results plotted on a world map"
 hero_logo: "/assets/logos/NaturalCloud-icon.png"
 hero_logo_alt: "NaturalCloud"
 

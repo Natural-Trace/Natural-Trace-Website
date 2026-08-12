@@ -544,3 +544,44 @@ function filterFaq(cat) {
 })();
 
 
+/* Autoplaying video, for people who have asked for less of it.
+
+   The NaturalCloud panel loops an eleven second recording with no controls,
+   which is what was asked for and is also, for anyone sensitive to motion,
+   eleven seconds of movement they cannot stop. WCAG 2.2.2 asks that anything
+   moving for more than five seconds can be paused.
+
+   So the operating system setting decides. Nobody who has not asked for
+   reduced motion notices this code at all; anyone who has gets the first
+   frame, a play button, and the choice. The check is live rather than
+   read-once, because the setting can be changed while the page is open.
+
+   Attributes rather than a class, because autoplay and controls are what the
+   browser actually reads. */
+window.addEventListener('DOMContentLoaded', function() {
+  var videos = document.querySelectorAll('video[autoplay]');
+  if (!videos.length || !window.matchMedia) return;
+  var query = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function apply() {
+    for (var i = 0; i < videos.length; i++) {
+      var v = videos[i];
+      if (query.matches) {
+        v.autoplay = false;
+        v.controls = true;
+        v.pause();
+      } else {
+        v.controls = false;
+        /* play() rejects when a browser blocks autoplay for its own reasons.
+           Nothing to do about that here, and an unhandled rejection in the
+           console helps nobody. */
+        var p = v.play();
+        if (p && p.catch) p.catch(function() {});
+      }
+    }
+  }
+
+  apply();
+  if (query.addEventListener) query.addEventListener('change', apply);
+  else if (query.addListener) query.addListener(apply);
+});

@@ -21,10 +21,33 @@ permalink: /naturalcloud/
           <a href="{{ naturalcloud.cta_primary_url }}" class="btn btn-primary" style="cursor:pointer">{{ naturalcloud.cta_primary }}</a>
         </div>
       </div>
-      {# A photograph if there is one, the logo panel if not. NaturalCloud is
-         still on the panel: its imagery is a video Kirsty is having made, and
-         a stand-in photograph would be worse than the mark. #}
-      {% if naturalcloud.hero_image %}
+      {# The video if there is one, then a photograph, then the logo panel.
+         All three come from the data file, so which one shows is a CMS choice
+         and not a code change.
+
+         muted is not decoration: no browser will autoplay a video with sound,
+         so without it the thing simply does not start. playsinline stops iOS
+         taking it fullscreen the moment it plays. There is no audio track at
+         all, so nothing is being silenced.
+
+         preload="metadata" and not "none". Those two were tried the other way
+         round and the video simply never started: autoplay and preload="none"
+         contradict each other, since a browser cannot play what it has been
+         told not to fetch. Measured at 0x0 natural size and paused after
+         nearly three seconds on a local 216KB file.
+
+         The 25KB poster is what keeps the panel from being empty in the
+         meantime, and it is the video's own first frame, so the switch from
+         still to moving is invisible. #}
+      {% if naturalcloud.hero_video %}
+      <div class="solution-photo solution-video">
+        <video
+          src="{{ naturalcloud.hero_video }}"
+          {% if naturalcloud.hero_video_poster %}poster="{{ naturalcloud.hero_video_poster }}"{% endif %}
+          autoplay muted loop playsinline preload="metadata"
+          aria-label="{{ naturalcloud.hero_video_alt }}"></video>
+      </div>
+      {% elif naturalcloud.hero_image %}
       <div class="solution-photo">
         <img src="{{ naturalcloud.hero_image }}" alt="{{ naturalcloud.hero_image_alt }}" loading="lazy">
       </div>

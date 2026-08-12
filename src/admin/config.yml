@@ -469,6 +469,9 @@ collections:
           - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
           - {label: "Product Logo", name: "hero_logo", widget: "image"}
           - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
+          - {label: "Hero video", name: "hero_video", widget: "file", required: false, hint: "Plays on a loop in the panel, with no sound and no play button. Setting this hides the hero image and the logo below. Clear it to go back to them. MP4, around 1280px wide."}
+          - {label: "Hero video still", name: "hero_video_poster", widget: "image", required: false, hint: "Shown until the video has loaded. A frame from the video itself is best, so the switch from still to moving is invisible."}
+          - {label: "Hero video description", name: "hero_video_alt", widget: "string", required: false, hint: "For screen readers. Describe what the video shows."}
           - {label: "Benefits Heading", name: "features_title", widget: "string"}
           - {label: "Benefits", name: "features", widget: "list", field: {label: "Benefit", name: "benefit", widget: "string"}}
           - {label: "Primary CTA", name: "cta_primary", widget: "string"}
