@@ -9,8 +9,11 @@ cases:
     challenge: "A supplement brand needed a way to verify that its proprietary botanical blend was present in finished products, beyond standard ingredient testing."
     solution: "NaturalTag was incorporated into the branded ingredient before manufacturing, allowing the finished product to be tested for the assigned tag."
     outcome: "The brand gained a practical way to verify the presence of its proprietary ingredient throughout the supply chain."
-    image: "https://images.unsplash.com/photo-1732900293895-233f769299b3?w=800&q=80"
-    image_alt: "Dietary supplement capsules"
+    # Bryan's pick, 12 Aug, closing the last of Kirsty's use-case image list.
+    # In the repo rather than hotlinked from Unsplash, so the case study's
+    # picture cannot be withdrawn or rate-limited by a third party.
+    image: "/assets/images/supplements-3.webp"
+    image_alt: "A row of white supplement bottles receding into a pale background, the nearest one in focus"
   - sector: "Branded Ingredients"
     title: "Manufacturing Origin"
     challenge: "A branded ingredient owner wanted greater confidence that production by licensed manufacturers matched authorised volumes."

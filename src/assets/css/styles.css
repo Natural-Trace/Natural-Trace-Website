@@ -132,7 +132,22 @@ h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02
 .nav-dropdown{position:relative}
 .nav-dropdown-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);min-width:200px;background:#fff;border-radius:10px;box-shadow:0 12px 36px rgba(0,0,0,.15);padding:.5rem 0;opacity:0;visibility:hidden;pointer-events:none;transition:all .25s ease;z-index:1000;padding-top:1rem}
 .nav-dropdown-menu::before{content:'';position:absolute;top:-8px;left:0;right:0;height:12px}
-.nav-dropdown:hover .nav-dropdown-menu{opacity:1;visibility:visible;pointer-events:auto}
+/* focus-within as well as hover. The menu was hover-only, so its contents were
+   in the tab order but invisible: a keyboard user tabbed through eight links
+   they could not see. */
+.nav-dropdown:hover > .nav-dropdown-menu,
+.nav-dropdown:focus-within > .nav-dropdown-menu{opacity:1;visibility:visible;pointer-events:auto}
+
+/* A second level, opening to the right. NaturalTag owns How It Works. */
+.nav-submenu{position:relative}
+.nav-submenu > a{display:flex!important;align-items:center;justify-content:space-between;gap:1rem}
+.nav-submenu-caret{width:.8rem;height:.8rem;flex:0 0 auto;opacity:.55}
+.nav-submenu-menu{position:absolute;top:-.5rem;left:100%;min-width:180px;background:#fff;
+  border-radius:10px;box-shadow:0 12px 36px rgba(0,0,0,.15);padding:.5rem 0;
+  opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility .2s ease;z-index:1001}
+.nav-submenu:hover > .nav-submenu-menu,
+.nav-submenu:focus-within > .nav-submenu-menu{opacity:1;visibility:visible;pointer-events:auto}
+#navbar:not(.scrolled) .nav-submenu-menu{background:rgba(30,34,50,.95);border:1px solid rgba(255,255,255,.08)}
 .nav-dropdown-menu a{display:block;padding:.55rem 1.25rem;font-size:.82rem!important;font-weight:500!important;color:var(--text)!important;transition:all .2s!important;white-space:nowrap}
 .nav-dropdown-menu a:hover{background:var(--offwhite);color:var(--sage)!important}
 .nav-dropdown-menu a::after{display:none!important}
@@ -649,11 +664,29 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
   .hero-stats{gap:2rem;flex-wrap:wrap}
 }
 @media(max-width:768px){
-  .nav-links{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--dark);padding:1rem 2rem;z-index:999}
+  /* Left aligned, not centred. The menu is eighteen links across three levels
+     now that the dropdowns open here, and an indent cannot show a hierarchy in
+     a centred list: every row starts in a different place for a reason that
+     has nothing to do with its depth. */
+  .nav-links{display:none;flex-direction:column;align-items:stretch;text-align:left;position:absolute;top:100%;left:0;right:0;background:var(--dark);padding:1rem 2rem;z-index:999}
   .nav-links.show{display:flex}
   .nav-links li{margin:0;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.1)}
   .nav-links li:last-child{border-bottom:none}
   .nav-links a{color:#fff!important;font-size:1rem}
+  /* The dropdowns open inline on a phone instead of not opening at all.
+     They were position:absolute, visibility:hidden and revealed on :hover,
+     which a touch screen does not have, so Team, Careers, NaturalDetect,
+     NaturalCloud, FAQ, the four industries and Industry Use-Cases were
+     unreachable from the phone menu entirely: fourteen of the site's pages,
+     behind five top-level links. Found on 12 Aug while adding the second
+     level; it has been that way as long as the dropdowns have existed. */
+  .nav-dropdown-menu,.nav-submenu-menu{position:static;transform:none;opacity:1;visibility:visible;
+    pointer-events:auto;background:transparent!important;border:0!important;box-shadow:none;
+    padding:.15rem 0 0;min-width:0}
+  .nav-dropdown-menu::before{display:none}
+  .nav-dropdown-menu a{padding:.5rem 0 .5rem 1.1rem;font-size:.94rem!important;white-space:normal}
+  .nav-submenu-menu a{padding-left:2.2rem}
+  .nav-submenu-caret{display:none}
   #navbar.scrolled .nav-links{background:rgba(255,255,255,.98);box-shadow:0 4px 20px rgba(0,0,0,.1)}
   #navbar.scrolled .nav-links li{border-bottom-color:rgba(0,0,0,.06)}
   #navbar.scrolled .nav-links a{color:var(--dark)!important}
