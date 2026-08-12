@@ -91,7 +91,14 @@ permalink: /about/
     <div class="vp-grid about-grid-2">
       {% for card in about.different_cards %}
       <article class="vp-card delay-{{ loop.index }}">
-        <span class="vp-mark" aria-hidden="true"></span>
+        {# A tick, at Kirsty's request, in place of the diamond that replaced the
+           01-04 counters on 11 Aug. Inline rather than an image file so it
+           inherits its colour from the stylesheet, stays sharp at any size and
+           costs no extra request. aria-hidden because it decorates the heading
+           below it and has nothing of its own to say. #}
+        <span class="vp-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.6 12.7 9.5 17.6 19.4 6.8"/></svg>
+        </span>
         <h3>{{ card.title }}</h3>
         <div class="vp-block"><p>{{ card.body }}</p></div>
       </article>
@@ -109,7 +116,9 @@ permalink: /about/
     <div class="vp-grid about-grid-2" style="max-width:900px;margin:0 auto">
       {% for group in about.choose_groups %}
       <article class="vp-card delay-{{ loop.index }}">
-        <h3>{{ group.title }}</h3>
+        {# safe: these titles carry &nbsp; around their ampersand so the
+           heading cannot break with the & stranded at the end of a line. #}
+        <h3>{{ group.title | safe }}</h3>
         <ul class="sol-list" style="grid-template-columns:1fr;margin-top:0">
           {% for item in group.items %}<li>{{ item }}</li>{% endfor %}
         </ul>

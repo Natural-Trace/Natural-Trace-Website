@@ -49,7 +49,13 @@ a{text-decoration:none;color:inherit}
    case is today's wrapping. */
 h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
 .container{max-width:1200px;margin:0 auto;padding:0 2rem}
-.section-label{font-family:'Montserrat',sans-serif;display:block;font-size:1.02rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);margin-bottom:.6rem}
+/* 1.02rem to 1.14rem, 16.3px to 18.2px. Kirsty asked for "Why Customers Choose
+   Natural Trace" to be larger. That line is a section label, not a heading: the
+   H2 under it is "Designed for Industry. Backed by Science." So this moves the
+   label, and it moves every label on the site rather than this one, because a
+   single section whose eyebrow is two points bigger than every other section's
+   is a mistake that looks like a mistake. */
+.section-label{font-family:'Montserrat',sans-serif;display:block;font-size:1.14rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);margin-bottom:.6rem}
 /* One scale, not seventeen overrides.
    Kirsty's 12 August list asks for a larger heading seventeen times: The
    Challenge, About Natural Trace, Industries, Careers, FAQ, Our Story, Why We
@@ -1450,10 +1456,13 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
    the height of what is in it. */
 #why-we-exist .how-grid{align-items:start}
 
-/* A17  The 01-04 counters are replaced by a branded mark. A proper icon set is
-        still waiting on artwork, so this is a brand shape, not a placeholder
-        number. */
-.vp-mark{display:block;width:14px;height:14px;margin-bottom:1rem;background:linear-gradient(135deg,var(--gold),var(--sage));border-radius:3px;transform:rotate(45deg)}
+/* A17  The 01-04 counters became a branded diamond on 11 Aug, then a tick on
+        12 Aug, which is what Kirsty asked for both times: these four cards are
+        not a sequence, so a counter was reading as an order of operations that
+        does not exist. The tick is drawn in the template, not here, so this
+        rule only sets the box and the colour it inherits. */
+.vp-mark{display:block;width:22px;height:22px;margin-bottom:.9rem;color:var(--sage)}
+.vp-mark svg{width:100%;height:100%;display:block}
 
 /* A21  Food matrices, promoted out of a bullet into its own section. */
 .matrices-section{padding:5rem 0;background:var(--offwhite)}

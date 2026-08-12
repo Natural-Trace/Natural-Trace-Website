@@ -398,7 +398,7 @@ collections:
             widget: "list"
             summary: "{{fields.title}}"
             fields:
-              - {label: "Group Title", name: "title", widget: "string"}
+              - {label: "Group Title", name: "title", widget: "string", hint: "Write the ampersand as &amp; and put &nbsp; either side of it, so the heading cannot break with the & left at the end of a line."}
               - {label: "Items", name: "items", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
           - {label: "Food Matrices: Label", name: "matrices_label", widget: "string"}
           - {label: "Food Matrices: Headline", name: "matrices_title", widget: "string", hint: "CLAIM REVIEW: the 20+ figure has not been signed off. Do not publish this section without approval."}

@@ -96,13 +96,20 @@ choose_label: "Why Customers Choose Natural Trace"
 # heading read "Designed for Real- / World Manufacturing." No hyphen, no
 # joiner: this line is now plain text and survives being retyped in the CMS.
 choose_title: "Designed for Industry. Backed by Science."
+# The ampersands are tied to the words either side of them with non-breaking
+# spaces. Kirsty marked the break in "Made for Food & / Nutraceutical
+# Manufacturing": an ampersand joins two things and should not be left at the
+# end of a line with only one of them. Bound this way the headings break as
+# "Made for Food & Nutraceutical / Manufacturing" and "Built on Scientific &
+# Regulatory / Foundations", which is where the sense divides anyway.
+# &amp; rather than a bare &, because these go through the safe filter.
 choose_groups:
-  - title: "Made for Food & Nutraceutical Manufacturing"
+  - title: "Made for Food&nbsp;&amp;&nbsp;Nutraceutical Manufacturing"
     items:
       - "100% natural, food-grade authentication"          # CLAIM REVIEW
       - "Compatible with existing manufacturing processes"
       - "Added at parts-per-million with no impact on taste, appearance or functionality"    # CLAIM REVIEW
-  - title: "Built on Scientific & Regulatory Foundations"
+  - title: "Built on Scientific&nbsp;&amp;&nbsp;Regulatory Foundations"
     items:
       - "Manufactured in ISO 22000, SFA and FDA-registered facilities"   # CLAIM REVIEW
       - "Self-determined FDA GRAS status"                               # CLAIM REVIEW
