@@ -1108,9 +1108,11 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 .challenge-point-icon{flex:0 0 auto;width:2.9rem;height:2.9rem;border-radius:50%;
   display:grid;place-items:center;background:rgba(107,114,73,.09);color:var(--sage-dark)}
 .challenge-point-icon svg{width:1.4rem;height:1.4rem;display:block}
-/* One point carries the turn. Two would be none. */
+/* One point carries the turn. Two would be none.
+   The emphasis is in the text only. The filled circle it also had was doing the
+   same job twice and made the third badge read as a different kind of thing
+   from the first two rather than as the same thing, emphasised. */
 .challenge-point.is-emphasis p{color:var(--sage-dark);font-weight:600}
-.challenge-point.is-emphasis .challenge-point-icon{background:var(--sage-dark);color:#fff}
 
 /* The chevron sits on a rule that runs the width of the points above it. */
 .challenge-turn{position:relative;max-width:940px;margin:3.25rem auto 0;text-align:center}
