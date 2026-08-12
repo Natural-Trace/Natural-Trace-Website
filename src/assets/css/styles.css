@@ -1321,10 +1321,19 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
    and both lists start at the top of the second row whatever the copy does or
    whichever machine renders it. Setting the row gap here because taking the
    card off flex would otherwise hand the spacing to the grid's 1.5rem. */
-.choose-grid{grid-template-rows:auto auto}
+.choose-grid{grid-template-rows:auto auto;row-gap:0}
 @supports (grid-template-rows:subgrid){
-  .choose-grid .vp-card{display:grid;grid-template-rows:subgrid;grid-row:span 2;align-content:start;row-gap:1.35rem}
+  .choose-grid .vp-card{display:grid;grid-template-rows:subgrid;grid-row:span 2;align-content:start}
 }
+/* margin-top:0, the same as the NaturalTag list. The h3 above already carries
+   17.6px of margin-bottom, so anything here is added to it, and this pairing is
+   meant to measure the same on both pages.
+
+   Two wrong answers were tried first and both were caught by the spacing audit
+   rather than by eye. A row-gap on the card is also honoured by flex, so when
+   the stacked layout put the card back on flex the gap and the margin both
+   applied: 19px on NaturalTag against 62px here. Replacing it with a 1.35rem
+   margin still stacked on the h3's own 17.6px: 39px against 18px. */
 .choose-grid .sol-list{grid-template-columns:1fr;margin-top:0}
 /* Stacks at 1060px rather than the 980px the rest of the value grids use.
    Between those two widths the container, not the 1040px cap, sets the grid,
@@ -1335,9 +1344,8 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 @media(max-width:1060px){
   /* One card per row, so a shared row would pair a card with nothing. Back to
      the ordinary flex card. */
-  .choose-grid{grid-template-rows:none;grid-template-columns:1fr}
+  .choose-grid{grid-template-rows:none;grid-template-columns:1fr;row-gap:1.5rem}
   .choose-grid .vp-card{display:flex;grid-row:auto;grid-column:1 / -1}
-  .choose-grid .sol-list{margin-top:1.35rem}
 }
 @media(max-width:980px){.about-grid-2 .vp-card,.about-grid-2 .vp-card:nth-child(4),.about-grid-2 .vp-card:nth-child(5){grid-column:span 1}}
 
@@ -1385,6 +1393,11 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
    words, verbatim, now opening the lead paragraph underneath the headline. */
 .hero-lead{max-width:600px;margin:0 0 1rem;font-size:1.08rem;line-height:1.75;color:rgba(255,255,255,.72)}
 .hero-lead strong{color:#fff;font-weight:600}
+/* The positioning line, on its own row above the description at Kirsty's
+   request. Everything else about it is .hero-lead; this only tightens the gap
+   below so the two sentences read as one block rather than two paragraphs
+   that happen to be adjacent. */
+.hero-lead-positioning{margin-bottom:.55rem}
 @media(max-width:520px){.hero-lead{font-size:1rem}}
 
 

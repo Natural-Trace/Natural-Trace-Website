@@ -16,7 +16,13 @@ hero_title_line2: "Behind Your Brand"
 # Positioning statement, verbatim from the copy guide. Do not shorten without
 # Kirsty's sign-off. Rendered in bold at the start of the hero lead paragraph,
 # directly under the headline.
-hero_slogan: "In-Product Authentication for Food & Nutraceutical Ingredients"
+# The ampersand is bound to the words either side of it, the same rule the
+# "Why Customers Choose" card headings follow: an ampersand joins two things
+# and is not left at the end of a line holding one of them. Without this the
+# line broke as "…for Food & / Nutraceutical Ingredients." on a phone. The
+# words are unchanged; &amp; is only how a bare & is written once the field
+# goes through the safe filter.
+hero_slogan: "In-Product Authentication for Food&nbsp;&amp;&nbsp;Nutraceutical Ingredients"
 hero_desc: "Natural Trace gives every ingredient a unique, detectable identity, verifiable throughout the supply chain."
 # Rendered as a single sentence: items joined with commas and "and", then the
 # coda after a comma. Kirsty wrote these as five short lines; the fifth is a

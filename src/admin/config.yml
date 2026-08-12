@@ -118,7 +118,7 @@ collections:
           - {label: "Hero Image Alt", name: "hero_image_alt", widget: "string"}
           - {label: "Hero Title Line 1", name: "hero_title_line1", widget: "string"}
           - {label: "Hero Title Line 2 (italic)", name: "hero_title_line2", widget: "string"}
-          - {label: "Hero Category Line", name: "hero_slogan", widget: "string"}
+          - {label: "Hero Category Line", name: "hero_slogan", widget: "string", hint: "Shown in bold on its own line above the description. Write the ampersand as &amp; with &nbsp; either side, so it cannot be left at the end of a line on a phone."}
           - {label: "Hero Description", name: "hero_desc", widget: "text"}
           - {label: "Hero Claims (joined into one sentence)", name: "hero_claims", widget: "list", field: {label: "Claim", name: "claim", widget: "string"}}
           - {label: "Hero Claims Closing Phrase", name: "hero_claims_coda", widget: "string"}

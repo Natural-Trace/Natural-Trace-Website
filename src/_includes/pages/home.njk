@@ -23,9 +23,17 @@
         <span class="hero-line"><span class="hero-line-inner" data-single-line>{{ home.hero_title_line1 }}</span></span>
         <span class="hero-line"><span class="hero-line-inner" data-single-line><em>{{ home.hero_title_line2 }}</em></span></span>
       </h1>
-      {# Kirsty's positioning line, verbatim, now opening the lead paragraph.
-         It used to sit above the H1 as an eyebrow label. #}
-      <p class="hero-lead"><strong>{{ home.hero_slogan }}.</strong> {{ home.hero_desc }}</p>
+      {# Kirsty's positioning line, verbatim. It sat above the H1 as an eyebrow
+         label, then opened the lead paragraph, and is its own paragraph now:
+         she does not want it sharing a line with the description. Two elements
+         rather than a <br>, because they are two sentences doing two different
+         jobs and a screen reader should hear the pause.
+
+         Both carry .hero-lead so the width, size and colour stay defined once.
+         The modifier only closes the gap between them, so they read as a pair
+         rather than as two unrelated paragraphs. #}
+      <p class="hero-lead hero-lead-positioning"><strong>{{ home.hero_slogan | safe }}.</strong></p>
+      <p class="hero-lead">{{ home.hero_desc }}</p>
       {# The mockup shows these as a ticked list rather than one long sentence. #}
       <ul class="hero-ticks">
         {% for c in home.hero_claims %}<li>{{ c }}</li>{% endfor %}
