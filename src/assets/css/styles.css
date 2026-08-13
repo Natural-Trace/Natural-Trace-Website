@@ -2054,3 +2054,83 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
 .compat-evidence:empty{display:none}
 .compat-evidence-yes{background:rgba(107,114,73,.1);color:var(--sage-dark)}
 .compat-evidence-no{background:rgba(59,102,107,.1);color:var(--teal)}
+
+/* ---------------------------------------------------------------------------
+   The five value cards, laid out in one place.
+
+   Bryan: the rule above "OUR VALUE" does not sit at the same height across a
+   row, on desktop or on mobile. It cannot, in a flex row: flex sizes the cards
+   and then each one lays its own contents out, so the divider lands wherever
+   that card's problem text happens to stop. Two lines of copy in one card and
+   three in the next puts them a line apart.
+
+   Grid with subgrid fixes it properly. Every card lends its four parts to the
+   grid's rows, so a band of cards shares one row for the picture, one for the
+   heading, one for the problem and one for the value. The divider is the top
+   of the fourth row, and a row has one top.
+
+   Two levels of it, because the card's padding lives on an inner wrapper so the
+   photograph can reach the card's edges: the card is a subgrid of the section,
+   and the body is a subgrid of the card.
+
+   The whole layout is here rather than spread through the file. It was three
+   separate additions in three media blocks, each fighting the generic .vp-grid
+   and .vp-card rules further up on source order alone, and it produced 24px
+   cards before it produced aligned ones. Every regime states its own columns
+   and its own spans, so none of them depends on what did or did not reach it.
+
+   Three regimes:
+     up to 720px    a sideways carousel, one card at a time
+     721 to 980     two across, the fifth centred under them
+     981 and up     three across, the last two centred under them
+--------------------------------------------------------------------------- */
+@supports (grid-template-rows:subgrid){
+  .vp-grid-centred{display:grid;gap:1.5rem}
+  .vp-grid-centred > .vp-card-photo{
+    display:grid;grid-template-rows:subgrid;grid-row:span 4;padding:0;
+  }
+  .vp-grid-centred > .vp-card-photo > .vp-card-body{
+    display:grid;grid-template-rows:subgrid;grid-row:span 3;align-content:start;row-gap:.9rem;
+  }
+  /* The row gaps do the spacing between the four parts now, so the parts stop
+     carrying their own bottom margins and cannot double up with them. */
+  .vp-grid-centred > .vp-card-photo .vp-card-head,
+  .vp-grid-centred > .vp-card-photo .vp-block{margin-bottom:0}
+  /* The heading sits at the bottom of its row, not the top. A shared row is as
+     tall as the tallest heading in the band, so a one-line heading in a band
+     with a two-line one has a spare line somewhere. Above the heading it is a
+     little air under the picture; below it, it is 37px between a heading and
+     its paragraph next to a card with 15px, which the spacing audit called and
+     was right to. */
+  .vp-grid-centred > .vp-card-photo .vp-card-head{align-self:end}
+
+  @media(min-width:981px){
+    .vp-grid-centred{grid-template-columns:repeat(6,1fr)}
+    .vp-grid-centred > .vp-card{grid-column:span 2}
+    /* One empty column at each end, so the last two are centred under the
+       first three and every card is the same width. The rule further up gives
+       them three columns each, which is half the row: the same card drawn half
+       again as large for no reason but that there are two of them. */
+    .vp-grid-centred > .vp-card:nth-child(4){grid-column:2 / span 2}
+    .vp-grid-centred > .vp-card:nth-child(5){grid-column:4 / span 2}
+  }
+  @media(min-width:721px) and (max-width:980px){
+    .vp-grid-centred{grid-template-columns:repeat(4,1fr)}
+    .vp-grid-centred > .vp-card{grid-column:span 2}
+    .vp-grid-centred > .vp-card:nth-child(5){grid-column:2 / span 2}
+  }
+  @media(max-width:720px){
+    /* The carousel, unchanged in behaviour: still one card at a time, still
+       scroll-snapped, still no script. A grid flowing sideways rather than a
+       flex row, so the cards can share rows here too. Two cards are on screen
+       at once, so the alignment shows. */
+    .vp-grid-centred{
+      grid-auto-flow:column;
+      grid-template-columns:none;
+      grid-auto-columns:82%;
+      grid-template-rows:auto auto auto auto;
+      gap:.9rem;
+    }
+    .vp-grid-centred > .vp-card{grid-column:auto}
+  }
+}
