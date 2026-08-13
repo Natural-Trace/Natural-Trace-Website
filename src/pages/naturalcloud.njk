@@ -60,7 +60,8 @@ permalink: /naturalcloud/
       </div>
       {% elif naturalcloud.hero_image %}
       <div class="solution-photo">
-        <img src="{{ naturalcloud.hero_image }}" alt="{{ naturalcloud.hero_image_alt }}" loading="lazy"{% if naturalcloud.hero_image_position %} style="object-position:{{ naturalcloud.hero_image_position }}"{% endif %}>
+        <img src="{{ naturalcloud.hero_image }}" alt="{{ naturalcloud.hero_image_alt }}" loading="lazy"
+          style="{% if naturalcloud.hero_image_position %}object-position:{{ naturalcloud.hero_image_position }};{% endif %}{% if naturalcloud.hero_image_zoom %}--photo-zoom:{{ naturalcloud.hero_image_zoom }};--photo-zoom-origin:{{ naturalcloud.hero_image_position or "center" }}{% endif %}">
       </div>
       {% else %}
       <div class="solution-mark">

@@ -528,9 +528,18 @@ body.page-home #navbar:not(.scrolled) .nav-toggle{color:#fff}
    These stops are measured rather than chosen. White text needs the pixel
    behind it no brighter than about rgb(118,118,118) to clear WCAG AA, and the
    brightest thing under any of these eight labels was rgb(233,234,229). */
-.industry-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.82) 42%,rgba(0,0,0,.34) 68%,rgba(0,0,0,0) 88%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;transition:background .4s}
+/* Lighter than it was, at Kirsty's request: the photographs were barely
+   readable under it. Every stop comes down; the shape is unchanged, so the
+   scrim still reaches as high as the text does. Verified by the contrast audit
+   rather than by eye. */
+.industry-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.86) 0%,rgba(0,0,0,.7) 42%,rgba(0,0,0,.22) 68%,rgba(0,0,0,0) 88%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;transition:background .4s}
 .industry-card:hover .industry-card-overlay{background:linear-gradient(to top,rgba(107,114,73,.85) 0%,rgba(0,0,0,.1) 60%)}
-.industry-card h3{font-family:'Montserrat',sans-serif;color:#fff;font-size:1.05rem;font-weight:700;transform:translateY(0);transition:transform .4s}
+/* Two lines of room whether the title needs them or not. The block is anchored
+   to the bottom of the card, so "Nutraceuticals & Dietary Supplements" wrapping
+   to two lines started 19px higher than its three one-line neighbours. Kirsty
+   asked for it to drop into line with the others; reserving the space is what
+   puts every title on the same line, rather than nudging one card. */
+.industry-card h3{font-family:'Montserrat',sans-serif;color:#fff;font-size:1.05rem;font-weight:700;line-height:1.35;min-height:2.7em;display:flex;align-items:flex-end;transform:translateY(0);transition:transform .4s}
 .industry-card p{color:rgba(255,255,255,.7);font-size:.8rem;margin-top:.25rem;opacity:0;transform:translateY(10px);transition:all .4s .1s}
 .industry-card:hover h3{transform:translateY(-4px)}
 .industry-card:hover p{opacity:1;transform:translateY(0)}
@@ -748,9 +757,11 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
      against a pale bench. The scrim has to reach wherever the text reaches, so
      here it carries most of the way to the top. */
   .page-home .industry-card-overlay{
-    background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.86) 55%,rgba(0,0,0,.66) 80%,rgba(0,0,0,.3) 100%);
+    background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.8) 55%,rgba(0,0,0,.58) 80%,rgba(0,0,0,.26) 100%);
     padding:1rem;
   }
+  /* Three lines here, not two: at half width the longest title takes three. */
+  .page-home .industry-card h3{min-height:4.05em}
   .pipeline-steps{grid-template-columns:1fr}
   .detection-methods-grid{grid-template-columns:1fr}
   .about-highlights{grid-template-columns:1fr}
@@ -1272,7 +1283,7 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 .howitworks.howitworks-photo{
   background-color:var(--charcoal);
   background-image:
-    linear-gradient(rgba(32,36,47,.87),rgba(32,36,47,.87)),
+    linear-gradient(rgba(32,36,47,.74),rgba(32,36,47,.74)),
     var(--why-bg);
   background-size:cover,cover;
   /* Weighted low. The vision photograph is half sky, and sky is the brightest
@@ -1487,7 +1498,12 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
    4:3 against a 3:2 source crops about eleven per cent off each side. Checked
    on both: the vial and the instrument are central enough to survive it. */
 .solution-photo{border-radius:24px;overflow:hidden;aspect-ratio:4/3;border:1px solid rgba(26,30,46,.08);box-shadow:var(--shadow);background:var(--offwhite)}
-.solution-photo img{width:100%;height:100%;object-fit:cover;display:block}
+/* --photo-zoom lets an editor crop tighter without a new file. Kirsty asked for
+   the NaturalTag vial cropped in a little more, and cover has already used all
+   the width the panel can take, so the only way further in is to scale. The
+   panel clips it. */
+.solution-photo img{width:100%;height:100%;object-fit:cover;display:block;
+  transform:scale(var(--photo-zoom,1));transform-origin:var(--photo-zoom-origin,center)}
 
 /* The same panel, playing a video.
 
@@ -1686,19 +1702,26 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 @supports ((mask-image:url(#m)) or (-webkit-mask-image:url(#m))){
   .solution-hero-mark{position:relative;overflow:hidden}
   .solution-hero-mark > .container{position:relative;z-index:1}
-  .solution-hero-mark::after{content:'';position:absolute;left:-7%;top:50%;transform:translateY(-50%);
-    width:clamp(240px,30vw,440px);aspect-ratio:1;z-index:0;pointer-events:none;
+  /* Smaller and lower than it started. Kirsty: the cloud "looks a bit lost and
+     impacts the text". It was a 440px mark centred on the copy, which is a
+     watermark competing with a paragraph rather than an accent. It sits below
+     the text block now, further off the edge, and two thirds the size. */
+  .solution-hero-mark::after{content:'';position:absolute;left:-9%;top:auto;bottom:-7%;
+    width:clamp(170px,20vw,290px);aspect-ratio:1;z-index:0;pointer-events:none;
     -webkit-mask:var(--hero-mark) no-repeat center/contain;mask:var(--hero-mark) no-repeat center/contain}
   .hero-tag.solution-hero-mark::after{background:rgba(107,114,73,.11)}
   .hero-detect.solution-hero-mark::after{background:rgba(59,102,107,.11)}
   .hero-cloud.solution-hero-mark::after{background:rgba(162,147,73,.14)}
   /* Off the left edge on a phone the mark is mostly gone and what is left is a
      stripe. Centred behind the copy instead, and quieter. */
+  /* On a phone it was centred behind the copy, which Kirsty found worse than on
+     desktop and she was right: a full-width column of text has no margin for a
+     mark to hide in. Bottom right corner, small, half off the edge. */
   @media(max-width:820px){
-    .solution-hero-mark::after{left:50%;transform:translate(-50%,-50%);width:min(70vw,320px)}
-    .hero-tag.solution-hero-mark::after{background:rgba(107,114,73,.08)}
-    .hero-detect.solution-hero-mark::after{background:rgba(59,102,107,.08)}
-    .hero-cloud.solution-hero-mark::after{background:rgba(162,147,73,.1)}
+    .solution-hero-mark::after{left:auto;right:-12%;bottom:-6%;transform:none;width:min(38vw,160px)}
+    .hero-tag.solution-hero-mark::after{background:rgba(107,114,73,.09)}
+    .hero-detect.solution-hero-mark::after{background:rgba(59,102,107,.09)}
+    .hero-cloud.solution-hero-mark::after{background:rgba(162,147,73,.11)}
   }
 }
 .hero-tag{background:linear-gradient(180deg,rgba(107,114,73,.13),var(--offwhite) 78%)}
@@ -1948,7 +1971,10 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
    the browser reserves the right box before the file arrives and the cards
    below do not jump as the five pictures load. */
 .vp-card-photo{padding:0;overflow:hidden}
-.vp-photo{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;display:block}
+/* 21/9, not the 16/9 the pictures are. Kirsty asked for the height reduced and
+   the width kept, so the card crops a band out of the middle of each photograph
+   rather than showing all of it. Three quarters of the height it was. */
+.vp-photo{width:100%;height:auto;aspect-ratio:21/9;object-fit:cover;object-position:center;display:block}
 .vp-card-photo .vp-card-body{padding:1.5rem}
 .vp-card-photo .vp-card-head{margin-bottom:.9rem}
 

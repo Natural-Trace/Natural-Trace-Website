@@ -34,7 +34,8 @@ permalink: /naturaltag/
         {# object-position lets an editor move the crop without a new file.
            The NaturalTag photograph is 3:2 and this panel is 4:3, so 12% of the
            width is cropped; centred, that put the vial at 41% across. #}
-        <img src="{{ naturaltag.hero_image }}" alt="{{ naturaltag.hero_image_alt }}" loading="lazy"{% if naturaltag.hero_image_position %} style="object-position:{{ naturaltag.hero_image_position }}"{% endif %}>
+        <img src="{{ naturaltag.hero_image }}" alt="{{ naturaltag.hero_image_alt }}" loading="lazy"
+          style="{% if naturaltag.hero_image_position %}object-position:{{ naturaltag.hero_image_position }};{% endif %}{% if naturaltag.hero_image_zoom %}--photo-zoom:{{ naturaltag.hero_image_zoom }};--photo-zoom-origin:{{ naturaltag.hero_image_position or "center" }}{% endif %}">
       </div>
       {% else %}
       <div class="solution-mark">

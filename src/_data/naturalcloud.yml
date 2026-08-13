@@ -12,6 +12,11 @@ hero_image_alt: ""
 # Which part of the photograph stays in frame when the 4:3 panel trims it.
 # Middle unless someone has a reason.
 hero_image_position: "50% 50%"
+# How far into the photograph to crop. 1 is the whole frame as the panel
+# already trims it; higher scales in and the panel clips the rest.
+# NaturalTag is at 1.18 because Kirsty asked for the vial cropped closer
+# on 13 Aug and the panel had already used all the width it could take.
+hero_image_zoom: "1"
 # The product mark, blended into the hero background. Only its shape is used;
 # the colour comes from the stylesheet, so it always sits tonally on this
 # page's tint. That means a flat single-colour graphic on a transparent

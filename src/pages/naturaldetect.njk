@@ -38,7 +38,8 @@ permalink: /naturaldetect/
          a stand-in photograph would be worse than the mark. #}
       {% if naturaldetect.hero_image %}
       <div class="solution-photo">
-        <img src="{{ naturaldetect.hero_image }}" alt="{{ naturaldetect.hero_image_alt }}" loading="lazy"{% if naturaldetect.hero_image_position %} style="object-position:{{ naturaldetect.hero_image_position }}"{% endif %}>
+        <img src="{{ naturaldetect.hero_image }}" alt="{{ naturaldetect.hero_image_alt }}" loading="lazy"
+          style="{% if naturaldetect.hero_image_position %}object-position:{{ naturaldetect.hero_image_position }};{% endif %}{% if naturaldetect.hero_image_zoom %}--photo-zoom:{{ naturaldetect.hero_image_zoom }};--photo-zoom-origin:{{ naturaldetect.hero_image_position or "center" }}{% endif %}">
       </div>
       {% else %}
       <div class="solution-mark">

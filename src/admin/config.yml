@@ -434,6 +434,16 @@ collections:
               - {label: "Right", value: "100% 50%"}
               - {label: "Top", value: "50% 0%"}
               - {label: "Bottom", value: "50% 100%"}
+          - label: "Product Photograph: How far to crop in"
+            name: "hero_image_zoom"
+            widget: "select"
+            required: false
+            hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
+            options:
+              - {label: "No extra crop", value: "1"}
+              - {label: "A little closer", value: "1.1"}
+              - {label: "Closer", value: "1.18"}
+              - {label: "Much closer", value: "1.3"}
           - {label: "Product Mark (background watermark)", name: "hero_mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
           - {label: "Product Logo", name: "hero_logo", widget: "image"}
           - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
@@ -478,6 +488,16 @@ collections:
               - {label: "Right", value: "100% 50%"}
               - {label: "Top", value: "50% 0%"}
               - {label: "Bottom", value: "50% 100%"}
+          - label: "Product Photograph: How far to crop in"
+            name: "hero_image_zoom"
+            widget: "select"
+            required: false
+            hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
+            options:
+              - {label: "No extra crop", value: "1"}
+              - {label: "A little closer", value: "1.1"}
+              - {label: "Closer", value: "1.18"}
+              - {label: "Much closer", value: "1.3"}
           - {label: "Product Mark (background watermark)", name: "hero_mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
           - {label: "Product Logo", name: "hero_logo", widget: "image"}
           - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
@@ -510,6 +530,16 @@ collections:
               - {label: "Right", value: "100% 50%"}
               - {label: "Top", value: "50% 0%"}
               - {label: "Bottom", value: "50% 100%"}
+          - label: "Product Photograph: How far to crop in"
+            name: "hero_image_zoom"
+            widget: "select"
+            required: false
+            hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
+            options:
+              - {label: "No extra crop", value: "1"}
+              - {label: "A little closer", value: "1.1"}
+              - {label: "Closer", value: "1.18"}
+              - {label: "Much closer", value: "1.3"}
           - {label: "Product Mark (background watermark)", name: "hero_mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
           - {label: "Product Logo", name: "hero_logo", widget: "image"}
           - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
