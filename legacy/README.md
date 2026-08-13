@@ -1,6 +1,13 @@
-# Superseded video assets
+# Superseded assets
 
-Kept for reference only. Nothing on the site points at anything in this folder.
+Kept in git for reference. This folder sits at the repository root, outside
+`src/`, on purpose: Eleventy's input directory is `src` and
+`addPassthroughCopy("src/assets")` copies everything under it, so anything left
+in `src/assets` is published to the live site whether or not a page links to
+it. A superseded file with visible misspellings should not be reachable at a
+guessable URL.
+
+Nothing here is built, deployed or linked.
 
 ## NaturalTag Process (Gemini original).mp4
 

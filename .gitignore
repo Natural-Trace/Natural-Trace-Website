@@ -56,3 +56,7 @@ Thumbs.db
 # Stale git lock files parked here by the Cowork device bridge, which cannot
 # unlink. Safe to delete the folder.
 _gitlocks/
+
+# Files the Cowork device bridge could not unlink, parked for manual deletion.
+# Safe to delete the whole folder.
+_todelete/
