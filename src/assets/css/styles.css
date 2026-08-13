@@ -525,7 +525,7 @@ body.page-home #navbar:not(.scrolled) .nav-toggle{color:#fff}
    readable under it. Every stop comes down; the shape is unchanged, so the
    scrim still reaches as high as the text does. Verified by the contrast audit
    rather than by eye. */
-.industry-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.86) 0%,rgba(0,0,0,.7) 42%,rgba(0,0,0,.22) 68%,rgba(0,0,0,0) 88%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;transition:background .4s}
+.industry-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.82) 20%,rgba(0,0,0,.4) 40%,rgba(0,0,0,0) 62%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;transition:background .4s}
 .industry-card:hover .industry-card-overlay{background:linear-gradient(to top,rgba(107,114,73,.85) 0%,rgba(0,0,0,.1) 60%)}
 /* Two lines of room whether the title needs them or not. The block is anchored
    to the bottom of the card, so "Nutraceuticals & Dietary Supplements" wrapping
@@ -533,9 +533,19 @@ body.page-home #navbar:not(.scrolled) .nav-toggle{color:#fff}
    asked for it to drop into line with the others; reserving the space is what
    puts every title on the same line, rather than nudging one card. */
 .industry-card h3{font-family:'Montserrat',sans-serif;color:#fff;font-size:1.05rem;font-weight:700;line-height:1.35;min-height:2.7em;display:flex;align-items:flex-end;transform:translateY(0);transition:transform .4s}
-.industry-card p{color:rgba(255,255,255,.7);font-size:.8rem;margin-top:.25rem;opacity:0;transform:translateY(10px);transition:all .4s .1s}
+/* The description takes no room until it is shown.
+   It was opacity:0, which hides it but keeps its box, and the block is anchored
+   to the bottom of the card, so an invisible paragraph was pushing every title
+   upward by its own height. On the Industries page the descriptions are long
+   and different lengths, so the titles floated at different heights in the
+   middle of the cards, over whatever the photograph was doing there. That is
+   why the scrim had to reach two thirds of the way up the card, and why the
+   photographs underneath were barely visible.
+   Collapsed, the title sits at the bottom of every card, the scrim only has to
+   cover the bottom band, and the picture shows. */
+.industry-card p{color:rgba(255,255,255,.82);font-size:.8rem;margin-top:0;max-height:0;opacity:0;overflow:hidden;transform:translateY(10px);transition:max-height .4s,opacity .4s .1s,transform .4s .1s,margin-top .4s}
 .industry-card:hover h3{transform:translateY(-4px)}
-.industry-card:hover p{opacity:1;transform:translateY(0)}
+.industry-card:hover p{max-height:8rem;opacity:1;margin-top:.35rem;transform:translateY(0)}
 
 /* CTA */
 /* The middle stop was --sage. Pure white on --sage measures 5.13:1, which is
@@ -748,7 +758,7 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
      against a pale bench. The scrim has to reach wherever the text reaches, so
      here it carries most of the way to the top. */
   .page-home .industry-card-overlay{
-    background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.8) 55%,rgba(0,0,0,.58) 80%,rgba(0,0,0,.26) 100%);
+    background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.82) 30%,rgba(0,0,0,.42) 52%,rgba(0,0,0,0) 74%);
     padding:1rem;
   }
   /* Three lines here, not two: at half width the longest title takes three. */
@@ -2037,10 +2047,14 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
    Three states, and the colour carries meaning, so it cannot be the only thing
    that does. Each badge says its verdict in words as well: someone who cannot
    tell sage from amber still reads "Testing required". */
+/* .72rem to 1.05rem, at Kirsty's request on 13 Aug: the verdict is the point of
+   the screen and it was set smaller than the note underneath it. The padding
+   and the letterspacing come up with it so the pill stays a pill rather than a
+   large word in a tight box. */
 .compat-badge{
-  display:inline-block;font-family:'Montserrat',sans-serif;font-size:.72rem;
-  font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  padding:.45rem 1rem;border-radius:999px;margin-bottom:1rem;
+  display:inline-block;font-family:'Montserrat',sans-serif;font-size:1.05rem;
+  font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:.55rem 1.4rem;border-radius:999px;margin-bottom:1.15rem;
 }
 .compat-badge-compatible{background:rgba(107,114,73,.16);color:var(--sage-dark);border:1px solid rgba(107,114,73,.35)}
 .compat-badge-conditions{background:rgba(162,147,73,.16);color:#7A6D2E;border:1px solid rgba(162,147,73,.4)}

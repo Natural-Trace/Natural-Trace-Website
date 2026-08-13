@@ -18,7 +18,13 @@ compat_btn_next: "Next"
 compat_btn_back: "Back"
 compat_confirm_title: "Thanks, we have what we need"
 compat_confirm_desc: "Compatibility depends on your specific formulation and process conditions. Send this through and one of our scientists will review it with you."
-compat_result_cta: "Talk to our team"
+# Kirsty's wording, 13 Aug. It replaces "Talk to our team", which asked for a
+# conversation where this asks for the thing the conversation is about, and it
+# matches the primary call to action everywhere else on the site.
+# One button serves all three outcomes, so this changed for all three. It reads
+# correctly on each: a product that needs testing is exactly the one that should
+# start an assessment.
+compat_result_cta: "Start a compatibility assessment"
 compat_result_cta_url: "/contact/"
 
 # --------------------------------------------------------------------------
@@ -107,9 +113,12 @@ compat_formulation_risk:
 # without having tested it.
 compat_outcomes:
   compatible:
+    # Kirsty's wording, 13 Aug, verbatim. She asked for a stronger message on
+    # this screen and for the badge to be larger; the badge size is in the
+    # stylesheet, since it is the same badge for all three outcomes.
     label: "Compatible"
-    title: "Your product looks compatible"
-    body: "Nothing you have described falls outside the conditions NaturalTag is used in today. The next step is a compatibility assessment on your actual formulation, which is how every project starts."
+    title: "Your product is a strong candidate for NaturalTag™"
+    body: "Your answers indicate that NaturalTag™ is likely compatible with your product. The next step is to confirm compatibility through laboratory testing."
   conditions:
     label: "Compatible with conditions"
     title: "Most likely compatible"
