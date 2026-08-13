@@ -18,13 +18,15 @@ compat_btn_next: "Next"
 compat_btn_back: "Back"
 compat_confirm_title: "Thanks, we have what we need"
 compat_confirm_desc: "Compatibility depends on your specific formulation and process conditions. Send this through and one of our scientists will review it with you."
-# Kirsty's wording, 13 Aug. It replaces "Talk to our team", which asked for a
-# conversation where this asks for the thing the conversation is about, and it
-# matches the primary call to action everywhere else on the site.
-# One button serves all three outcomes, so this changed for all three. It reads
-# correctly on each: a product that needs testing is exactly the one that should
-# start an assessment.
-compat_result_cta: "Start a compatibility assessment"
+# "Talk to our team", kept at Bryan's call on 13 Aug.
+# Kirsty's email that morning suggested "Start a compatibility assessment" on
+# the compatible screen. It was changed and changed back within the hour. One
+# button serves all three outcomes, and this one has to work for a result that
+# says the product needs testing as well as one that says it looks fine, which
+# is the argument for asking for a conversation rather than for the assessment.
+# Her heading and body copy from the same email are in, verbatim; this is the
+# only line of hers not taken.
+compat_result_cta: "Talk to our team"
 compat_result_cta_url: "/contact/"
 
 # --------------------------------------------------------------------------
