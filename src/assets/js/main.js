@@ -505,6 +505,26 @@ function filterFaq(cat) {
     return { key: key, proven: proven };
   }
 
+  /* Seasonal headline for the result screen, if a theme is running today.
+
+     Only the headline. The badge, the body, the evidence line and the call to
+     action stay exactly as written, so a themed day changes the tone of one
+     sentence and nothing about what the quiz tells someone or where it sends
+     them. Any failure here falls through to the normal copy. */
+  function themedTitles() {
+    try {
+      var key = document.documentElement.getAttribute('data-theme');
+      if (!key) { return null; }
+      var raw = document.getElementById('compatThemeCopy');
+      if (!raw) { return null; }
+      var list = JSON.parse(raw.textContent) || [];
+      for (var i = 0; i < list.length; i++) {
+        if (list[i] && list[i].key === key && list[i].enabled) { return list[i].quiz || null; }
+      }
+    } catch (e) {}
+    return null;
+  }
+
   window.compatShowResult = function() {
     var out = verdict();
     var outcomes = (model && model.outcomes) || {};
@@ -521,7 +541,9 @@ function filterFaq(cat) {
     var badge = el('compatResultBadge');
     badge.textContent = o.label;
     badge.className = 'compat-badge compat-badge-' + out.key;
-    el('compatResultTitle').textContent = o.title;
+    var themed = themedTitles();
+    el('compatResultTitle').textContent =
+      (themed && themed[out.key]) ? themed[out.key] : o.title;
     el('compatResultBody').textContent = o.body;
 
     var ev = el('compatResultEvidence');

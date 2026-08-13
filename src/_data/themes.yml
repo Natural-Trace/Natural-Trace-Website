@@ -1,0 +1,66 @@
+# Seasonal themes
+#
+# A theme is an accent layer, not a redesign. It recolours the hero scrim, adds
+# a strip above the footer and swaps the headline on the compatibility result.
+# Body text, cards, forms and every call to action keep the normal palette, so
+# a theme can never make the actual pitch harder to read.
+#
+# HOW THE DATE IS DECIDED
+# The site is a static build, so nothing rebuilds on 4 May by itself. The theme
+# is therefore picked in the browser from the VISITOR's local date, which is
+# also the only way Singapore National Day starts at midnight in Singapore
+# rather than eight hours late on a UTC build machine. The detector is a
+# blocking script in <head>, so the attribute is set before the first paint and
+# there is no flash of the untinted page.
+#
+# TURNING IT OFF
+# enabled: false below kills every theme at the next build. A single theme can
+# be turned off with its own enabled flag. To check a theme on any day, add
+# ?theme=space or ?theme=sg to any URL; ?theme=off forces the normal site.
+#
+# DATES are MM-DD and recur every year. A range that crosses new year (12-28 to
+# 01-02) is handled.
+
+enabled: true
+
+themes:
+  - key: "space"
+    name: "4 May"
+    enabled: true
+    starts: "05-04"
+    ends: "05-04"
+    # Deliberately not Star Wars. Disney holds registered trade marks on both
+    # spellings of "May the 4th be with you", and the guidance from the trade
+    # mark firms is that the risk comes from the exact phrases and from Star
+    # Wars imagery used alongside a 4 May reference. A space theme with none of
+    # that is a space theme. Do not add the phrase, a character, a lightsaber
+    # shape or the word Force to this file.
+    ribbon: "Somewhere out there, an ingredient is pretending to be something it is not."
+    ribbon_note: "Every ingredient should be able to prove its own identity."
+    # Result headlines only. The badge, the body text, the evidence line and
+    # the call to action are Kirsty's 13 Aug copy and are not touched, so the
+    # commercial path through the quiz is the same on a themed day as any
+    # other. Word order is inverted; nothing here quotes anything.
+    quiz:
+      compatible: "A strong candidate, your product is."
+      conditions: "Compatible, most likely it is."
+      testing: "Look at this one properly, we must."
+
+  - key: "sg"
+    name: "Singapore National Day"
+    enabled: true
+    starts: "08-08"
+    ends: "08-10"
+    # Flag colours and a crescent-and-stars motif, never the flag itself. The
+    # National Symbols Regulations 2023 permit commercial and decorative use of
+    # the National Flag between 1 July and 30 September, but explicitly
+    # prohibit a modified or distorted design of it. Nothing here is presented
+    # as a flag: the motif is spaced along a strip at mixed sizes, which is not
+    # the canton arrangement. Do not wrap, stretch, animate or crop it into a
+    # flag shape.
+    ribbon: "Proudly building from Singapore."
+    ribbon_note: "Wishing everyone a happy National Day."
+    quiz:
+      compatible: ""
+      conditions: ""
+      testing: ""

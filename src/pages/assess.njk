@@ -115,3 +115,14 @@ summary: "Check in 60 seconds whether Natural Trace is compatible with your prod
   "outcomes": {{ assess.compat_outcomes | dump | safe }}
 }
 </script>
+{%- if themes.enabled %}
+{# Seasonal result headlines, from src/_data/themes.yml. The whole theme list
+   is dumped rather than a filtered object, because a filtered loop that skips
+   a disabled theme produces a stray comma and invalid JSON. The script picks
+   the entry that matches data-theme and ignores the rest.
+
+   Headline only. The badge, the body, the evidence line and the call to action
+   are Kirsty's copy and are never themed, so the route from a result to
+   "Talk to our team" is identical on a themed day. #}
+<script type="application/json" id="compatThemeCopy">{{ themes.themes | dump | safe }}</script>
+{%- endif %}

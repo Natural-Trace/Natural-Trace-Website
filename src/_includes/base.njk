@@ -3,6 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{%- if themes.enabled %}
+{# Seasonal theme detector. Definitions are in src/_data/themes.yml.
+
+   This runs in the browser rather than at build time for two reasons. The site
+   is a static build, so nothing rebuilds on 4 May by itself and a build-time
+   theme would simply never appear. And the date that matters is the visitor's:
+   deciding Singapore National Day from a UTC build machine starts it eight
+   hours late in Singapore.
+
+   It is a blocking script in <head>, so the attribute is on <html> before the
+   first paint and there is no flash of the untinted page. Everything is inside
+   a try, because a malformed date in a CMS field must not be able to stop a
+   page rendering. #}
+<script>
+(function(){try{
+var T=[{% for t in themes.themes %}{% if t.enabled %}{k:"{{ t.key }}",s:"{{ t.starts }}",e:"{{ t.ends }}"},{% endif %}{% endfor %}];
+var h=document.documentElement,q=null;
+try{q=new URLSearchParams(location.search).get('theme')}catch(e){}
+if(q!==null){if(q&&q!=='off'){h.setAttribute('data-theme',q)}return}
+var n=new Date(),p=function(v){return(v<10?'0':'')+v},
+    md=p(n.getMonth()+1)+'-'+p(n.getDate());
+for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
+  if(s<=e?(md>=s&&md<=e):(md>=s||md<=e)){h.setAttribute('data-theme',T[i].k);break}}
+}catch(e){}})();
+</script>
+{%- endif %}
 {%- set s = seo.pages | seoLookup(page.url) -%}
 {#- Order of preference: the entry in seo.yml, then anything the page sets for
     itself (Insights articles do this), then the page title and summary. So an
@@ -38,6 +64,11 @@
    visitor keeps the stylesheet they cached last time, which is how a fixed
    layout can stay broken on screen after a deploy. #}
 <link rel="stylesheet" href="/assets/css/styles.css?v={{ assetVersions.css }}">
+{%- if themes.enabled %}
+{# Seasonal accents, kept out of styles.css so the main sheet cannot be broken
+   by a theme and a theme can be reverted without touching it. #}
+<link rel="stylesheet" href="/assets/css/themes.css?v={{ assetVersions.themes }}">
+{%- endif %}
 {%- if site.cta_mark %}
 {# The CTA watermark is set here rather than in the stylesheet so it stays a
    CMS field. The url filter is required: HtmlBasePlugin rewrites src and href
@@ -55,6 +86,8 @@
 <main>
   {{ content | safe }}
 </main>
+
+{% include "partials/theme-ribbon.njk" %}
 
 {% include "partials/footer.njk" %}
 

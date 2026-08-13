@@ -37,6 +37,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addGlobalData("assetVersions", {
     css: assetVersion("src/assets/css/styles.css"),
     js: assetVersion("src/assets/js/main.js"),
+    themes: assetVersion("src/assets/css/themes.css"),
   });
 
   // Date filter for templates

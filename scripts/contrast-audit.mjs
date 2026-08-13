@@ -57,6 +57,13 @@ import { useLocalMontserrat } from './lib/local-fonts.mjs';
 
 const ROOT = '_site';
 const PORT = 8125;
+
+/* Seasonal themes are an accent layer, but an accent layer is still a colour
+   system and the whole point of this script is that colour systems are not
+   checked by eye. `--theme=space` forces that theme on every page before
+   anything is measured, so a themed day is audited exactly like an ordinary
+   one. Without the flag the site is measured untinted, as before. */
+const THEME = (process.argv.find(a => a.startsWith('--theme=')) || '').split('=')[1] || '';
 const VIEWPORTS = [[1440, 950, 'desktop'], [1024, 768, 'laptop'], [390, 844, 'phone']];
 
 /* Redirect stubs are three lines of markup that bounce, and the CMS is a
@@ -283,7 +290,17 @@ for (const url of urls) {
     await useLocalMontserrat(page, {
       allowPrefix: `http://127.0.0.1:${PORT}`, origin: `http://127.0.0.1:${PORT}`,
     });
+    /* Set before navigation so the attribute is already on <html> when the
+       page's own detector runs, and so no frame is ever measured untinted. */
+    if (THEME) {
+      await page.addInitScript(t => {
+        document.addEventListener('DOMContentLoaded', () =>
+          document.documentElement.setAttribute('data-theme', t));
+        try { document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+      }, THEME);
+    }
     await page.goto(`http://127.0.0.1:${PORT}${url}`, { waitUntil: 'domcontentloaded', timeout: 25000 });
+    if (THEME) await page.evaluate(t => document.documentElement.setAttribute('data-theme', t), THEME);
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(400);
     /* The consent bar sits over the page and is not part of any page's design.

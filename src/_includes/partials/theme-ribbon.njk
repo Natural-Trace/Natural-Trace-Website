@@ -1,0 +1,26 @@
+{#- Seasonal strip, above the footer on every page.
+
+    Every enabled theme's strip is rendered into the page and all of them are
+    display:none. CSS shows the one whose key matches the data-theme attribute
+    that the detector in <head> set from the visitor's date. No JavaScript runs
+    here at all, which is why the strip cannot flash, arrive late, or appear at
+    all when themes are switched off.
+
+    It sits in normal flow above the footer rather than under the navigation,
+    because #navbar is position:fixed and anything placed at the top of the
+    document would be underneath it. -#}
+{%- if themes.enabled -%}
+{%- for t in themes.themes -%}
+{%- if t.enabled and t.ribbon -%}
+<aside class="theme-ribbon" data-theme-for="{{ t.key }}" aria-label="{{ t.name }}">
+  <div class="container theme-ribbon-inner">
+    <span class="theme-ribbon-mark" aria-hidden="true"></span>
+    <p class="theme-ribbon-text">
+      <strong>{{ t.ribbon }}</strong>
+      {%- if t.ribbon_note %} <span class="theme-ribbon-note">{{ t.ribbon_note }}</span>{% endif %}
+    </p>
+  </div>
+</aside>
+{%- endif -%}
+{%- endfor -%}
+{%- endif -%}
