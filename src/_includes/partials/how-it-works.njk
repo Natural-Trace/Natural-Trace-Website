@@ -8,8 +8,15 @@
     anyone edited one of them. This partial is the section; both pages include
     it; the words stay in home.yml and are edited once.
 
-    Compact on purpose. Four steps across one row and the detail behind a
-    disclosure, so the section costs roughly one screen instead of four.
+    Four steps across one row, with the detail below in a disclosure that is
+    open by default.
+
+    Alex Bond asked on 13 Aug for that detail to be fixed on the page rather
+    than behind a click. `open` is the version of that request which keeps what
+    the disclosure was for: the six lines are visible with no interaction, and
+    anyone who wants the section back to one screen can still collapse it.
+    Deleting the disclosure would have given the same first impression and
+    taken the control away.
 
     <details> and <summary> rather than a hover or a scripted panel: they work
     with a tap, they work from a keyboard, a screen reader announces the open
@@ -35,7 +42,7 @@
       {% endfor %}
     </ol>
     {% if home.how_features %}
-    <details class="how-more">
+    <details class="how-more" open>
       <summary>{{ home.how_features_label }}</summary>
       <ul class="how-facts">
         {% for feature in home.how_features %}<li>{{ feature }}</li>{% endfor %}

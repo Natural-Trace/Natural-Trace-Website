@@ -28,14 +28,18 @@ hero_desc: "Natural Trace gives every ingredient a unique, detectable identity, 
 # coda after a comma. Kirsty wrote these as five short lines; the fifth is a
 # coda, not a peer, which is why it read as an orphan when set as a list.
 # These read as a ticked list now rather than one running sentence, so each one
-# starts with a capital. The wording is unchanged: the mockup says "Investigate
-# Counterfeit Products", which is a stronger claim than "suspicious", and that
-# is not a change to make without asking.
+# starts with a capital.
+#
+# The fourth said "suspicious" until 14 Aug. "Counterfeit" is the stronger
+# claim and was deliberately left alone until someone owned it; Alex Bond,
+# Director of Business Development US, asked for it on 13 Aug. It moves in step
+# with the fourth value card below, which now carries the same word. Changing
+# one without the other leaves the page arguing with itself.
 hero_claims:
   - "Verify presence"
   - "Protect branded ingredients"
   - "Confirm authorised manufacturing"
-  - "Investigate suspicious products"
+  - "Investigate counterfeit products"
 # Emptied on Kirsty's 12 Aug request. It used to trail the four ticks as
 # "...all through the supply chain", saying the same thing the description
 # above now says in a full sentence. The template only renders this line
@@ -99,7 +103,11 @@ vp_cards:
     icon: "origin"
     problem: "Documents can be lost, altered, or disconnected from the physical product as it moves through the supply chain."
     value: "Confirm the true origin, custody, movement, and destination of the physical product itself."
-  - title: "Investigate with Objective Evidence"
+  # Retitled 14 Aug at Alex Bond's request, to carry "counterfeit" as a
+  # keyword. The problem line deliberately still opens with "Suspicious or
+  # counterfeit": the title names the case people search for, the body keeps
+  # the wider one, so the card does not narrow to counterfeits only.
+  - title: "Investigate Counterfeit Products"
     image: "/assets/images/04_investigate_objective_evidence_landscape.webp"
     image_alt: "A magnifying glass held over an amber supplement bottle in front of a row of sample vials"
     icon: "search"
