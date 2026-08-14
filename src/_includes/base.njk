@@ -19,9 +19,20 @@
 <script>
 (function(){try{
 var T=[{% for t in themes.themes %}{% if t.enabled %}{k:"{{ t.key }}",s:"{{ t.starts }}",e:"{{ t.ends }}"},{% endif %}{% endfor %}];
-var h=document.documentElement,q=null;
+var h=document.documentElement,q=null,S=null;
+try{S=window.sessionStorage}catch(e){}
 try{q=new URLSearchParams(location.search).get('theme')}catch(e){}
-if(q!==null){if(q&&q!=='off'){h.setAttribute('data-theme',q)}return}
+/* ?theme= sticks for the rest of the tab. Without this a preview lasts
+   exactly one page: click any link and the query string is gone, which makes
+   checking a theme across 36 pages unusable. sessionStorage, not local, so it
+   dies with the tab and cannot follow a real visitor around. ?theme=off
+   clears it. */
+if(q!==null){
+  if(q&&q!=='off'){h.setAttribute('data-theme',q);if(S)S.setItem('nt-theme',q);return}
+  if(S)S.removeItem('nt-theme');return
+}
+var p=S&&S.getItem('nt-theme');
+if(p){h.setAttribute('data-theme',p);return}
 var n=new Date(),p=function(v){return(v<10?'0':'')+v},
     md=p(n.getMonth()+1)+'-'+p(n.getDate());
 for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;

@@ -114,10 +114,19 @@ html[data-theme="space"] .hero.hero-lab::after{
     radial-gradient(2.2px 2.2px at 89% 24%, rgba(255,255,255,.30),transparent 62%);
 }
 
-/* Every other page's hero uses the overlay element instead. */
-html[data-theme="space"] .hero-overlay{
-  background:linear-gradient(135deg,rgba(26,31,78,.84) 0%,rgba(7,10,28,.95) 100%);
-}
+/* The three solution pages and the FAQ are the only other pages with a hero.
+   .hero-overlay is styled in styles.css but no page renders it, so a rule for
+   it themed nothing; it was removed rather than left looking like coverage.
+
+   The solution heroes are a pale wash over --offwhite carrying dark text, so
+   only the hue moves. At 13% over near-white the text contrast barely shifts,
+   and the audit confirms it. The product watermark on each keeps its own brand
+   colour: it is a logo, not decoration. */
+html[data-theme="space"] .hero-tag{background:linear-gradient(180deg,rgba(26,31,78,.13),var(--offwhite) 78%)}
+html[data-theme="space"] .hero-detect{background:linear-gradient(180deg,rgba(26,31,78,.13),var(--offwhite) 78%)}
+html[data-theme="space"] .hero-cloud{background:linear-gradient(180deg,rgba(26,31,78,.15),var(--offwhite) 78%)}
+/* #0B1030 against white is 17.6:1 */
+html[data-theme="space"] .faq-page-hero{background:#0B1030}
 
 
 /* ---------- Singapore National Day -------------------------------------- */
@@ -166,6 +175,15 @@ html[data-theme="sg"] .hero.hero-lab{
       rgba(196,26,44,.60) 100%),
     var(--hero-bg,url('/assets/images/ingredients-lab.webp'));
 }
-html[data-theme="sg"] .hero-overlay{
-  background:linear-gradient(135deg,rgba(165,16,28,.84) 0%,rgba(74,8,14,.95) 100%);
-}
+html[data-theme="sg"] .hero-tag{background:linear-gradient(180deg,rgba(165,16,28,.13),var(--offwhite) 78%)}
+html[data-theme="sg"] .hero-detect{background:linear-gradient(180deg,rgba(165,16,28,.13),var(--offwhite) 78%)}
+html[data-theme="sg"] .hero-cloud{background:linear-gradient(180deg,rgba(165,16,28,.15),var(--offwhite) 78%)}
+/* #9C0F1A against white is 8.2:1.
+   The two lines inside this hero do NOT come free with it. On --charcoal the
+   label is --sage-light and the subtitle is white at .6 alpha, and both clear
+   the line. On red they do not: the audit measured the label at 2.57:1 and the
+   subtitle at 3.76:1. A sage label on a red field was the wrong colour anyway.
+   Label to near-white, subtitle up to .82, which measures 5.8:1. */
+html[data-theme="sg"] .faq-page-hero{background:#9C0F1A}
+html[data-theme="sg"] .faq-page-hero .section-label{color:rgba(255,255,255,.92)}
+html[data-theme="sg"] .faq-page-hero p{color:rgba(255,255,255,.82)}

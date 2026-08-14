@@ -854,6 +854,10 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
    production and neither was caught, because contrast-audit.mjs only measures
    pages with photographs behind the text and this band is a flat colour. */
 .faq-page-hero{padding:8rem 0 4rem;background:var(--charcoal);text-align:center}
+/* Was a style attribute on the span in faq.njk. Moved here so it can be
+   overridden: an inline style beats every selector short of !important,
+   which made this label untouchable by the seasonal themes. */
+.faq-page-hero .section-label{color:var(--sage-light)}
 .faq-page-hero h1{color:#fff;font-size:clamp(2.5rem,5vw,3.5rem);margin-bottom:1rem}
 .faq-page-hero p{color:rgba(255,255,255,.6);font-size:1.1rem;max-width:600px;margin:0 auto}
 .faq-section{padding:4rem 0 5rem;background:var(--offwhite)}

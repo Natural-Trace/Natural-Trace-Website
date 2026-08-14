@@ -7,7 +7,12 @@ permalink: /faq/
 
 <section class="faq-page-hero">
   <div class="container">
-    <span class="section-label" style="color:var(--sage-light)">{{ faq.section_label }}</span>
+    {# The colour was a style attribute here until 14 Aug. An inline style beats
+       every selector short of !important, so the seasonal themes could not
+       recolour this label for a red hero and the audit failed it at 2.57:1.
+       The rule now lives in styles.css under .faq-page-hero .section-label,
+       which looks identical and can be overridden. #}
+    <span class="section-label">{{ faq.section_label }}</span>
     <h1>{{ faq.title }}</h1>
     <p>{{ faq.subtitle }}</p>
   </div>
