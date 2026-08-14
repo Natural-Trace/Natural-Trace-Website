@@ -137,12 +137,24 @@ html[data-theme="sg"] .theme-ribbon[data-theme-for="sg"]{
   background:linear-gradient(100deg,#9C0F1A 0%,#A5101C 55%,#B81525 100%);
 }
 html[data-theme="sg"] .theme-ribbon-mark{
-  /* Crescent drawn as a circle with an offset circle punched out of it with
-     fill-rule evenodd, which is the only construction that renders reliably;
-     an arc-pair version collapsed to nothing. Five stars follow at mixed sizes
-     and uneven spacing, which is what keeps this a decorative motif rather
-     than a reproduction of the canton. */
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 118 34' fill='%23fff'%3E%3Cpath fill-rule='evenodd' d='M17 3a14 14 0 1 0 0 28 14 14 0 1 0 0-28zM22 5.5a11.5 11.5 0 1 1 0 23 11.5 11.5 0 1 1 0-23z'/%3E%3Cpath d='M46 6l1.4 4.2h4.4l-3.6 2.6 1.4 4.3-3.6-2.7-3.6 2.7 1.4-4.3-3.6-2.6h4.4z'/%3E%3Cpath d='M64 20l1 3.1h3.3l-2.7 1.9.9 3.1-2.5-1.9-2.6 1.9 1-3.1-2.7-1.9h3.3z' opacity='.9'/%3E%3Cpath d='M80 7l1.6 4.9h5.2l-4.2 3 1.6 4.9-4.2-3-4.2 3 1.6-4.9-4.2-3h5.2z'/%3E%3Cpath d='M98 22l.9 2.8h3l-2.4 1.7.9 2.8-2.4-1.8-2.4 1.8.9-2.8-2.4-1.7h3z' opacity='.85'/%3E%3Cpath d='M110 8l1.2 3.5h3.7l-3 2.2 1.1 3.5-3-2.2-3 2.2 1.2-3.5-3-2.2h3.6z' opacity='.95'/%3E%3C/svg%3E");
+  /* One crescent, five stars. Do not add to either count.
+
+     The crescent is two arcs, not two circles with fill-rule evenodd. Evenodd
+     was the bug in the first version: the part of the punch-out circle that
+     hangs outside the disc sits inside exactly one subpath, so it fills, and
+     what should have been a crescent came out as a ring with a notch.
+
+     Geometry rather than eyeballing. Outer circle r=14 at (17,17). The horns
+     are placed at x=6 from the centre, which puts them near 1 and 5 o'clock
+     and leaves a 130 degree opening. The spine is 8 units, 29% of the
+     diameter, which is what the flag's crescent measures. Those two numbers
+     then fix the punch-out circle: r=12.67 offset 6.67 to the right. Change a
+     number and re-derive the other two; do not nudge the path by hand.
+
+     The stars stay spaced along the strip at mixed sizes. That is not the
+     canton arrangement, and it is the reason this is a motif rather than a
+     modified flag. */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 118 34' fill='%23fff'%3E%3Cpath d='M23 4.35A14 14 0 1 0 23 29.65A12.67 12.67 0 1 1 23 4.35Z'/%3E%3Cpath d='M46 6l1.4 4.2h4.4l-3.6 2.6 1.4 4.3-3.6-2.7-3.6 2.7 1.4-4.3-3.6-2.6h4.4z'/%3E%3Cpath d='M64 20l1 3.1h3.3l-2.7 1.9.9 3.1-2.5-1.9-2.6 1.9 1-3.1-2.7-1.9h3.3z' opacity='.9'/%3E%3Cpath d='M80 7l1.6 4.9h5.2l-4.2 3 1.6 4.9-4.2-3-4.2 3 1.6-4.9-4.2-3h5.2z'/%3E%3Cpath d='M98 22l.9 2.8h3l-2.4 1.7.9 2.8-2.4-1.8-2.4 1.8.9-2.8-2.4-1.7h3z' opacity='.85'/%3E%3Cpath d='M110 8l1.2 3.5h3.7l-3 2.2 1.1 3.5-3-2.2-3 2.2 1.2-3.5-3-2.2h3.6z' opacity='.95'/%3E%3C/svg%3E");
 }
 
 /* rgba(120,14,24,.96) over the photo measures 12.9:1 against white. */
