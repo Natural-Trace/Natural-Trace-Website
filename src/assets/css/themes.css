@@ -175,6 +175,26 @@ html[data-theme="sg"] .hero.hero-lab{
       rgba(196,26,44,.60) 100%),
     var(--hero-bg,url('/assets/images/ingredients-lab.webp'));
 }
+/* The primary call to action in the hero is --sage, and a solid olive block on
+   a red field is the one thing on that screen that looks like it belongs to a
+   different site. White with dark red text on the National Day theme.
+
+   This is the one place a theme touches a button, which the rule at the top of
+   this file otherwise forbids, and it is deliberate: the hero only, on one
+   theme. #7A0C15 on white measures 9.9:1, so the label is more legible than the
+   white-on-olive it replaces. The rest of the site's buttons are untouched. */
+html[data-theme="sg"] .hero.hero-lab .btn-primary{background:#fff;color:#7A0C15}
+html[data-theme="sg"] .hero.hero-lab .btn-primary:hover{background:#F7EDEE;color:#7A0C15}
+/* Same reason for the other two olives on that screen. The headline accent is
+   normally a gold gradient painted through background-clip:text, which is the
+   one element the contrast audit cannot measure from a screenshot; solid white
+   is both the right colour here and measurable. */
+html[data-theme="sg"] .hero.hero-lab h1 em{
+  background:none;-webkit-background-clip:border-box;background-clip:border-box;
+  color:#fff;-webkit-text-fill-color:#fff;
+}
+html[data-theme="sg"] .hero.hero-lab .hero-ticks li::before{border-color:#fff}
+
 html[data-theme="sg"] .hero-tag{background:linear-gradient(180deg,rgba(165,16,28,.13),var(--offwhite) 78%)}
 html[data-theme="sg"] .hero-detect{background:linear-gradient(180deg,rgba(165,16,28,.13),var(--offwhite) 78%)}
 html[data-theme="sg"] .hero-cloud{background:linear-gradient(180deg,rgba(165,16,28,.15),var(--offwhite) 78%)}
