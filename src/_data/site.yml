@@ -7,8 +7,10 @@ tagline: "In-Product Authentication for Food & Nutraceutical Ingredients"
 # Moved to the Natural-Trace organisation on 7 Aug 2026. The old
 # ntbryan.github.io address is a 404 now, not a redirect, so this had to change
 # with the transfer or every page would have been pointing at a dead URL.
-# Change this to https://natural-trace.com when the domain is cut over.
-url: "https://natural-trace.github.io/Natural-Trace-Website"
+# Cut over to the custom domain on 18 Aug 2026. If this ever has to go back
+# to a project page, the PATH_PREFIX in deploy.yml and the CNAME passthrough
+# change with it; they are one decision, not three.
+url: "https://natural-trace.com"
 
 default_summary: "Natural Trace is the in-product authentication platform for food and nutraceutical ingredients. Protect branded ingredients, confirm authorised manufacturing and investigate suspicious products."
 

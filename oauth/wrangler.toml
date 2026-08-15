@@ -8,7 +8,7 @@ GITHUB_CLIENT_ID = "Ov23liBrjVszAH9CI7PP"
 
 # Only these origins may receive a token. Keep this tight. Add the production
 # domain at cutover and remove anything that is no longer used.
-ALLOWED_ORIGINS = "https://natural-trace.github.io,http://localhost:8080"
+ALLOWED_ORIGINS = "https://natural-trace.com,https://natural-trace.github.io,http://localhost:8080"
 
 # GITHUB_CLIENT_SECRET is deliberately absent. It is set once with
 #   wrangler secret put GITHUB_CLIENT_SECRET

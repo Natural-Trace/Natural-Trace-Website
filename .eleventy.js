@@ -180,6 +180,10 @@ module.exports = function(eleventyConfig) {
   if (process.env.SKIP_ASSETS !== "1") {
     eleventyConfig.addPassthroughCopy("src/assets");
     eleventyConfig.addPassthroughCopy("src/admin");
+    // The custom domain. GitHub Pages reads CNAME from the published branch
+    // and forgets the domain on any deploy that lacks it, so it has to be in
+    // the build output, not just in the repository settings.
+    eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
   }
   eleventyConfig.addWatchTarget("src/assets/");
 
