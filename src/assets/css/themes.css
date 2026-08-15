@@ -22,7 +22,8 @@
    each theme needs its own line here. */
 .theme-ribbon{display:none}
 html[data-theme="space"] .theme-ribbon[data-theme-for="space"],
-html[data-theme="sg"]    .theme-ribbon[data-theme-for="sg"]{display:block}
+html[data-theme="sg"]    .theme-ribbon[data-theme-for="sg"],
+html[data-theme="xmas"]  .theme-ribbon[data-theme-for="xmas"]{display:block}
 
 .theme-ribbon-inner{
   display:flex;align-items:center;gap:1.25rem;
@@ -44,6 +45,34 @@ html[data-theme="sg"]    .theme-ribbon[data-theme-for="sg"]{display:block}
 
 /* A decorative strip is not something anyone needs on paper. */
 @media print{.theme-ribbon{display:none !important}}
+
+
+/* ---------- what every dark hero gets ----------------------------------- */
+/* The homepage hero goes dark under every theme, and --sage on top of it is
+   the one thing on that screen that looks like it belongs to a different site.
+   So the treatment lives here rather than in each theme: white button, white
+   headline accent, white ticks, and each theme supplies only the label colour.
+   A theme added later inherits this and cannot forget it.
+
+   This is the one place a theme touches a button, which the rule at the top of
+   this file otherwise forbids. Deliberate, and scoped to the homepage hero.
+
+   The headline accent is normally a gold gradient painted through
+   background-clip:text, which is the one element the contrast audit cannot
+   measure from a screenshot. Solid white is both right here and measurable, so
+   under any theme that blind spot closes. */
+html[data-theme] .hero.hero-lab .btn-primary{background:#fff}
+html[data-theme] .hero.hero-lab .btn-primary:hover{background:#F2F2EE}
+html[data-theme] .hero.hero-lab h1 em{
+  background:none;-webkit-background-clip:border-box;background-clip:border-box;
+  color:#fff;-webkit-text-fill-color:#fff;
+}
+html[data-theme] .hero.hero-lab .hero-ticks li::before{border-color:#fff}
+
+/* Label colours, measured on white: 11.1:1, 14.8:1 and 13.4:1. */
+html[data-theme="sg"]    .hero.hero-lab .btn-primary{color:#7A0C15}
+html[data-theme="space"] .hero.hero-lab .btn-primary{color:#131A45}
+html[data-theme="xmas"]  .hero.hero-lab .btn-primary{color:#0E2A1B}
 
 
 /* ---------- 4 May: space ------------------------------------------------ */
@@ -175,26 +204,6 @@ html[data-theme="sg"] .hero.hero-lab{
       rgba(196,26,44,.60) 100%),
     var(--hero-bg,url('/assets/images/ingredients-lab.webp'));
 }
-/* The primary call to action in the hero is --sage, and a solid olive block on
-   a red field is the one thing on that screen that looks like it belongs to a
-   different site. White with dark red text on the National Day theme.
-
-   This is the one place a theme touches a button, which the rule at the top of
-   this file otherwise forbids, and it is deliberate: the hero only, on one
-   theme. #7A0C15 on white measures 9.9:1, so the label is more legible than the
-   white-on-olive it replaces. The rest of the site's buttons are untouched. */
-html[data-theme="sg"] .hero.hero-lab .btn-primary{background:#fff;color:#7A0C15}
-html[data-theme="sg"] .hero.hero-lab .btn-primary:hover{background:#F7EDEE;color:#7A0C15}
-/* Same reason for the other two olives on that screen. The headline accent is
-   normally a gold gradient painted through background-clip:text, which is the
-   one element the contrast audit cannot measure from a screenshot; solid white
-   is both the right colour here and measurable. */
-html[data-theme="sg"] .hero.hero-lab h1 em{
-  background:none;-webkit-background-clip:border-box;background-clip:border-box;
-  color:#fff;-webkit-text-fill-color:#fff;
-}
-html[data-theme="sg"] .hero.hero-lab .hero-ticks li::before{border-color:#fff}
-
 html[data-theme="sg"] .hero-tag{background:linear-gradient(180deg,rgba(165,16,28,.13),var(--offwhite) 78%)}
 html[data-theme="sg"] .hero-detect{background:linear-gradient(180deg,rgba(165,16,28,.13),var(--offwhite) 78%)}
 html[data-theme="sg"] .hero-cloud{background:linear-gradient(180deg,rgba(165,16,28,.15),var(--offwhite) 78%)}
@@ -207,3 +216,60 @@ html[data-theme="sg"] .hero-cloud{background:linear-gradient(180deg,rgba(165,16,
 html[data-theme="sg"] .faq-page-hero{background:#9C0F1A}
 html[data-theme="sg"] .faq-page-hero .section-label{color:rgba(255,255,255,.92)}
 html[data-theme="sg"] .faq-page-hero p{color:rgba(255,255,255,.82)}
+
+
+/* ---------- Christmas --------------------------------------------------- */
+/* Deep evergreen rather than the obvious red, for two reasons. Singapore
+   already owns red on this site and two red themes would be hard to tell
+   apart, and a pine green sits closer to a brand built on sage and gold
+   without collapsing into it: #0E2A1B is far darker and cooler than --sage.
+
+   No Santa, no reindeer, no wordmark from anyone else. Snowflakes only, which
+   nobody owns. */
+
+html[data-theme="xmas"] .theme-ribbon[data-theme-for="xmas"]{
+  /* #0E2A1B against white is 16.9:1 */
+  background:linear-gradient(100deg,#0E2A1B 0%,#123724 58%,#17482D 100%);
+}
+html[data-theme="xmas"] .theme-ribbon-mark{
+  /* Six-arm snowflakes at mixed sizes. Stroked, not filled, so they stay light
+     against the green instead of reading as blobs at 34px tall. */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 118 34' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'%3E%3Cg transform='translate(15 17) scale(1.5)'%3E%3Cpath d='M0-8V8M-6.9-4L6.9 4M-6.9 4L6.9-4M0-8l-2.2 2.4M0-8l2.2 2.4M0 8l-2.2-2.4M0 8l2.2-2.4'/%3E%3C/g%3E%3Cg transform='translate(45 11) scale(0.9)'%3E%3Cpath d='M0-8V8M-6.9-4L6.9 4M-6.9 4L6.9-4'/%3E%3C/g%3E%3Cg transform='translate(70 23) scale(0.75)'%3E%3Cpath d='M0-8V8M-6.9-4L6.9 4M-6.9 4L6.9-4'/%3E%3C/g%3E%3Cg transform='translate(94 12) scale(1.1)'%3E%3Cpath d='M0-8V8M-6.9-4L6.9 4M-6.9 4L6.9-4M0-8l-2.2 2.4M0-8l2.2 2.4'/%3E%3C/g%3E%3Cg transform='translate(112 25) scale(0.6)'%3E%3Cpath d='M0-8V8M-6.9-4L6.9 4M-6.9 4L6.9-4'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* rgba(10,32,20,.95) over the photo measures 17.2:1 against white. */
+html[data-theme="xmas"] .hero.hero-lab{
+  background-image:
+    linear-gradient(100deg,
+      rgba(10,32,20,.95) 0%,
+      rgba(14,44,28,.90) 44%,
+      rgba(24,72,46,.62) 100%),
+    var(--hero-bg,url('/assets/images/ingredients-lab.webp'));
+}
+
+/* Snow. Capped at .34 alpha for exactly the reason the starfield is: on a
+   phone the hero copy runs the full width, a flake lands inside a line of
+   text, and the audit measures the brightest pixel in each line box. Nothing
+   here moves; falling snow would be motion a visitor cannot stop. */
+html[data-theme="xmas"] .hero.hero-lab::after{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:
+    radial-gradient(2.2px 2.2px at 14% 20%, rgba(255,255,255,.32),transparent 62%),
+    radial-gradient(1.6px 1.6px at 28% 58%, rgba(255,255,255,.22),transparent 62%),
+    radial-gradient(2.6px 2.6px at 41% 14%, rgba(255,255,255,.34),transparent 62%),
+    radial-gradient(1.7px 1.7px at 52% 74%, rgba(255,255,255,.20),transparent 62%),
+    radial-gradient(2.3px 2.3px at 64% 30%, rgba(255,255,255,.30),transparent 62%),
+    radial-gradient(1.6px 1.6px at 73% 62%, rgba(255,255,255,.24),transparent 62%),
+    radial-gradient(2.8px 2.8px at 81% 18%, rgba(255,255,255,.34),transparent 62%),
+    radial-gradient(1.9px 1.9px at 89% 45%, rgba(255,255,255,.26),transparent 62%),
+    radial-gradient(1.5px 1.5px at 95% 70%, rgba(255,255,255,.20),transparent 62%),
+    radial-gradient(2.1px 2.1px at 58% 88%, rgba(255,255,255,.28),transparent 62%),
+    radial-gradient(1.7px 1.7px at 22% 38%, rgba(255,255,255,.24),transparent 62%),
+    radial-gradient(2px   2px   at 35% 84%, rgba(255,255,255,.26),transparent 62%);
+}
+
+html[data-theme="xmas"] .hero-tag{background:linear-gradient(180deg,rgba(24,72,46,.13),var(--offwhite) 78%)}
+html[data-theme="xmas"] .hero-detect{background:linear-gradient(180deg,rgba(24,72,46,.13),var(--offwhite) 78%)}
+html[data-theme="xmas"] .hero-cloud{background:linear-gradient(180deg,rgba(24,72,46,.15),var(--offwhite) 78%)}
+/* #0E2A1B against white is 16.9:1 */
+html[data-theme="xmas"] .faq-page-hero{background:#0E2A1B}

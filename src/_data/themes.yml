@@ -64,3 +64,20 @@ themes:
       compatible: ""
       conditions: ""
       testing: ""
+
+  - key: "xmas"
+    name: "Christmas"
+    enabled: true
+    starts: "12-22"
+    ends: "12-26"
+    # Deep evergreen, not red: Singapore already owns red on this site and two
+    # red themes would be hard to tell apart. Snowflakes only for the motif.
+    # No Santa, no reindeer, no borrowed wordmarks.
+    ribbon: "Season's greetings from all of us at Natural Trace."
+    ribbon_note: "Wishing you a restful break and a strong start to the new year."
+    # Empty on purpose, same as Singapore. A festive joke on a compatibility
+    # verdict is not worth the lead.
+    quiz:
+      compatible: ""
+      conditions: ""
+      testing: ""
