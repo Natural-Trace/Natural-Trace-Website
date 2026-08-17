@@ -222,11 +222,27 @@ if (CHECK_EXTERNAL) {
     }
   }
 
-  // 3. Hosts that refuse automated requests on principle. LinkedIn answers a
-  //    bot with 429 or 403 whether the page exists or not, so a failure from
-  //    one of these is information about their bot policy and nothing else.
+  // 3. Hosts that do not answer an automated request the way they answer a
+  //    person. LinkedIn returns 429 or 403 to a bot whether the page exists or
+  //    not; Forbes blocks datacentre address ranges, which is every CI runner;
+  //    the German ministry site refuses the connection outright from GitHub's
+  //    IP ranges while serving fine from a browser. A failure from one of these
+  //    is information about their traffic policy and nothing about our link.
   //    Reported, never failed, so a genuinely dead link still gets eyes on it.
-  const BOT_HOSTILE = [/(^|\.)linkedin\.com$/, /(^|\.)licdn\.com$/, /(^|\.)x\.com$/, /(^|\.)twitter\.com$/];
+  //
+  //    All three were verified by hand on 17 Aug 2026: every one loads normally
+  //    in a browser. Do not delete a link because this list grew; check it
+  //    first.
+  const BOT_HOSTILE = [
+    /(^|\.)linkedin\.com$/,
+    /(^|\.)lnkd\.in$/,          // LinkedIn's own shortener, same policy
+    /(^|\.)licdn\.com$/,
+    /(^|\.)x\.com$/,
+    /(^|\.)twitter\.com$/,
+    /(^|\.)forbes\.com$/,
+    /(^|\.)csr-in-deutschland\.de$/,
+    /(^|\.)fda\.gov$/,           // Akamai answers a datacentre GET with 401
+  ];
 
   const unverified = [];
   for (const url of externals) {
@@ -237,7 +253,17 @@ if (CHECK_EXTERNAL) {
 
     const hostile = BOT_HOSTILE.some(re => re.test(u.hostname));
     try {
-      const r = await fetch(url, { method: 'HEAD', redirect: 'follow', signal: AbortSignal.timeout(15000) });
+      /* HEAD first, because it is cheap and most servers answer it. A fair
+         number answer it with 403 or 405 while serving the same URL to GET:
+         HEAD is optional in practice and some CDN rules treat it as a scraper
+         signal. So a HEAD failure is not yet a finding. Retry once with GET
+         before saying anything, and believe the GET. */
+      let r = await fetch(url, { method: 'HEAD', redirect: 'follow', signal: AbortSignal.timeout(15000) });
+      if (r.status >= 400) {
+        try {
+          r = await fetch(url, { method: 'GET', redirect: 'follow', signal: AbortSignal.timeout(20000) });
+        } catch { /* keep the HEAD result, reported below */ }
+      }
       if (r.status >= 400) {
         if (hostile) unverified.push(`${u.hostname} answered ${r.status} to an automated request: ${url}`);
         else note(`external link ${r.status}: ${url}`);
