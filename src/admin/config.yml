@@ -48,77 +48,16 @@ public_folder: "/assets/images/uploads"
 publish_mode: editorial_workflow
 
 collections:
-  # Each page is its own sidebar entry. They were one "Pages" collection
-  # until 15 Aug 2026; split so an editor can see every page at a glance.
-  # A file entry keeps its original name, so the entry named "home" still
-  # edits src/_data/home.yml and any bookmarked editor URL still resolves.
-  # ── Site Settings ─────
-  - name: "site"
-    label: "Site Settings"
-    files:
-      # SITE SETTINGS
-      - name: "site"
-        label: "Site Settings"
-        file: "src/_data/site.yml"
-        fields:
-          - {label: "Site Name", name: "name", widget: "string"}
-          - {label: "Legal Name", name: "legal_name", widget: "string"}
-          - {label: "Tagline", name: "tagline", widget: "string"}
-          - {label: "Canonical URL (no trailing slash)", name: "url", widget: "string"}
-          - {label: "Default Meta Description", name: "default_summary", widget: "text"}
-          - {label: "Founding Year", name: "founding_year", widget: "string"}
-          - {label: "City", name: "locality", widget: "string"}
-          - {label: "Country Code", name: "country", widget: "string"}
-          - {label: "Contact Email", name: "email", widget: "string"}
-          - {label: "Logo", name: "logo", widget: "image"}
-          - {label: "CTA panel watermark", name: "cta_mark", widget: "image", required: false, hint: "The faint brand mark in the top right of every green call-to-action panel. Only its shape is used, the colour comes from the panel, so use a flat single-colour graphic on a transparent background. Leave empty for a plain circle."}
-          - {label: "Social Profile URLs", name: "social", widget: "list", field: {label: "URL", name: "url", widget: "string"}}
-          - {label: "Allow AI crawlers", name: "allow_ai_crawlers", widget: "boolean", hint: "Lets ChatGPT, Claude, Perplexity and Google AI read the site"}
+  # The sidebar mirrors the website navigation: Home, About, Solutions,
+  # Industries, Insights, then Contact and the settings. A group opens to
+  # the same pages its menu holds on the site, so Solutions lists
+  # NaturalTag, NaturalDetect, NaturalCloud and FAQ exactly like the nav
+  # dropdown. Decap has no expandable tree in the sidebar itself; one
+  # level of grouping is the deepest the pinned version goes.
+  #
+  # File entries keep their original names and paths, so the entry named
+  # "home" still edits src/_data/home.yml wherever it sits.
 
-
-  # ── SEO: titles and descriptions ─────
-  - name: "seo"
-    label: "SEO: titles and descriptions"
-    files:
-      # SEO: page titles and meta descriptions
-      - name: "seo"
-        label: "SEO: titles and descriptions"
-        file: "src/_data/seo.yml"
-        fields:
-          # "url" is how an entry is matched to a page. It was a free text box,
-          # which meant a typo silently detached a page's title and description
-          # with nothing to show for it. It is a picker now, so it can only ever
-          # be a page that exists.
-          - label: "Search engine listings"
-            name: "pages"
-            widget: "list"
-            collapsed: true
-            summary: "{{fields.url}}  {{fields.title}}"
-            fields:
-              - label: "Which page"
-                name: "url"
-                widget: "select"
-                hint: "Pick the page these words describe. If a new page has been added and is not in this list, a developer needs to add it."
-                options:
-                  - {label: "Home", value: "/"}
-                  - {label: "About Us", value: "/about/"}
-                  - {label: "NaturalTag", value: "/naturaltag/"}
-                  - {label: "NaturalDetect", value: "/naturaldetect/"}
-                  - {label: "NaturalCloud", value: "/naturalcloud/"}
-                  - {label: "Industries", value: "/industries/"}
-                  - {label: "Industry Use-Cases", value: "/industries/use-cases/"}
-                  - {label: "FAQ", value: "/faq/"}
-                  - {label: "Team", value: "/team/"}
-                  - {label: "Careers", value: "/careers/"}
-                  - {label: "Insights", value: "/insights/"}
-                  - {label: "Assess My Product", value: "/assess/"}
-                  - {label: "Contact", value: "/contact/"}
-                  - {label: "Privacy Policy", value: "/privacy/"}
-              - {label: "Headline in Google results", name: "title", widget: "string", hint: "What someone sees as the blue clickable line on a search results page. Around 60 characters before Google trims it."}
-              - {label: "Description in Google results", name: "description", widget: "text", hint: "The grey paragraph under the headline. Aim for 150 to 160 characters: shorter wastes the space, longer gets cut off mid-sentence."}
-
-
-  # ── Home ─────
   - name: "home"
     label: "Home"
     files:
@@ -223,12 +162,536 @@ collections:
 
 
   # ── Assess My Product (quiz) ─────
-  - name: "assess"
-    label: "Assess My Product (quiz)"
+
+  - name: "about"
+    label: "About"
     files:
+      # ABOUT
+      - name: "about"
+        label: "About Us"
+        file: "src/_data/about.yml"
+        fields:
+          - {label: "Label", name: "label", widget: "string"}
+          - {label: "Headline", name: "title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line. The break is ignored on phones."}
+          - {label: "Sub-headline", name: "subtitle", widget: "text", hint: "Wrap a word in <strong> to emphasise it. Type &nbsp; between two words to stop them being split across a line break."}
+          - {label: "Intro", name: "intro", widget: "text"}
+          - {label: "Disciplines Line", name: "disciplines", widget: "string"}
+          - {label: "Secondary Intro", name: "intro_secondary", widget: "text"}
+          - {label: "Hero Image", name: "hero_image", widget: "image"}
+          - {label: "Hero Image Alt", name: "hero_image_alt", widget: "string"}
+          - {label: "Hero CTA Text", name: "hero_cta", widget: "string"}
+          - {label: "Hero CTA URL", name: "hero_cta_url", widget: "string"}
+          - {label: "Story: Label", name: "story_label", widget: "string"}
+          - {label: "Story: Headline", name: "story_title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line."}
+          - {label: "Story: Opening Question", name: "story_question", widget: "text"}
+          - {label: "Story: Paragraphs", name: "story_body", widget: "list", field: {label: "Paragraph", name: "para", widget: "text"}}
+          - {label: "Why We Exist: Label", name: "why_label", widget: "string"}
+          - {label: "Why We Exist: Headline", name: "why_title", widget: "string"}
+          - {label: "Why We Exist: Background Image", name: "why_bg_image", widget: "image", required: false, hint: "Sits behind the section, tinted to the brand navy so white text stays readable. A wide landscape photograph works best. Leave empty for a plain dark background."}
+          - {label: "Why We Exist: Paragraphs", name: "why_body", widget: "list", field: {label: "Paragraph", name: "para", widget: "text"}}
+          - {label: "Vision Label", name: "vision_label", widget: "string"}
+          - {label: "Vision Text", name: "vision_text", widget: "text"}
+          - {label: "Mission Label", name: "mission_label", widget: "string"}
+          - {label: "Mission Text", name: "mission_text", widget: "text"}
+          - {label: "Mission Body", name: "mission_body", widget: "text"}
+          - {label: "Different: Label", name: "different_label", widget: "string"}
+          - {label: "Different: Sub-headline", name: "different_title", widget: "string", required: false, hint: "Optional. Leave it empty and only the What Makes Us Different heading shows, which is how it reads now."}
+          - label: "Different: Cards"
+            name: "different_cards"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Body", name: "body", widget: "text"}
+          - {label: "Why Choose: Label", name: "choose_label", widget: "string"}
+          - {label: "Why Choose: Headline", name: "choose_title", widget: "string"}
+          - label: "Why Choose: Groups"
+            name: "choose_groups"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - {label: "Group Title", name: "title", widget: "string", hint: "Write the ampersand as &amp; and put &nbsp; either side of it, so the heading cannot break with the & left at the end of a line."}
+              - {label: "Items", name: "items", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+          - {label: "Food Matrices: Label", name: "matrices_label", widget: "string"}
+          - {label: "Food Matrices: Headline", name: "matrices_title", widget: "string", hint: "CLAIM REVIEW: the 20+ figure has not been signed off. Do not publish this section without approval."}
+          - {label: "Food Matrices: Categories", name: "matrices_items", widget: "list", field: {label: "Category", name: "item", widget: "string"}}
+          - {label: "CTA Title", name: "cta_title", widget: "string"}
+          - {label: "CTA URL", name: "cta_url", widget: "string"}
+
+
+  # ── Solutions: NaturalTag ─────
+      - name: "team-data"
+        label: "All Team Members"
+        file: "src/_data/team.json"
+        fields:
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Subtitle", name: "hero_subtitle", widget: "text"}
+          - {label: "Leadership Section Label", name: "leadership_label", widget: "string"}
+          - {label: "Advisors Section Label", name: "advisors_label", widget: "string"}
+          - {label: "CTA Text", name: "cta_text", widget: "string"}
+          - {label: "CTA URL", name: "cta_url", widget: "string"}
+          - label: "Team members and advisors"
+            name: "members"
+            label_singular: "person"
+            widget: "list"
+            collapsed: true
+            summary: "{{fields.name}} — {{fields.role}}"
+            fields:
+              - {label: "Name", name: "name", widget: "string"}
+              - {label: "Role", name: "role", widget: "string"}
+              - {label: "Shown under", name: "type", widget: "select", options: ["leadership", "advisor"], hint: "Which section of the Team page this person appears in."}
+              - {label: "Location", name: "location", widget: "string", required: false}
+              - {label: "Photo", name: "photo", widget: "image", media_folder: "/src/assets/team", public_folder: "/assets/team", hint: "A square headshot works best. It is cropped to a circle."}
+              - {label: "LinkedIn profile", name: "linkedin", widget: "string", required: false, hint: "Full address, starting https://. Leave empty and no icon appears."}
+              - {label: "Education", name: "education", widget: "list", required: false, field: {label: "Degree", name: "degree", widget: "string"}}
+              - {label: "Biography", name: "bio", widget: "list", hint: "One point per line. They appear as separate paragraphs when someone opens this person.", field: {label: "Paragraph", name: "point", widget: "string"}}
+              - {label: "Position in the list", name: "order", widget: "number", hint: "Lower numbers appear first. Only matters relative to the other people in the same section."}
+
+  # Insights: news, updates, and articles
+      # CAREERS
+      - name: "careers"
+        label: "Careers"
+        file: "src/_data/careers.yml"
+        fields:
+          - {label: "Section Label", name: "section_label", widget: "string"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Intro", name: "intro", widget: "text"}
+          - {label: "Open Positions Tab Label", name: "tab_openings_label", widget: "string"}
+          - {label: "Internships Tab Label", name: "tab_internship_label", widget: "string"}
+          - label: "No Openings Message"
+            name: "no_openings"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+          - label: "Open Positions"
+            name: "positions"
+            widget: "list"
+            summary: "{{fields.title}} ({{fields.location}})"
+            required: false
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Department", name: "department", widget: "string"}
+              - {label: "Location", name: "location", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+
+          # The internship side of the page, and the form on it. Same gap as the
+          # contact form had: all of this reads as editable copy and none of it
+          # was reachable from the panel.
+          - label: "Internship: intro"
+            name: "internship"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Heading", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Expectations heading", name: "expectations_label", widget: "string"}
+              - {label: "Expectations", name: "expectations", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+              - {label: "Location", name: "location", widget: "string"}
+
+          - label: "Internship: application form"
+            name: "internship_form"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Form Heading", name: "title", widget: "string"}
+              - {label: "Form Intro", name: "subtitle", widget: "text"}
+              - {label: "First Name: label", name: "first_name_label", widget: "string"}
+              - {label: "First Name: placeholder", name: "first_name_placeholder", widget: "string"}
+              - {label: "Last Name: label", name: "last_name_label", widget: "string"}
+              - {label: "Last Name: placeholder", name: "last_name_placeholder", widget: "string"}
+              - {label: "Email: label", name: "email_label", widget: "string"}
+              - {label: "Email: placeholder", name: "email_placeholder", widget: "string"}
+              - {label: "University: label", name: "university_label", widget: "string"}
+              - {label: "University: placeholder", name: "university_placeholder", widget: "string"}
+              - {label: "Area of interest: label", name: "interest_label", widget: "string"}
+              - {label: "Area of interest: placeholder", name: "interest_placeholder", widget: "string"}
+              - {label: "Message: label", name: "message_label", widget: "string"}
+              - {label: "Message: placeholder", name: "message_placeholder", widget: "string"}
+              - {label: "Submit button", name: "submit_text", widget: "string"}
+
+          - {label: "Internship: areas of interest", name: "areas_of_interest", widget: "list", field: {label: "Area", name: "area", widget: "string"}}
+
+          - label: "Internship: after sending"
+            name: "success"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Heading", name: "title", widget: "string"}
+              - {label: "Message", name: "message", widget: "text"}
+
+
+  # ── Contact ─────
+
+  - name: "solutions"
+    label: "Solutions"
+    files:
+      # SOLUTIONS: NATURALTAG
+      - name: "naturaltag"
+        label: "NaturalTag"
+        file: "src/_data/naturaltag.yml"
+        fields:
+          - {label: "Label", name: "label", widget: "string"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Hero Line", name: "hero", widget: "string"}
+          - {label: "Intro", name: "intro", widget: "text"}
+          - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
+          - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
+          - label: "Product Photograph: Which part to keep"
+            name: "hero_image_position"
+            widget: "select"
+            required: false
+            hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
+            options:
+              - {label: "Middle", value: "50% 50%"}
+              - {label: "Left", value: "0% 50%"}
+              - {label: "Right", value: "100% 50%"}
+              - {label: "Top", value: "50% 0%"}
+              - {label: "Bottom", value: "50% 100%"}
+          - label: "Product Photograph: How far to crop in"
+            name: "hero_image_zoom"
+            widget: "select"
+            required: false
+            hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
+            options:
+              - {label: "No extra crop", value: "1"}
+              - {label: "A little closer", value: "1.1"}
+              - {label: "Closer", value: "1.18"}
+              - {label: "Much closer", value: "1.3"}
+          - {label: "Product Mark (background watermark)", name: "hero_mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
+          - {label: "Product Logo", name: "hero_logo", widget: "image"}
+          - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
+          - {label: "Why Heading", name: "why_title", widget: "string"}
+          - {label: "Why Items", name: "why_items", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+          - {label: "Features Heading", name: "features_title", widget: "string"}
+          - {label: "Features", name: "features", widget: "list", field: {label: "Feature", name: "feature", widget: "string"}}
+          - {label: "Matrices Label", name: "matrices_label", widget: "string"}
+          - {label: "Matrices Heading", name: "matrices_title", widget: "string"}
+          - label: "Matrices"
+            name: "matrices"
+            widget: "list"
+            summary: "{{fields.group}}"
+            fields:
+              - {label: "Group", name: "group", widget: "string"}
+              - {label: "Items", name: "items", widget: "text"}
+          - {label: "Video Label", name: "video_label", widget: "string"}
+          - {label: "Video Title", name: "video_title", widget: "string"}
+          - {label: "Video Description", name: "video_description", widget: "text"}
+          - {label: "Video File Path", name: "video_src", widget: "string"}
+          - {label: "CTA Text", name: "cta_text", widget: "string"}
+          - {label: "CTA URL", name: "cta_url", widget: "string"}
+
+
+  # ── Solutions: NaturalDetect ─────
+      - name: "naturaldetect"
+        label: "NaturalDetect"
+        file: "src/_data/naturaldetect.yml"
+        fields:
+          - {label: "Label", name: "label", widget: "string"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Hero Line", name: "hero", widget: "string"}
+          - {label: "Intro", name: "intro", widget: "text"}
+          - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
+          - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
+          - label: "Product Photograph: Which part to keep"
+            name: "hero_image_position"
+            widget: "select"
+            required: false
+            hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
+            options:
+              - {label: "Middle", value: "50% 50%"}
+              - {label: "Left", value: "0% 50%"}
+              - {label: "Right", value: "100% 50%"}
+              - {label: "Top", value: "50% 0%"}
+              - {label: "Bottom", value: "50% 100%"}
+          - label: "Product Photograph: How far to crop in"
+            name: "hero_image_zoom"
+            widget: "select"
+            required: false
+            hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
+            options:
+              - {label: "No extra crop", value: "1"}
+              - {label: "A little closer", value: "1.1"}
+              - {label: "Closer", value: "1.18"}
+              - {label: "Much closer", value: "1.3"}
+          - {label: "Product Mark (background watermark)", name: "hero_mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
+          - {label: "Product Logo", name: "hero_logo", widget: "image"}
+          - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
+          - {label: "Features Heading", name: "features_title", widget: "string"}
+          - {label: "Features", name: "features", widget: "list", field: {label: "Feature", name: "feature", widget: "string"}}
+          - {label: "Primary CTA", name: "cta_primary", widget: "string"}
+          - {label: "Primary CTA URL", name: "cta_primary_url", widget: "string"}
+          - {label: "Secondary CTA", name: "cta_secondary", widget: "string"}
+          - {label: "Secondary CTA URL", name: "cta_secondary_url", widget: "string"}
+
+
+  # ── Solutions: NaturalCloud ─────
+      # SOLUTIONS: NATURALCLOUD
+      - name: "naturalcloud"
+        label: "NaturalCloud"
+        file: "src/_data/naturalcloud.yml"
+        fields:
+          - {label: "Label", name: "label", widget: "string"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Hero Line", name: "hero", widget: "string"}
+          - {label: "Intro", name: "intro", widget: "text"}
+          - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
+          - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
+          - label: "Product Photograph: Which part to keep"
+            name: "hero_image_position"
+            widget: "select"
+            required: false
+            hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
+            options:
+              - {label: "Middle", value: "50% 50%"}
+              - {label: "Left", value: "0% 50%"}
+              - {label: "Right", value: "100% 50%"}
+              - {label: "Top", value: "50% 0%"}
+              - {label: "Bottom", value: "50% 100%"}
+          - label: "Product Photograph: How far to crop in"
+            name: "hero_image_zoom"
+            widget: "select"
+            required: false
+            hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
+            options:
+              - {label: "No extra crop", value: "1"}
+              - {label: "A little closer", value: "1.1"}
+              - {label: "Closer", value: "1.18"}
+              - {label: "Much closer", value: "1.3"}
+          - {label: "Product Mark (background watermark)", name: "hero_mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
+          - {label: "Product Logo", name: "hero_logo", widget: "image"}
+          - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
+          - {label: "Hero video", name: "hero_video", widget: "file", required: false, hint: "Plays on a loop in the panel, with no sound and no play button. Setting this hides the hero image and the logo below. Clear it to go back to them. MP4, around 1280px wide."}
+          - {label: "Hero video still", name: "hero_video_poster", widget: "image", required: false, hint: "Shown until the video has loaded. A frame from the video itself is best, so the switch from still to moving is invisible."}
+          - {label: "Hero video description", name: "hero_video_alt", widget: "string", required: false, hint: "For screen readers. Describe what the video shows."}
+          - {label: "Benefits Heading", name: "features_title", widget: "string"}
+          - {label: "Benefits", name: "features", widget: "list", field: {label: "Benefit", name: "benefit", widget: "string"}}
+          - {label: "Primary CTA", name: "cta_primary", widget: "string"}
+          - {label: "Primary CTA URL", name: "cta_primary_url", widget: "string"}
+          - {label: "Secondary CTA", name: "cta_secondary", widget: "string"}
+          - {label: "Secondary CTA URL", name: "cta_secondary_url", widget: "string"}
+
+
+  # ── Industries ─────
+      # FAQ
+      - name: "faq"
+        label: "FAQ"
+        file: "src/_data/faq.yml"
+        fields:
+          - {label: "Section Label", name: "section_label", widget: "string"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Subtitle", name: "subtitle", widget: "text"}
+          - label: "Categories"
+            name: "categories"
+            widget: "list"
+            summary: "{{fields.label}}"
+            fields:
+              - {label: "Internal name", name: "id", widget: "string", hint: "Used to link questions to this tab. Changing it detaches every question filed under it, so leave it alone unless you are also updating the questions."}
+              - {label: "Tab name visitors see", name: "label", widget: "string"}
+          - label: "Questions"
+            name: "questions"
+            widget: "list"
+            summary: "{{fields.question}}"
+            fields:
+              - label: "Which tab"
+                name: "category"
+                widget: "select"
+                hint: "The tab this question appears under. These match the internal names above."
+                options: ["regulatory", "safety", "integration", "detection"]
+              - {label: "Question", name: "question", widget: "string"}
+              - {label: "Answer", name: "answer", widget: "text"}
+          - {label: "CTA Title", name: "cta_title", widget: "string"}
+          - {label: "CTA Text", name: "cta_text", widget: "text"}
+          - {label: "CTA Button", name: "cta_button", widget: "string"}
+
+  - name: "industries"
+    label: "Industries"
+    files:
+      # INDUSTRIES
+      - name: "industries"
+        label: "Industries"
+        file: "src/_data/industries.yml"
+        fields:
+          - {label: "Label", name: "label", widget: "string"}
+          - {label: "Headline", name: "title", widget: "string"}
+          - {label: "Subtitle", name: "subtitle", widget: "text"}
+          - label: "Industries"
+            name: "industries"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - {label: "Internal name", name: "id", widget: "string", hint: "Used in links that jump straight to this industry, e.g. /industries/#agri-food. Changing it breaks those links."}
+              - {label: "Name", name: "name", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Image", name: "image", widget: "image"}
+              - {label: "Image Alt", name: "image_alt", widget: "string"}
+          - {label: "CTA Label", name: "cta_label", widget: "string"}
+          - {label: "CTA Title", name: "cta_title", widget: "string"}
+          - {label: "CTA Description", name: "cta_description", widget: "text"}
+          - {label: "CTA Primary Text", name: "cta_button_primary_text", widget: "string"}
+          - {label: "CTA Primary URL", name: "cta_button_primary_url", widget: "string"}
+          - {label: "CTA Secondary Text", name: "cta_button_secondary_text", widget: "string"}
+          - {label: "CTA Secondary URL", name: "cta_button_secondary_url", widget: "string"}
+
+
+  # ── Industry Use-Cases ─────
+      # INDUSTRY USE-CASES
+      - name: "usecases"
+        label: "Industry Use-Cases"
+        file: "src/_data/usecases.yml"
+        fields:
+          - {label: "Label", name: "label", widget: "string"}
+          - {label: "Headline", name: "title", widget: "string"}
+          - {label: "Subtitle", name: "subtitle", widget: "text"}
+          - label: "Use Cases"
+            name: "cases"
+            widget: "list"
+            summary: "{{fields.sector}} — {{fields.title}}"
+            fields:
+              - {label: "Sector", name: "sector", widget: "string"}
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Challenge", name: "challenge", widget: "text"}
+              - {label: "How Natural Trace Helped", name: "solution", widget: "text"}
+              - {label: "Outcome", name: "outcome", widget: "text"}
+              - {label: "Image", name: "image", widget: "image"}
+              - {label: "Image Alt", name: "image_alt", widget: "string"}
+          - {label: "Challenge Label", name: "challenge_label", widget: "string"}
+          - {label: "Solution Label", name: "solution_label", widget: "string"}
+          - {label: "Outcome Label", name: "outcome_label", widget: "string"}
+          - {label: "CTA Title", name: "cta_title", widget: "string"}
+          - {label: "CTA URL", name: "cta_url", widget: "string"}
+
+
+  # ── Careers ─────
+
+  # Insights: news, updates, and articles
+  - name: "insights"
+    label: "Insights articles"
+    label_singular: "article"
+    folder: "src/insights"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}}"
+    sortable_fields: ["date", "title"]
+    media_folder: "/src/assets/images/insights"
+    public_folder: "/assets/images/insights"
+    fields:
+      - {label: "Headline", name: "title", widget: "string"}
+      - {label: "Date", name: "date", widget: "datetime", hint: "Articles are listed newest first. Post-dating one does not hide it."}
+      - {label: "Author", name: "author", widget: "string", default: "Natural Trace Team"}
+      - {label: "Pin to the top of Insights", name: "pinned", widget: "boolean", default: false, required: false, hint: "Pinned articles sit above the rest regardless of date. Use sparingly, or nothing stands out."}
+      - {label: "Header image", name: "image", widget: "image", required: false, hint: "Shown at the top of the article and on its card. Landscape works best, around 1200px wide. A tall or square image is cropped to a banner rather than filling the screen, so it will still look right."}
+      - {label: "Header image caption", name: "image_caption", widget: "string", required: false, hint: "Optional line under the header image. Leave empty for no caption."}
+      - {label: "Header image description", name: "image_alt", widget: "string", required: false, hint: "For screen readers and for when the image fails to load. Describe what is in the picture. Leave empty and the headline is used."}
+      - {label: "Summary", name: "summary", widget: "text", hint: "The paragraph on the article's card. Also used as the Google description unless you set one below."}
+      - {label: "Article", name: "body", widget: "markdown"}
+      - {label: "Tags", name: "tags", widget: "list", required: false, field: {label: "Tag", name: "tag", widget: "string"}}
+      - {label: "Google headline (optional)", name: "seo_title", widget: "string", required: false, hint: "Only if the headline above is not what you want appearing in search results. Leave empty to use the headline."}
+      - {label: "Google description (optional)", name: "seo_description", widget: "text", required: false, hint: "Only if the summary above is not right for search results. Aim for 150 to 160 characters. Leave empty to use the summary."}
+
+
+  - name: "contact"
+    label: "Contact & Quiz"
+    files:
+      # CONTACT
+      - name: "contact"
+        label: "Contact"
+        file: "src/_data/contact.yml"
+        fields:
+          - {label: "Section Label", name: "section_label", widget: "string"}
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Subtitle", name: "subtitle", widget: "text"}
+          - label: "Info Items"
+            name: "info_items"
+            widget: "list"
+            summary: "{{fields.label}}"
+            fields:
+              - {label: "Label", name: "label", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+
+          # The form itself. Every label and placeholder on the contact form is
+          # here. Renaming a field is a copy change, not a developer change.
+          - label: "Contact Form"
+            name: "form"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Form Heading", name: "title", widget: "string"}
+              - {label: "Form Intro", name: "subtitle", widget: "text"}
+              - {label: "First Name: label", name: "first_name_label", widget: "string"}
+              - {label: "First Name: placeholder", name: "first_name_placeholder", widget: "string"}
+              - {label: "Last Name: label", name: "last_name_label", widget: "string"}
+              - {label: "Last Name: placeholder", name: "last_name_placeholder", widget: "string"}
+              - {label: "Email: label", name: "email_label", widget: "string"}
+              - {label: "Email: placeholder", name: "email_placeholder", widget: "string"}
+              - {label: "Company: label", name: "company_label", widget: "string"}
+              - {label: "Company: placeholder", name: "company_placeholder", widget: "string"}
+              - {label: "Job Title: label", name: "job_title_label", widget: "string"}
+              - {label: "Job Title: placeholder", name: "job_title_placeholder", widget: "string"}
+              - {label: "Inquiry Type: label", name: "inquiry_type_label", widget: "string"}
+              - {label: "Inquiry Type: placeholder", name: "inquiry_type_placeholder", widget: "string"}
+              - {label: "Message: label", name: "message_label", widget: "string"}
+              - {label: "Message: placeholder", name: "message_placeholder", widget: "string"}
+              - {label: "Submit button", name: "submit_text", widget: "string"}
+
+          # WARNING: "Value sent to HubSpot" is data, not copy. It is written to
+          # the inquiry_type property on the contact record. Changing it changes
+          # what future enquiries are filed as, and does not rename anything
+          # already in HubSpot. Change the visible label freely; change the value
+          # only deliberately.
+          - label: "Inquiry Type options"
+            name: "inquiry_types"
+            widget: "list"
+            summary: "{{fields.label}}"
+            fields:
+              - {label: "Value sent to HubSpot", name: "value", widget: "string"}
+              - {label: "Label shown to the visitor", name: "label", widget: "string"}
+
+          - label: "After sending: success"
+            name: "success"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Heading", name: "title", widget: "string"}
+              - {label: "Message", name: "message", widget: "text"}
+
+          # Shown when the enquiry is handed to the visitor's email client
+          # instead of going straight to HubSpot.
+          - label: "After sending: email fallback"
+            name: "fallback"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Heading", name: "title", widget: "string"}
+              - {label: "Message", name: "message", widget: "text"}
+
+          - label: "After sending: failure"
+            name: "error"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Heading", name: "title", widget: "string"}
+              - {label: "Message", name: "message", widget: "text"}
+
+          - label: "Closing call to action"
+            name: "cta"
+            widget: "object"
+            collapsed: true
+            fields:
+              - {label: "Section Label", name: "section_label", widget: "string"}
+              - {label: "Heading", name: "title", widget: "string"}
+              - {label: "Background photograph", name: "background_image", widget: "image", required: false, hint: "Blended into the green panel: only its light and shade survive and the colour comes from the panel. A picture with strong shapes works, a pale or busy one disappears. Leave empty for a plain gradient."}
+              - {label: "Subcopy", name: "subtitle", widget: "text"}
+              - {label: "Primary button text", name: "primary_text", widget: "string"}
+              - {label: "Primary button link", name: "primary_href", widget: "string"}
+              - {label: "Secondary button text", name: "secondary_text", widget: "string"}
+              - {label: "Secondary button link", name: "secondary_href", widget: "string"}
+
+
+  # ── FAQ ─────
       # ASSESS. The compatibility quiz, moved off the home page on 6 Aug 2026.
       - name: "assess"
-        label: "Assess My Product (quiz)"
+        label: "Compatibility Quiz"
         file: "src/_data/assess.yml"
         fields:
           - {label: "Quiz: Label", name: "compat_label", widget: "string"}
@@ -382,495 +845,70 @@ collections:
 
 
   # ── About Us ─────
-  - name: "about"
-    label: "About Us"
+
+  - name: "settings"
+    label: "Site & SEO Settings"
     files:
-      # ABOUT
-      - name: "about"
-        label: "About Us"
-        file: "src/_data/about.yml"
+      # SITE SETTINGS
+      - name: "site"
+        label: "Site Settings"
+        file: "src/_data/site.yml"
         fields:
-          - {label: "Label", name: "label", widget: "string"}
-          - {label: "Headline", name: "title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line. The break is ignored on phones."}
-          - {label: "Sub-headline", name: "subtitle", widget: "text", hint: "Wrap a word in <strong> to emphasise it. Type &nbsp; between two words to stop them being split across a line break."}
-          - {label: "Intro", name: "intro", widget: "text"}
-          - {label: "Disciplines Line", name: "disciplines", widget: "string"}
-          - {label: "Secondary Intro", name: "intro_secondary", widget: "text"}
-          - {label: "Hero Image", name: "hero_image", widget: "image"}
-          - {label: "Hero Image Alt", name: "hero_image_alt", widget: "string"}
-          - {label: "Hero CTA Text", name: "hero_cta", widget: "string"}
-          - {label: "Hero CTA URL", name: "hero_cta_url", widget: "string"}
-          - {label: "Story: Label", name: "story_label", widget: "string"}
-          - {label: "Story: Headline", name: "story_title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line."}
-          - {label: "Story: Opening Question", name: "story_question", widget: "text"}
-          - {label: "Story: Paragraphs", name: "story_body", widget: "list", field: {label: "Paragraph", name: "para", widget: "text"}}
-          - {label: "Why We Exist: Label", name: "why_label", widget: "string"}
-          - {label: "Why We Exist: Headline", name: "why_title", widget: "string"}
-          - {label: "Why We Exist: Background Image", name: "why_bg_image", widget: "image", required: false, hint: "Sits behind the section, tinted to the brand navy so white text stays readable. A wide landscape photograph works best. Leave empty for a plain dark background."}
-          - {label: "Why We Exist: Paragraphs", name: "why_body", widget: "list", field: {label: "Paragraph", name: "para", widget: "text"}}
-          - {label: "Vision Label", name: "vision_label", widget: "string"}
-          - {label: "Vision Text", name: "vision_text", widget: "text"}
-          - {label: "Mission Label", name: "mission_label", widget: "string"}
-          - {label: "Mission Text", name: "mission_text", widget: "text"}
-          - {label: "Mission Body", name: "mission_body", widget: "text"}
-          - {label: "Different: Label", name: "different_label", widget: "string"}
-          - {label: "Different: Sub-headline", name: "different_title", widget: "string", required: false, hint: "Optional. Leave it empty and only the What Makes Us Different heading shows, which is how it reads now."}
-          - label: "Different: Cards"
-            name: "different_cards"
+          - {label: "Site Name", name: "name", widget: "string"}
+          - {label: "Legal Name", name: "legal_name", widget: "string"}
+          - {label: "Tagline", name: "tagline", widget: "string"}
+          - {label: "Canonical URL (no trailing slash)", name: "url", widget: "string"}
+          - {label: "Default Meta Description", name: "default_summary", widget: "text"}
+          - {label: "Founding Year", name: "founding_year", widget: "string"}
+          - {label: "City", name: "locality", widget: "string"}
+          - {label: "Country Code", name: "country", widget: "string"}
+          - {label: "Contact Email", name: "email", widget: "string"}
+          - {label: "Logo", name: "logo", widget: "image"}
+          - {label: "CTA panel watermark", name: "cta_mark", widget: "image", required: false, hint: "The faint brand mark in the top right of every green call-to-action panel. Only its shape is used, the colour comes from the panel, so use a flat single-colour graphic on a transparent background. Leave empty for a plain circle."}
+          - {label: "Social Profile URLs", name: "social", widget: "list", field: {label: "URL", name: "url", widget: "string"}}
+          - {label: "Allow AI crawlers", name: "allow_ai_crawlers", widget: "boolean", hint: "Lets ChatGPT, Claude, Perplexity and Google AI read the site"}
+
+
+  # ── SEO: titles and descriptions ─────
+      # SEO: page titles and meta descriptions
+      - name: "seo"
+        label: "SEO: titles and descriptions"
+        file: "src/_data/seo.yml"
+        fields:
+          # "url" is how an entry is matched to a page. It was a free text box,
+          # which meant a typo silently detached a page's title and description
+          # with nothing to show for it. It is a picker now, so it can only ever
+          # be a page that exists.
+          - label: "Search engine listings"
+            name: "pages"
             widget: "list"
-            summary: "{{fields.title}}"
-            fields:
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Body", name: "body", widget: "text"}
-          - {label: "Why Choose: Label", name: "choose_label", widget: "string"}
-          - {label: "Why Choose: Headline", name: "choose_title", widget: "string"}
-          - label: "Why Choose: Groups"
-            name: "choose_groups"
-            widget: "list"
-            summary: "{{fields.title}}"
-            fields:
-              - {label: "Group Title", name: "title", widget: "string", hint: "Write the ampersand as &amp; and put &nbsp; either side of it, so the heading cannot break with the & left at the end of a line."}
-              - {label: "Items", name: "items", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
-          - {label: "Food Matrices: Label", name: "matrices_label", widget: "string"}
-          - {label: "Food Matrices: Headline", name: "matrices_title", widget: "string", hint: "CLAIM REVIEW: the 20+ figure has not been signed off. Do not publish this section without approval."}
-          - {label: "Food Matrices: Categories", name: "matrices_items", widget: "list", field: {label: "Category", name: "item", widget: "string"}}
-          - {label: "CTA Title", name: "cta_title", widget: "string"}
-          - {label: "CTA URL", name: "cta_url", widget: "string"}
-
-
-  # ── Solutions: NaturalTag ─────
-  - name: "naturaltag"
-    label: "Solutions: NaturalTag"
-    files:
-      # SOLUTIONS: NATURALTAG
-      - name: "naturaltag"
-        label: "Solutions: NaturalTag"
-        file: "src/_data/naturaltag.yml"
-        fields:
-          - {label: "Label", name: "label", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Hero Line", name: "hero", widget: "string"}
-          - {label: "Intro", name: "intro", widget: "text"}
-          - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
-          - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
-          - label: "Product Photograph: Which part to keep"
-            name: "hero_image_position"
-            widget: "select"
-            required: false
-            hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
-            options:
-              - {label: "Middle", value: "50% 50%"}
-              - {label: "Left", value: "0% 50%"}
-              - {label: "Right", value: "100% 50%"}
-              - {label: "Top", value: "50% 0%"}
-              - {label: "Bottom", value: "50% 100%"}
-          - label: "Product Photograph: How far to crop in"
-            name: "hero_image_zoom"
-            widget: "select"
-            required: false
-            hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
-            options:
-              - {label: "No extra crop", value: "1"}
-              - {label: "A little closer", value: "1.1"}
-              - {label: "Closer", value: "1.18"}
-              - {label: "Much closer", value: "1.3"}
-          - {label: "Product Mark (background watermark)", name: "hero_mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
-          - {label: "Product Logo", name: "hero_logo", widget: "image"}
-          - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
-          - {label: "Why Heading", name: "why_title", widget: "string"}
-          - {label: "Why Items", name: "why_items", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
-          - {label: "Features Heading", name: "features_title", widget: "string"}
-          - {label: "Features", name: "features", widget: "list", field: {label: "Feature", name: "feature", widget: "string"}}
-          - {label: "Matrices Label", name: "matrices_label", widget: "string"}
-          - {label: "Matrices Heading", name: "matrices_title", widget: "string"}
-          - label: "Matrices"
-            name: "matrices"
-            widget: "list"
-            summary: "{{fields.group}}"
-            fields:
-              - {label: "Group", name: "group", widget: "string"}
-              - {label: "Items", name: "items", widget: "text"}
-          - {label: "Video Label", name: "video_label", widget: "string"}
-          - {label: "Video Title", name: "video_title", widget: "string"}
-          - {label: "Video Description", name: "video_description", widget: "text"}
-          - {label: "Video File Path", name: "video_src", widget: "string"}
-          - {label: "CTA Text", name: "cta_text", widget: "string"}
-          - {label: "CTA URL", name: "cta_url", widget: "string"}
-
-
-  # ── Solutions: NaturalDetect ─────
-  - name: "naturaldetect"
-    label: "Solutions: NaturalDetect"
-    files:
-      - name: "naturaldetect"
-        label: "Solutions: NaturalDetect"
-        file: "src/_data/naturaldetect.yml"
-        fields:
-          - {label: "Label", name: "label", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Hero Line", name: "hero", widget: "string"}
-          - {label: "Intro", name: "intro", widget: "text"}
-          - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
-          - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
-          - label: "Product Photograph: Which part to keep"
-            name: "hero_image_position"
-            widget: "select"
-            required: false
-            hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
-            options:
-              - {label: "Middle", value: "50% 50%"}
-              - {label: "Left", value: "0% 50%"}
-              - {label: "Right", value: "100% 50%"}
-              - {label: "Top", value: "50% 0%"}
-              - {label: "Bottom", value: "50% 100%"}
-          - label: "Product Photograph: How far to crop in"
-            name: "hero_image_zoom"
-            widget: "select"
-            required: false
-            hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
-            options:
-              - {label: "No extra crop", value: "1"}
-              - {label: "A little closer", value: "1.1"}
-              - {label: "Closer", value: "1.18"}
-              - {label: "Much closer", value: "1.3"}
-          - {label: "Product Mark (background watermark)", name: "hero_mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
-          - {label: "Product Logo", name: "hero_logo", widget: "image"}
-          - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
-          - {label: "Features Heading", name: "features_title", widget: "string"}
-          - {label: "Features", name: "features", widget: "list", field: {label: "Feature", name: "feature", widget: "string"}}
-          - {label: "Primary CTA", name: "cta_primary", widget: "string"}
-          - {label: "Primary CTA URL", name: "cta_primary_url", widget: "string"}
-          - {label: "Secondary CTA", name: "cta_secondary", widget: "string"}
-          - {label: "Secondary CTA URL", name: "cta_secondary_url", widget: "string"}
-
-
-  # ── Solutions: NaturalCloud ─────
-  - name: "naturalcloud"
-    label: "Solutions: NaturalCloud"
-    files:
-      # SOLUTIONS: NATURALCLOUD
-      - name: "naturalcloud"
-        label: "Solutions: NaturalCloud"
-        file: "src/_data/naturalcloud.yml"
-        fields:
-          - {label: "Label", name: "label", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Hero Line", name: "hero", widget: "string"}
-          - {label: "Intro", name: "intro", widget: "text"}
-          - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
-          - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
-          - label: "Product Photograph: Which part to keep"
-            name: "hero_image_position"
-            widget: "select"
-            required: false
-            hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
-            options:
-              - {label: "Middle", value: "50% 50%"}
-              - {label: "Left", value: "0% 50%"}
-              - {label: "Right", value: "100% 50%"}
-              - {label: "Top", value: "50% 0%"}
-              - {label: "Bottom", value: "50% 100%"}
-          - label: "Product Photograph: How far to crop in"
-            name: "hero_image_zoom"
-            widget: "select"
-            required: false
-            hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
-            options:
-              - {label: "No extra crop", value: "1"}
-              - {label: "A little closer", value: "1.1"}
-              - {label: "Closer", value: "1.18"}
-              - {label: "Much closer", value: "1.3"}
-          - {label: "Product Mark (background watermark)", name: "hero_mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
-          - {label: "Product Logo", name: "hero_logo", widget: "image"}
-          - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
-          - {label: "Hero video", name: "hero_video", widget: "file", required: false, hint: "Plays on a loop in the panel, with no sound and no play button. Setting this hides the hero image and the logo below. Clear it to go back to them. MP4, around 1280px wide."}
-          - {label: "Hero video still", name: "hero_video_poster", widget: "image", required: false, hint: "Shown until the video has loaded. A frame from the video itself is best, so the switch from still to moving is invisible."}
-          - {label: "Hero video description", name: "hero_video_alt", widget: "string", required: false, hint: "For screen readers. Describe what the video shows."}
-          - {label: "Benefits Heading", name: "features_title", widget: "string"}
-          - {label: "Benefits", name: "features", widget: "list", field: {label: "Benefit", name: "benefit", widget: "string"}}
-          - {label: "Primary CTA", name: "cta_primary", widget: "string"}
-          - {label: "Primary CTA URL", name: "cta_primary_url", widget: "string"}
-          - {label: "Secondary CTA", name: "cta_secondary", widget: "string"}
-          - {label: "Secondary CTA URL", name: "cta_secondary_url", widget: "string"}
-
-
-  # ── Industries ─────
-  - name: "industries"
-    label: "Industries"
-    files:
-      # INDUSTRIES
-      - name: "industries"
-        label: "Industries"
-        file: "src/_data/industries.yml"
-        fields:
-          - {label: "Label", name: "label", widget: "string"}
-          - {label: "Headline", name: "title", widget: "string"}
-          - {label: "Subtitle", name: "subtitle", widget: "text"}
-          - label: "Industries"
-            name: "industries"
-            widget: "list"
-            summary: "{{fields.name}}"
-            fields:
-              - {label: "Internal name", name: "id", widget: "string", hint: "Used in links that jump straight to this industry, e.g. /industries/#agri-food. Changing it breaks those links."}
-              - {label: "Name", name: "name", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-              - {label: "Image", name: "image", widget: "image"}
-              - {label: "Image Alt", name: "image_alt", widget: "string"}
-          - {label: "CTA Label", name: "cta_label", widget: "string"}
-          - {label: "CTA Title", name: "cta_title", widget: "string"}
-          - {label: "CTA Description", name: "cta_description", widget: "text"}
-          - {label: "CTA Primary Text", name: "cta_button_primary_text", widget: "string"}
-          - {label: "CTA Primary URL", name: "cta_button_primary_url", widget: "string"}
-          - {label: "CTA Secondary Text", name: "cta_button_secondary_text", widget: "string"}
-          - {label: "CTA Secondary URL", name: "cta_button_secondary_url", widget: "string"}
-
-
-  # ── Industry Use-Cases ─────
-  - name: "usecases"
-    label: "Industry Use-Cases"
-    files:
-      # INDUSTRY USE-CASES
-      - name: "usecases"
-        label: "Industry Use-Cases"
-        file: "src/_data/usecases.yml"
-        fields:
-          - {label: "Label", name: "label", widget: "string"}
-          - {label: "Headline", name: "title", widget: "string"}
-          - {label: "Subtitle", name: "subtitle", widget: "text"}
-          - label: "Use Cases"
-            name: "cases"
-            widget: "list"
-            summary: "{{fields.sector}} — {{fields.title}}"
-            fields:
-              - {label: "Sector", name: "sector", widget: "string"}
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Challenge", name: "challenge", widget: "text"}
-              - {label: "How Natural Trace Helped", name: "solution", widget: "text"}
-              - {label: "Outcome", name: "outcome", widget: "text"}
-              - {label: "Image", name: "image", widget: "image"}
-              - {label: "Image Alt", name: "image_alt", widget: "string"}
-          - {label: "Challenge Label", name: "challenge_label", widget: "string"}
-          - {label: "Solution Label", name: "solution_label", widget: "string"}
-          - {label: "Outcome Label", name: "outcome_label", widget: "string"}
-          - {label: "CTA Title", name: "cta_title", widget: "string"}
-          - {label: "CTA URL", name: "cta_url", widget: "string"}
-
-
-  # ── Careers ─────
-  - name: "careers"
-    label: "Careers"
-    files:
-      # CAREERS
-      - name: "careers"
-        label: "Careers"
-        file: "src/_data/careers.yml"
-        fields:
-          - {label: "Section Label", name: "section_label", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Intro", name: "intro", widget: "text"}
-          - {label: "Open Positions Tab Label", name: "tab_openings_label", widget: "string"}
-          - {label: "Internships Tab Label", name: "tab_internship_label", widget: "string"}
-          - label: "No Openings Message"
-            name: "no_openings"
-            widget: "object"
-            fields:
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-          - label: "Open Positions"
-            name: "positions"
-            widget: "list"
-            summary: "{{fields.title}} ({{fields.location}})"
-            required: false
-            fields:
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Department", name: "department", widget: "string"}
-              - {label: "Location", name: "location", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-
-          # The internship side of the page, and the form on it. Same gap as the
-          # contact form had: all of this reads as editable copy and none of it
-          # was reachable from the panel.
-          - label: "Internship: intro"
-            name: "internship"
-            widget: "object"
             collapsed: true
+            summary: "{{fields.url}}  {{fields.title}}"
             fields:
-              - {label: "Heading", name: "title", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-              - {label: "Expectations heading", name: "expectations_label", widget: "string"}
-              - {label: "Expectations", name: "expectations", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
-              - {label: "Location", name: "location", widget: "string"}
-
-          - label: "Internship: application form"
-            name: "internship_form"
-            widget: "object"
-            collapsed: true
-            fields:
-              - {label: "Form Heading", name: "title", widget: "string"}
-              - {label: "Form Intro", name: "subtitle", widget: "text"}
-              - {label: "First Name: label", name: "first_name_label", widget: "string"}
-              - {label: "First Name: placeholder", name: "first_name_placeholder", widget: "string"}
-              - {label: "Last Name: label", name: "last_name_label", widget: "string"}
-              - {label: "Last Name: placeholder", name: "last_name_placeholder", widget: "string"}
-              - {label: "Email: label", name: "email_label", widget: "string"}
-              - {label: "Email: placeholder", name: "email_placeholder", widget: "string"}
-              - {label: "University: label", name: "university_label", widget: "string"}
-              - {label: "University: placeholder", name: "university_placeholder", widget: "string"}
-              - {label: "Area of interest: label", name: "interest_label", widget: "string"}
-              - {label: "Area of interest: placeholder", name: "interest_placeholder", widget: "string"}
-              - {label: "Message: label", name: "message_label", widget: "string"}
-              - {label: "Message: placeholder", name: "message_placeholder", widget: "string"}
-              - {label: "Submit button", name: "submit_text", widget: "string"}
-
-          - {label: "Internship: areas of interest", name: "areas_of_interest", widget: "list", field: {label: "Area", name: "area", widget: "string"}}
-
-          - label: "Internship: after sending"
-            name: "success"
-            widget: "object"
-            collapsed: true
-            fields:
-              - {label: "Heading", name: "title", widget: "string"}
-              - {label: "Message", name: "message", widget: "text"}
-
-
-  # ── Contact ─────
-  - name: "contact"
-    label: "Contact"
-    files:
-      # CONTACT
-      - name: "contact"
-        label: "Contact"
-        file: "src/_data/contact.yml"
-        fields:
-          - {label: "Section Label", name: "section_label", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Subtitle", name: "subtitle", widget: "text"}
-          - label: "Info Items"
-            name: "info_items"
-            widget: "list"
-            summary: "{{fields.label}}"
-            fields:
-              - {label: "Label", name: "label", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-
-          # The form itself. Every label and placeholder on the contact form is
-          # here. Renaming a field is a copy change, not a developer change.
-          - label: "Contact Form"
-            name: "form"
-            widget: "object"
-            collapsed: true
-            fields:
-              - {label: "Form Heading", name: "title", widget: "string"}
-              - {label: "Form Intro", name: "subtitle", widget: "text"}
-              - {label: "First Name: label", name: "first_name_label", widget: "string"}
-              - {label: "First Name: placeholder", name: "first_name_placeholder", widget: "string"}
-              - {label: "Last Name: label", name: "last_name_label", widget: "string"}
-              - {label: "Last Name: placeholder", name: "last_name_placeholder", widget: "string"}
-              - {label: "Email: label", name: "email_label", widget: "string"}
-              - {label: "Email: placeholder", name: "email_placeholder", widget: "string"}
-              - {label: "Company: label", name: "company_label", widget: "string"}
-              - {label: "Company: placeholder", name: "company_placeholder", widget: "string"}
-              - {label: "Job Title: label", name: "job_title_label", widget: "string"}
-              - {label: "Job Title: placeholder", name: "job_title_placeholder", widget: "string"}
-              - {label: "Inquiry Type: label", name: "inquiry_type_label", widget: "string"}
-              - {label: "Inquiry Type: placeholder", name: "inquiry_type_placeholder", widget: "string"}
-              - {label: "Message: label", name: "message_label", widget: "string"}
-              - {label: "Message: placeholder", name: "message_placeholder", widget: "string"}
-              - {label: "Submit button", name: "submit_text", widget: "string"}
-
-          # WARNING: "Value sent to HubSpot" is data, not copy. It is written to
-          # the inquiry_type property on the contact record. Changing it changes
-          # what future enquiries are filed as, and does not rename anything
-          # already in HubSpot. Change the visible label freely; change the value
-          # only deliberately.
-          - label: "Inquiry Type options"
-            name: "inquiry_types"
-            widget: "list"
-            summary: "{{fields.label}}"
-            fields:
-              - {label: "Value sent to HubSpot", name: "value", widget: "string"}
-              - {label: "Label shown to the visitor", name: "label", widget: "string"}
-
-          - label: "After sending: success"
-            name: "success"
-            widget: "object"
-            collapsed: true
-            fields:
-              - {label: "Heading", name: "title", widget: "string"}
-              - {label: "Message", name: "message", widget: "text"}
-
-          # Shown when the enquiry is handed to the visitor's email client
-          # instead of going straight to HubSpot.
-          - label: "After sending: email fallback"
-            name: "fallback"
-            widget: "object"
-            collapsed: true
-            fields:
-              - {label: "Heading", name: "title", widget: "string"}
-              - {label: "Message", name: "message", widget: "text"}
-
-          - label: "After sending: failure"
-            name: "error"
-            widget: "object"
-            collapsed: true
-            fields:
-              - {label: "Heading", name: "title", widget: "string"}
-              - {label: "Message", name: "message", widget: "text"}
-
-          - label: "Closing call to action"
-            name: "cta"
-            widget: "object"
-            collapsed: true
-            fields:
-              - {label: "Section Label", name: "section_label", widget: "string"}
-              - {label: "Heading", name: "title", widget: "string"}
-              - {label: "Background photograph", name: "background_image", widget: "image", required: false, hint: "Blended into the green panel: only its light and shade survive and the colour comes from the panel. A picture with strong shapes works, a pale or busy one disappears. Leave empty for a plain gradient."}
-              - {label: "Subcopy", name: "subtitle", widget: "text"}
-              - {label: "Primary button text", name: "primary_text", widget: "string"}
-              - {label: "Primary button link", name: "primary_href", widget: "string"}
-              - {label: "Secondary button text", name: "secondary_text", widget: "string"}
-              - {label: "Secondary button link", name: "secondary_href", widget: "string"}
-
-
-  # ── FAQ ─────
-  - name: "faq"
-    label: "FAQ"
-    files:
-      # FAQ
-      - name: "faq"
-        label: "FAQ"
-        file: "src/_data/faq.yml"
-        fields:
-          - {label: "Section Label", name: "section_label", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Subtitle", name: "subtitle", widget: "text"}
-          - label: "Categories"
-            name: "categories"
-            widget: "list"
-            summary: "{{fields.label}}"
-            fields:
-              - {label: "Internal name", name: "id", widget: "string", hint: "Used to link questions to this tab. Changing it detaches every question filed under it, so leave it alone unless you are also updating the questions."}
-              - {label: "Tab name visitors see", name: "label", widget: "string"}
-          - label: "Questions"
-            name: "questions"
-            widget: "list"
-            summary: "{{fields.question}}"
-            fields:
-              - label: "Which tab"
-                name: "category"
+              - label: "Which page"
+                name: "url"
                 widget: "select"
-                hint: "The tab this question appears under. These match the internal names above."
-                options: ["regulatory", "safety", "integration", "detection"]
-              - {label: "Question", name: "question", widget: "string"}
-              - {label: "Answer", name: "answer", widget: "text"}
-          - {label: "CTA Title", name: "cta_title", widget: "string"}
-          - {label: "CTA Text", name: "cta_text", widget: "text"}
-          - {label: "CTA Button", name: "cta_button", widget: "string"}
+                hint: "Pick the page these words describe. If a new page has been added and is not in this list, a developer needs to add it."
+                options:
+                  - {label: "Home", value: "/"}
+                  - {label: "About Us", value: "/about/"}
+                  - {label: "NaturalTag", value: "/naturaltag/"}
+                  - {label: "NaturalDetect", value: "/naturaldetect/"}
+                  - {label: "NaturalCloud", value: "/naturalcloud/"}
+                  - {label: "Industries", value: "/industries/"}
+                  - {label: "Industry Use-Cases", value: "/industries/use-cases/"}
+                  - {label: "FAQ", value: "/faq/"}
+                  - {label: "Team", value: "/team/"}
+                  - {label: "Careers", value: "/careers/"}
+                  - {label: "Insights", value: "/insights/"}
+                  - {label: "Assess My Product", value: "/assess/"}
+                  - {label: "Contact", value: "/contact/"}
+                  - {label: "Privacy Policy", value: "/privacy/"}
+              - {label: "Headline in Google results", name: "title", widget: "string", hint: "What someone sees as the blue clickable line on a search results page. Around 60 characters before Google trims it."}
+              - {label: "Description in Google results", name: "description", widget: "text", hint: "The grey paragraph under the headline. Aim for 150 to 160 characters: shorter wastes the space, longer gets cut off mid-sentence."}
 
 
-  - name: "integrations"
-    label: "Integrations"
-    files:
+  # ── Home ─────
       - name: "hubspot"
         label: "HubSpot & Contact Form"
         file: "src/_data/integrations.yml"
@@ -942,58 +980,3 @@ collections:
               - {label: "Decline button", name: "decline_label", widget: "string"}
               - {label: "Policy link text", name: "policy_label", widget: "string"}
               - {label: "Policy link URL", name: "policy_url", widget: "string"}
-
-  - name: "team"
-    label: "Team Members"
-    files:
-      - name: "team-data"
-        label: "All Team Members"
-        file: "src/_data/team.json"
-        fields:
-          - {label: "Hero Title", name: "hero_title", widget: "string"}
-          - {label: "Hero Subtitle", name: "hero_subtitle", widget: "text"}
-          - {label: "Leadership Section Label", name: "leadership_label", widget: "string"}
-          - {label: "Advisors Section Label", name: "advisors_label", widget: "string"}
-          - {label: "CTA Text", name: "cta_text", widget: "string"}
-          - {label: "CTA URL", name: "cta_url", widget: "string"}
-          - label: "Team members and advisors"
-            name: "members"
-            label_singular: "person"
-            widget: "list"
-            collapsed: true
-            summary: "{{fields.name}} — {{fields.role}}"
-            fields:
-              - {label: "Name", name: "name", widget: "string"}
-              - {label: "Role", name: "role", widget: "string"}
-              - {label: "Shown under", name: "type", widget: "select", options: ["leadership", "advisor"], hint: "Which section of the Team page this person appears in."}
-              - {label: "Location", name: "location", widget: "string", required: false}
-              - {label: "Photo", name: "photo", widget: "image", media_folder: "/src/assets/team", public_folder: "/assets/team", hint: "A square headshot works best. It is cropped to a circle."}
-              - {label: "LinkedIn profile", name: "linkedin", widget: "string", required: false, hint: "Full address, starting https://. Leave empty and no icon appears."}
-              - {label: "Education", name: "education", widget: "list", required: false, field: {label: "Degree", name: "degree", widget: "string"}}
-              - {label: "Biography", name: "bio", widget: "list", hint: "One point per line. They appear as separate paragraphs when someone opens this person.", field: {label: "Paragraph", name: "point", widget: "string"}}
-              - {label: "Position in the list", name: "order", widget: "number", hint: "Lower numbers appear first. Only matters relative to the other people in the same section."}
-
-  # Insights: news, updates, and articles
-  - name: "insights"
-    label: "Insights articles"
-    label_singular: "article"
-    folder: "src/insights"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    summary: "{{title}}"
-    sortable_fields: ["date", "title"]
-    media_folder: "/src/assets/images/insights"
-    public_folder: "/assets/images/insights"
-    fields:
-      - {label: "Headline", name: "title", widget: "string"}
-      - {label: "Date", name: "date", widget: "datetime", hint: "Articles are listed newest first. Post-dating one does not hide it."}
-      - {label: "Author", name: "author", widget: "string", default: "Natural Trace Team"}
-      - {label: "Pin to the top of Insights", name: "pinned", widget: "boolean", default: false, required: false, hint: "Pinned articles sit above the rest regardless of date. Use sparingly, or nothing stands out."}
-      - {label: "Header image", name: "image", widget: "image", required: false, hint: "Shown at the top of the article and on its card. Landscape works best, around 1200px wide. A tall or square image is cropped to a banner rather than filling the screen, so it will still look right."}
-      - {label: "Header image caption", name: "image_caption", widget: "string", required: false, hint: "Optional line under the header image. Leave empty for no caption."}
-      - {label: "Header image description", name: "image_alt", widget: "string", required: false, hint: "For screen readers and for when the image fails to load. Describe what is in the picture. Leave empty and the headline is used."}
-      - {label: "Summary", name: "summary", widget: "text", hint: "The paragraph on the article's card. Also used as the Google description unless you set one below."}
-      - {label: "Article", name: "body", widget: "markdown"}
-      - {label: "Tags", name: "tags", widget: "list", required: false, field: {label: "Tag", name: "tag", widget: "string"}}
-      - {label: "Google headline (optional)", name: "seo_title", widget: "string", required: false, hint: "Only if the headline above is not what you want appearing in search results. Leave empty to use the headline."}
-      - {label: "Google description (optional)", name: "seo_description", widget: "text", required: false, hint: "Only if the summary above is not right for search results. Aim for 150 to 160 characters. Leave empty to use the summary."}
