@@ -48,8 +48,13 @@ public_folder: "/assets/images/uploads"
 publish_mode: editorial_workflow
 
 collections:
-  - name: "pages"
-    label: "Pages"
+  # Each page is its own sidebar entry. They were one "Pages" collection
+  # until 15 Aug 2026; split so an editor can see every page at a glance.
+  # A file entry keeps its original name, so the entry named "home" still
+  # edits src/_data/home.yml and any bookmarked editor URL still resolves.
+  # ── Site Settings ─────
+  - name: "site"
+    label: "Site Settings"
     files:
       # SITE SETTINGS
       - name: "site"
@@ -70,6 +75,11 @@ collections:
           - {label: "Social Profile URLs", name: "social", widget: "list", field: {label: "URL", name: "url", widget: "string"}}
           - {label: "Allow AI crawlers", name: "allow_ai_crawlers", widget: "boolean", hint: "Lets ChatGPT, Claude, Perplexity and Google AI read the site"}
 
+
+  # ── SEO: titles and descriptions ─────
+  - name: "seo"
+    label: "SEO: titles and descriptions"
+    files:
       # SEO: page titles and meta descriptions
       - name: "seo"
         label: "SEO: titles and descriptions"
@@ -107,6 +117,11 @@ collections:
               - {label: "Headline in Google results", name: "title", widget: "string", hint: "What someone sees as the blue clickable line on a search results page. Around 60 characters before Google trims it."}
               - {label: "Description in Google results", name: "description", widget: "text", hint: "The grey paragraph under the headline. Aim for 150 to 160 characters: shorter wastes the space, longer gets cut off mid-sentence."}
 
+
+  # ── Home ─────
+  - name: "home"
+    label: "Home"
+    files:
       # HOME
       - name: "home"
         label: "Home"
@@ -206,6 +221,11 @@ collections:
           - {label: "Final CTA: Secondary URL", name: "final_cta_secondary_url", widget: "string"}
 
 
+
+  # ── Assess My Product (quiz) ─────
+  - name: "assess"
+    label: "Assess My Product (quiz)"
+    files:
       # ASSESS. The compatibility quiz, moved off the home page on 6 Aug 2026.
       - name: "assess"
         label: "Assess My Product (quiz)"
@@ -360,6 +380,11 @@ collections:
                   - {label: "Heading", name: "title", widget: "string"}
                   - {label: "Body", name: "body", widget: "text"}
 
+
+  # ── About Us ─────
+  - name: "about"
+    label: "About Us"
+    files:
       # ABOUT
       - name: "about"
         label: "About Us"
@@ -412,6 +437,11 @@ collections:
           - {label: "CTA Title", name: "cta_title", widget: "string"}
           - {label: "CTA URL", name: "cta_url", widget: "string"}
 
+
+  # ── Solutions: NaturalTag ─────
+  - name: "naturaltag"
+    label: "Solutions: NaturalTag"
+    files:
       # SOLUTIONS: NATURALTAG
       - name: "naturaltag"
         label: "Solutions: NaturalTag"
@@ -467,6 +497,11 @@ collections:
           - {label: "CTA Text", name: "cta_text", widget: "string"}
           - {label: "CTA URL", name: "cta_url", widget: "string"}
 
+
+  # ── Solutions: NaturalDetect ─────
+  - name: "naturaldetect"
+    label: "Solutions: NaturalDetect"
+    files:
       - name: "naturaldetect"
         label: "Solutions: NaturalDetect"
         file: "src/_data/naturaldetect.yml"
@@ -508,6 +543,11 @@ collections:
           - {label: "Secondary CTA", name: "cta_secondary", widget: "string"}
           - {label: "Secondary CTA URL", name: "cta_secondary_url", widget: "string"}
 
+
+  # ── Solutions: NaturalCloud ─────
+  - name: "naturalcloud"
+    label: "Solutions: NaturalCloud"
+    files:
       # SOLUTIONS: NATURALCLOUD
       - name: "naturalcloud"
         label: "Solutions: NaturalCloud"
@@ -553,6 +593,11 @@ collections:
           - {label: "Secondary CTA", name: "cta_secondary", widget: "string"}
           - {label: "Secondary CTA URL", name: "cta_secondary_url", widget: "string"}
 
+
+  # ── Industries ─────
+  - name: "industries"
+    label: "Industries"
+    files:
       # INDUSTRIES
       - name: "industries"
         label: "Industries"
@@ -579,6 +624,11 @@ collections:
           - {label: "CTA Secondary Text", name: "cta_button_secondary_text", widget: "string"}
           - {label: "CTA Secondary URL", name: "cta_button_secondary_url", widget: "string"}
 
+
+  # ── Industry Use-Cases ─────
+  - name: "usecases"
+    label: "Industry Use-Cases"
+    files:
       # INDUSTRY USE-CASES
       - name: "usecases"
         label: "Industry Use-Cases"
@@ -605,6 +655,11 @@ collections:
           - {label: "CTA Title", name: "cta_title", widget: "string"}
           - {label: "CTA URL", name: "cta_url", widget: "string"}
 
+
+  # ── Careers ─────
+  - name: "careers"
+    label: "Careers"
+    files:
       # CAREERS
       - name: "careers"
         label: "Careers"
@@ -677,6 +732,11 @@ collections:
               - {label: "Heading", name: "title", widget: "string"}
               - {label: "Message", name: "message", widget: "text"}
 
+
+  # ── Contact ─────
+  - name: "contact"
+    label: "Contact"
+    files:
       # CONTACT
       - name: "contact"
         label: "Contact"
@@ -771,6 +831,11 @@ collections:
               - {label: "Secondary button text", name: "secondary_text", widget: "string"}
               - {label: "Secondary button link", name: "secondary_href", widget: "string"}
 
+
+  # ── FAQ ─────
+  - name: "faq"
+    label: "FAQ"
+    files:
       # FAQ
       - name: "faq"
         label: "FAQ"
@@ -801,6 +866,7 @@ collections:
           - {label: "CTA Title", name: "cta_title", widget: "string"}
           - {label: "CTA Text", name: "cta_text", widget: "text"}
           - {label: "CTA Button", name: "cta_button", widget: "string"}
+
 
   - name: "integrations"
     label: "Integrations"
