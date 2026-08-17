@@ -129,7 +129,11 @@ vp_cards:
 # not a hover: hover does not exist on a phone and cannot be reached from a
 # keyboard.
 how_label: "How It Works"
-how_title: "Four Steps From Ingredient to Evidence"
+# Inverted on 17 Aug at Alex Wild's suggestion. "Four Steps From Ingredient to
+# Evidence" leads with the count, which is the least interesting part; this
+# leads with the outcome and keeps the count as the reassurance that it is
+# short. Renders on the homepage and the NaturalTag page from this one field.
+how_title: "From Ingredient to Evidence in Four Steps"
 how_steps:
   - num: "01"
     title: "Tag"
