@@ -70,39 +70,81 @@ directory too deep.
 
 ## 3. DNS at Hostinger
 
-Read from a public resolver on 18 August 2026, before any change.
+The whole zone as it stood immediately before the cutover on 18 August 2026,
+transcribed from the hPanel record list rather than from public lookups. The
+first version of this section was built from public queries and was incomplete:
+it missed the apex AAAA record, both HubSpot signing records, `_dmarc`, and the
+`dev`, `staging` and `ftp` hosts. Restoring from that version would have left
+the site broken over IPv6 and quietly damaged outbound mail authentication.
 
-Nameservers: `ns1.dns-parking.com`, `ns2.dns-parking.com` — these are
-Hostinger's, which is what makes the hPanel DNS zone editor the authoritative
-one for this domain.
+Nameservers: `ns1.dns-parking.com`, `ns2.dns-parking.com`. These are
+Hostinger's, which is what makes the hPanel zone editor authoritative for this
+domain.
 
-| Type | Name | Value |
-| --- | --- | --- |
-| A | `@` | `217.21.74.49` |
-| CNAME | `www` | `natural-trace.com` |
-| MX | `@` | `1 aspmx.l.google.com` |
-| MX | `@` | `5 alt1.aspmx.l.google.com` |
-| MX | `@` | `5 alt2.aspmx.l.google.com` |
-| MX | `@` | `10 alt3.aspmx.l.google.com` |
-| MX | `@` | `10 alt4.aspmx.l.google.com` |
-| TXT | `@` | `google-site-verification=f7iKoYlAt3oRfAwWBxIxRqKUx5tH_W_YS4BUEH3xzaM` |
-| TXT | `@` | `v=spf1 include:_spf.google.com include:23458507.spf08.hubspotemail.net -all` |
+### Rows that the cutover changed
 
-### Getting back
+| Type | Name | Before | After |
+| --- | --- | --- | --- |
+| A | `@` | `217.21.74.49` | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` |
+| AAAA | `@` | `2a02:4780:3:711:0:2a16:dc3:2` | `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153` |
+| CNAME | `www` | `natural-trace.com` | `natural-trace.github.io` |
 
-Delete the four `185.199.*.153` A records, add a single A record on `@` pointing
-to `217.21.74.49`, and set the `www` CNAME target back to `natural-trace.com`.
+All at TTL 14400.
 
-The five MX records and the two TXT records are not part of the cutover and must
-not be edited at any point in either direction. They carry Google Workspace mail
-routing, the Google site verification, and the SPF record that keeps outbound
-mail from HubSpot and Workspace out of spam folders. They are recorded here so
-that if one is lost by accident it can be put back exactly.
+To roll back: delete the four A and four AAAA records on `@`, add a single A
+record `@` to `217.21.74.49` and a single AAAA record `@` to
+`2a02:4780:3:711:0:2a16:dc3:2`, and set the `www` target back to
+`natural-trace.com`.
 
-Allow the same propagation time coming back as going out. Hostinger's guidance
-is up to 24 hours; in practice it is usually minutes.
+The AAAA record is the one that is easy to miss and expensive to get wrong.
+Leaving a stale AAAA in place sends every IPv6 visitor to a different server
+from everyone else, which presents as an intermittent fault that cannot be
+reproduced on the machine of whoever is investigating it.
 
----
+### Rows that were not touched, and must not be
+
+These carry mail, mail authentication and two separate hosts. None of them are
+part of the cutover in either direction.
+
+| Type | Name | Value | TTL |
+| --- | --- | --- | --- |
+| MX | `@` | `1 aspmx.l.google.com` | 3600 |
+| MX | `@` | `5 alt1.aspmx.l.google.com` | 3600 |
+| MX | `@` | `5 alt2.aspmx.l.google.com` | 3600 |
+| MX | `@` | `10 alt3.aspmx.l.google.com` | 3600 |
+| MX | `@` | `10 alt4.aspmx.l.google.com` | 3600 |
+| TXT | `@` | `google-site-verification=f7iKoYlAt3oRfAwWBxIxRqKUx5tH_W_YS4BUEH3xzaM` | 300 |
+| TXT | `@` | `v=spf1 include:_spf.google.com include:23458507.spf08.hubspotemail.net -all` | 300 |
+| TXT | `_dmarc` | `v=DMARC1;p=none;sp=none;adkim=r;aspf=r;pct=100` | 14400 |
+| CNAME | `hs1-23458507._domainkey` | `natural--trace-com.hs07a.dkim.hubspotemail.net` | 300 |
+| CNAME | `hs2-23458507._domainkey` | `natural--trace-com.hs07b.dkim.hubspotemail.net` | 300 |
+| A | `dev` | `217.21.74.49` | 1800 |
+| AAAA | `dev` | `2a02:4780:3:711:0:2a16:dc3:2` | 1800 |
+| A | `staging` | `217.21.74.49` | 1800 |
+| AAAA | `staging` | `2a02:4780:3:711:0:2a16:dc3:2` | 1800 |
+| A | `ftp` | `217.21.74.49` | 14400 |
+| CNAME | `autoconfig.mail.hostpoint.ch` | `autoconfig.mail.hostpoint.ch` | 300 |
+| CNAME | `autoconfig-nonssl.mail.hostpoint.ch` | `autoconfig-nonssl.mail.hostpoint.ch` | 300 |
+| CNAME | `lists.admin.hostpoint.ch` | `lists.admin.hostpoint.ch` | 300 |
+
+The five MX rows and the SPF and DKIM records are Google Workspace and HubSpot
+mail. Deleting an MX row stops mail arriving. Deleting the SPF or either DKIM
+row sends outbound mail to spam folders, which is worse, because it fails
+silently and nobody reports the email they never received.
+
+`dev`, `staging` and `ftp` still point at Hostinger and are unrelated to the
+website. They are the reason the Hostinger plan must not be cancelled.
+
+The three `hostpoint.ch` rows point at themselves and appear to be leftovers
+from an earlier host. They do nothing. Leave them; today is not the day.
+
+### Timing
+
+The old apex records carried a 14400 second TTL, so resolvers held the previous
+answer for up to four hours after the change. The same delay applies going
+back. `www` was the slowest to follow, for the same reason. Dropping these to
+300 while the zone is stable would make any future change take minutes instead
+of hours.
 
 ## 4. What this savepoint does not cover
 
