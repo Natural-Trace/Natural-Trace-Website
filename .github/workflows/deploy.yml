@@ -69,7 +69,7 @@ jobs:
       - run: npx @11ty/eleventy
         env:
           NODE_ENV: production
-          PATH_PREFIX: /Natural-Trace-Website/
+          PATH_PREFIX: /
 
       # A branch-served Pages site is run through Jekyll unless this file is
       # present, and Jekyll silently drops every directory starting with an
