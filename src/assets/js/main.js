@@ -607,3 +607,46 @@ window.addEventListener('DOMContentLoaded', function() {
   if (query.addEventListener) query.addEventListener('change', apply);
   else if (query.addListener) query.addListener(apply);
 });
+
+/* Closing the phone menu.
+ *
+ * The menu is opened by a class on .nav-links and there was nothing that took
+ * it off again except the hamburger. That is fine for a link to another page,
+ * because the reload drops the class with the document. It is not fine for the
+ * in-page links: Our Story, and the four industry anchors, jump within a page
+ * that is already loaded, so the menu stayed open, full height, over a page
+ * that had just scrolled underneath it. That is what a phone user sees as "it
+ * covers the screen and scrolling moves the page behind it".
+ *
+ * Three ways out, all of them what a phone user will try: tap a link, tap off
+ * the menu, press Escape. The hamburger keeps working as before; its inline
+ * handler is deliberately left alone so the menu still opens if this file
+ * fails to load.
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  var links = document.querySelector('.nav-links');
+  var toggle = document.querySelector('.nav-toggle');
+  if (!links) return;
+
+  function close() { links.classList.remove('show'); }
+  function isOpen() { return links.classList.contains('show'); }
+
+  links.addEventListener('click', function (e) {
+    var el = e.target;
+    while (el && el !== links) {
+      if (el.tagName === 'A') { close(); return; }
+      el = el.parentNode;
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!isOpen()) return;
+    if (links.contains(e.target)) return;
+    if (toggle && toggle.contains(e.target)) return;
+    close();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && isOpen()) close();
+  });
+});

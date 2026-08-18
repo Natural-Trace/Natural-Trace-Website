@@ -721,7 +721,26 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
      now that the dropdowns open here, and an indent cannot show a hierarchy in
      a centred list: every row starts in a different place for a reason that
      has nothing to do with its depth. */
-  .nav-links{display:none;flex-direction:column;align-items:stretch;text-align:left;position:absolute;top:100%;left:0;right:0;background:var(--dark);padding:1rem 2rem;z-index:999}
+  /* The panel is absolutely positioned inside a fixed navbar, so it behaves as
+     though it were fixed: it does not scroll with the page. With every dropdown
+     expanded inline below, the menu is seventeen rows tall, which overflows a
+     phone screen. Without a height limit and its own scrollbar it simply ran off
+     the bottom, the rows past the fold were unreachable, and a swipe fell
+     through to the document and scrolled the page behind the still-open menu.
+     Reported on a phone on 18 Aug.
+
+     100dvh rather than 100vh because a mobile browser's toolbars collapse on
+     scroll and 100vh is the tall measurement, which would put the last row back
+     under the bottom edge. The vh line is a fallback for browsers that do not
+     know dvh and is deliberately left in place above it.
+
+     overscroll-behavior:contain is the half of the fix people forget: without
+     it, reaching the end of the menu hands the rest of the gesture to the
+     document, which is the scrolling-behind half of the same bug. */
+  .nav-links{display:none;flex-direction:column;align-items:stretch;text-align:left;position:absolute;top:100%;left:0;right:0;background:var(--dark);padding:1rem 2rem;z-index:999;
+    max-height:calc(100vh - 80px);
+    max-height:calc(100dvh - 80px);
+    overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
   .nav-links.show{display:flex}
   .nav-links li{margin:0;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.1)}
   .nav-links li:last-child{border-bottom:none}
