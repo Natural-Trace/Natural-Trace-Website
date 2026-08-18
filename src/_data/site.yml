@@ -7,8 +7,10 @@ tagline: "In-Product Authentication for Food & Nutraceutical Ingredients"
 # Moved to the Natural-Trace organisation on 7 Aug 2026. The old
 # ntbryan.github.io address is a 404 now, not a redirect, so this had to change
 # with the transfer or every page would have been pointing at a dead URL.
-# Change this to https://natural-trace.com when the domain is cut over.
-url: "https://natural-trace.github.io/Natural-Trace-Website"
+# Cut over to the custom domain on 18 Aug 2026. If this ever has to go back
+# to a project page, the PATH_PREFIX in deploy.yml and the CNAME passthrough
+# change with it; they are one decision, not three.
+url: "https://natural-trace.com"
 
 default_summary: "Natural Trace is the in-product authentication platform for food and nutraceutical ingredients. Protect branded ingredients, confirm authorised manufacturing and investigate suspicious products."
 
@@ -42,7 +44,30 @@ social:
 search_indexable: false
 
 # Crawler policy
-# AI assistants are a route to discovery for a category most buyers cannot name
-# yet, so the answer engines are allowed. Set allow_ai_crawlers to false to
-# block them instead.
-allow_ai_crawlers: true
+#
+# Two switches, because "AI crawlers" is two different things and they carry
+# opposite risks. Split on 17 Aug 2026; it used to be one flag called
+# allow_ai_crawlers, which allowed both at once.
+#
+# ANSWER ENGINES read a page so they can cite it in an answer, either because
+# someone asked a question this minute or because the assistant keeps its own
+# search index. OpenAI, Anthropic and Perplexity each document that these
+# agents do not feed model training. Buyers rarely search for "in-product
+# authentication" by name, so being quotable in an assistant's answer is a real
+# route to discovery for us. Allowed.
+allow_answer_engines: true
+
+# TRAINING CRAWLERS collect pages to train future models. This stays false
+# while the copy claims are under review, and the reason is not the same as the
+# one for search_indexable above. An indexed claim is cached and quotable, and
+# it can be corrected: fix the page, the index catches up. A claim absorbed
+# into a model's weights cannot be withdrawn, corrected or removed on request,
+# and it keeps surfacing in answers long after the page has been fixed. With
+# FDA GRAS status and the ISO and facility wording still flagged, this is the
+# least reversible thing on the site.
+#
+# Turn it on once the claims are signed off. Blocking it costs nothing in
+# search: Google states that Google-Extended is not a ranking signal and does
+# not affect inclusion in Google Search, and Applebot-Extended likewise governs
+# only Apple model training, not Siri or Spotlight.
+allow_ai_training: false

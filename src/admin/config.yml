@@ -866,7 +866,8 @@ collections:
           - {label: "Logo", name: "logo", widget: "image"}
           - {label: "CTA panel watermark", name: "cta_mark", widget: "image", required: false, hint: "The faint brand mark in the top right of every green call-to-action panel. Only its shape is used, the colour comes from the panel, so use a flat single-colour graphic on a transparent background. Leave empty for a plain circle."}
           - {label: "Social Profile URLs", name: "social", widget: "list", field: {label: "URL", name: "url", widget: "string"}}
-          - {label: "Allow AI crawlers", name: "allow_ai_crawlers", widget: "boolean", hint: "Lets ChatGPT, Claude, Perplexity and Google AI read the site"}
+          - {label: "Allow answer engines", name: "allow_answer_engines", widget: "boolean", hint: "Lets ChatGPT, Claude and Perplexity read the site so they can quote it in an answer and link back. These do not train on the content."}
+          - {label: "Allow AI training crawlers", name: "allow_ai_training", widget: "boolean", hint: "Lets OpenAI, Anthropic, Google and Common Crawl collect pages to train future AI models. Leave off until the copy claims are signed off: anything used for training cannot be corrected or withdrawn later."}
 
 
   # ── SEO: titles and descriptions ─────
