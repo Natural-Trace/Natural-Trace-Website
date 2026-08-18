@@ -128,6 +128,33 @@ h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02
    set for whoever adds the next one. */
 #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0);-webkit-backdrop-filter:blur(0);backdrop-filter:blur(0);transition:all .4s;border-bottom:1px solid transparent}
 #navbar.scrolled{background:rgba(255,255,255,.95);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom-color:rgba(0,0,0,.06);box-shadow:0 2px 20px rgba(0,0,0,.06)}
+/* A strip of the navigation bar, painted above where the bar actually sits.
+ *
+ * On iOS the browser's own toolbar grows and shrinks as you scroll, which
+ * moves the top of the layout viewport. A position:fixed element is placed
+ * against that viewport, so during the transition the bar can sit a few pixels
+ * below the true top of the screen and page content shows through the gap
+ * above it. Reported on an iPhone on 18 Aug as the header separating into a
+ * white band with the page visible above it.
+ *
+ * Nothing here can stop the gap opening; that is the browser moving its own
+ * furniture. What it can do is make the gap the same colour as the bar, so
+ * there is nothing to see when it opens.
+ *
+ * background:inherit rather than a literal colour, so this tracks the bar
+ * through both its states without being told twice. Unscrolled that is
+ * rgba(255,255,255,0) and this paints nothing, which is what the transparent
+ * bar over the hero needs. Scrolled it is the same near-white as the bar.
+ *
+ * Off-screen on every browser that does not open a gap, so there is nothing to
+ * regress. 150px is well past any gap iOS has been observed to open.
+ *
+ * Worth knowing if this ever comes back: body carries overflow-x:hidden, and
+ * overflow on the body element is a documented cause of position:fixed
+ * misbehaving on iOS. Removing it would be the next thing to try, but it is
+ * load-bearing against horizontal scroll, so it is not a free change. */
+#navbar::before{content:'';position:absolute;left:0;right:0;bottom:100%;height:150px;
+  background:inherit;pointer-events:none}
 .nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:80px;position:relative}
 .nav-logo img{height:44px;width:auto}
 #navbar:not(.scrolled) .logo-color{display:none}#navbar:not(.scrolled) .logo-white{display:block}#navbar.scrolled .logo-color{display:block}#navbar.scrolled .logo-white{display:none}.logo-color,.logo-white{transition:opacity .4s}
@@ -575,9 +602,33 @@ body.page-home #navbar:not(.scrolled) .nav-toggle{color:#fff}
   background-repeat:no-repeat,no-repeat;
   background-blend-mode:normal,luminosity;
 }
-.cta-shape{position:absolute;border-radius:50%;opacity:.08;background:#fff}
+/* The two shapes carry the Natural Trace mark rather than being plain circles,
+   so that the two sage panels on the site are not the same panel twice. The
+   compatibility panel on the home page wears the mark once, small, tucked into
+   the top right corner. This one wears it twice, large, bleeding off two
+   opposite corners. Same asset, deliberately different treatment.
+
+   Masked rather than painted, for the same reason as .finalcta-inner::after:
+   the fill is a percentage of white that this stylesheet controls, so the mark
+   stays tonal over whatever the photograph blended underneath is doing. A PNG
+   painted directly would be mid-sage on sage and read as a smudge.
+
+   border-radius:50% stays for the same reason it stays on the other panel. If
+   --cta-mark is unset, or a browser has no mask support, both mask
+   declarations drop and what is left is the plain circle these were before.
+   The icon is a circle inscribed in a square, so the radius never clips it. */
+.cta-shape{position:absolute;border-radius:50%;opacity:.08;background:#fff;
+  -webkit-mask:var(--cta-mark) no-repeat center/contain;mask:var(--cta-mark) no-repeat center/contain}
 .cta-shape-1{width:300px;height:300px;top:-100px;left:-80px}
 .cta-shape-2{width:200px;height:200px;bottom:-60px;right:-40px;animation-delay:3s}
+/* Same judgement as the home page panel, and for the same reason. Below 560px
+   the headline wraps to two lines and lands directly on the top left mark, and
+   a mark with internal detail crossing letterforms is noise in a way a plain
+   circle never was. The bottom right one sits below the buttons and collides
+   with nothing, so it stays and the panel keeps some texture. */
+@media(max-width:560px){
+  .cta-shape-1{display:none}
+}
 .cta-inner{position:relative;z-index:2;text-align:center;max-width:700px;margin:0 auto}
 /* .5 and .6 white measured 2.52:1 and 2.94:1 on this panel where 18px text
    needs 4.5, and had done since the panel was built. It was invisible because

@@ -317,9 +317,20 @@ html body {
   background: rgba(59, 102, 107, .18);
 }
 
-#nc-root [class*="-ToggleBackground"] {
-  background: var(--nt-teal);
-}
+/* The on/off switches. This rule used to paint the track teal unconditionally,
+ * which was meant for the Rich Text / Markdown toggle in the editor toolbar but
+ * matched the boolean widget's track as well. Decap signals a boolean's state
+ * with the track colour, grey for off and coloured for on, so overriding both
+ * states to one colour removed the only difference between them. All that was
+ * left was which side the knob sat on, and the two crawler switches on the Site
+ * Settings screen were read as identical. Reported 18 Aug: "which one is on and
+ * which is off".
+ *
+ * Removed rather than replaced with a state-aware selector. Decap builds these
+ * class names at runtime and the boolean's checked state is not reliably
+ * expressed in a way a stylesheet can hook, so a guessed selector would risk
+ * showing "on" as grey, which is worse than a control that is not brand teal.
+ * Decap's own colours are left to do the job they were designed for. */
 
 #nc-root [class*="-ToolbarContainer"] {
   border-bottom: 1px solid var(--nt-line);
