@@ -50,6 +50,28 @@ social:
 # claim is cached and quotable; a retraction is not.
 search_indexable: true
 
+# Google Search Console ownership token.
+#
+# Empty until someone claims the property. Search Console is where you submit
+# the sitemap, ask Google to crawl a page, and see which searches the site
+# actually shows up for. It is Google's own tool and has nothing to do with the
+# registrar or the host.
+#
+# To claim it: search.google.com/search-console, Add property, choose the URL
+# prefix option and enter https://natural-trace.com, then pick the HTML tag
+# method. Google shows a string that looks like content="abc123...". Paste only
+# the part inside the quotes here, save, wait for the deploy, then press Verify.
+#
+# The other option Google offers, Domain property, covers subdomains too but is
+# verified with a DNS record at the registrar, which needs whoever holds the
+# Hostinger login. This route does not.
+#
+# Note there is already a google-site-verification TXT record on the domain.
+# Google Workspace uses that same record format to prove domain ownership, and
+# Natural Trace runs Workspace, so it may be that rather than Search Console.
+# Claiming a property here is independent either way and breaks nothing.
+google_site_verification: ""
+
 # Crawler policy
 #
 # Two switches, because "AI crawlers" is two different things and they carry

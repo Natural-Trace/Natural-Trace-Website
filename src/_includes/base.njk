@@ -50,6 +50,12 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
 {%- set seoDescription = (s.description or seo_description or summary or site.default_summary) | truncate(157, false, "…") -%}
 <title>{% if seoTitle %}{{ seoTitle }} | {% endif %}Natural Trace</title>
 <meta name="description" content="{{ seoDescription }}">
+{% if site.google_site_verification %}{# Proves to Google that whoever pastes this
+   token controls the site, which is how a Search Console property is claimed.
+   Rendered on every page because Google checks the homepage but the extra tag
+   costs nothing and survives someone verifying a different page later.
+   Set from the CMS, so claiming the property never needs a developer again. #}
+<meta name="google-site-verification" content="{{ site.google_site_verification }}">{% endif %}
 {% if not site.search_indexable %}{# Holding switch in src/_data/site.yml. data-hold marks this as the
    site-wide hold rather than a genuinely noindex page, so the health check
    still validates titles, descriptions and canonicals underneath it. #}
