@@ -1,102 +1,20 @@
-# Site-wide settings: editable via Decap CMS
-name: "Natural Trace"
-legal_name: "Natural Trace Pte Ltd"
-tagline: "In-Product Authentication for Food & Nutraceutical Ingredients and Products"
-
-# Canonical origin used for canonical links, Open Graph, sitemap and robots.
-# Moved to the Natural-Trace organisation on 7 Aug 2026. The old
-# ntbryan.github.io address is a 404 now, not a redirect, so this had to change
-# with the transfer or every page would have been pointing at a dead URL.
-# Cut over to the custom domain on 18 Aug 2026. If this ever has to go back
-# to a project page, the PATH_PREFIX in deploy.yml and the CNAME passthrough
-# change with it; they are one decision, not three.
-url: "https://natural-trace.com"
-
-default_summary: "Natural Trace is the in-product authentication platform for food and nutraceutical ingredients. Protect branded ingredients, confirm authorised manufacturing and investigate suspicious products."
-
-# Organisation facts, used for structured data
+name: Natural Trace
+legal_name: Natural Trace Pte Ltd
+tagline: In-Product Authentication for Food & Nutraceutical Ingredients and Products
+url: https://natural-trace.com
+default_summary: Natural Trace is the in-product authentication platform for
+  food and nutraceutical ingredients. Protect branded ingredients, confirm
+  authorised manufacturing and investigate suspicious products.
 founding_year: "2021"
-locality: "Singapore"
-country: "SG"
-email: "info@natural-trace.com"
-logo: "/assets/logos/NT icon without logo.png"
-
-# The watermark in the top right corner of every call-to-action panel.
-# It is used as a mask, not as a picture: only the shape is taken from this
-# file and the colour comes from the stylesheet, so the mark always sits
-# tonally on the panel behind it whatever colour that panel is. That also
-# means a flat single-colour graphic on a transparent background works and a
-# photograph or a multi-colour logo does not. Clear this field to fall back to
-# the plain circle.
-cta_mark: "/assets/logos/NT icon without logo.png"
+locality: Singapore
+country: SG
+email: info@natural-trace.com
+logo: /assets/logos/NT icon without logo.png
+cta_mark: /assets/logos/NT icon without logo.png
 social:
-  - "https://www.linkedin.com/company/natural-trace/"
-  - "https://www.youtube.com/@naturaltrace8510"
-
-# Search visibility holding switch.
-#
-# SWITCHED ON 18 Aug 2026 on Kirsty's go-ahead, immediately before the
-# natural-trace.com cutover. Note what that go-ahead covered: she approved
-# the list of search terms. The claims below were not re-raised with her in
-# that exchange, and 22 CLAIM REVIEW markers are still open in the data
-# files. If any of them has to come out, it is now a live correction rather
-# than an edit to an unpublished site.
-# false = the whole site is kept out of Google and every other search engine:
-#         robots.txt disallows everything and every page carries a noindex tag.
-#         The site still works and anyone with the link can read it.
-# Set this to true only once the copy claims are signed off. Sixteen claims are
-# still flagged CLAIM REVIEW in the data files, including FDA GRAS status, ISO
-# 17025, MIQE 2.0 and the sensory panel and matrix-count statements. An indexed
-# claim is cached and quotable; a retraction is not.
-search_indexable: true
-
-# Google Search Console ownership token.
-#
-# Empty until someone claims the property. Search Console is where you submit
-# the sitemap, ask Google to crawl a page, and see which searches the site
-# actually shows up for. It is Google's own tool and has nothing to do with the
-# registrar or the host.
-#
-# To claim it: search.google.com/search-console, Add property, choose the URL
-# prefix option and enter https://natural-trace.com, then pick the HTML tag
-# method. Google shows a string that looks like content="abc123...". Paste only
-# the part inside the quotes here, save, wait for the deploy, then press Verify.
-#
-# The other option Google offers, Domain property, covers subdomains too but is
-# verified with a DNS record at the registrar, which needs whoever holds the
-# Hostinger login. This route does not.
-#
-# Note there is already a google-site-verification TXT record on the domain.
-# Google Workspace uses that same record format to prove domain ownership, and
-# Natural Trace runs Workspace, so it may be that rather than Search Console.
-# Claiming a property here is independent either way and breaks nothing.
-google_site_verification: ""
-
-# Crawler policy
-#
-# Two switches, because "AI crawlers" is two different things and they carry
-# opposite risks. Split on 18 Aug 2026; it used to be one flag called
-# allow_ai_crawlers, which allowed both at once.
-#
-# ANSWER ENGINES read a page so they can cite it in an answer, either because
-# someone asked a question this minute or because the assistant keeps its own
-# search index. OpenAI, Anthropic and Perplexity each document that these
-# agents do not feed model training. Buyers rarely search for "in-product
-# authentication" by name, so being quotable in an assistant's answer is a real
-# route to discovery for us. Allowed.
+  - https://www.linkedin.com/company/natural-trace/
+  - https://www.youtube.com/@naturaltrace8510
+google_site_verification: fBEjiMaipIEP6wqRdfm2-R46Y4TykAXiO879C9mxWpw
 allow_answer_engines: true
-
-# TRAINING CRAWLERS collect pages to train future models. This stays false
-# while the copy claims are under review, and the reason is not the same as the
-# one for search_indexable above. An indexed claim is cached and quotable, and
-# it can be corrected: fix the page, the index catches up. A claim absorbed
-# into a model's weights cannot be withdrawn, corrected or removed on request,
-# and it keeps surfacing in answers long after the page has been fixed. With
-# FDA GRAS status and the ISO and facility wording still flagged, this is the
-# least reversible thing on the site.
-#
-# Turn it on once the claims are signed off. Blocking it costs nothing in
-# search: Google states that Google-Extended is not a ranking signal and does
-# not affect inclusion in Google Search, and Applebot-Extended likewise governs
-# only Apple model training, not Siri or Spotlight.
+search_indexable: true
 allow_ai_training: false
