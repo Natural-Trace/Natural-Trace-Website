@@ -38,8 +38,8 @@ logo:
 # site address in the header while logged in, so an editor always has one click
 # back to what they are editing.
 # https://decapcms.org/docs/configuration-options/#site-url
-site_url: "https://natural-trace.github.io/Natural-Trace-Website"
-display_url: "https://natural-trace.github.io/Natural-Trace-Website"
+site_url: "https://natural-trace.com"
+display_url: "https://natural-trace.com"
 locale: "en"
 
 media_folder: "src/assets/images/uploads"
@@ -77,9 +77,17 @@ collections:
           - {label: "Hero Claims (joined into one sentence)", name: "hero_claims", widget: "list", field: {label: "Claim", name: "claim", widget: "string"}}
           - {label: "Hero Claims Closing Phrase", name: "hero_claims_coda", widget: "string"}
           - {label: "Primary CTA Text", name: "hero_cta", widget: "string"}
-          - {label: "Primary CTA URL", name: "hero_cta_url", widget: "string"}
+          - label: "Primary CTA URL"
+            name: "hero_cta_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
           - {label: "Secondary CTA Text", name: "hero_cta_secondary", widget: "string"}
-          - {label: "Secondary CTA URL", name: "hero_cta_secondary_url", widget: "string"}
+          - label: "Secondary CTA URL"
+            name: "hero_cta_secondary_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
           - {label: "Challenge: Label", name: "challenge_label", widget: "string"}
           - {label: "Challenge: Headline", name: "challenge_title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line."}
@@ -135,7 +143,11 @@ collections:
               - {label: "Description", name: "description", widget: "text"}
               - {label: "Image", name: "image", widget: "image"}
               - {label: "Image Alt", name: "image_alt", widget: "string"}
-              - {label: "Link URL", name: "url", widget: "string"}
+              - label: "Link URL"
+                name: "url"
+                widget: "string"
+                pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+                hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
           - {label: "Partners: Label", name: "trust_label", widget: "string"}
           - label: "Partner logos"
@@ -155,9 +167,17 @@ collections:
           - {label: "Final CTA: Headline", name: "final_cta_title", widget: "string"}
           - {label: "Final CTA: Text", name: "final_cta_text", widget: "text"}
           - {label: "Final CTA: Primary Button", name: "final_cta_primary", widget: "string"}
-          - {label: "Final CTA: Primary URL", name: "final_cta_primary_url", widget: "string"}
+          - label: "Final CTA: Primary URL"
+            name: "final_cta_primary_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
           - {label: "Final CTA: Secondary Button", name: "final_cta_secondary", widget: "string", required: false, hint: "Leave empty to show only one button."}
-          - {label: "Final CTA: Secondary URL", name: "final_cta_secondary_url", widget: "string"}
+          - label: "Final CTA: Secondary URL"
+            name: "final_cta_secondary_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
 
@@ -180,7 +200,11 @@ collections:
           - {label: "Hero Image", name: "hero_image", widget: "image"}
           - {label: "Hero Image Alt", name: "hero_image_alt", widget: "string"}
           - {label: "Hero CTA Text", name: "hero_cta", widget: "string"}
-          - {label: "Hero CTA URL", name: "hero_cta_url", widget: "string"}
+          - label: "Hero CTA URL"
+            name: "hero_cta_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
           - {label: "Story: Label", name: "story_label", widget: "string"}
           - {label: "Story: Headline", name: "story_title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line."}
           - {label: "Story: Opening Question", name: "story_question", widget: "text"}
@@ -216,7 +240,11 @@ collections:
           - {label: "Food Matrices: Headline", name: "matrices_title", widget: "string", hint: "CLAIM REVIEW: the 20+ figure has not been signed off. Do not publish this section without approval."}
           - {label: "Food Matrices: Categories", name: "matrices_items", widget: "list", field: {label: "Category", name: "item", widget: "string"}}
           - {label: "CTA Title", name: "cta_title", widget: "string"}
-          - {label: "CTA URL", name: "cta_url", widget: "string"}
+          - label: "CTA URL"
+            name: "cta_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
   # ── Solutions: NaturalTag ─────
@@ -229,7 +257,11 @@ collections:
           - {label: "Leadership Section Label", name: "leadership_label", widget: "string"}
           - {label: "Advisors Section Label", name: "advisors_label", widget: "string"}
           - {label: "CTA Text", name: "cta_text", widget: "string"}
-          - {label: "CTA URL", name: "cta_url", widget: "string"}
+          - label: "CTA URL"
+            name: "cta_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
           - label: "Team members and advisors"
             name: "members"
             label_singular: "person"
@@ -379,7 +411,11 @@ collections:
           - {label: "Video Description", name: "video_description", widget: "text"}
           - {label: "Video File Path", name: "video_src", widget: "string"}
           - {label: "CTA Text", name: "cta_text", widget: "string"}
-          - {label: "CTA URL", name: "cta_url", widget: "string"}
+          - label: "CTA URL"
+            name: "cta_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
   # ── Solutions: NaturalDetect ─────
@@ -420,9 +456,17 @@ collections:
           - {label: "Features Heading", name: "features_title", widget: "string"}
           - {label: "Features", name: "features", widget: "list", field: {label: "Feature", name: "feature", widget: "string"}}
           - {label: "Primary CTA", name: "cta_primary", widget: "string"}
-          - {label: "Primary CTA URL", name: "cta_primary_url", widget: "string"}
+          - label: "Primary CTA URL"
+            name: "cta_primary_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
           - {label: "Secondary CTA", name: "cta_secondary", widget: "string"}
-          - {label: "Secondary CTA URL", name: "cta_secondary_url", widget: "string"}
+          - label: "Secondary CTA URL"
+            name: "cta_secondary_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
   # ── Solutions: NaturalCloud ─────
@@ -467,9 +511,17 @@ collections:
           - {label: "Benefits Heading", name: "features_title", widget: "string"}
           - {label: "Benefits", name: "features", widget: "list", field: {label: "Benefit", name: "benefit", widget: "string"}}
           - {label: "Primary CTA", name: "cta_primary", widget: "string"}
-          - {label: "Primary CTA URL", name: "cta_primary_url", widget: "string"}
+          - label: "Primary CTA URL"
+            name: "cta_primary_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
           - {label: "Secondary CTA", name: "cta_secondary", widget: "string"}
-          - {label: "Secondary CTA URL", name: "cta_secondary_url", widget: "string"}
+          - label: "Secondary CTA URL"
+            name: "cta_secondary_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
   # ── Industries ─────
@@ -529,9 +581,17 @@ collections:
           - {label: "CTA Title", name: "cta_title", widget: "string"}
           - {label: "CTA Description", name: "cta_description", widget: "text"}
           - {label: "CTA Primary Text", name: "cta_button_primary_text", widget: "string"}
-          - {label: "CTA Primary URL", name: "cta_button_primary_url", widget: "string"}
+          - label: "CTA Primary URL"
+            name: "cta_button_primary_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
           - {label: "CTA Secondary Text", name: "cta_button_secondary_text", widget: "string"}
-          - {label: "CTA Secondary URL", name: "cta_button_secondary_url", widget: "string"}
+          - label: "CTA Secondary URL"
+            name: "cta_button_secondary_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
   # ── Industry Use-Cases ─────
@@ -559,7 +619,11 @@ collections:
           - {label: "Solution Label", name: "solution_label", widget: "string"}
           - {label: "Outcome Label", name: "outcome_label", widget: "string"}
           - {label: "CTA Title", name: "cta_title", widget: "string"}
-          - {label: "CTA URL", name: "cta_url", widget: "string"}
+          - label: "CTA URL"
+            name: "cta_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
   # ── Careers ─────
@@ -711,7 +775,11 @@ collections:
           - {label: "Quiz: Confirm Title", name: "compat_confirm_title", widget: "string", required: false, hint: "No longer shown. Kept so the old wording is not lost if the verdict is ever switched off."}
           - {label: "Quiz: Confirm Description", name: "compat_confirm_desc", widget: "text", required: false, hint: "No longer shown. See above."}
           - {label: "Quiz: Result CTA", name: "compat_result_cta", widget: "string"}
-          - {label: "Quiz: Result CTA URL", name: "compat_result_cta_url", widget: "string"}
+          - label: "Quiz: Result CTA URL"
+            name: "compat_result_cta_url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
           - {label: "Quiz: Result Small Print", name: "compat_result_note", widget: "text"}
 
           # The scoring. These are claims about what NaturalTag tolerates, taken
@@ -857,7 +925,11 @@ collections:
           - {label: "Site Name", name: "name", widget: "string"}
           - {label: "Legal Name", name: "legal_name", widget: "string"}
           - {label: "Tagline", name: "tagline", widget: "string"}
-          - {label: "Canonical URL (no trailing slash)", name: "url", widget: "string"}
+          - label: "Canonical URL (no trailing slash)"
+            name: "url"
+            widget: "string"
+            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
           - {label: "Default Meta Description", name: "default_summary", widget: "text"}
           - {label: "Founding Year", name: "founding_year", widget: "string"}
           - {label: "City", name: "locality", widget: "string"}
@@ -943,15 +1015,58 @@ collections:
               - label: "Field mapping"
                 name: "field_map"
                 widget: "object"
-                hint: "The names these fields have inside HubSpot. Do not change them unless HubSpot has been changed to match, or enquiries stop arriving. Leave one empty to stop sending that field."
+                hint: >
+                  These are not labels. Each box holds the name HubSpot uses for
+                  that property behind the scenes, which is rarely the same as
+                  the name shown on screen. HubSpot calls "Job title" jobtitle,
+                  one word, all lowercase. Find any of them in HubSpot under
+                  Settings, Properties, Contact properties: open the property
+                  and the internal name is shown under its label. A wrong name
+                  does not raise an error, that field just stops arriving, so
+                  change one only when HubSpot has been changed to match.
                 fields:
-                  - {label: "First name", name: "firstName", widget: "string", required: false}
-                  - {label: "Last name", name: "lastName", widget: "string", required: false}
-                  - {label: "Email", name: "email", widget: "string", required: false}
-                  - {label: "Company", name: "company", widget: "string", required: false}
-                  - {label: "Job title", name: "jobTitle", widget: "string", required: false}
-                  - {label: "Inquiry type", name: "inquiryType", widget: "string", required: false}
-                  - {label: "Message", name: "message", widget: "string", required: false}
+                  - label: "First name"
+                    name: "firstName"
+                    widget: "string"
+                    required: false
+                    pattern: ['^$|^[a-z][a-z0-9_]*$', 'HubSpot internal names are lowercase only, with no spaces. Words run together or are joined by an underscore. Leave empty to stop sending this field.']
+                    hint: "HubSpot's standard property is firstname, one word."
+                  - label: "Last name"
+                    name: "lastName"
+                    widget: "string"
+                    required: false
+                    pattern: ['^$|^[a-z][a-z0-9_]*$', 'HubSpot internal names are lowercase only, with no spaces. Words run together or are joined by an underscore. Leave empty to stop sending this field.']
+                    hint: "HubSpot's standard property is lastname, one word."
+                  - label: "Email"
+                    name: "email"
+                    widget: "string"
+                    required: false
+                    pattern: ['^$|^[a-z][a-z0-9_]*$', 'HubSpot internal names are lowercase only, with no spaces. Words run together or are joined by an underscore. Leave empty to stop sending this field.']
+                    hint: "HubSpot's standard property is email."
+                  - label: "Company"
+                    name: "company"
+                    widget: "string"
+                    required: false
+                    pattern: ['^$|^[a-z][a-z0-9_]*$', 'HubSpot internal names are lowercase only, with no spaces. Words run together or are joined by an underscore. Leave empty to stop sending this field.']
+                    hint: "HubSpot's standard property is company."
+                  - label: "Job title"
+                    name: "jobTitle"
+                    widget: "string"
+                    required: false
+                    pattern: ['^$|^[a-z][a-z0-9_]*$', 'HubSpot internal names are lowercase only, with no spaces. Words run together or are joined by an underscore. Leave empty to stop sending this field.']
+                    hint: "HubSpot's standard property is jobtitle, one word, no space and no capital T."
+                  - label: "Inquiry type"
+                    name: "inquiryType"
+                    widget: "string"
+                    required: false
+                    pattern: ['^$|^[a-z][a-z0-9_]*$', 'HubSpot internal names are lowercase only, with no spaces. Words run together or are joined by an underscore. Leave empty to stop sending this field.']
+                    hint: "Not one of HubSpot's own properties. Someone has to create a custom contact property named inquiry_type, or this stays empty and the field is not sent."
+                  - label: "Message"
+                    name: "message"
+                    widget: "string"
+                    required: false
+                    pattern: ['^$|^[a-z][a-z0-9_]*$', 'HubSpot internal names are lowercase only, with no spaces. Words run together or are joined by an underscore. Leave empty to stop sending this field.']
+                    hint: "HubSpot's standard property is message."
           - label: "Email fallback"
             name: "fallback"
             widget: "object"
@@ -980,4 +1095,8 @@ collections:
               - {label: "Accept button", name: "accept_label", widget: "string"}
               - {label: "Decline button", name: "decline_label", widget: "string"}
               - {label: "Policy link text", name: "policy_label", widget: "string"}
-              - {label: "Policy link URL", name: "policy_url", widget: "string"}
+              - label: "Policy link URL"
+                name: "policy_url"
+                widget: "string"
+                pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+                hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
