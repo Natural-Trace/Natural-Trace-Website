@@ -230,7 +230,7 @@ if (CHECK_EXTERNAL) {
   //    is information about their traffic policy and nothing about our link.
   //    Reported, never failed, so a genuinely dead link still gets eyes on it.
   //
-  //    All three were verified by hand on 17 Aug 2026: every one loads normally
+  //    All three were verified by hand on 18 Aug 2026: every one loads normally
   //    in a browser. Do not delete a link because this list grew; check it
   //    first.
   const BOT_HOSTILE = [

@@ -1,7 +1,7 @@
 # Site-wide settings: editable via Decap CMS
 name: "Natural Trace"
 legal_name: "Natural Trace Pte Ltd"
-tagline: "In-Product Authentication for Food & Nutraceutical Ingredients"
+tagline: "In-Product Authentication for Food & Nutraceutical Ingredients and Products"
 
 # Canonical origin used for canonical links, Open Graph, sitemap and robots.
 # Moved to the Natural-Trace organisation on 7 Aug 2026. The old
@@ -46,7 +46,7 @@ search_indexable: false
 # Crawler policy
 #
 # Two switches, because "AI crawlers" is two different things and they carry
-# opposite risks. Split on 17 Aug 2026; it used to be one flag called
+# opposite risks. Split on 18 Aug 2026; it used to be one flag called
 # allow_ai_crawlers, which allowed both at once.
 #
 # ANSWER ENGINES read a page so they can cite it in an answer, either because

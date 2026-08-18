@@ -1,4 +1,4 @@
-# Savepoint v1 — 17 August 2026
+# Savepoint v1 — 18 August 2026
 
 Everything needed to put the website and the domain back to exactly the state
 they were in immediately before the natural-trace.com cutover.
@@ -70,7 +70,7 @@ directory too deep.
 
 ## 3. DNS at Hostinger
 
-Read from a public resolver on 17 August 2026, before any change.
+Read from a public resolver on 18 August 2026, before any change.
 
 Nameservers: `ns1.dns-parking.com`, `ns2.dns-parking.com` — these are
 Hostinger's, which is what makes the hPanel DNS zone editor the authoritative

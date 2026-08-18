@@ -24,8 +24,27 @@ questions:
     answer: "Yes. NaturalTag™ uses naturally occurring organisms with no genetic modification. Fully compatible with Non-GMO certification standards."
   - category: "regulatory"
     question: "Which countries or regions can I use it in?"
-    # CLAIM REVIEW: highest-risk item in the 30 July review. Contradicts the About Us page.
-    answer: "NaturalTag has established food-safety status across the EU, US, APAC, and many other jurisdictions."
+    # Rewritten 18 Aug 2026, before search indexing was switched on.
+    #
+    # It used to read: "NaturalTag has established food-safety status across the
+    # EU, US, APAC, and many other jurisdictions." The 30 July review flagged
+    # that as the highest-risk item on the site, because it contradicts the
+    # About Us page, which claims a self-determined FDA GRAS status. That is one
+    # jurisdiction, and it is our own determination rather than a regulator's.
+    # Those two sentences cannot both be true, and the weaker one is the one
+    # with evidence behind it.
+    #
+    # This page carries FAQPage structured data, so its answers are the ones a
+    # search engine shows as a drop-down and an AI assistant quotes back at a
+    # prospect word for word. It is the worst place on the site to keep a claim
+    # that does not hold.
+    #
+    # Replaced with a procedural answer that asserts nothing rather than one
+    # that asserts less. Importing "self-determined FDA GRAS status" here would
+    # move a still-unresolved claim onto the most quotable page we have.
+    # Restore a substantive answer once the regulatory position is signed off;
+    # the original wording is preserved above so nothing is lost.
+    answer: "Regulatory requirements differ by market and by product category, so we confirm the position for each product rather than stating a blanket one. Tell us your product type and the markets you sell into, and we will come back with the position for your case."
 
   # Safety
   - category: "safety"

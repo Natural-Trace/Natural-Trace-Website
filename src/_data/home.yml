@@ -22,7 +22,11 @@ hero_title_line2: "Behind Your Brand"
 # line broke as "…for Food & / Nutraceutical Ingredients." on a phone. The
 # words are unchanged; &amp; is only how a bare & is written once the field
 # goes through the safe filter.
-hero_slogan: "In-Product Authentication for Food&nbsp;&amp;&nbsp;Nutraceutical Ingredients"
+# "and Products" added 18 Aug at Alex Bond's request. His argument is that the
+# line as written reads as ingredients-only, which loses anyone protecting a
+# finished product. The non-breaking space keeps "and Products" from wrapping
+# alone onto its own line on a phone.
+hero_slogan: "In-Product Authentication for Food&nbsp;&amp;&nbsp;Nutraceutical Ingredients and&nbsp;Products"
 hero_desc: "Natural Trace gives every ingredient a unique, detectable identity, verifiable throughout the supply chain."
 # Rendered as a single sentence: items joined with commas and "and", then the
 # coda after a comma. Kirsty wrote these as five short lines; the fifth is a
@@ -129,7 +133,7 @@ vp_cards:
 # not a hover: hover does not exist on a phone and cannot be reached from a
 # keyboard.
 how_label: "How It Works"
-# Inverted on 17 Aug at Alex Wild's suggestion. "Four Steps From Ingredient to
+# Inverted on 18 Aug at Alex Wild's suggestion. "Four Steps From Ingredient to
 # Evidence" leads with the count, which is the least interesting part; this
 # leads with the outcome and keeps the count as the reassurance that it is
 # short. Renders on the homepage and the NaturalTag page from this one field.
