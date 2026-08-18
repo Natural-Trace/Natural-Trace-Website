@@ -34,6 +34,13 @@ social:
   - "https://www.youtube.com/@naturaltrace8510"
 
 # Search visibility holding switch.
+#
+# SWITCHED ON 18 Aug 2026 on Kirsty's go-ahead, immediately before the
+# natural-trace.com cutover. Note what that go-ahead covered: she approved
+# the list of search terms. The claims below were not re-raised with her in
+# that exchange, and 22 CLAIM REVIEW markers are still open in the data
+# files. If any of them has to come out, it is now a live correction rather
+# than an edit to an unpublished site.
 # false = the whole site is kept out of Google and every other search engine:
 #         robots.txt disallows everything and every page carries a noindex tag.
 #         The site still works and anyone with the link can read it.
@@ -41,7 +48,7 @@ social:
 # still flagged CLAIM REVIEW in the data files, including FDA GRAS status, ISO
 # 17025, MIQE 2.0 and the sensory panel and matrix-count statements. An indexed
 # claim is cached and quotable; a retraction is not.
-search_indexable: false
+search_indexable: true
 
 # Crawler policy
 #
