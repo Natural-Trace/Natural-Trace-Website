@@ -5,6 +5,24 @@ node_modules/
 _site/
 _site*/
 
+# The compatibility quiz answer key: every one of the 1,088 answer combinations
+# and the outcome it reaches, built by scripts/assess-matrix.mjs.
+#
+# Generated, never committed, and that is a decision rather than an oversight.
+# A Decap publish writes exactly one file, src/_data/assess.yml, and knows
+# nothing about anything derived from it. So a checked-in copy would silently
+# disagree with its own source the first time anyone edited the quiz through the
+# CMS — not a merge conflict, which would at least be loud, but a file that
+# still opens, still shows 1,088 rows, and is quietly wrong.
+#
+# Until 19 Aug this was excluded by intent alone: nobody had committed it
+# because nobody had been told to. That works right up until someone clones the
+# repo, runs the generator and commits the output because nothing stopped them.
+#
+# Anyone who needs it without running Node downloads it from the Artifacts
+# section of any Health check run, as compatibility-quiz-answer-key.
+/docs/assess-matrix.html
+
 # Local scratch. Anything at the repo root starting with an underscore is a
 # throwaway: preview builds, staging copies, tarballs, logs.
 #
