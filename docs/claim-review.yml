@@ -287,6 +287,25 @@ claims:
       either number is quoted to anyone.
     owner: Alrik
 
+  # Added 19 August 2026, after Alrik published a wording change through the CMS.
+  - id: assess-outcome-conditions-title
+    status: open
+    source: src/_data/assess.yml
+    field: compat_outcomes
+    phrase: 'Sounds like you are compatible'
+    published_on: ["/assess/"]
+    why: >
+      Replaced "Most likely compatible" on 19 August 2026. The previous line
+      hedged the degree of compatibility; this one states it, on a screen that
+      is only ever shown when one of the three inputs scored medium risk, and
+      directly above a badge that still reads "Compatible with conditions". The
+      heading and the badge now say different things. It is also Alex Wild's
+      request to be more generous arriving as copy, ahead of the decision it
+      depends on: the thresholds that decide who sees this screen did not move,
+      only the words describing them. Either the wording comes back, or the
+      thresholds change and this becomes true, but the two need to agree.
+    owner: Kirsty
+
   # ---- Migrated press releases --------------------------------------------
   # Published in 2022, carried across in the WordPress migration on 12 August,
   # and indexed since 18 August. These are the highest-exposure entries on the
