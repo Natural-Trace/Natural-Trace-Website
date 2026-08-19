@@ -70,20 +70,32 @@ their publish will revert you. Check for open `cms/` pull requests first.
 The site went live on the custom domain on 18 Aug. Savepoint tag `v1` with a
 full DNS rollback record in `docs/rollback-v1.md`.
 
+Savepoint tag `v2` at `2247d8c` marks the state before the quiz copy change and
+the CI claim gate. `docs/rollback-v2.md` lists what landed on top, how to revert
+each piece on its own, and the checks to run afterwards. The revert of the copy
+commit was tested rather than assumed: it applies cleanly, the register goes
+back with the wording, and the answer key still reports 63/124/901.
+
 ### Outstanding, in priority order
 
-1. **Two workflow files need adding** (Bryan, by hand):
-   - the `claim-check.mjs` step in `.github/workflows/healthcheck.yml`
-   - `.github/workflows/cms-draft-notice.yml`, which warns when two CMS drafts
-     touch the same file
-2. **Live copy defect.** `compat_outcomes.testing.title` reads "Let's dive and
-   understand your product more". Missing a word. It is the heading 83% of quiz
-   visitors see. One-line fix, can be done in the CMS.
-3. **The compatibility quiz is 83% "Testing required"** across all 1,088
+1. **The compatibility quiz is 83% "Testing required"** across all 1,088
    possible answer combinations, and only 6% "Compatible". Four decisions are
    open with Alrik and Ying Xiang before anything is changed. Do not adjust a
    band without one of those closing.
-4. **CMS editability refactor**, blocked on those four decisions.
+2. **CMS editability refactor**, blocked on those four decisions.
+
+### Closed on 19 August
+
+- Both workflow files are in. `claim-check.mjs` runs in the health check, so the
+  register is enforced on CMS pull requests rather than only on one laptop.
+  `cms-draft-notice.yml` comments on both pull requests when two CMS drafts
+  touch the same file.
+- The `compat_outcomes.testing.title` defect is fixed.
+- `conditions.label` became "Likely compatible", so the badge agrees with the
+  heading Alrik published through the CMS on 19 Aug. Both are registered and
+  **still open**: aligning the badge closed the contradiction on the screen but
+  spread the warmer wording rather than retiring it, and the thresholds did not
+  move. Only one of the four decisions closes those entries.
 
 ### The quiz, if you are working on it
 
@@ -120,4 +132,6 @@ matter for the quiz work:
 - `assess-cms-editability-scope-2026-08-19.md` — the phased refactor
 - `cms-concurrent-editing-2026-08-19.md` — the collision workflow and the
   working agreement
-- `rollback-v1.md` (in `docs/`) — DNS and rollback
+- `rollback-v1.md` (in `docs/`) — DNS, Pages and the domain cutover
+- `rollback-v2.md` (in `docs/`) — the quiz copy change and the CI claim gate,
+  the versions everything was pinned at, and the checks to run after a revert
