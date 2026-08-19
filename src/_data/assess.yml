@@ -1,262 +1,160 @@
-# Compatibility quiz, rendered at /assess/.
-# It used to sit at the bottom of the home page underneath the final call to
-# action, two calls to action stacked on top of each other and about 780px of
-# scrolling. On its own page it has a URL that can be sent to a prospect.
-compat_label: "Product Compatibility"
-compat_title: "Assess My Product"
-compat_subtitle: "Find out in 60 seconds whether Natural Trace is compatible with your product."
-compat_welcome_title: "Check Product Compatibility"
-compat_welcome_desc: "Answer three quick questions about your product so we can understand your formulation and process conditions."
-compat_welcome_cta: "Check Compatibility"
-compat_step1_question: "What type of product do you make?"
-compat_step2_question: "How is your product formulated?"
-compat_step2_hint: "Select all that apply"
-compat_step3_question: "What are your processing conditions?"
-compat_step3_temp_label: "Max Processing Temperature"
-compat_step3_ph_label: "pH Range"
-compat_btn_next: "Next"
-compat_btn_back: "Back"
-compat_confirm_title: "Thanks, we have what we need"
-compat_confirm_desc: "Compatibility depends on your specific formulation and process conditions. Send this through and one of our scientists will review it with you."
-# "Talk to our team", kept at Bryan's call on 13 Aug.
-# Kirsty's email that morning suggested "Start a compatibility assessment" on
-# the compatible screen. It was changed and changed back within the hour. One
-# button serves all three outcomes, and this one has to work for a result that
-# says the product needs testing as well as one that says it looks fine, which
-# is the argument for asking for a conversation rather than for the assessment.
-# Her heading and body copy from the same email are in, verbatim; this is the
-# only line of hers not taken.
-compat_result_cta: "Talk to our team"
-compat_result_cta_url: "/contact/"
-
-# --------------------------------------------------------------------------
-# The verdict.
-#
-# Until 11 Aug the quiz collected four answers and then showed the same
-# "thanks, we have what we need" screen whatever anyone chose. It was a form
-# wearing a quiz's clothes.
-#
-# Everything below is lifted from the NaturalTag Chemical Compatibility Guide
-# v1.2, April 2026, classification "For Client Use". Section numbers are cited
-# on each rule. Nothing here is invented: the bands, the thresholds and the
-# three verdict names are the ones Natural Trace already gives clients in
-# writing, so the website and that document say the same thing.
-#
-# ONE THING NEEDS SIGNING OFF BEFORE THIS GOES LIVE. The guide is written for
-# agricultural sprays. Its screening criteria are about DNA chemistry, pH,
-# oxidisers, nucleases and heat, which apply to any matrix. Its product table
-# is fungicides, which does not. Applying the criteria to nutraceutical
-# manufacturing is a reasonable extension of the chemistry and an extension all
-# the same. Every entry is marked CLAIM REVIEW until that is confirmed.
-# --------------------------------------------------------------------------
-
-# Guide section 3.1. The bands are the guide's, not rounded or reinterpreted.  # CLAIM REVIEW
+compat_label: Product Compatibility
+compat_title: Assess My Product
+compat_subtitle: Find out in 60 seconds whether Natural Trace is compatible with your product.
+compat_welcome_title: Check Product Compatibility
+compat_welcome_desc: Answer three quick questions about your product so we can
+  understand your formulation and process conditions.
+compat_welcome_cta: Check Compatibility
+compat_step1_question: What type of product do you make?
+compat_step2_question: How is your product formulated?
+compat_step2_hint: Select all that apply
+compat_step3_question: What are your processing conditions?
+compat_step3_temp_label: Max Processing Temperature
+compat_step3_ph_label: pH Range
+compat_btn_next: Next
+compat_btn_back: Back
+compat_confirm_title: Thanks, we have what we need
+compat_confirm_desc: Compatibility depends on your specific formulation and
+  process conditions. Send this through and one of our scientists will review it
+  with you.
+compat_result_cta: Talk to our team
+compat_result_cta_url: /contact/
+compat_result_note: This is a first screen based on three answers, not a
+  laboratory result. Compatibility is confirmed on your own formulation.
 compat_ph_options:
-  - label: "pH 5 to 9"
+  - label: pH 5 to 9
     risk: low
-  - label: "pH 3 to 5, or 9 to 11"
+  - label: pH 3 to 5, or 9 to 11
     risk: medium
-  - label: "Below pH 3, or above pH 11"
+  - label: Below pH 3, or above pH 11
     risk: high
-  - label: "Not sure"
+  - label: Not sure
     risk: medium
-
-# Guide section 3.4: above 60 degrees, contact Natural Trace. That is the only
-# temperature threshold the guide states, so it is the only one used here.      # CLAIM REVIEW
 compat_temp_options:
-  - label: "Below 60°C"
+  - label: Below 60°C
     risk: low
-  - label: "60 to 100°C"
+  - label: 60 to 100°C
     risk: medium
-  - label: "Above 100°C"
+  - label: Above 100°C
     risk: high
-  - label: "Not sure"
+  - label: Not sure
     risk: medium
-
-# Guide sections 3.2 and 3.3 screen for oxidisers and for nucleases as well.
-# There is no question for them. A fourth step asking what is in the
-# formulation was built on 11 Aug and taken out the same day: it is a question
-# a visitor should not have to answer to get a first read, and the formulation
-# risk below already carries most of the same signal, since the formats that
-# tend to involve a peroxide wash or an enzyme system are the same ones scored
-# medium and high. Anything genuinely unusual comes out in the conversation
-# that every verdict ends in.
-
-# Risk by product form.
-#
-# These are the old quiz's own numbers, re-expressed. Until 30 July the quiz
-# scored each form out of 100 (tablet and capsule 95, chewable and powder 88,
-# effervescent and drops 78, softgel and bar 68, gummy and liquid 55, lozenge
-# and RTD 40) and added negative modifiers for temperature and pH to reach a
-# percentage. The percentage is gone, the ranking is kept: 80 and above is low,
-# 55 to 79 is medium, below 55 is high.
-#
-# Unlike the pH and temperature bands, these have no cited source. They encode
-# a sensible judgement, that heat and water and long time in solution are
-# harder on DNA than a dry compressed tablet, and they are still a judgement.  # CLAIM REVIEW
 compat_formulation_risk:
+  rtd: high
+  softgel: medium
+  drops: medium
   tablet: low
+  gummy: medium
   capsule: low
   chewable: low
+  bar: medium
   powder: low
   effervescent: medium
-  drops: medium
-  softgel: medium
-  bar: medium
-  gummy: medium
   liquid: medium
   lozenge: high
-  rtd: high
-
-# Three verdicts, and they are the three the guide already uses when Natural
-# Trace answers a client in writing: compatible, compatible with conditions,
-# not compatible. The bottom band here is named for the action rather than the
-# outcome, because a website cannot tell anyone their product will not work
-# without having tested it.
+compat_evidence_yes: We have tested a product in this category and format, and it worked.
+compat_evidence_no: We have tested a product in this category and format and it
+  did not work, which is why this needs a look rather than a yes.
+compat_evidence:
+  - category: herbal
+    forms:
+      - powder
+      - capsule
+    outcome: compatible
+    ph: ""
+    temperature: ""
+    products: ""
+    note: Ginger and curcumin extract. Confirmed working, Bryan, 11 Aug 2026.
+  - category: herbal
+    forms:
+      - powder
+    outcome: compatible
+    ph: ""
+    temperature: ""
+    products: ""
+    note: Botanical flower material, fresh and dried. Confirmed working, Bryan, 11
+      Aug 2026.
+  - category: joint
+    forms:
+      - capsule
+      - powder
+    outcome: compatible
+    ph: ""
+    temperature: ""
+    products: ""
+    note: Powder-filled capsules. Confirmed working, Bryan, 11 Aug 2026.
+  - category: vitamins
+    forms:
+      - drops
+      - liquid
+    outcome: compatible
+    ph: ""
+    temperature: ""
+    products: ""
+    note: "Liquid drops and a syrup. Confirmed working, Bryan, 11 Aug 2026. Worth
+      recording the pH on these two: liquid and drops both score medium on form,
+      and a measured pH is what turns that into a fact."
+  - category: immune
+    forms:
+      - powder
+    outcome: compatible
+    ph: ""
+    temperature: ""
+    products: ""
+    note: Berry powder. Confirmed working, Bryan, 11 Aug 2026.
+  - category: specialty
+    forms:
+      - effervescent
+    outcome: compatible
+    ph: ""
+    temperature: ""
+    products: ""
+    note: "Effervescent tablet. Confirmed working, Bryan, 11 Aug 2026. This is the
+      most useful row here: effervescent scores medium on form alone, and it
+      means an effervescent product now comes back compatible rather than
+      qualified."
+  - category: specialty
+    forms:
+      - capsule
+    outcome: compatible
+    ph: ""
+    temperature: ""
+    products: ""
+    note: Confirmed working, Bryan, 11 Aug 2026.
+  - category: ingredients
+    forms:
+      - liquid
+      - powder
+    outcome: compatible
+    ph: ""
+    temperature: ""
+    products: ""
+    note: Lecithin in both oil and powder form. 100% accuracy and 100% specificity,
+      n=15 in each arm.
+  - category: sports
+    forms:
+      - powder
+    outcome: compatible
+    ph: ""
+    temperature: ""
+    products: ""
+    note: Dairy protein powders. 100% accuracy and 100% specificity, n=12 and n=21.
 compat_outcomes:
   compatible:
-    # Kirsty's wording, 13 Aug, verbatim. She asked for a stronger message on
-    # this screen and for the badge to be larger; the badge size is in the
-    # stylesheet, since it is the same badge for all three outcomes.
-    label: "Compatible"
-    title: "Your product is a strong candidate for NaturalTag™"
-    body: "Your answers indicate that NaturalTag™ is likely compatible with your product. The next step is to confirm compatibility through laboratory testing."
+    label: Compatible
+    title: Your product is a strong candidate for NaturalTag™
+    body: Your answers indicate that NaturalTag™ is likely compatible with your
+      product. The next step is to confirm compatibility through laboratory
+      testing.
   conditions:
-    label: "Compatible with conditions"
-    title: "Most likely compatible"
-    body: "Products like yours are in use with NaturalTag today. There may be an adjustment to make to the dose, or to the point in your process where the tag goes in. Our scientists will work that out with you."
+    label: Compatible with conditions
+    title: Sounds like you are compatible
+    body: Products like yours are in use with NaturalTag today. There may be an
+      adjustment to make to the dose, or to the point in your process where the
+      tag goes in. Our scientists will work that out with you.
   testing:
-    label: "Testing required"
-    title: "This one needs testing"
-    body: "We would want to look at this one properly before saying yes. Send us a sample, we will run the assessment on your actual formulation and give you a straight answer."
-
-compat_result_note: "This is a first screen based on three answers, not a laboratory result. Compatibility is confirmed on your own formulation."
-
-# The result screen used to carry a "What drove this" list naming the pH band,
-# temperature band or product form that moved the answer, and the two outcome
-# bodies above used to open by saying how many things were wrong. Both were
-# removed on 11 Aug 2026 on request: the screen gives a verdict and a next
-# step, not a diagnosis. The reasoning still runs, it is just not published.
-
-# --------------------------------------------------------------------------
-# What has actually been tested.
-#
-# Built 11 Aug 2026 from productList.csv, the thirty products that have been
-# through the lab. Bryan confirmed on 11 Aug 2026 that every product on that
-# list worked. That confirmation is the source for every "compatible" below:
-# the CSV itself has three columns, category, type and name, and no result.
-#
-# So these rows are a person's word, recorded and attributed, not a file
-# import. If that word needs revisiting, this is the paragraph to revisit.      # CLAIM REVIEW
-#
-# Entries are keyed on the quiz's own category and form rather than on client
-# product names, for two reasons. The quiz matches on category and form, so
-# that is the useful key. And this file builds into the public site: anything
-# typed into "products" is published, so it should only carry a name the client
-# has agreed to.
-#
-# The nineteen rows from the list with no nutraceutical equivalent, the coffee,
-# whisky, tobacco, peanut, olive oil, balsamic, honey, wax and fungicide work,
-# are not here. The quiz asks about supplements. Those belong on the agri-food
-# side of the site if they are to appear at all.
-#
-# ONE ROW ON THAT LIST DOES NOT AGREE WITH THE PROJECT RECORD. Raspberry
-# appears twice, fresh and freeze dried. The recorded result for Hillwood
-# raspberry is 47.8% accuracy at 7.7% sensitivity, described as
-# threshold-unfixable. Raspberry is agri-food and has no category the quiz
-# offers, so nothing below depends on it, but the two statements cannot both be
-# true and the difference is worth settling before either is quoted.
-#
-# A row only fires when the visitor's category offers one of its forms. Two
-# rows written here on 11 Aug could never fire, because Vitamins & Minerals
-# did not offer drops and Specialty Health did not offer effervescent. Both
-# gaps are fixed in catFormMap in main.js. If a row is added for a
-# combination the quiz cannot offer, it is dead and nothing will say so.
-#
-# outcome: compatible | conditions | not-compatible | unconfirmed
-# --------------------------------------------------------------------------
-compat_evidence:
-
-  # Ginjer and Cumacure. Ginger and curcumin extracts.
-  - category: "herbal"
-    forms: ["powder", "capsule"]
-    outcome: "compatible"
-    ph: ""
-    temperature: ""
-    products: ""
-    note: "Ginger and curcumin extract. Confirmed working, Bryan, 11 Aug 2026."
-
-  # Fresh and dried flowers.
-  - category: "herbal"
-    forms: ["powder"]
-    outcome: "compatible"
-    ph: ""
-    temperature: ""
-    products: ""
-    note: "Botanical flower material, fresh and dried. Confirmed working, Bryan, 11 Aug 2026."
-
-  # Bone Boost, Bioaktiv OPTIMSM PLUS.
-  - category: "joint"
-    forms: ["capsule", "powder"]
-    outcome: "compatible"
-    ph: ""
-    temperature: ""
-    products: ""
-    note: "Powder-filled capsules. Confirmed working, Bryan, 11 Aug 2026."
-
-  # Organic Vitamin B12 Liquid, K2+D3+Ca Syrup.
-  - category: "vitamins"
-    forms: ["drops", "liquid"]
-    outcome: "compatible"
-    ph: ""
-    temperature: ""
-    products: ""
-    note: "Liquid drops and a syrup. Confirmed working, Bryan, 11 Aug 2026. Worth recording the pH on these two: liquid and drops both score medium on form, and a measured pH is what turns that into a fact."
-
-  # BerriQi.
-  - category: "immune"
-    forms: ["powder"]
-    outcome: "compatible"
-    ph: ""
-    temperature: ""
-    products: ""
-    note: "Berry powder. Confirmed working, Bryan, 11 Aug 2026."
-
-  # H2 tablets.
-  - category: "specialty"
-    forms: ["effervescent"]
-    outcome: "compatible"
-    ph: ""
-    temperature: ""
-    products: ""
-    note: "Effervescent tablet. Confirmed working, Bryan, 11 Aug 2026. This is the most useful row here: effervescent scores medium on form alone, and it means an effervescent product now comes back compatible rather than qualified."
-
-  # Oxy-Powder.
-  - category: "specialty"
-    forms: ["capsule"]
-    outcome: "compatible"
-    ph: ""
-    temperature: ""
-    products: ""
-    note: "Confirmed working, Bryan, 11 Aug 2026."
-
-  # Lecithin, oil and powder.
-  - category: "ingredients"
-    forms: ["liquid", "powder"]
-    outcome: "compatible"
-    ph: ""
-    temperature: ""
-    products: ""
-    note: "Lecithin in both oil and powder form. 100% accuracy and 100% specificity, n=15 in each arm."
-
-  # Quantec IDP and Milkamune, plus the milk powder row.
-  - category: "sports"
-    forms: ["powder"]
-    outcome: "compatible"
-    ph: ""
-    temperature: ""
-    products: ""
-    note: "Dairy protein powders. 100% accuracy and 100% specificity, n=12 and n=21."
-
-compat_evidence_yes: "We have tested a product in this category and format, and it worked."
-compat_evidence_no: "We have tested a product in this category and format and it did not work, which is why this needs a look rather than a yes."
+    label: Testing required
+    title: Let's dive and understand your product more
+    body: We would want to look at this one properly before saying yes. Send us a
+      sample, we will run the assessment on your actual formulation and give you
+      a straight answer.
