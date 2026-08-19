@@ -45,6 +45,22 @@ jobs:
       - name: Check the admin panel matches the data files
         run: node scripts/cms-audit.mjs
 
+      # The register is the only durable record of which published phrases have
+      # not been signed off, because the CMS deletes YAML comments and the
+      # markers that used to sit beside the claims are gone. Until now it was
+      # enforced by `npm run check`, which runs on one laptop. That is the wrong
+      # place: the edits most likely to reword a flagged claim arrive from the
+      # CMS as a pull request nobody checks out. On 19 August a heading on
+      # /assess/ was rewritten that way, reached the live site, and was caught
+      # by hand hours later. Running it here is what makes "a reworded claim is
+      # a new claim" true for everyone, not just for whoever remembers.
+      #
+      # This does not fail on open claims — 23 are open and that is a commercial
+      # decision, not a build error. It fails only when the register and the
+      # site disagree, which always means a person needs to look.
+      - name: Check published claims still match the register
+        run: node scripts/claim-check.mjs
+
       # Outbound links are only checked on the schedule and on demand, so a
       # third party being briefly down cannot block a deploy.
       - name: Check outbound links

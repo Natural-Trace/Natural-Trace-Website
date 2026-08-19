@@ -1,0 +1,122 @@
+name: CMS draft collision notice
+
+# Warns when two CMS drafts are open against the same file at the same time.
+#
+# WHY THIS EXISTS
+#
+# Decap names an editorial workflow branch cms/<collection>/<entry>. The name is
+# keyed on the entry being edited, not on the person editing it, so two people
+# who open the same section get the same branch and the same pull request. That
+# alone would be survivable. What makes it lossy is that Decap does not patch a
+# YAML file, it parses the file into data and writes the whole thing back out —
+# so the second person to publish does not merge with the first, they replace
+# them, silently, with whatever their browser had loaded when they started.
+#
+# Different sections are genuinely fine. The failure is narrow and specific:
+# same file, two drafts, overlapping in time. That is what this looks for.
+#
+# It deliberately compares changed files rather than branch names. Two different
+# collections can be backed by the same data file, and a same-name check would
+# miss that, which is the case most likely to be lost quietly because nobody
+# involved would think of themselves as editing the same thing.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  collision:
+    # Only CMS branches. A hand-written branch is Bryan's, and he can read a
+    # git log; the whole point here is to warn the people who cannot.
+    if: startsWith(github.head_ref, 'cms/')
+    runs-on: ubuntu-latest
+    # Every job gets a ceiling. See the note in healthcheck.yml about the
+    # 3h40m deploy on 11 Aug.
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Find other open CMS drafts touching the same files
+        id: collide
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+
+          mine=$(gh pr view "$PR" --json files -q '.files[].path' | sort -u)
+          echo "This draft (#$PR) touches:"
+          echo "$mine" | sed 's/^/  /'
+          echo ""
+
+          report=""
+          found=no
+
+          # Every other open pull request from a cms/ branch. Closed and merged
+          # ones cannot collide: the danger is only ever two drafts alive at the
+          # same moment, both holding a full copy of the file.
+          others=$(gh pr list --state open --json number,headRefName \
+            -q '.[] | select(.headRefName | startswith("cms/")) | .number')
+
+          for other in $others; do
+            [ "$other" = "$PR" ] && continue
+
+            theirs=$(gh pr view "$other" --json files -q '.files[].path' | sort -u)
+            shared=$(comm -12 <(echo "$mine") <(echo "$theirs") || true)
+
+            if [ -n "$shared" ]; then
+              found=yes
+              title=$(gh pr view "$other" --json title -q '.title')
+              url=$(gh pr view "$other" --json url -q '.url')
+              echo "COLLISION with #$other ($title)"
+              echo "$shared" | sed 's/^/    /'
+              report="${report}- [#${other} ${title}](${url}), also editing: $(echo "$shared" | tr '\n' ' ')"$'\n'
+            fi
+          done
+
+          if [ "$found" = "no" ]; then
+            echo "No other open CMS draft touches these files."
+          fi
+
+          {
+            echo "found=$found"
+            echo "report<<EOF"
+            echo "$report"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      # ---------------------------------------------------------------------
+      # TODO (Bryan): decide what happens when found == 'yes'.
+      #
+      # steps.collide.outputs.found   is 'yes' or 'no'
+      # steps.collide.outputs.report  is a markdown list of the colliding PRs
+      #                               and the files they share
+      #
+      # The trade-off, both ways:
+      #
+      #   Comment and pass.  The editor sees a note on their own pull request
+      #   and can still publish. Nothing is blocked, nothing is lost by the
+      #   tooling being wrong. But a warning that does not stop anything gets
+      #   read past, and the cost of reading past it is somebody's afternoon of
+      #   copy disappearing with no error anywhere — which is exactly the
+      #   failure that has already happened twice with comments.
+      #
+      #   Comment and fail.  A red X on the pull request. It genuinely stops the
+      #   overwrite, but it stops it in a UI Kirsty and Alrik do not use and
+      #   cannot interpret, on a check whose name means nothing to them. The
+      #   likely outcome is a message to Bryan asking why the CMS is broken,
+      #   which is slower than the overwrite but at least recoverable.
+      #
+      # A third option: comment on *both* pull requests, so the person who
+      # started first also learns they are about to be overwritten. They are the
+      # one with something to lose and currently the only one with no signal at
+      # all.
+      #
+      # `gh pr comment <number> --body "..."` is available; GH_TOKEN and
+      # pull-requests: write are already set above.
+      # ---------------------------------------------------------------------
