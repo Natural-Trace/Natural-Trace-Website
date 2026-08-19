@@ -1,6 +1,6 @@
 name: CMS draft collision notice
 
-# Warns when two CMS drafts are open against the same file at the same time.
+# Warns both editors when two CMS drafts are open against the same file.
 #
 # WHY THIS EXISTS
 #
@@ -19,6 +19,11 @@ name: CMS draft collision notice
 # collections can be backed by the same data file, and a same-name check would
 # miss that, which is the case most likely to be lost quietly because nobody
 # involved would think of themselves as editing the same thing.
+#
+# It warns and does not fail. A red X would genuinely stop the overwrite, but it
+# would stop it in a UI Kirsty and Alrik do not use and cannot interpret, on a
+# check whose name means nothing to them. A comment they can read is worth more
+# than a block they cannot.
 
 on:
   pull_request:
@@ -30,9 +35,14 @@ permissions:
 
 jobs:
   collision:
-    # Only CMS branches. A hand-written branch is Bryan's, and he can read a
-    # git log; the whole point here is to warn the people who cannot.
-    if: startsWith(github.head_ref, 'cms/')
+    # Only CMS branches, and only from this repository. A hand-written branch is
+    # Bryan's and he can read a git log; the whole point here is to warn the
+    # people who cannot. The repository test is because a pull request opened
+    # from a fork gets a read-only token, and every `gh pr comment` below would
+    # fail on it — a red X for a reason that has nothing to do with drafts.
+    if: >
+      startsWith(github.head_ref, 'cms/') &&
+      github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     # Every job gets a ceiling. See the note in healthcheck.yml about the
     # 3h40m deploy on 11 Aug.
@@ -54,13 +64,29 @@ jobs:
           echo "$mine" | sed 's/^/  /'
           echo ""
 
-          report=""
           found=no
+          report=""     # markdown, for the comment on this pull request
+          partners=""   # the numbers, for the far side loop and the dedup key
 
           # Every other open pull request from a cms/ branch. Closed and merged
           # ones cannot collide: the danger is only ever two drafts alive at the
           # same moment, both holding a full copy of the file.
-          others=$(gh pr list --state open --json number,headRefName \
+          #
+          # The limit is explicit because gh pr list defaults to 30 and truncates
+          # without saying so, and in a check like this a truncated list reads as
+          # "no collision" rather than "did not look at everything". Decap leaves
+          # a draft open until someone publishes, so they do accumulate. The
+          # count is compared against the limit so that if it is ever reached the
+          # job says so out loud instead of passing green.
+          LIMIT=100
+          total=$(gh pr list --state open --limit "$LIMIT" --json number -q 'length')
+          if [ "$total" -ge "$LIMIT" ]; then
+            echo "WARNING: $total open pull requests, which is the maximum this"
+            echo "query asked for. Any draft past that was not examined. Raise"
+            echo "LIMIT in .github/workflows/cms-draft-notice.yml."
+          fi
+
+          others=$(gh pr list --state open --limit "$LIMIT" --json number,headRefName \
             -q '.[] | select(.headRefName | startswith("cms/")) | .number')
 
           for other in $others; do
@@ -75,7 +101,9 @@ jobs:
               url=$(gh pr view "$other" --json url -q '.url')
               echo "COLLISION with #$other ($title)"
               echo "$shared" | sed 's/^/    /'
-              report="${report}- [#${other} ${title}](${url}), also editing: $(echo "$shared" | tr '\n' ' ')"$'\n'
+
+              report="${report}- [${title}](${url}) (#${other})"$'\n'
+              partners="${partners}${other} "
             fi
           done
 
@@ -83,40 +111,92 @@ jobs:
             echo "No other open CMS draft touches these files."
           fi
 
+          # report is multi-line, so it needs the heredoc form of GITHUB_OUTPUT.
+          # The delimiter is deliberately not a word that could turn up inside a
+          # pull request title.
           {
             echo "found=$found"
-            echo "report<<EOF"
+            echo "partners=$partners"
+            echo "report<<COLLIDE_EOF"
             echo "$report"
-            echo "EOF"
+            echo "COLLIDE_EOF"
           } >> "$GITHUB_OUTPUT"
 
-      # ---------------------------------------------------------------------
-      # TODO (Bryan): decide what happens when found == 'yes'.
-      #
-      # steps.collide.outputs.found   is 'yes' or 'no'
-      # steps.collide.outputs.report  is a markdown list of the colliding PRs
-      #                               and the files they share
-      #
-      # The trade-off, both ways:
-      #
-      #   Comment and pass.  The editor sees a note on their own pull request
-      #   and can still publish. Nothing is blocked, nothing is lost by the
-      #   tooling being wrong. But a warning that does not stop anything gets
-      #   read past, and the cost of reading past it is somebody's afternoon of
-      #   copy disappearing with no error anywhere — which is exactly the
-      #   failure that has already happened twice with comments.
-      #
-      #   Comment and fail.  A red X on the pull request. It genuinely stops the
-      #   overwrite, but it stops it in a UI Kirsty and Alrik do not use and
-      #   cannot interpret, on a check whose name means nothing to them. The
-      #   likely outcome is a message to Bryan asking why the CMS is broken,
-      #   which is slower than the overwrite but at least recoverable.
-      #
-      # A third option: comment on *both* pull requests, so the person who
-      # started first also learns they are about to be overwritten. They are the
-      # one with something to lose and currently the only one with no signal at
-      # all.
-      #
-      # `gh pr comment <number> --body "..."` is available; GH_TOKEN and
-      # pull-requests: write are already set above.
-      # ---------------------------------------------------------------------
+      - name: Tell both editors
+        if: steps.collide.outputs.found == 'yes'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          ME_TITLE: ${{ github.event.pull_request.title }}
+          ME_URL: ${{ github.event.pull_request.html_url }}
+          PARTNERS: ${{ steps.collide.outputs.partners }}
+          REPORT: ${{ steps.collide.outputs.report }}
+        run: |
+          set -euo pipefail
+
+          # One marker per set of drafts involved, rather than a fixed string.
+          #
+          # Fixed would mean a branch that gets saved five times collects five
+          # identical warnings, because `synchronize` re-runs this job on every
+          # push. Keying it on the set keeps the repeat saves quiet, while a
+          # third draft appearing later changes the key and does earn a fresh
+          # comment — the one case where saying it again is right.
+          key=$(printf '%s\n%s\n' "$PR" "$(echo "$PARTNERS" | tr ' ' '\n')" \
+                | sed '/^$/d' | sort -n -u | paste -sd, -)
+          marker="<!-- cms-draft-collision:${key} -->"
+
+          # Written for someone who has never opened GitHub on purpose and is
+          # only here because an email told them to be. No branch names, no file
+          # paths, no mention of Decap or YAML: none of that is anything they
+          # can act on. The only things they need are that saving second
+          # destroys the other person's work, and that they should go and talk
+          # to them. "Publish" is the word the CMS itself uses for the button.
+          body () {
+            printf '%s\n' \
+              "$marker" \
+              '### Someone else is editing this at the same time' \
+              '' \
+              "$1" \
+              '' \
+              'If you both publish, whoever publishes **second replaces everything the other person changed** — the whole section, not only the parts that overlap.' \
+              '' \
+              'It happens quietly. Nothing goes red, nobody is told, and afterwards there is no way to see what was lost.' \
+              '' \
+              'Agree who is making which change before either of you publishes. If you are not sure who is on the other side of this, ask whoever looks after the website.'
+          }
+
+          post () {
+            target="$1"
+            # Already said, for this exact set of drafts. Repeating it on every
+            # save is how a warning turns into background noise.
+            # Captured into a variable rather than piped into grep -q, which is
+            # what this was first written as and was wrong.
+            #
+            # grep -q exits the moment it matches and closes the pipe. gh is
+            # still writing, so it dies with SIGPIPE, and `pipefail` then makes
+            # the pipeline return 141. The test read false exactly when the
+            # marker WAS present, so the guard inverted itself and every save
+            # posted another copy of the warning — the noise it exists to
+            # prevent. It passed a stubbed-gh test because the stub finished
+            # writing before grep could exit; the bug lives entirely in the
+            # timing, so only a slow producer shows it.
+            existing=$(gh pr view "$target" --json comments -q '.comments[].body')
+            case "$existing" in
+              *"$marker"*)
+                echo "#$target already warned about set $key, skipping"
+                return
+                ;;
+            esac
+            gh pr comment "$target" --body "$(body "$2")"
+            echo "warned #$target"
+          }
+
+          # This draft: name every other draft it collides with.
+          post "$PR" "$REPORT"
+
+          # The far side. This is the half that did not exist before: whoever
+          # opened their draft first has no way of knowing a second one was
+          # started, and they are the one with work already done to lose.
+          for num in $PARTNERS; do
+            post "$num" "- [${ME_TITLE}](${ME_URL}) (#${PR})"
+          done
