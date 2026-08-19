@@ -158,6 +158,55 @@ h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02
 .nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:80px;position:relative}
 .nav-logo img{height:44px;width:auto}
 #navbar:not(.scrolled) .logo-color{display:none}#navbar:not(.scrolled) .logo-white{display:block}#navbar.scrolled .logo-color{display:block}#navbar.scrolled .logo-white{display:none}.logo-color,.logo-white{transition:opacity .4s}
+/* ---------------------------------------------------------------------------
+   Navigation: which !important actually wins
+
+   Audited 19 August 2026, after two bugs in one day came out of this block.
+   Twenty authored !important declarations across twelve rules, which the
+   browser expands to seventy-three longhands. Checked against the live DOM on
+   the home page and /team/ at 375px and 1280px — between them those cover both
+   navbar states, because the home page loads unscrolled and every other page is
+   given .scrolled by main.js as soon as it runs.
+
+   The thing to understand before editing anything here: !important does not
+   decide these, it only moves a declaration into a higher bracket. Inside that
+   bracket ordinary specificity still settles it, and most rules in this section
+   are !important, so the contest has simply moved up a tier.
+
+   Four places where two !important declarations set the same property to
+   different values on the same element. All four resolve correctly today:
+
+     1. color, menu links, scrolled + mobile
+        #navbar.scrolled .nav-links a:not(.nav-cta)  (1,3,1)  wins var(--dark)
+        over .nav-links a  (0,1,1)  #fff.  Intended.
+
+     2. color, dropdown links, unscrolled
+        #navbar:not(.scrolled) .nav-dropdown-menu a  (1,2,1)  wins.  Intended.
+
+     3. color, dropdown links, scrolled + mobile
+        The menu-link rule (1,3,1) beats .nav-dropdown-menu a's own
+        color:var(--text), so the dropdown never gets its own colour there.
+        Not intended, and invisible: --text is #2C3345 and --dark is #1A1E2E.
+        Left alone deliberately — there is nothing to see and changing it risks
+        a regression for no gain.
+
+     4. font-size, dropdown links, mobile
+        Was decided by source order alone, both sides (0,1,1). Fixed by scoping
+        the mobile rule to #navbar; see the note there.
+
+   The structural risk, which is the one that will bite next: .nav-cta carries
+   21 of the 73 declarations at specificity (0,1,0), the LOWEST in the section.
+   The most emphatic rule in the file is also the easiest to outrank — anything
+   with an id, or three classes, beats it on every property it sets. That is
+   exactly how the CTA turned dark navy on sage on 19 August. If you are adding
+   a rule that touches .nav-links a, check whether it also catches .nav-cta, and
+   exclude it with :not(.nav-cta) if so.
+
+   No dead rules were found here. Note that this audit could not have found the
+   three dead .nav-toggle span rules removed the same morning, because those
+   carried no !important. A rule that never applies and a rule that loses are
+   different faults and need different checks.
+   --------------------------------------------------------------------------- */
 .nav-links{display:flex;align-items:center;gap:2.25rem;list-style:none}
 .nav-links a{font-size:.88rem;font-weight:500;transition:color .3s,transform .2s;position:relative;cursor:pointer}
 #navbar:not(.scrolled) .nav-links a{color:rgba(255,255,255,.8)}
@@ -824,7 +873,20 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
     pointer-events:auto;background:transparent!important;border:0!important;box-shadow:none;
     padding:.15rem 0 0;min-width:0}
   .nav-dropdown-menu::before{display:none}
-  .nav-dropdown-menu a{padding:.5rem 0 .5rem 1.1rem;font-size:.94rem!important;white-space:normal}
+  /* Scoped to #navbar so this outranks the base .nav-dropdown-menu a rule on
+     specificity rather than on being further down the file.
+
+     Both declare font-size with !important at identical specificity (0,1,1),
+     so before this the winner was decided purely by source order: .82rem up in
+     the base block, .94rem here, later line wins. That works until someone
+     moves a block, at which point the mobile dropdown silently changes size
+     with nothing to explain it. Every .nav-dropdown-menu is inside #navbar and
+     they exist only in partials/nav.njk, so the scope costs nothing.
+
+     The padding and white-space in this rule ride along at the higher
+     specificity too. They were already winning over the base rule, which sets
+     neither with !important, so nothing changes for them. */
+  #navbar .nav-dropdown-menu a{padding:.5rem 0 .5rem 1.1rem;font-size:.94rem!important;white-space:normal}
   #navbar.scrolled .nav-links{background:rgba(255,255,255,.98);box-shadow:0 4px 20px rgba(0,0,0,.1)}
   #navbar.scrolled .nav-links li{border-bottom-color:rgba(0,0,0,.06)}
   /* The CTA is excluded because it is the one link in here that carries its own
