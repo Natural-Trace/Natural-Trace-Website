@@ -101,16 +101,37 @@ back with the wording, and the answer key still reports 63/124/901.
    expires them the pages lose their images with no error anywhere. The fix is
    a content job, not a code one: re-upload both through the CMS so they are
    served from the site. Kirsty's lane.
-4. **`cms-draft-notice.yml` has never fired against a real collision.** It only
-   triggers on `cms/*` head branches, and there has not been one since it was
-   added. Its detection half was exercised against a stubbed `gh`, but the
-   `gh pr comment` calls have not run for real. To test it deliberately, push
-   two branches named `cms/test/a` and `cms/test/b` that both change the same
-   file, open a pull request from each, and check that both get a comment and
-   that a second push to either adds no duplicate. Close them afterwards.
+4. **The collision comment says which draft it clashes with, but not who is
+   editing it.** It links the other pull request and its title, and deliberately
+   carries no branch name and no file path, because neither is something Kirsty
+   or Alrik can act on. Testing it for real on 19 Aug showed up the gap: it ends
+   by saying "ask whoever looks after the website", and naming the other editor
+   would answer that outright. It is a two-line change to `body ()` in
+   `cms-draft-notice.yml`, left alone on purpose — the wording of anything that
+   gets sent to an editor is Kirsty's to approve, not a thing to change quietly.
 
 ### Closed on 19 August
 
+- **`cms-draft-notice.yml` has now been fired against real GitHub**, both
+  halves, using four throwaway pull requests (#14-#17, all closed, branches
+  deleted). Two drafts on the same file and different lines: both got exactly
+  one comment, including the draft that was opened first, which is the half
+  that did not exist before and belongs to the person with work to lose. A
+  second push to one of them re-ran the job and posted nothing new — the marker
+  dedup holds against a real, slow `gh`, which is precisely the code path the
+  SIGPIPE bug lived in. Two drafts on different files, opened while the
+  colliding pair was still live: `Tell both editors` reported `skipped`, so the
+  condition was evaluated and declined rather than quietly passing. The one
+  thing the run log does not say is how many other drafts it examined, so a
+  genuine negative and a list that came back empty print the same line.
+- **The Actions default workflow permission on this repository is `read`**,
+  from `gh api repos/Natural-Trace/Natural-Trace-Website/actions/permissions/workflow`.
+  The collision job can comment only because it declares `pull-requests: write`
+  in its own `permissions:` block, which overrides that default; the run log
+  confirms the token is issued as `PullRequests: write`. **Do not delete that
+  block as redundant.** Without it the job inherits read-only, every
+  `gh pr comment` fails with a 403, and it reads as a logic bug in a workflow
+  nobody is watching.
 - Both workflow files are in. `claim-check.mjs` runs in the health check, so the
   register is enforced on CMS pull requests rather than only on one laptop.
   `cms-draft-notice.yml` comments on both pull requests when two CMS drafts
