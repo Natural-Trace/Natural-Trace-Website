@@ -1,0 +1,314 @@
+# Claim review register
+#
+# WHY THIS FILE EXISTS
+#
+# Every flagged claim used to be recorded as a "# CLAIM REVIEW" comment sitting
+# above the line it applied to. That worked until 18 August 2026, when a routine
+# edit through the CMS rewrote src/_data/site.yml and removed all 76 of its
+# comment lines in one commit. Decap does not edit YAML in place. It parses the
+# file into data and writes it back out, and a comment is not data.
+#
+# The settings survived. The explanations did not. Applied to about.yml or
+# faq.yml, the same save would silently delete the record of which claims have
+# not been signed off, and the only visible trace would be a line count in a
+# pull request that the person who made it is also the person approving it.
+#
+# So the register moved here. Nothing under docs/ is reachable from the CMS,
+# because the CMS can only touch files named in a collection in
+# src/admin/config.yml. scripts/claim-check.mjs reads this file and fails the
+# build if reality and this register disagree, which turns a comment that could
+# be deleted by accident into a test that cannot.
+#
+# HOW TO USE IT
+#
+#   status: open        Flagged on review, not signed off, still published.
+#   status: signed_off  Reviewed and approved. Record who and when.
+#   status: withdrawn   Taken off the site. The checker enforces its absence.
+#
+# The checker matches `phrase` against the source file exactly. If you reword a
+# claim, the build fails, on purpose: a reworded claim is a new claim and needs
+# looking at again. Update the phrase here in the same commit that changes it.
+#
+# Entries with no `phrase` are scoped to a field instead, for cases where the
+# concern is a whole block of data rather than one sentence.
+
+review_date: "2026-07-30"
+
+claims:
+
+  # ---- About Us -----------------------------------------------------------
+  - id: about-natural-food-grade
+    status: open
+    source: src/_data/about.yml
+    field: choose_groups
+    phrase: '100% natural, food-grade authentication'
+    published_on: ["/about/"]
+    why: >
+      "100%" is an absolute. It has to hold for every batch and every matrix,
+      not typically.
+    owner: Kirsty
+
+  - id: about-ppm-no-impact
+    status: open
+    source: src/_data/about.yml
+    field: choose_groups
+    phrase: 'Added at parts-per-million with no impact on taste, appearance or functionality'
+    published_on: ["/about/"]
+    why: >
+      "No impact" is an absolute across three separate properties. The sensory
+      work behind it is a panel, not a proof of no effect.
+    owner: Kirsty
+
+  - id: about-facilities
+    status: open
+    source: src/_data/about.yml
+    field: choose_groups
+    phrase: 'Manufactured in ISO 22000, SFA and FDA-registered facilities'
+    published_on: ["/about/"]
+    why: >
+      Names three regulatory regimes. Each needs a current certificate on file
+      and FDA-registered is a registration, not an approval.
+    owner: Alrik
+
+  - id: about-gras
+    status: open
+    source: src/_data/about.yml
+    field: choose_groups
+    phrase: 'Self-determined FDA GRAS status'
+    published_on: ["/about/"]
+    why: >
+      Self-determined GRAS is the company's own conclusion, not the FDA's, and
+      applies to one jurisdiction. Contradicted directly by the 2022 press
+      release, which says FDA-approved. See claim press-2022-fda-approved.
+    owner: Alrik
+
+  - id: about-matrices-20
+    status: open
+    source: src/_data/about.yml
+    field: matrices_title
+    phrase: 'Validated Across 20+ Categories Most at Risk of Fraud'
+    published_on: ["/about/"]
+    why: >
+      Was one bullet, is now a section headline, so it is more exposed than when
+      it was flagged. Needs the list of 20 and what validated means for each.
+    owner: Alrik
+
+  # ---- FAQ ----------------------------------------------------------------
+  # This page carries FAQPage structured data, so its answers are what a search
+  # engine shows as a drop-down and what an assistant quotes verbatim. Claims
+  # here are more exposed than the same words anywhere else on the site.
+  - id: faq-global-frameworks
+    status: open
+    source: src/_data/faq.yml
+    field: questions
+    phrase: 'compatible with global food regulatory frameworks'
+    published_on: ["/faq/"]
+    why: >
+      "Global" is unbounded. There is no single global food regulatory
+      framework to be compatible with.
+    owner: Alrik
+
+  - id: faq-zero-impact
+    status: open
+    source: src/_data/faq.yml
+    field: questions
+    phrase: 'Zero impact on product characteristics'
+    published_on: ["/faq/"]
+    why: >
+      Absolute, and rests on a sensory panel. Same underlying claim as
+      about-ppm-no-impact; resolve the two together.
+    owner: Kirsty
+
+  - id: faq-cannot-be-removed
+    status: open
+    source: src/_data/faq.yml
+    field: questions
+    phrase: 'It cannot be replicated or removed.'
+    published_on: ["/faq/"]
+    why: >
+      An impossibility claim, retired at the 30 July review and still published.
+      Of everything on this list, this is the one least likely to survive
+      contact with a determined counterfeiter or a lawyer.
+    owner: Alrik
+
+  - id: faq-binary-result
+    status: open
+    source: src/_data/faq.yml
+    field: questions
+    phrase: 'NaturalDetect™ provides a clear binary result: Authenticated or Not Authenticated. A certificate of analysis is generated automatically via NaturalCloud™.'
+    published_on: ["/faq/"]
+    why: >
+      Two errors. The calling pipeline has a third verdict, Inconclusive, so the
+      result is not binary. And the document is a Certificate of Authenticity,
+      not a certificate of analysis, which means something specific and
+      different in a laboratory context.
+    owner: Ying Xiang
+
+  - id: faq-shelf-life
+    status: open
+    source: src/_data/faq.yml
+    field: questions
+    phrase: 'NaturalTag™ remains detectable throughout the standard shelf life of tagged products.'
+    published_on: ["/faq/"]
+    why: >
+      The longest completed stability study is far shorter than a typical shelf
+      life. This is an extrapolation stated as a fact.
+    owner: Alrik
+
+  # ---- NaturalDetect -------------------------------------------------------
+  - id: detect-coa-wording
+    status: open
+    source: src/_data/naturaldetect.yml
+    field: capabilities
+    phrase: 'Client ready Certificate of Analysis reporting'
+    published_on: ["/naturaldetect/"]
+    why: >
+      Canon is Certificate of Authenticity. Certificate of Analysis is a
+      different document with its own expectations.
+    owner: Ying Xiang
+
+  - id: detect-standards
+    status: open
+    source: src/_data/naturaldetect.yml
+    field: capabilities
+    phrase: 'Standards compliance: ISO 22174, ISO 17025, ISO20837, ISO21571 and MIQE 2.0 Guidelines'
+    published_on: ["/naturaldetect/"]
+    why: >
+      ISO 17025 and MIQE 2.0 were both retired from the approved copy on
+      30 July. 17025 is a laboratory accreditation, which is a thing you hold,
+      not a thing you comply with.
+    owner: Ying Xiang
+
+  # ---- NaturalTag ----------------------------------------------------------
+  - id: tag-robust-stability
+    status: open
+    source: src/_data/naturaltag.yml
+    field: benefits
+    phrase: 'Robust stability, survives supply chain handling'
+    published_on: ["/naturaltag/"]
+    why: >
+      "Survives" with no conditions attached. Needs the tested range stated.
+    owner: Alrik
+
+  - id: tag-facility
+    status: open
+    source: src/_data/naturaltag.yml
+    field: benefits
+    phrase: 'Manufactured in Singapore in SFA, ISO22000, GMP, FDA registered facility'
+    published_on: ["/naturaltag/"]
+    why: >
+      Four regimes in one line. Same evidence requirement as about-facilities,
+      and the two must agree with each other.
+    owner: Alrik
+
+  # ---- Compatibility assessment -------------------------------------------
+  # Scoped to fields rather than phrases. The concern is whether the thresholds
+  # match the source guide, which is a question about a table of values, not
+  # about one sentence.
+  - id: assess-ph-bands
+    status: open
+    source: src/_data/assess.yml
+    field: compat_ph_options
+    published_on: ["/assess/"]
+    why: >
+      Bands taken from section 3.1 of the compatibility guide. Confirm they are
+      still the guide's current numbers before this drives a customer answer.
+    owner: Ying Xiang
+
+  - id: assess-temp-bands
+    status: open
+    source: src/_data/assess.yml
+    field: compat_temp_options
+    published_on: ["/assess/"]
+    why: >
+      Built on the single temperature threshold the guide states in section 3.4,
+      above 60 degrees, contact Natural Trace. The split between 60 to 100 and
+      above 100 is the website's own, not the guide's. Confirm the guide has not
+      moved.
+    owner: Ying Xiang
+
+  - id: assess-formulation-risk
+    status: open
+    source: src/_data/assess.yml
+    field: compat_formulation_risk
+    published_on: ["/assess/"]
+    why: >
+      Judgement calls about which formulations are harder on the tag, not
+      measurements. Should be confirmed against test data.
+    owner: Ying Xiang
+
+  - id: assess-evidence-wording
+    status: open
+    source: src/_data/assess.yml
+    field: compat_evidence
+    published_on: ["/assess/"]
+    why: >
+      The products field here publishes client names to the live site. Only name
+      a company that has agreed in writing to be named.
+    owner: Kirsty
+
+  # Added 19 August 2026. Both of these were recorded only as comments inside
+  # src/_data/assess.yml. Alrik opened that file in the CMS on 19 August, and a
+  # CMS save rewrites the file from parsed data, which deletes every comment in
+  # it. Neither of these is recoverable from anywhere else once that lands, so
+  # they are written out in full here rather than referenced.
+  - id: assess-guide-scope
+    status: open
+    source: src/_data/assess.yml
+    field: compat_ph_options
+    published_on: ["/assess/"]
+    why: >
+      The NaturalTag Chemical Compatibility Guide v1.2, April 2026, is written
+      for agricultural sprays. Its screening criteria are about DNA chemistry,
+      pH, oxidisers, nucleases and heat, which apply to any matrix. Its product
+      table is fungicides, which does not. Applying those criteria to
+      nutraceutical manufacturing is a reasonable extension of the chemistry and
+      an extension all the same, and the whole quiz rests on it. This is the
+      parent of assess-ph-bands, assess-temp-bands and assess-formulation-risk:
+      if the extension does not hold, none of the three matter.
+    owner: Ying Xiang
+
+  - id: assess-raspberry-conflict
+    status: open
+    source: src/_data/assess.yml
+    field: compat_evidence
+    published_on: []
+    why: >
+      Two records of the same result disagree. productList.csv lists raspberry
+      twice, fresh and freeze dried, and Bryan confirmed on 11 August 2026 that
+      every product on that list worked. The project record for Hillwood
+      raspberry is 47.8% accuracy at 7.7% sensitivity, described as
+      threshold-unfixable. Both cannot be true. Nothing on the site depends on
+      it today, because raspberry is agri-food and the quiz offers no category
+      for it, so this is not published and published_on is deliberately empty.
+      It matters because the 11 August confirmation is the sole source for every
+      compatible row in compat_evidence, and one contradicted row puts a
+      question against the method that produced the rest. Settle it before
+      either number is quoted to anyone.
+    owner: Alrik
+
+  # ---- Migrated press releases --------------------------------------------
+  # Published in 2022, carried across in the WordPress migration on 12 August,
+  # and indexed since 18 August. These are the highest-exposure entries on the
+  # list because the same wording is also on third-party sites.
+  - id: press-2022-fda-approved
+    status: open
+    source: src/insights/2022-05-23-singapore-based-startup-natural-trace-develops.md
+    phrase: 'patented DNA that is FDA-approved'
+    published_on: ["/insights/2022-05-23-singapore-based-startup-natural-trace-develops/"]
+    why: >
+      FDA-approved is far stronger than the self-determined GRAS status claimed
+      on the About page, and the two cannot both be true. Verified on 18 August
+      to have been republished verbatim by Food & Beverage Asia and, lightly
+      reworded, by Blue Incube. Correcting the site does not retract those.
+    owner: Alrik
+
+  - id: press-2022-worlds-first
+    status: open
+    source: src/insights/2022-05-23-singapore-based-startup-natural-trace-develops.md
+    phrase: "world’s first patented supply chain traceability solution"
+    published_on: ["/insights/2022-05-23-singapore-based-startup-natural-trace-develops/"]
+    why: >
+      A superlative and an intellectual property claim in one phrase. Needs the
+      patent number and a defensible reading of first.
+    owner: Alrik

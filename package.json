@@ -6,12 +6,13 @@
     "start": "eleventy --serve --port 8080",
     "preview": "eleventy --serve --port 8080",
     "build": "eleventy",
-    "check": "eleventy && node scripts/healthcheck.mjs _site",
+    "check": "eleventy && node scripts/healthcheck.mjs _site && node scripts/claim-check.mjs",
     "check:external": "eleventy && node scripts/healthcheck.mjs _site --external",
     "check:layout": "eleventy && node scripts/layout-audit.mjs",
     "check:spacing": "eleventy && node scripts/spacing-audit.mjs",
     "check:cms": "node scripts/cms-audit.mjs",
-    "check:contrast": "eleventy && node scripts/contrast-audit.mjs"
+    "check:contrast": "eleventy && node scripts/contrast-audit.mjs",
+    "check:claims": "node scripts/claim-check.mjs"
   },
   "dependencies": {
     "js-yaml": "^4.1.0"
