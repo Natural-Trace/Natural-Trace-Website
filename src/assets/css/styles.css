@@ -189,16 +189,33 @@ h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02
 .nav-cta{background:var(--sage)!important;color:#fff!important;padding:.6rem 1.5rem!important;border-radius:8px;font-weight:600!important;font-size:.85rem!important;transition:all .3s!important;border:none}
 .nav-cta::after{display:none!important}
 .nav-cta:hover{background:var(--sage-dark)!important;transform:translateY(-2px)!important;box-shadow:0 6px 20px rgba(107,114,73,.3)}
-.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:.5rem}
-.nav-toggle span{display:block;width:24px;height:2px;background:#fff;margin:5px 0;transition:.3s}
-/* The burger is an inline svg drawn with currentColor, not the three spans the
-   rule above and the two below it target. Those three rules have had no effect
-   on anything for some time. This is the one that actually colours it, and it
-   has to be white on the home page because the hero behind it is a dark
-   photograph. Every other page starts on a pale section and keeps the dark
-   default. */
+/* The burger is an inline svg drawn with stroke="currentColor", so the colour
+   it takes is whatever `color` resolves to on the button.
+
+   That colour is set here, explicitly, and the reason is a bug that was live
+   for some time: it used to be set nowhere except the home page rule below.
+   On every other page nothing matched, currentColor fell through to the
+   browser's own default for button text, and browsers do not agree on what
+   that is. Chrome, Brave and Firefox use a near-black, which looked correct by
+   accident. iOS Safari uses the system accent blue, so on an iPhone the burger
+   was bright blue on every page except the home hero. Two people reported it
+   on 19 August and it did not reproduce on the machine it was reported to,
+   which is exactly the shape of a bug that lives in a UA default.
+
+   A previous comment here recorded that non-home pages "keep the dark default".
+   There was no dark default to keep. Setting it is the fix; nothing about the
+   markup or the page classes needed to change.
+
+   Three rules targeting `.nav-toggle span` were deleted at the same time. The
+   burger stopped being three spans and became an svg, and they had been dead
+   ever since — they are what made the missing colour hard to see, because the
+   file looked like it was handling this. Their intent was var(--dark) in every
+   state, which is now simply the default here. */
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:.5rem;color:var(--dark)}
+/* White on the home page only, because the hero behind it is a dark
+   photograph. Outranks the rule above on specificity, and stops applying the
+   moment the navbar scrolls onto a pale background. */
 body.page-home #navbar:not(.scrolled) .nav-toggle{color:#fff}
-#navbar.scrolled .nav-toggle span{background:var(--dark)}
 
 /* Pages */
 .page{display:none;opacity:0;transition:opacity .4s ease}
@@ -1982,7 +1999,9 @@ body.hero-is-light #navbar:not(.scrolled) .logo-color{display:block}
 body.hero-is-light #navbar:not(.scrolled) .logo-white{display:none}
 body.hero-is-light #navbar:not(.scrolled) .nav-links a{color:#4B5563}
 body.hero-is-light #navbar:not(.scrolled) .nav-links a:hover{color:var(--sage)}
-body.hero-is-light #navbar:not(.scrolled) .nav-toggle span{background:var(--dark)}
+/* The .nav-toggle span rule that used to sit here was dead — the burger is an
+   svg, not spans — and its intent, var(--dark), is now the default on
+   .nav-toggle itself. See the note there. */
 
 /* How It Works, Section 4 of the copy, now on the homepage.
    Compact by design: the request was to cut the amount of scrolling. */
