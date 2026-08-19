@@ -827,7 +827,23 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
   .nav-dropdown-menu a{padding:.5rem 0 .5rem 1.1rem;font-size:.94rem!important;white-space:normal}
   #navbar.scrolled .nav-links{background:rgba(255,255,255,.98);box-shadow:0 4px 20px rgba(0,0,0,.1)}
   #navbar.scrolled .nav-links li{border-bottom-color:rgba(0,0,0,.06)}
-  #navbar.scrolled .nav-links a{color:var(--dark)!important}
+  /* The CTA is excluded because it is the one link in here that carries its own
+     background. The rest of the menu sits on white and needs dark text; the
+     "Request Assessment" button sits on --sage and needs white.
+
+     Both this rule and .nav-cta are !important, so !important does not decide
+     it — specificity does, and this selector is (1,2,1) against the flat
+     (0,1,0) of .nav-cta. It won, and the button rendered dark navy on mid-olive
+     on every non-home page on a phone, because those get .scrolled the moment
+     the script runs. Reported 19 August as a Samsung problem; it was every
+     mobile browser.
+
+     :not(.nav-cta) rather than raising .nav-cta's specificity to outrank this,
+     because the intent here is "the menu links", and the button is not one of
+     them. Making the two rules bid against each other again would leave the
+     next person reading two !important declarations and no way to tell which
+     is meant to win. */
+  #navbar.scrolled .nav-links a:not(.nav-cta){color:var(--dark)!important}
   .nav-toggle{display:block}
   .services-grid,.mission-grid,.mission-values-grid{grid-template-columns:1fr}
   /* Industry tiles on the homepage stay two across on a phone. One per row read
