@@ -21,6 +21,19 @@ node scripts/assess-matrix.mjs   # regenerate docs/assess-matrix.html
 
 `npm run check` must pass before pushing.
 
+**The quiz answer key is generated, never committed.** `docs/assess-matrix.html`
+is in nobody's git history on purpose: a Decap publish writes exactly one file,
+`src/_data/assess.yml`, and knows nothing about derived artifacts, so a
+checked-in copy would silently disagree with its own source the first time
+anyone edited the quiz through the CMS. It would still open, still show 1,088
+rows, and be quietly wrong.
+
+If you do not have Node to hand, every Health check run builds it and attaches
+it as **compatibility-quiz-answer-key** under Artifacts at the bottom of the run
+page. That is the route for Alrik and Ying Xiang. It is not published on the
+site, deliberately — it exposes the full scoring thresholds and the outcome
+distribution.
+
 ## Hard rules
 
 - **Never commit a HubSpot private-app token, API key or access token.** The
@@ -83,6 +96,18 @@ back with the wording, and the answer key still reports 63/124/901.
    open with Alrik and Ying Xiang before anything is changed. Do not adjust a
    band without one of those closing.
 2. **CMS editability refactor**, blocked on those four decisions.
+3. **Two insight images load from `pbs.twimg.com`**, a server we do not
+   control. `npm run check` names them on every run. If Twitter's CDN moves or
+   expires them the pages lose their images with no error anywhere. The fix is
+   a content job, not a code one: re-upload both through the CMS so they are
+   served from the site. Kirsty's lane.
+4. **`cms-draft-notice.yml` has never fired against a real collision.** It only
+   triggers on `cms/*` head branches, and there has not been one since it was
+   added. Its detection half was exercised against a stubbed `gh`, but the
+   `gh pr comment` calls have not run for real. To test it deliberately, push
+   two branches named `cms/test/a` and `cms/test/b` that both change the same
+   file, open a pull request from each, and check that both get a comment and
+   that a second push to either adds no duplicate. Close them afterwards.
 
 ### Closed on 19 August
 
@@ -96,6 +121,19 @@ back with the wording, and the answer key still reports 63/124/901.
   **still open**: aligning the badge closed the contradiction on the screen but
   spread the warmer wording rather than retiring it, and the thresholds did not
   move. Only one of the four decisions closes those entries.
+- Two mobile navigation faults, both reported as device-specific and neither
+  actually being so. The burger icon had no `color` declared anywhere except on
+  the home hero, so `stroke="currentColor"` fell through to the browser's own
+  default for button text — near-black in Chrome and Brave, system blue in iOS
+  Safari. The "Request Assessment" button lost a specificity contest between two
+  `!important` colour declarations and rendered dark navy on sage at 3.25:1,
+  under the 4.5:1 WCAG AA wants.
+- The nav `!important` rules were audited afterwards, because both faults came
+  out of that one block. No dead rules; four collisions, three left alone and
+  one settled by scoping. **The map is written as a comment above `.nav-links`
+  in `src/assets/css/styles.css`** — read it before adding any rule that touches
+  `.nav-links a`, and note the warning there about `.nav-cta` carrying 21 of the
+  73 declarations at the lowest specificity in the section.
 
 ### The quiz, if you are working on it
 

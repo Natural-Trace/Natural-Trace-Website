@@ -64,6 +64,51 @@ jobs:
       - name: Check published claims still match the register
         run: node scripts/claim-check.mjs
 
+      # The compatibility quiz answer key: all 1,088 answer combinations and the
+      # outcome each one reaches, lifted from verdict() in main.js as source
+      # text and run against assess.yml, so it cannot drift from the real logic.
+      #
+      # Generated here rather than committed. A Decap publish writes exactly one
+      # file — src/_data/assess.yml — and has no idea a derived artifact exists,
+      # so a checked-in copy would silently disagree with its own source the
+      # first time anyone edits the quiz through the CMS. Not a merge conflict,
+      # which would at least be loud, but a file that still opens, still shows
+      # 1,088 rows, and is quietly wrong. Building it on every run means it is
+      # always current, and means Alrik and Ying Xiang can read it without
+      # running a Node script, which matters while the four scoring decisions
+      # are still open.
+      #
+      # Deliberately NOT built into _site. GitHub Pages serves that publicly and
+      # this exposes the full scoring thresholds and the outcome distribution.
+      - name: Build the compatibility quiz answer key
+        run: node scripts/assess-matrix.mjs
+
+      # Pinned to v7 for the same reason checkout and setup-node are pinned to
+      # v6: v4 declares runs.using node20, which GitHub deprecated and is
+      # already force-running on node24. Confirmed from action.yml at the v7
+      # tag: runs.using is node24.
+      - name: Attach the answer key to this run
+        uses: actions/upload-artifact@v7
+        with:
+          name: compatibility-quiz-answer-key
+          path: docs/assess-matrix.html
+          retention-days: 90
+
+      # Without this the artifact is real but undiscoverable: nothing on the run
+      # page says what it is or why anyone would want it.
+      - name: Say where the answer key is
+        run: |
+          {
+            echo "### Compatibility quiz answer key"
+            echo ""
+            echo "Every one of the 1,088 answer combinations and the outcome it reaches,"
+            echo "regenerated from this commit. Download it from the **Artifacts** section"
+            echo "at the bottom of this run, as \`compatibility-quiz-answer-key\`."
+            echo ""
+            echo "It is not committed to the repository and not published on the site."
+            echo "Regenerate locally with \`node scripts/assess-matrix.mjs\`."
+          } >> "$GITHUB_STEP_SUMMARY"
+
       # Outbound links are only checked on the schedule and on demand, so a
       # third party being briefly down cannot block a deploy.
       - name: Check outbound links
