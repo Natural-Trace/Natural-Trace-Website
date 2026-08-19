@@ -147,14 +147,14 @@ compat_outcomes:
       product. The next step is to confirm compatibility through laboratory
       testing.
   conditions:
-    label: Compatible with conditions
+    label: Likely compatible
     title: Sounds like you are compatible
     body: Products like yours are in use with NaturalTag today. There may be an
       adjustment to make to the dose, or to the point in your process where the
       tag goes in. Our scientists will work that out with you.
   testing:
     label: Testing required
-    title: Let's dive and understand your product more
+    title: Let's dive in and understand your product more
     body: We would want to look at this one properly before saying yes. Send us a
       sample, we will run the assessment on your actual formulation and give you
       a straight answer.

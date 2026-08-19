@@ -896,7 +896,7 @@ collections:
                   - {label: "Badge", name: "label", widget: "string"}
                   - {label: "Heading", name: "title", widget: "string"}
                   - {label: "Body", name: "body", widget: "text"}
-              - label: "Compatible with conditions"
+              - label: "Likely compatible"
                 name: "conditions"
                 widget: "object"
                 fields:

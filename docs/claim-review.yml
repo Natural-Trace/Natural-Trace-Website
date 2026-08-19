@@ -297,13 +297,39 @@ claims:
     why: >
       Replaced "Most likely compatible" on 19 August 2026. The previous line
       hedged the degree of compatibility; this one states it, on a screen that
-      is only ever shown when one of the three inputs scored medium risk, and
-      directly above a badge that still reads "Compatible with conditions". The
-      heading and the badge now say different things. It is also Alex Wild's
-      request to be more generous arriving as copy, ahead of the decision it
-      depends on: the thresholds that decide who sees this screen did not move,
-      only the words describing them. Either the wording comes back, or the
-      thresholds change and this becomes true, but the two need to agree.
+      is only ever shown when one of the three inputs scored medium risk. It is
+      Alex Wild's request to be more generous arriving as copy, ahead of the
+      decision it depends on: the thresholds that decide who sees this screen
+      did not move, only the words describing them.
+
+
+      Closed the contradiction on 19 August by moving the badge up to the
+      heading rather than the heading back to the badge: "Compatible with
+      conditions" became "Likely compatible". That was the resolution asked
+      for, and the screen no longer says two things at once. This entry stays
+      open because that was the smaller of the two problems. Aligning the badge
+      spread the warmer wording rather than retiring it, so both halves of the
+      screen now describe a medium-risk result more generously than the scoring
+      behind them justifies. Only a threshold decision can close this.
+    owner: Kirsty
+
+  # Added 19 August 2026, in the same commit that changed it. A reworded claim
+  # is a new claim, so the badge is registered in its own right rather than
+  # carried along by assess-outcome-conditions-title above.
+  - id: assess-outcome-conditions-badge
+    status: open
+    source: src/_data/assess.yml
+    field: compat_outcomes
+    phrase: 'Likely compatible'
+    published_on: ["/assess/"]
+    why: >
+      Replaced "Compatible with conditions" on 19 August 2026, so the badge and
+      the heading above it would stop saying different things. The old wording
+      named what a prospect still has to do; this one does not, and 124 of the
+      1,088 answer combinations land on this screen. Not worded "Compatible":
+      that is already the badge on the unconditional result, and two outcomes
+      sharing one badge would be indistinguishable both on screen and in the
+      answer key. Open for the same reason as the heading it was matched to.
     owner: Kirsty
 
   # ---- Migrated press releases --------------------------------------------
