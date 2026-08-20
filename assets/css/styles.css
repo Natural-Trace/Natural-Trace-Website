@@ -1,0 +1,2350 @@
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+/* scrollbar-gutter reserves the scrollbar's width whether or not one is shown,
+   so the page can never change width underneath the visitor. It went in to fix
+   the jump the splash overlay caused. The splash is gone, but keeping it means
+   no modal or overflow lock can reintroduce that jump later. */
+html{scroll-behavior:smooth;scrollbar-gutter:stable}
+body{font-family:'Montserrat',-apple-system,sans-serif;color:#2C3345;line-height:1.6;background:#FAFBFC;overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+:root{
+  --sage:#6B7249;--sage-dark:#535A38;--sage-light:#8A9360;
+  --gold:#A29349;--gold-light:#BFB060;
+  /* Gold that can hold text. --gold and --gold-light are surface colours: on
+     the pale gold tint of the NaturalCloud hero neither of them clears 4.5:1
+     at body size. This one is measured, not eyeballed. */
+  --gold-ink:#6B6025;
+  /* Sage that can hold text, the same idea as --gold-ink. --sage is a surface
+     colour: on the off-white and card greys it sits on it measures between
+     4.36:1 and 4.48:1, and 4.5 is the line. Every one of those was a real
+     failure found by the 12 Aug audit rewrite, and every one was within a
+     tenth of passing, which is exactly the margin that a slightly wider font
+     on another machine eats. */
+  --sage-ink:#5A6140;
+  /* An inactive control still has to be legible. WCAG exempts them from the
+     contrast rule, which is a licence this site does not need to take: the
+     disabled pager step was --soft-sage at 1.34:1, which is not a disabled
+     control, it is an invisible one. */
+  --disabled-ink:#6E7369;
+  --teal:#3B666B;--teal-light:#4D8489;
+  --dark:#1A1E2E;--offwhite:#F5F6F1;--soft-sage:#DEDFDE;
+  --text:#2C3345;
+  /* Was #6B7280. Kirsty asked for the grey text to be darker for readability
+     and it was independently failing: 4.45:1 against --offwhite where small
+     text needs 4.5, and 4.15:1 on the --offwhite cards. #565C6B measures
+     6.16, 6.69 and 5.74 on the three surfaces this colour actually lands on.
+     One token, so every muted line on the site moves together. */
+  --muted:#565C6B;
+  --shadow:0 4px 30px rgba(0,0,0,.08);--shadow-lg:0 20px 60px rgba(0,0,0,.12);
+  /* The space under a section head, before whatever the section is about.
+     Three wrappers do this job across the site (.vp-head, .how-head,
+     .industries-header) and they had drifted to 3.25rem, 3.5rem and 4rem, so
+     the same relationship measured 52px, 56px and 64px depending on which
+     section you happened to be looking at. One number, one place to change it. */
+  --section-head-gap:3rem;
+  /* How wide a section head is allowed to get. Sized from measurement: at
+     960px every centred section title on the site holds one line at 1440,
+     except the four listed in docs/heading-widths.md, which are too long to
+     fit at any sensible size and are copy decisions rather than CSS ones. */
+  --section-head-width:1000px;
+  /* Charcoal blue. The How It Works cards land on this by accident, four per
+   cent white over the navy, and Kirsty picked it out of that section by eye.
+   Naming it makes it a colour the site has rather than a coincidence of two
+   other values, and means the footer and Why We Exist cannot drift off it. */
+  --charcoal:#20242F;
+  /* The required-field asterisk. Not a general error colour, it has no other
+     use yet. Chosen to clear 4.5:1 on both surfaces a form label sits on,
+     white and --offwhite: it measures 6.0:1 and 5.7:1. A brighter red would
+     read better as a warning and fail as text. */
+  --required:#B3261E;
+}
+/* balance across every heading, not just .section-title. It evens the line
+   lengths instead of filling each line to the edge and dropping the remainder
+   onto the last one, which is what leaves a heading with one word underneath
+   it. Chrome caps it at six lines and older browsers ignore it, so the worst
+   case is today's wrapping. */
+h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+.container{max-width:1200px;margin:0 auto;padding:0 2rem}
+/* 1.02rem to 1.14rem, 16.3px to 18.2px. Kirsty asked for "Why Customers Choose
+   Natural Trace" to be larger. That line is a section label, not a heading: the
+   H2 under it is "Designed for Industry. Backed by Science." So this moves the
+   label, and it moves every label on the site rather than this one, because a
+   single section whose eyebrow is two points bigger than every other section's
+   is a mistake that looks like a mistake. */
+.section-label{font-family:'Montserrat',sans-serif;display:block;font-size:1.14rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);margin-bottom:.6rem}
+/* One scale, not seventeen overrides.
+   Kirsty's 12 August list asks for a larger heading seventeen times: The
+   Challenge, About Natural Trace, Industries, Careers, FAQ, Our Story, Why We
+   Exist, Why Customers Choose, What Makes Us Different and the rest. They are
+   all this rule. Raising it once keeps the site a system; seventeen local
+   overrides is how a stylesheet stops having a scale at all.
+   Roughly +14% at both ends of the clamp. */
+.section-title{font-size:clamp(2.15rem,4.1vw,3rem);color:var(--dark);line-height:1.18;margin-bottom:1.25rem;letter-spacing:-.025em}
+/* balance evens the lines out instead of filling each one to the edge and
+   leaving whatever is left on the last. It is what stops a centred subtitle
+   ending on a single stranded word. Chrome only applies it to blocks of six
+   lines or fewer, which every subtitle on the site is, and browsers that do
+   not support it simply wrap as they do today. */
+/* text-wrap:pretty, not balance.
+   balance makes every line in the block roughly the same length. Centred that
+   is what you want. Left-aligned in a text column it is wrong: at 1100px the
+   About hero subtitle was setting as two 250px lines inside a 502px column,
+   so the sentence ended halfway across and left a 250px hole down its right
+   side while the paragraph directly beneath it ran the full width. pretty
+   keeps the orphan control and fills each line first.
+   balance is put back below on the section heads that are actually centred. */
+.section-subtitle{font-size:1.1rem;color:var(--muted);max-width:640px;line-height:1.7;text-wrap:pretty}
+.vp-head .section-subtitle,
+.how-head .section-subtitle,
+.industries-header .section-subtitle,
+.services-header .section-subtitle,
+.detection-methods-header .section-subtitle,
+.nc-features-header .section-subtitle{text-wrap:balance}
+
+/* Animations. Scroll-reveal was removed on 6 Aug 2026: every section now
+   paints on load instead of fading in as you scroll. What is left is used by
+   discrete UI, not by page entrances. */
+@keyframes scaleIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+
+/* Nav */
+/* #navbar, not nav.
+
+   This was a bare element selector, which meant every <nav> on the site was
+   position:fixed, top:0, z-index:1000. There was only ever one, so it worked,
+   until the Insights pager was added as <nav class="insights-pager"> because
+   that is what a pagination control is. It was immediately pinned to the top
+   of the window over the site header, at every scroll position, on both
+   Insights pages.
+
+   Neither the layout audit nor the contrast audit saw it. Both measure text
+   against text and background, and a control sitting on top of the header is
+   neither overflowing nor overlapping any text they check.
+
+   Scoped to the id, which is what every one of these twenty-one rules always
+   meant. The alternative was to stop using <nav> for the pager, which would
+   have fixed the symptom by giving up the correct element and left the trap
+   set for whoever adds the next one. */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0);-webkit-backdrop-filter:blur(0);backdrop-filter:blur(0);transition:all .4s;border-bottom:1px solid transparent}
+#navbar.scrolled{background:rgba(255,255,255,.95);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom-color:rgba(0,0,0,.06);box-shadow:0 2px 20px rgba(0,0,0,.06)}
+/* A strip of the navigation bar, painted above where the bar actually sits.
+ *
+ * On iOS the browser's own toolbar grows and shrinks as you scroll, which
+ * moves the top of the layout viewport. A position:fixed element is placed
+ * against that viewport, so during the transition the bar can sit a few pixels
+ * below the true top of the screen and page content shows through the gap
+ * above it. Reported on an iPhone on 18 Aug as the header separating into a
+ * white band with the page visible above it.
+ *
+ * Nothing here can stop the gap opening; that is the browser moving its own
+ * furniture. What it can do is make the gap the same colour as the bar, so
+ * there is nothing to see when it opens.
+ *
+ * background:inherit rather than a literal colour, so this tracks the bar
+ * through both its states without being told twice. Unscrolled that is
+ * rgba(255,255,255,0) and this paints nothing, which is what the transparent
+ * bar over the hero needs. Scrolled it is the same near-white as the bar.
+ *
+ * Off-screen on every browser that does not open a gap, so there is nothing to
+ * regress. 150px is well past any gap iOS has been observed to open.
+ *
+ * Worth knowing if this ever comes back: body carries overflow-x:hidden, and
+ * overflow on the body element is a documented cause of position:fixed
+ * misbehaving on iOS. Removing it would be the next thing to try, but it is
+ * load-bearing against horizontal scroll, so it is not a free change. */
+#navbar::before{content:'';position:absolute;left:0;right:0;bottom:100%;height:150px;
+  background:inherit;pointer-events:none}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:80px;position:relative}
+.nav-logo img{height:44px;width:auto}
+#navbar:not(.scrolled) .logo-color{display:none}#navbar:not(.scrolled) .logo-white{display:block}#navbar.scrolled .logo-color{display:block}#navbar.scrolled .logo-white{display:none}.logo-color,.logo-white{transition:opacity .4s}
+/* ---------------------------------------------------------------------------
+   Navigation: which !important actually wins
+
+   Audited 19 August 2026, after two bugs in one day came out of this block.
+   Twenty authored !important declarations across twelve rules, which the
+   browser expands to seventy-three longhands. Checked against the live DOM on
+   the home page and /team/ at 375px and 1280px — between them those cover both
+   navbar states, because the home page loads unscrolled and every other page is
+   given .scrolled by main.js as soon as it runs.
+
+   The thing to understand before editing anything here: !important does not
+   decide these, it only moves a declaration into a higher bracket. Inside that
+   bracket ordinary specificity still settles it, and most rules in this section
+   are !important, so the contest has simply moved up a tier.
+
+   Four places where two !important declarations set the same property to
+   different values on the same element. All four resolve correctly today:
+
+     1. color, menu links, scrolled + mobile
+        #navbar.scrolled .nav-links a:not(.nav-cta)  (1,3,1)  wins var(--dark)
+        over .nav-links a  (0,1,1)  #fff.  Intended.
+
+     2. color, dropdown links, unscrolled
+        #navbar:not(.scrolled) .nav-dropdown-menu a  (1,2,1)  wins.  Intended.
+
+     3. color, dropdown links, scrolled + mobile
+        The menu-link rule (1,3,1) beats .nav-dropdown-menu a's own
+        color:var(--text), so the dropdown never gets its own colour there.
+        Not intended, and invisible: --text is #2C3345 and --dark is #1A1E2E.
+        Left alone deliberately — there is nothing to see and changing it risks
+        a regression for no gain.
+
+     4. font-size, dropdown links, mobile
+        Was decided by source order alone, both sides (0,1,1). Fixed by scoping
+        the mobile rule to #navbar; see the note there.
+
+   The structural risk, which is the one that will bite next: .nav-cta carries
+   21 of the 73 declarations at specificity (0,1,0), the LOWEST in the section.
+   The most emphatic rule in the file is also the easiest to outrank — anything
+   with an id, or three classes, beats it on every property it sets. That is
+   exactly how the CTA turned dark navy on sage on 19 August. If you are adding
+   a rule that touches .nav-links a, check whether it also catches .nav-cta, and
+   exclude it with :not(.nav-cta) if so.
+
+   No dead rules were found here. Note that this audit could not have found the
+   three dead .nav-toggle span rules removed the same morning, because those
+   carried no !important. A rule that never applies and a rule that loses are
+   different faults and need different checks.
+   --------------------------------------------------------------------------- */
+.nav-links{display:flex;align-items:center;gap:2.25rem;list-style:none}
+.nav-links a{font-size:.88rem;font-weight:500;transition:color .3s,transform .2s;position:relative;cursor:pointer}
+#navbar:not(.scrolled) .nav-links a{color:rgba(255,255,255,.8)}
+#navbar.scrolled .nav-links a{color:#4B5563}
+.nav-links a:hover{transform:translateY(-1px)}
+#navbar:not(.scrolled) .nav-links a:hover{color:#fff}
+#navbar.scrolled .nav-links a:hover{color:var(--sage)}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gold);transition:width .3s}
+.nav-links a:hover::after{width:100%}
+.nav-links a.active::after{width:100%}
+.nav-dropdown{position:relative}
+.nav-dropdown-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%);min-width:200px;background:#fff;border-radius:10px;box-shadow:0 12px 36px rgba(0,0,0,.15);padding:.5rem 0;opacity:0;visibility:hidden;pointer-events:none;transition:all .25s ease;z-index:1000;padding-top:1rem}
+.nav-dropdown-menu::before{content:'';position:absolute;top:-8px;left:0;right:0;height:12px}
+/* focus-within as well as hover. The menu was hover-only, so its contents were
+   in the tab order but invisible: a keyboard user tabbed through eight links
+   they could not see. */
+.nav-dropdown:hover > .nav-dropdown-menu,
+.nav-dropdown:focus-within > .nav-dropdown-menu{opacity:1;visibility:visible;pointer-events:auto}
+
+/* There was a second level here from 12 to 13 Aug, opening to the right, with
+   How It Works under NaturalTag. Kirsty asked for it removed after seeing it.
+   Removed rather than hidden: an unused rule is a rule someone has to read. */
+.nav-dropdown-menu a{display:block;padding:.55rem 1.25rem;font-size:.82rem!important;font-weight:500!important;color:var(--text)!important;transition:all .2s!important;white-space:nowrap}
+.nav-dropdown-menu a:hover{background:var(--offwhite);color:var(--sage)!important}
+.nav-dropdown-menu a::after{display:none!important}
+#navbar:not(.scrolled) .nav-dropdown-menu{background:rgba(30,34,50,.95);border:1px solid rgba(255,255,255,.08)}
+#navbar:not(.scrolled) .nav-dropdown-menu a{color:rgba(255,255,255,.7)!important}
+#navbar:not(.scrolled) .nav-dropdown-menu a:hover{background:rgba(255,255,255,.08);color:#fff!important}
+.nav-cta{background:var(--sage)!important;color:#fff!important;padding:.6rem 1.5rem!important;border-radius:8px;font-weight:600!important;font-size:.85rem!important;transition:all .3s!important;border:none}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{background:var(--sage-dark)!important;transform:translateY(-2px)!important;box-shadow:0 6px 20px rgba(107,114,73,.3)}
+/* The burger is an inline svg drawn with stroke="currentColor", so the colour
+   it takes is whatever `color` resolves to on the button.
+
+   That colour is set here, explicitly, and the reason is a bug that was live
+   for some time: it used to be set nowhere except the home page rule below.
+   On every other page nothing matched, currentColor fell through to the
+   browser's own default for button text, and browsers do not agree on what
+   that is. Chrome, Brave and Firefox use a near-black, which looked correct by
+   accident. iOS Safari uses the system accent blue, so on an iPhone the burger
+   was bright blue on every page except the home hero. Two people reported it
+   on 19 August and it did not reproduce on the machine it was reported to,
+   which is exactly the shape of a bug that lives in a UA default.
+
+   A previous comment here recorded that non-home pages "keep the dark default".
+   There was no dark default to keep. Setting it is the fix; nothing about the
+   markup or the page classes needed to change.
+
+   Three rules targeting `.nav-toggle span` were deleted at the same time. The
+   burger stopped being three spans and became an svg, and they had been dead
+   ever since — they are what made the missing colour hard to see, because the
+   file looked like it was handling this. Their intent was var(--dark) in every
+   state, which is now simply the default here. */
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:.5rem;color:var(--dark)}
+/* White on the home page only, because the hero behind it is a dark
+   photograph. Outranks the rule above on specificity, and stops applying the
+   moment the navbar scrolls onto a pale background. */
+body.page-home #navbar:not(.scrolled) .nav-toggle{color:#fff}
+
+/* Pages */
+.page{display:none;opacity:0;transition:opacity .4s ease}
+.page.active{display:block;animation:fadeIn .5s ease forwards}
+
+/* Hero */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;background:var(--dark);overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.28;will-change:transform}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(107,114,73,.8) 0%,rgba(26,30,46,.92) 100%)}
+.hero-visual{position:absolute;right:12%;top:190px;width:440px;height:400px;border-radius:20px;overflow:hidden;box-shadow:-20px 0 60px rgba(0,0,0,.3);z-index:2}
+.hero-visual img{width:100%;height:100%;object-fit:cover;object-position:center;filter:sepia(.08) saturate(.9) brightness(.95)}
+.hero-visual::after{content:'';position:absolute;inset:0;border:1px solid rgba(255,255,255,.08);border-radius:20px;pointer-events:none;background:linear-gradient(180deg,rgba(107,114,73,.1) 0%,transparent 40%)}
+@media(min-width:1600px){.hero-visual{right:calc(50% - 540px);top:375px}}
+@media(max-width:1100px){.hero-visual{width:340px;height:280px;right:2%}}
+@media(max-width:900px){.hero-visual{display:none}}
+.hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:8rem 2rem 5rem;width:100%}
+
+
+.hero h1{font-size:clamp(2.5rem,4.6vw,3.9rem);color:#fff;line-height:1.08;max-width:820px;margin-bottom:1.25rem;letter-spacing:-.025em;font-weight:700}
+/* overflow:hidden was the mask for the old headline reveal, where each line
+   slid up from underneath. That animation was removed in the de-AI pass; the
+   mask was not. Nothing animates these any more, so all it did was hide
+   whatever did not fit, including the descenders on "Behind Your Brand" at a
+   1.08 line-height. Gone. */
+.hero-line{display:block}
+.hero-line-inner{display:block}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.hero-desc{font-size:1.08rem;color:rgba(255,255,255,.72);max-width:560px;line-height:1.75;margin-bottom:2.5rem}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 2rem;border-radius:10px;font-size:.95rem;font-weight:600;transition:all .35s;cursor:pointer;border:none;position:relative;overflow:hidden}
+.btn-primary{background:var(--sage);color:#fff}
+.btn-primary:hover{background:var(--sage-dark);transform:translateY(-3px);box-shadow:0 6px 20px rgba(107,114,73,.3)}
+.btn-outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.25)}
+.btn-outline:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.05);transform:translateY(-3px)}
+.hero-stats{display:flex;gap:2.5rem;margin-top:4rem;padding-top:2.5rem;border-top:1px solid rgba(255,255,255,.08);flex-wrap:wrap}
+.hero-stat{text-align:left;min-width:120px}
+.hero-stat h3{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:.3px}
+.hero-stat p{font-size:.75rem;color:rgba(255,255,255,.4);margin-top:.25rem;line-height:1.4}
+.hero-stat .count{display:inline}
+
+/* Partners */
+.trust-bar{background:#fff;border-bottom:1px solid #E5E7EB;padding:2.5rem 0;overflow:hidden}
+.trust-label{display:block;text-align:center;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--muted);white-space:nowrap;margin-bottom:1.75rem}
+/* The visible window MUST stay narrower than one set of logos. If it is wider,
+   the tail of one set and the head of the next are on screen together and the
+   same partner appears at both ends of the rail. Eight logos make a set about
+   1528px wide, so 960px leaves a wide margin and still holds five logos at a
+   time. If partners ever drop below six, drop this figure to match: measure one
+   .trust-set in devtools and keep this number below it. */
+.trust-marquee{max-width:960px;margin:0 auto;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%)}
+.trust-track{display:flex;width:max-content;animation:trustRail 48s linear infinite}
+.trust-set{display:flex;align-items:center}
+/* Hovering or tabbing into the rail stops it, so a logo can actually be clicked. */
+.trust-marquee:hover .trust-track,.trust-track:focus-within{animation-play-state:paused}
+@keyframes trustRail{from{transform:translateX(0)}to{transform:translateX(-25%)}}
+@media(prefers-reduced-motion:reduce){
+  .trust-marquee{-webkit-mask-image:none;mask-image:none}
+  .trust-track{animation:none;width:auto;flex-wrap:wrap;justify-content:center}
+  .trust-set+.trust-set{display:none}
+  .trust-set{flex-wrap:wrap;justify-content:center}
+}
+.trust-logo{display:inline-flex;align-items:center;justify-content:center;height:44px;margin-right:4.5rem;transition:transform .3s ease}
+@media(max-width:640px){.trust-logo{margin-right:3rem}}
+.trust-logo img{height:40px;width:auto;max-width:140px;display:block;object-fit:contain;filter:none;opacity:.92;transition:opacity .3s ease,transform .3s ease}
+.trust-logo:hover img{opacity:1;transform:scale(1.08)}
+
+/* About */
+.about{padding:7rem 0;background:#fff}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-image-wrapper{position:relative;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.about-image-wrapper img{width:100%;height:480px;object-fit:cover;transition:transform .6s}
+.about-image-wrapper:hover img{transform:scale(1.04)}
+.about-accent{position:absolute;bottom:-30px;right:-30px;width:200px;height:200px;background:var(--sage);opacity:.08;border-radius:50%;z-index:-1}
+.about-text .section-subtitle{margin-bottom:2rem}
+.about-highlights{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem}
+.about-highlight{display:flex;align-items:flex-start;gap:.75rem;padding:1rem;border-radius:12px;transition:background .3s,transform .3s;border-left:3px solid var(--sage)}
+.about-highlight:hover{background:var(--offwhite);transform:translateY(-2px)}
+.about-highlight h4{font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:600}
+.about-highlight p{font-size:.8rem;color:var(--muted);margin-top:.15rem}
+
+/* Mission */
+.mission{padding:5rem 0;background:var(--offwhite)}
+.mission-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+.mission-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);transition:transform .4s,box-shadow .4s}
+.mission-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.mission-card-img{width:100%;height:200px;object-fit:cover}
+.mission-card-body{padding:1.75rem}
+.mission-card h3{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:.5rem;color:var(--dark)}
+.mission-card p{font-size:.88rem;color:var(--muted);line-height:1.7}
+
+/* Services */
+.services{padding:7rem 0;background:#fff}
+.services-header{text-align:center;margin-bottom:4rem}
+.services-header .section-subtitle{margin:0 auto}
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.service-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);transition:transform .4s,box-shadow .4s;border:1px solid rgba(0,0,0,.04);display:flex;flex-direction:column}
+.service-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
+.service-card-img{width:100%;height:240px;object-fit:cover;transition:transform .5s}
+.service-card:hover .service-card-img{transform:scale(1.05)}
+.service-card-img-wrap{overflow:hidden}
+.service-card-body{padding:2rem;display:flex;flex-direction:column;flex:1}
+.service-card h3{font-family:'Montserrat',sans-serif;font-size:1.15rem;font-weight:700;margin-bottom:.75rem;color:var(--dark)}
+.service-card p{font-size:.9rem;color:var(--muted);line-height:1.7;flex:1}
+.service-card-link{display:inline-flex;align-items:center;gap:.4rem;margin-top:1.25rem;font-size:.85rem;font-weight:600;color:var(--teal);transition:gap .3s,color .3s}
+.service-card-link:hover{gap:.75rem;color:var(--sage-dark)}
+
+/* Technology */
+.technology{padding:7rem 0;background:var(--dark);color:#fff;position:relative;overflow:hidden}
+.tech-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(107,114,73,.12) 0%,transparent 70%);border-radius:50%;top:-200px;right:-200px}
+.tech-glow-2{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(162,147,73,.08) 0%,transparent 70%);border-radius:50%;bottom:-150px;left:-100px}
+.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;position:relative;z-index:2}
+.tech-content .section-label{color:var(--gold)}
+.tech-content .section-title{color:#fff}
+.tech-content .section-subtitle{color:rgba(255,255,255,.55);margin-bottom:2.5rem}
+.tech-features{display:flex;flex-direction:column;gap:1.25rem}
+.tech-feature{display:flex;align-items:flex-start;gap:1rem;padding:1.25rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:12px;transition:all .4s}
+.tech-feature:hover{background:rgba(255,255,255,.06);border-color:rgba(107,114,73,.3);transform:translateX(6px)}
+.tech-feature-num{flex-shrink:0;width:36px;height:36px;background:linear-gradient(135deg,var(--gold),var(--gold-light));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;color:var(--dark)}
+.tech-feature h4{font-family:'Montserrat',sans-serif;font-size:.95rem;font-weight:600;margin-bottom:.2rem}
+.tech-feature p{font-size:.85rem;color:rgba(255,255,255,.45)}
+.tech-image-wrapper{border-radius:20px;overflow:hidden;transition:transform .5s;background:var(--dark);display:flex;align-items:center;justify-content:center;align-self:center}
+.tech-image-wrapper:hover{transform:scale(1.02)}
+.tech-image-wrapper img{width:100%;height:auto;object-fit:contain;padding:2rem}
+
+/* Pipeline */
+.pipeline{padding:5rem 0;background:#1F2336;position:relative;z-index:2}
+.pipeline-header{text-align:center;margin-bottom:3rem}
+.pipeline-header .section-label{color:var(--gold)}
+.pipeline-header .section-title{color:#fff}
+.pipeline-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+.pipeline-step{text-align:center;padding:2rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:16px;transition:all .4s}
+.pipeline-step:hover{background:rgba(255,255,255,.06);border-color:rgba(162,147,73,.3);transform:translateY(-4px)}
+.pipeline-step-num{width:56px;height:56px;margin:0 auto 1.25rem;background:linear-gradient(135deg,var(--gold),var(--gold-light));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-size:1.3rem;font-weight:700;color:var(--dark)}
+.pipeline-step h3{font-family:'Montserrat',sans-serif;color:#fff;font-size:.95rem;font-weight:700;margin-bottom:.5rem}
+.pipeline-step p{font-size:.82rem;color:rgba(255,255,255,.4);max-width:200px;margin:0 auto}
+
+/* Detection Methods */
+.detection-methods{padding:6rem 0;background:var(--dark);position:relative;z-index:2}
+.detection-methods-header{text-align:center;margin-bottom:3.5rem}
+.detection-methods-header .section-label{color:var(--gold)}
+.detection-methods-header .section-title{color:#fff}
+.detection-methods-header .section-subtitle{color:rgba(255,255,255,.55);margin:0 auto}
+.detection-methods-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:2.5rem}
+.method-card{position:relative;padding:2.5rem 2rem 2rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;transition:all .4s;text-align:center;display:flex;flex-direction:column;align-items:center}
+.method-card:hover{background:rgba(255,255,255,.06);border-color:rgba(107,114,73,.35);transform:translateY(-6px)}
+.method-tier{font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:.35rem 1rem;border-radius:20px;margin-bottom:1.5rem;display:inline-block}
+.method-tier.basic{background:rgba(59,102,107,.2);color:var(--teal-light)}
+.method-tier.advanced{background:rgba(107,114,73,.2);color:var(--sage-light)}
+.method-tier.premium{background:rgba(162,147,73,.2);color:var(--gold-light)}
+.method-icon{width:120px;height:120px;border-radius:16px;overflow:hidden;margin-bottom:1.25rem}
+.method-icon img{width:100%;height:100%;object-fit:cover}
+.method-card h3{font-family:'Montserrat',sans-serif;color:#fff;font-size:1.1rem;font-weight:700;margin-bottom:.25rem}
+.method-card .method-full-name{font-size:.82rem;color:rgba(255,255,255,.35);margin-bottom:1rem}
+.method-card p.method-desc{font-size:.88rem;color:rgba(255,255,255,.5);line-height:1.7;max-width:280px}
+.method-card ul{list-style:none;padding:0;margin:1.25rem 0 0;text-align:left;width:100%}
+.method-card ul li{font-size:.82rem;color:rgba(255,255,255,.45);padding:.4rem 0;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:.5rem}
+.method-card ul li::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.method-card.basic ul li::before{background:var(--teal-light)}
+.method-card.advanced ul li::before{background:var(--sage-light)}
+.method-card.premium ul li::before{background:var(--gold-light)}
+.detection-algo-note{text-align:center;max-width:680px;margin:0 auto;padding:2rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px}
+.detection-algo-note p{font-size:.9rem;color:rgba(255,255,255,.5);line-height:1.75}
+.detection-algo-note strong{color:var(--gold-light);font-weight:600}
+
+/* Data Pipeline */
+.data-pipeline{padding:0;background:var(--dark);position:relative;overflow:hidden}
+.dp-hero{padding:6rem 0 3rem;text-align:center;position:relative;z-index:2}
+.dp-hero .section-label{color:var(--gold)}
+.dp-hero h2{font-size:clamp(2rem,4.5vw,3rem);color:#fff;margin-bottom:1rem}
+.dp-hero p{font-size:1.1rem;color:rgba(255,255,255,.55);max-width:680px;margin:0 auto;line-height:1.75}
+.dp-glow{position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(107,114,73,.1) 0%,transparent 70%);border-radius:50%;top:-200px;right:-100px}
+.dp-steps{max-width:1100px;margin:0 auto 4rem;position:relative;z-index:2;padding:0 2rem;display:flex;flex-direction:column;gap:2rem}
+.dp-step{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;padding:2rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden}
+.dp-step:nth-child(even){direction:rtl}
+.dp-step:nth-child(even)>*{direction:ltr}
+.dp-step-img{border-radius:12px;overflow:hidden;height:260px}
+.dp-step-img img{width:100%;height:100%;object-fit:cover;display:block}
+.dp-step-text{padding:1rem 0}
+.dp-step-num{font-family:'Montserrat',sans-serif;font-size:3.5rem;color:rgba(107,114,73,.3);line-height:1;margin-bottom:.5rem;display:block}
+.dp-step h3{font-family:'Montserrat',sans-serif;color:#fff;font-size:1.2rem;font-weight:700;margin-bottom:.75rem}
+.dp-step p{font-size:.92rem;color:rgba(255,255,255,.5);line-height:1.75}
+.dp-trust{max-width:1100px;margin:0 auto 3rem;padding:3rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;position:relative;z-index:2}
+.dp-trust h3{font-family:'Montserrat',sans-serif;color:var(--gold-light);font-size:1.15rem;font-weight:700;margin-bottom:1rem}
+.dp-trust p{font-size:.9rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:0}
+.dp-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;max-width:1100px;margin:0 auto 4rem;padding:0 2rem;position:relative;z-index:2}
+.dp-stat{text-align:left;padding:1.5rem;background:rgba(255,255,255,.03);border-left:3px solid var(--sage);border-radius:0 12px 12px 0}
+.dp-stat p{font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.6}
+.dp-stat strong{color:var(--gold-light);font-weight:600;display:block;margin-bottom:.25rem}
+.dp-cta{text-align:center;padding:3rem 2rem 6rem;position:relative;z-index:2}
+.dp-cta p{font-size:1.05rem;color:rgba(255,255,255,.5);margin-bottom:2rem;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.7;font-style:italic}
+@media(max-width:900px){.dp-step{grid-template-columns:1fr;gap:1.5rem}.dp-step:nth-child(even){direction:ltr}.dp-step-img{height:200px}.dp-stats{grid-template-columns:repeat(2,1fr);gap:1rem}}
+@media(max-width:600px){.dp-steps,.dp-stats{grid-template-columns:1fr}}
+
+/* Quality Standards */
+.qs-hero-section{padding:0;background:var(--dark);position:relative;overflow:hidden}
+.qs-glow{position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(59,102,107,.12) 0%,transparent 70%);border-radius:50%;top:-200px;left:-100px}
+.qs-hero{padding:6rem 0 4rem;text-align:center;position:relative;z-index:2}
+.qs-hero .section-label{color:var(--gold)}
+.qs-hero h2{font-size:clamp(2rem,4.5vw,3rem);color:#fff;margin-bottom:1rem}
+.qs-hero p{font-size:1.1rem;color:rgba(255,255,255,.55);max-width:720px;margin:0 auto;line-height:1.75}
+.qs-standards{padding:5rem 0;background:#fff}
+.qs-grid{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:3rem}
+.qs-card{display:grid;grid-template-columns:1fr 1.4fr;gap:3rem;align-items:center;padding:2.5rem;background:var(--offwhite);border-radius:16px;border:1px solid #E5E7EB}
+.qs-card-reverse{grid-template-columns:1.4fr 1fr}
+.qs-card-reverse .qs-card-img{order:2}
+.qs-card-reverse .qs-card-body{order:1}
+.qs-card-img{border-radius:12px;overflow:hidden;height:280px}
+.qs-card-img img{width:100%;height:100%;object-fit:cover;display:block}
+.qs-card-body{padding:.5rem 0}
+.qs-tag{display:inline-block;font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--sage);background:rgba(107,114,73,.1);padding:.35rem .75rem;border-radius:6px;margin-bottom:.75rem}
+.qs-card h3{font-family:'Montserrat',sans-serif;font-size:1.6rem;color:var(--dark);margin-bottom:.35rem;letter-spacing:.02em}
+.qs-card-subtitle{font-family:'Montserrat',sans-serif;font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:1rem;line-height:1.5}
+.qs-card p{font-size:.9rem;color:var(--dark);line-height:1.75;opacity:.75}
+.qs-commitment{padding:4rem 0 6rem;background:#fff}
+.qs-commitment-inner{max-width:800px;margin:0 auto;text-align:center;padding:3rem;background:var(--dark);border-radius:16px}
+.qs-commitment-inner h3{font-family:'Montserrat',sans-serif;color:var(--gold-light);font-size:1.15rem;font-weight:700;margin-bottom:1rem}
+.qs-commitment-inner p{font-size:.92rem;color:rgba(255,255,255,.55);line-height:1.8;margin-bottom:2rem}
+@media(max-width:900px){.qs-card,.qs-card-reverse{grid-template-columns:1fr;gap:1.5rem}.qs-card-reverse .qs-card-img{order:0}.qs-card-reverse .qs-card-body{order:0}.qs-card-img{height:200px}}
+
+/* ====== NaturalTag Page ====== */
+/* Primary brand colors: sage/gold/white instead of dark */
+.nt-hero-section{padding:7rem 0;background:var(--offwhite);color:var(--dark);position:relative;overflow-x:clip;overflow-y:visible}
+.nt-hero-section .tech-glow{background:radial-gradient(circle,rgba(107,114,73,.08) 0%,transparent 70%)}
+.nt-hero-section .tech-glow-2{background:radial-gradient(circle,rgba(162,147,73,.06) 0%,transparent 70%)}
+.nt-hero-section .tech-grid{align-items:start}
+.nt-hero-section .section-label{color:var(--sage)}
+.nt-hero-section .section-title{color:var(--dark)}
+.nt-hero-section .section-subtitle{color:var(--muted)}
+.nt-hero-section .tech-feature{background:rgba(107,114,73,.05);border:1px solid rgba(107,114,73,.1)}
+.nt-hero-section .tech-feature:hover{background:rgba(107,114,73,.1);border-color:rgba(107,114,73,.25)}
+.nt-hero-section .tech-feature h4{color:var(--dark)}
+.nt-hero-section .tech-feature p{color:var(--muted)}
+.nt-hero-section .tech-image-wrapper{background:transparent;border-radius:0;box-shadow:none;align-self:start;position:sticky;top:120px}
+.nt-hero-section .tech-image-wrapper img{filter:brightness(0) invert(43%) sepia(12%) saturate(1100%) hue-rotate(44deg) brightness(94%) contrast(87%);opacity:1}
+
+.nt-pipeline{padding:5rem 0;background:var(--sage);position:relative;z-index:2}
+.nt-pipeline .pipeline-header .section-label{color:var(--gold-light)}
+.nt-pipeline .pipeline-header .section-title{color:#fff}
+.nt-pipeline .pipeline-step{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1)}
+.nt-pipeline .pipeline-step:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.2)}
+.nt-pipeline .pipeline-step h3{color:#fff}
+.nt-pipeline .pipeline-step p{color:rgba(255,255,255,.65)}
+
+.nt-video-section{padding:3rem 0 3.5rem;background:var(--dark);position:relative;overflow:hidden}
+.nt-video-header{text-align:center;margin-bottom:2rem;position:relative;z-index:2}
+.nt-video-header .section-label{color:var(--gold)}
+.nt-video-header h2{color:#fff}
+.nt-video-header p{font-size:.95rem;color:rgba(255,255,255,.45);max-width:600px;margin:0 auto;line-height:1.7}
+.nt-journey-bar{padding:2.5rem 0;background:#252A3A;position:relative;z-index:2}
+.nt-journey-strip{display:flex;align-items:center;justify-content:center;gap:0;max-width:800px;margin:0 auto;position:relative;z-index:2}
+.nt-journey-stage{display:flex;flex-direction:column;align-items:center;gap:.5rem;flex:0 0 auto}
+.nt-journey-icon{width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;transition:all .3s}
+.nt-journey-icon svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.nt-journey-label{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:500;color:rgba(255,255,255,.5);letter-spacing:.04em;white-space:nowrap}
+.nt-journey-line{flex:1;height:1px;min-width:40px;border-top:1.5px dashed rgba(255,255,255,.15);margin:0 .25rem;align-self:center;margin-bottom:1.5rem}
+@media(max-width:600px){.nt-journey-strip{gap:0;flex-wrap:wrap;justify-content:center}.nt-journey-line{min-width:20px}.nt-journey-icon{width:38px;height:38px}.nt-journey-icon svg{width:18px;height:18px}.nt-journey-label{font-size:.6rem}}
+.nt-video-wrapper{max-width:960px;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 8px 40px rgba(0,0,0,.3)}
+.nt-video-wrapper video{width:100%;display:block}
+
+.nt-cta-section{padding:3rem 0 5rem;background:var(--offwhite);text-align:center;position:relative;z-index:2}
+.nt-cta-section p{font-size:1rem;color:var(--muted);margin-bottom:1.5rem;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.7;font-style:italic}
+
+@media(max-width:900px){
+  .nt-pipeline .pipeline-steps{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .nt-pipeline .pipeline-steps{grid-template-columns:1fr}
+}
+
+/* NaturalCloud */
+.nc-hero-section{padding:0;background:var(--dark);position:relative;overflow:hidden}
+.nc-glow{position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(59,102,107,.14) 0%,transparent 70%);border-radius:50%;top:-200px;right:-100px}
+.nc-glow-2{position:absolute;width:350px;height:350px;background:radial-gradient(circle,rgba(59,102,107,.08) 0%,transparent 70%);border-radius:50%;bottom:-150px;left:-80px}
+.nc-hero{padding:6rem 0 4rem;text-align:center;position:relative;z-index:2}
+.nc-hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;text-align:left}
+.nc-hero-logo{display:flex;align-items:center;justify-content:center}
+.nc-hero-logo img{width:280px;height:auto;border-radius:20px;box-shadow:0 8px 40px rgba(0,0,0,.3)}
+.nc-hero .section-label{color:var(--gold)}
+.nc-hero h2{font-size:clamp(2rem,4.5vw,3rem);color:#fff;margin-bottom:1rem}
+.nc-hero p{font-size:1.1rem;color:rgba(255,255,255,.55);max-width:720px;line-height:1.75}
+.nc-hero:not(.nc-hero-grid) p{margin:0 auto}
+.nc-pipeline{padding:5rem 0;background:#fff}
+.nc-pipeline-grid{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:3rem}
+.nc-card{display:grid;grid-template-columns:1fr 1.4fr;gap:3rem;align-items:center;padding:2.5rem;background:var(--offwhite);border-radius:16px;border:1px solid #E5E7EB}
+.nc-card-reverse{grid-template-columns:1.4fr 1fr}
+.nc-card-reverse .nc-card-img{order:2}
+.nc-card-reverse .nc-card-body{order:1}
+.nc-card-img{border-radius:12px;overflow:hidden;height:280px}
+.nc-card-img img{width:100%;height:100%;object-fit:cover;display:block}
+.nc-card-body{padding:.5rem 0}
+.nc-tag{display:inline-block;font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);background:rgba(59,102,107,.1);padding:.35rem .75rem;border-radius:6px;margin-bottom:.75rem}
+.nc-card h3{font-family:'Montserrat',sans-serif;font-size:1.6rem;color:var(--dark);margin-bottom:.35rem;letter-spacing:.02em}
+.nc-card-subtitle{font-family:'Montserrat',sans-serif;font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:1rem;line-height:1.5}
+.nc-card p{font-size:.9rem;color:var(--dark);line-height:1.75;opacity:.75}
+.nc-features-section{padding:5rem 0;background:var(--dark);position:relative;overflow:hidden}
+.nc-features-header{text-align:center;margin-bottom:3.5rem;position:relative;z-index:2}
+.nc-features-header .section-label{color:var(--gold)}
+.nc-features-header .section-title{color:#fff}
+.nc-features-header .section-subtitle{color:rgba(255,255,255,.55);margin:0 auto}
+.nc-features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto;position:relative;z-index:2}
+.nc-feature-card{padding:0;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden;transition:all .4s;display:flex;flex-direction:column}
+.nc-feature-card:hover{background:rgba(255,255,255,.06);border-color:rgba(59,102,107,.4);transform:translateY(-6px)}
+.nc-feature-card-img{width:100%;height:180px;overflow:hidden}
+.nc-feature-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.nc-feature-card:hover .nc-feature-card-img img{transform:scale(1.05)}
+.nc-feature-card-body{padding:1.5rem 1.75rem 1.75rem;flex:1;display:flex;flex-direction:column}
+.nc-feature-card h3{font-family:'Montserrat',sans-serif;color:#fff;font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.nc-feature-card p{font-size:.85rem;color:rgba(255,255,255,.45);line-height:1.7;flex:1}
+.nc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;max-width:1100px;margin:3rem auto 0;padding:0 2rem;position:relative;z-index:2}
+.nc-stat{text-align:left;padding:1.5rem;background:rgba(255,255,255,.03);border-left:3px solid var(--teal);border-radius:0 12px 12px 0}
+.nc-stat p{font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.6}
+.nc-stat strong{color:var(--gold-light);font-weight:600;display:block;margin-bottom:.25rem}
+.nc-cta{padding:4rem 0 6rem;background:#fff}
+.nc-cta-inner{max-width:800px;margin:0 auto;text-align:center;padding:3rem;background:var(--dark);border-radius:16px}
+.nc-cta-inner p{font-size:1.05rem;color:rgba(255,255,255,.55);margin-bottom:2rem;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.7;font-style:italic}
+@media(max-width:900px){
+  .nc-hero-grid{grid-template-columns:1fr;gap:2rem;text-align:center}
+  .nc-hero-logo img{width:200px}
+  .nc-card,.nc-card-reverse{grid-template-columns:1fr;gap:1.5rem}
+  .nc-card-reverse .nc-card-img{order:0}
+  .nc-card-reverse .nc-card-body{order:0}
+  .nc-card-img{height:200px}
+  .nc-features-grid{grid-template-columns:repeat(2,1fr)}
+  .nc-stats{grid-template-columns:repeat(2,1fr);gap:1rem}
+}
+@media(max-width:600px){
+  .nc-features-grid{grid-template-columns:1fr}
+  .nc-stats{grid-template-columns:1fr}
+}
+
+/* Industries */
+.industries{padding:7rem 0;background:#fff}
+.industries-header{text-align:center;margin-bottom:var(--section-head-gap)}
+.industries-header .section-subtitle{margin:0 auto}
+.industries-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+.industry-card{position:relative;border-radius:16px;overflow:hidden;height:340px;cursor:pointer}
+.industry-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.industry-card:hover img{transform:scale(1.1)}
+/* The scrim behind the tile label. It used to fade out by 60% of the height,
+   which was fine over the dark stock photographs that were here before.
+   Kirsty's pictures are bright: pale powders, white sacks, a cream bench. The
+   labels measured as low as 1.2:1 against them, which is unreadable, and worst
+   on the Industries page where the description below the title pushes the
+   title further up the card and out of the dark end of the gradient.
+
+   These stops are measured rather than chosen. White text needs the pixel
+   behind it no brighter than about rgb(118,118,118) to clear WCAG AA, and the
+   brightest thing under any of these eight labels was rgb(233,234,229). */
+/* Lighter than it was, at Kirsty's request: the photographs were barely
+   readable under it. Every stop comes down; the shape is unchanged, so the
+   scrim still reaches as high as the text does. Verified by the contrast audit
+   rather than by eye. */
+.industry-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.82) 20%,rgba(0,0,0,.4) 40%,rgba(0,0,0,0) 62%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;transition:background .4s}
+.industry-card:hover .industry-card-overlay{background:linear-gradient(to top,rgba(107,114,73,.85) 0%,rgba(0,0,0,.1) 60%)}
+/* Two lines of room whether the title needs them or not. The block is anchored
+   to the bottom of the card, so "Nutraceuticals & Dietary Supplements" wrapping
+   to two lines started 19px higher than its three one-line neighbours. Kirsty
+   asked for it to drop into line with the others; reserving the space is what
+   puts every title on the same line, rather than nudging one card. */
+.industry-card h3{font-family:'Montserrat',sans-serif;color:#fff;font-size:1.05rem;font-weight:700;line-height:1.35;min-height:2.7em;display:flex;align-items:flex-end;transform:translateY(0);transition:transform .4s}
+/* The description takes no room until it is shown.
+   It was opacity:0, which hides it but keeps its box, and the block is anchored
+   to the bottom of the card, so an invisible paragraph was pushing every title
+   upward by its own height. On the Industries page the descriptions are long
+   and different lengths, so the titles floated at different heights in the
+   middle of the cards, over whatever the photograph was doing there. That is
+   why the scrim had to reach two thirds of the way up the card, and why the
+   photographs underneath were barely visible.
+   Collapsed, the title sits at the bottom of every card, the scrim only has to
+   cover the bottom band, and the picture shows. */
+.industry-card p{color:rgba(255,255,255,.82);font-size:.8rem;margin-top:0;max-height:0;opacity:0;overflow:hidden;transform:translateY(10px);transition:max-height .4s,opacity .4s .1s,transform .4s .1s,margin-top .4s}
+.industry-card:hover h3{transform:translateY(-4px)}
+.industry-card:hover p{max-height:8rem;opacity:1;margin-top:.35rem;transform:translateY(0)}
+
+/* CTA */
+/* The middle stop was --sage. Pure white on --sage measures 5.13:1, which is
+   fine for the heading and leaves nothing for anything set below full white,
+   and the label and subcopy on this panel are not full white. Darker through
+   the middle, so 18px text has somewhere to go. */
+.cta-section{padding:7rem 0;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--sage-dark) 0%,#5A613C 50%,var(--sage-dark) 100%)}
+/* The photograph blended into the panel, at Kirsty's request.
+   This replaced a .cta-bg div carrying an Unsplash URL hard-coded here at 8%
+   opacity. Three things wrong with that: the picture was a third party's to
+   withdraw, nobody could change it without editing the stylesheet, and an
+   8% overlay of a full-colour photograph on a green panel is a smudge rather
+   than a texture.
+
+   luminosity keeps the picture's light and shade and takes its colour from the
+   sage beneath, so the capsules read as one tone with the panel. The scrim is
+   the panel's own gradient at 92%, which is what leaves the photograph its 8%
+   without letting it bring its own colours. Measured against the white text
+   on top; see the contrast audit, which now covers this page. */
+.cta-section-photo{
+  background-color:var(--sage-dark);
+  background-image:
+    linear-gradient(135deg,rgba(83,90,56,.96) 0%,rgba(90,97,60,.945) 50%,rgba(83,90,56,.96) 100%),
+    var(--cta-bg);
+  background-size:cover,cover;
+  background-position:center,center;
+  background-repeat:no-repeat,no-repeat;
+  background-blend-mode:normal,luminosity;
+}
+/* The two shapes carry the Natural Trace mark rather than being plain circles,
+   so that the two sage panels on the site are not the same panel twice. The
+   compatibility panel on the home page wears the mark once, small, tucked into
+   the top right corner. This one wears it twice, large, bleeding off two
+   opposite corners. Same asset, deliberately different treatment.
+
+   Masked rather than painted, for the same reason as .finalcta-inner::after:
+   the fill is a percentage of white that this stylesheet controls, so the mark
+   stays tonal over whatever the photograph blended underneath is doing. A PNG
+   painted directly would be mid-sage on sage and read as a smudge.
+
+   border-radius:50% stays for the same reason it stays on the other panel. If
+   --cta-mark is unset, or a browser has no mask support, both mask
+   declarations drop and what is left is the plain circle these were before.
+   The icon is a circle inscribed in a square, so the radius never clips it. */
+.cta-shape{position:absolute;border-radius:50%;opacity:.08;background:#fff;
+  -webkit-mask:var(--cta-mark) no-repeat center/contain;mask:var(--cta-mark) no-repeat center/contain}
+.cta-shape-1{width:300px;height:300px;top:-100px;left:-80px}
+.cta-shape-2{width:200px;height:200px;bottom:-60px;right:-40px;animation-delay:3s}
+/* Same judgement as the home page panel, and for the same reason. Below 560px
+   the headline wraps to two lines and lands directly on the top left mark, and
+   a mark with internal detail crossing letterforms is noise in a way a plain
+   circle never was. The bottom right one sits below the buttons and collides
+   with nothing, so it stays and the panel keeps some texture. */
+@media(max-width:560px){
+  .cta-shape-1{display:none}
+}
+.cta-inner{position:relative;z-index:2;text-align:center;max-width:700px;margin:0 auto}
+/* .5 and .6 white measured 2.52:1 and 2.94:1 on this panel where 18px text
+   needs 4.5, and had done since the panel was built. It was invisible because
+   the contrast audit did not visit this page until the photograph was added on
+   12 Aug. Both are near-white now, and the panel below them is darker. */
+.cta-inner .section-label{color:#fff}
+.cta-inner h2{font-size:clamp(2rem,4vw,2.8rem);color:#fff;margin-bottom:1.25rem;letter-spacing:-.005em;line-height:1.25;text-wrap:balance}
+.cta-inner p{font-size:1.1rem;color:rgba(255,255,255,.93);margin-bottom:2.5rem;line-height:1.7}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-white{background:#fff;color:var(--sage-dark);padding:.9rem 2.5rem;border-radius:10px;font-weight:700;border:none}
+.btn-white:hover{background:#F0F0F0;transform:translateY(-3px);box-shadow:0 10px 35px rgba(0,0,0,.15)}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3);padding:.9rem 2.5rem;border-radius:10px;font-weight:600}
+.btn-ghost:hover{border-color:#fff;transform:translateY(-3px)}
+
+/* Contact page */
+.contact-section{padding:7rem 0;background:#fff}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.contact-info h3{font-family:'Montserrat',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.5rem;color:var(--dark)}
+.contact-info p{font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.7}
+.contact-info-item{display:flex;align-items:flex-start;gap:1rem;padding:1.25rem;background:var(--offwhite);border-radius:12px;margin-bottom:1rem;transition:transform .3s}
+.contact-info-item:hover{transform:translateX(4px)}
+.contact-info-item-dot{width:10px;height:10px;border-radius:50%;background:var(--sage);margin-top:4px;flex-shrink:0}
+.contact-info-item h4{font-family:'Montserrat',sans-serif;font-size:.88rem;font-weight:600;margin-bottom:.3rem}
+.contact-info-item p{font-size:.82rem;color:var(--muted);margin-bottom:0}
+.contact-image{border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.contact-image img{width:100%;height:400px;object-fit:cover}
+
+
+.contact-form{background:#fff;border-radius:16px;padding:2.5rem;box-shadow:var(--shadow-lg);border:1px solid #E5E7EB}
+.contact-form h3{font-family:'Montserrat',sans-serif;font-size:1.5rem;margin-bottom:.5rem;color:var(--dark)}
+.contact-form p{font-size:.85rem;color:var(--muted);margin-bottom:2rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-group{margin-bottom:1rem}
+/* Required marker.
+   Written by the template next to the label of every field carrying the
+   required attribute, rather than typed into the label strings in the data
+   files. That way the marker cannot say one thing while the input does
+   another, and nobody editing copy in the CMS has to remember to type it.
+   aria-hidden because the required attribute already tells a screen reader
+   what this asterisk is telling everyone else. */
+.form-group label .req{color:var(--required);margin-left:.15rem;font-weight:700}
+.form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--dark);margin-bottom:.4rem;letter-spacing:.3px}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:.75rem 1rem;border:1.5px solid #E5E7EB;border-radius:10px;font-family:'Montserrat',sans-serif;font-size:.9rem;transition:border-color .3s,box-shadow .3s;background:#FAFAFA;outline:none;box-sizing:border-box}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--sage);box-shadow:0 0 0 3px rgba(107,114,73,.1);background:#fff}
+.form-group textarea{resize:vertical;min-height:120px}
+.form-submit{width:100%;padding:.9rem;background:var(--sage);color:#fff;border:none;border-radius:10px;font-family:'Montserrat',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .3s;margin-top:.5rem}
+.form-submit:hover{background:var(--sage-dark);transform:translateY(-2px);box-shadow:0 8px 25px rgba(107,114,73,.3)}
+.form-success{display:none;text-align:center;padding:2rem;color:var(--sage)}
+.form-success h4{font-size:1.2rem;margin-bottom:.5rem}
+.form-success p{font-size:.9rem;color:var(--muted)}
+@media(max-width:768px){.form-row{grid-template-columns:1fr}}
+/* Privacy */
+/* Careers tabs */
+.careers-tabs{display:flex;gap:.5rem;margin-bottom:2rem;border-bottom:2px solid #E5E7EB;padding-bottom:0}
+.careers-tab{font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:600;padding:.75rem 1.5rem;background:none;border:none;border-bottom:3px solid transparent;color:var(--muted);cursor:pointer;transition:all .3s;margin-bottom:-2px}
+.careers-tab:hover{color:var(--dark)}
+.careers-tab.active{color:var(--sage);border-bottom-color:var(--sage)}
+.careers-panel{display:none}
+.careers-panel.active{display:block}
+@media(max-width:768px){#careers-internship > div{grid-template-columns:1fr !important}}
+
+.privacy-page{padding:8rem 0 5rem;background:#fff}
+/* Careers and Team reuse this section for the page frame but open with a
+   normal section head. Without these exclusions the head picked up legal
+   document styling: the subtitle rendered at .92rem instead of 1.1rem and the
+   title sat 2rem above it instead of 1.25rem, so those two pages had a smaller
+   subtitle further from its title than every other page on the site. */
+.privacy-page h2:not(.section-title){margin-bottom:2rem}
+.privacy-page h3{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:700;color:var(--dark);margin:2rem 0 .75rem}
+.privacy-page p:not(.section-subtitle),.privacy-page li{font-size:.92rem;color:var(--muted);line-height:1.8}
+.privacy-page ul{list-style:disc;padding-left:1.5rem;margin:.5rem 0 1rem}
+.privacy-page li{margin-bottom:.35rem}
+.privacy-back{display:inline-flex;align-items:center;gap:.4rem;font-size:.85rem;font-weight:600;color:var(--teal);cursor:pointer;margin-bottom:2rem;transition:gap .3s}
+.privacy-back:hover{gap:.75rem}
+/* Team */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2rem;max-width:1000px;margin:0 auto}
+.advisor-grid{max-width:900px}
+.team-card{background:#fff;border-radius:14px;overflow:hidden;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.06);transition:transform .3s,box-shadow .3s;cursor:pointer}
+.team-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.team-card h4{font-family:'Montserrat',sans-serif;font-size:.95rem;font-weight:700;color:var(--dark);margin:.5rem 0 .25rem}
+.team-card-info{padding:1rem 1.25rem 1.5rem}
+.team-avatar{width:100%;aspect-ratio:1;overflow:hidden}
+.team-avatar img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.team-card:hover .team-avatar img{transform:scale(1.08)}
+.team-avatar-sm{aspect-ratio:1}
+.team-role{font-size:.8rem;color:var(--sage);font-weight:600;margin-bottom:.15rem}
+.team-loc{font-size:.75rem;color:var(--muted)}
+@media(max-width:600px){.team-grid{grid-template-columns:repeat(2,1fr);gap:1rem}}
+
+/* Team Modal */
+.team-modal-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
+.team-modal-overlay.active{display:flex;opacity:1}
+.team-modal{background:#fff;border-radius:16px;max-width:720px;width:90%;max-height:85vh;overflow:hidden;display:flex;box-shadow:0 24px 80px rgba(0,0,0,.25);animation:scaleIn .3s ease forwards}
+.team-modal-photo{width:260px;min-height:320px;flex-shrink:0;overflow:hidden}
+.team-modal-photo img{width:100%;height:100%;object-fit:cover}
+.team-modal-body{padding:2rem 2rem 1.5rem;flex:1;overflow-y:auto;position:relative}
+.team-modal-close{position:absolute;top:1rem;right:1rem;width:32px;height:32px;border-radius:50%;border:1.5px solid #ddd;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#888;transition:all .2s}
+.team-modal-close:hover{border-color:var(--sage);color:var(--sage);background:#f5f5f5}
+.team-modal-body h3{font-family:'Montserrat',sans-serif;font-size:1.4rem;font-weight:700;color:var(--dark);margin-bottom:.25rem}
+.team-modal-body .tm-role{font-size:.95rem;color:var(--sage);font-weight:600;margin-bottom:.15rem}
+.team-modal-body .tm-loc{font-size:.85rem;color:var(--muted);margin-bottom:.75rem}
+.team-modal-body .tm-edu{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1.25rem}
+.team-modal-body .tm-edu-item{display:inline-flex;align-items:center;font-size:.85rem;color:var(--teal);font-weight:500}
+.team-modal-body .tm-bio{list-style:disc;padding-left:1.25rem;margin-bottom:1.25rem}
+.team-modal-body .tm-bio li{font-size:.88rem;color:#444;line-height:1.6;margin-bottom:.5rem}
+.team-modal-linkedin{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--sage);color:var(--sage);font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:700;text-decoration:none;transition:all .2s}
+.team-modal-linkedin:hover{background:var(--sage);color:#fff}
+@media(max-width:640px){.team-modal{flex-direction:column}.team-modal-photo{width:100%;min-height:200px;max-height:240px}}
+
+/* Footer */
+footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand-logo{height:40px;width:auto;margin-bottom:1rem;opacity:.7}
+.footer-brand p{font-size:.85rem;line-height:1.7;max-width:300px}
+/* White at 25% on the charcoal measured 2.27:1, the worst on the site and a
+   long way under the 4.5 small text needs. 55% measures 5.68 and still reads
+   as a quiet label rather than a heading competing with the links below it. */
+.footer-col h4{font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.55);margin-bottom:1.25rem}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:.6rem}
+.footer-col a{font-size:.9rem;color:rgba(255,255,255,.5);transition:color .2s,padding-left .2s;cursor:pointer}
+.footer-col a:hover{color:#fff;padding-left:4px}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-bottom p{font-size:.8rem}
+.footer-social{display:flex;gap:.75rem}
+.footer-social a{width:36px;height:36px;background:rgba(255,255,255,.06);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:rgba(255,255,255,.78);transition:all .3s}
+.footer-social a:hover{background:var(--sage);color:#fff;transform:translateY(-2px)}
+
+/* Responsive */
+@media(max-width:1024px){
+  .about-grid,.tech-grid,.contact-grid{grid-template-columns:1fr;gap:3rem}
+  .services-grid,.mission-grid,.mission-values-grid{grid-template-columns:repeat(2,1fr)}
+  .industries-grid{grid-template-columns:repeat(2,1fr)}
+  .pipeline-steps{grid-template-columns:repeat(2,1fr)}
+  .detection-methods-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .hero-stats{gap:2rem;flex-wrap:wrap}
+}
+@media(max-width:768px){
+  /* Left aligned, not centred. The menu is eighteen links across three levels
+     now that the dropdowns open here, and an indent cannot show a hierarchy in
+     a centred list: every row starts in a different place for a reason that
+     has nothing to do with its depth. */
+  /* The panel is absolutely positioned inside a fixed navbar, so it behaves as
+     though it were fixed: it does not scroll with the page. With every dropdown
+     expanded inline below, the menu is seventeen rows tall, which overflows a
+     phone screen. Without a height limit and its own scrollbar it simply ran off
+     the bottom, the rows past the fold were unreachable, and a swipe fell
+     through to the document and scrolled the page behind the still-open menu.
+     Reported on a phone on 18 Aug.
+
+     100dvh rather than 100vh because a mobile browser's toolbars collapse on
+     scroll and 100vh is the tall measurement, which would put the last row back
+     under the bottom edge. The vh line is a fallback for browsers that do not
+     know dvh and is deliberately left in place above it.
+
+     overscroll-behavior:contain is the half of the fix people forget: without
+     it, reaching the end of the menu hands the rest of the gesture to the
+     document, which is the scrolling-behind half of the same bug. */
+  .nav-links{display:none;flex-direction:column;align-items:stretch;text-align:left;position:absolute;top:100%;left:0;right:0;background:var(--dark);padding:1rem 2rem;z-index:999;
+    max-height:calc(100vh - 80px);
+    max-height:calc(100dvh - 80px);
+    overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .nav-links.show{display:flex}
+  .nav-links li{margin:0;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.1)}
+  .nav-links li:last-child{border-bottom:none}
+  .nav-links a{color:#fff!important;font-size:1rem}
+  /* The dropdowns open inline on a phone instead of not opening at all.
+     They were position:absolute, visibility:hidden and revealed on :hover,
+     which a touch screen does not have, so Team, Careers, NaturalDetect,
+     NaturalCloud, FAQ, the four industries and Industry Use-Cases were
+     unreachable from the phone menu entirely: fourteen of the site's pages,
+     behind five top-level links. Found on 12 Aug while adding the second
+     level; it has been that way as long as the dropdowns have existed. */
+  .nav-dropdown-menu{position:static;transform:none;opacity:1;visibility:visible;
+    pointer-events:auto;background:transparent!important;border:0!important;box-shadow:none;
+    padding:.15rem 0 0;min-width:0}
+  .nav-dropdown-menu::before{display:none}
+  /* Scoped to #navbar so this outranks the base .nav-dropdown-menu a rule on
+     specificity rather than on being further down the file.
+
+     Both declare font-size with !important at identical specificity (0,1,1),
+     so before this the winner was decided purely by source order: .82rem up in
+     the base block, .94rem here, later line wins. That works until someone
+     moves a block, at which point the mobile dropdown silently changes size
+     with nothing to explain it. Every .nav-dropdown-menu is inside #navbar and
+     they exist only in partials/nav.njk, so the scope costs nothing.
+
+     The padding and white-space in this rule ride along at the higher
+     specificity too. They were already winning over the base rule, which sets
+     neither with !important, so nothing changes for them. */
+  #navbar .nav-dropdown-menu a{padding:.5rem 0 .5rem 1.1rem;font-size:.94rem!important;white-space:normal}
+  #navbar.scrolled .nav-links{background:rgba(255,255,255,.98);box-shadow:0 4px 20px rgba(0,0,0,.1)}
+  #navbar.scrolled .nav-links li{border-bottom-color:rgba(0,0,0,.06)}
+  /* The CTA is excluded because it is the one link in here that carries its own
+     background. The rest of the menu sits on white and needs dark text; the
+     "Request Assessment" button sits on --sage and needs white.
+
+     Both this rule and .nav-cta are !important, so !important does not decide
+     it — specificity does, and this selector is (1,2,1) against the flat
+     (0,1,0) of .nav-cta. It won, and the button rendered dark navy on mid-olive
+     on every non-home page on a phone, because those get .scrolled the moment
+     the script runs. Reported 19 August as a Samsung problem; it was every
+     mobile browser.
+
+     :not(.nav-cta) rather than raising .nav-cta's specificity to outrank this,
+     because the intent here is "the menu links", and the button is not one of
+     them. Making the two rules bid against each other again would leave the
+     next person reading two !important declarations and no way to tell which
+     is meant to win. */
+  #navbar.scrolled .nav-links a:not(.nav-cta){color:var(--dark)!important}
+  .nav-toggle{display:block}
+  .services-grid,.mission-grid,.mission-values-grid{grid-template-columns:1fr}
+  /* Industry tiles on the homepage stay two across on a phone. One per row read
+     as four separate screens for what is really one row of choices.
+
+     Homepage only, deliberately. The Industries page runs the same markup but
+     with much longer descriptions, and at half width the title is pushed out of
+     the top of the card. There the cards are the content of the page rather
+     than a signpost to it, so full width is the right call anyway. */
+  .page-home .industries-grid{grid-template-columns:repeat(2,1fr);gap:.9rem}
+  body:not(.page-home) .industries-grid{grid-template-columns:1fr}
+  /* Two across on a phone means a 148px card, and "Nutraceuticals & Dietary
+     Supplements" takes three lines in it. That pushes the first line most of
+     the way up the card, past the top of the scrim, where it measured 2.7:1
+     against a pale bench. The scrim has to reach wherever the text reaches, so
+     here it carries most of the way to the top. */
+  .page-home .industry-card-overlay{
+    background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.82) 30%,rgba(0,0,0,.42) 52%,rgba(0,0,0,0) 74%);
+    padding:1rem;
+  }
+  /* Three lines here, not two: at half width the longest title takes three. */
+  .page-home .industry-card h3{min-height:4.05em}
+  .pipeline-steps{grid-template-columns:1fr}
+  .detection-methods-grid{grid-template-columns:1fr}
+  .about-highlights{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .hero h1{font-size:2.4rem}
+  .hero-stats{flex-direction:column;gap:1.5rem}
+}
+
+/* Compatibility Quiz */
+.compat-section{padding:6rem 0;background:var(--dark)}
+.compat-quiz{background:#fff;border-radius:16px;max-width:800px;margin:0 auto;padding:2.5rem;box-shadow:0 8px 40px rgba(0,0,0,.2);position:relative;overflow:hidden}
+.compat-progress{display:flex;align-items:center;gap:.5rem;margin-bottom:2rem}
+.compat-progress-bar{flex:1;height:6px;background:rgba(107,114,73,.15);border-radius:3px;overflow:hidden}
+.compat-progress-fill{height:100%;background:var(--sage);border-radius:3px;transition:width .4s ease}
+.compat-step-label{font-size:.75rem;font-weight:600;color:var(--muted);white-space:nowrap}
+.compat-screen{display:none;animation:compatFadeIn .4s ease}
+.compat-screen.active{display:block}
+@keyframes compatFadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.compat-welcome{text-align:center;padding:2rem 0}
+.compat-welcome h3{font-family:'Montserrat',sans-serif;font-size:2rem;color:var(--dark);margin-bottom:.75rem;letter-spacing:.02em}
+.compat-welcome p{color:var(--muted);font-size:.95rem;max-width:500px;margin:0 auto 2rem}
+.compat-cta{display:inline-block;background:var(--sage);color:#fff;font-family:'Montserrat',sans-serif;font-size:.95rem;font-weight:600;padding:.85rem 2rem;border-radius:10px;border:none;cursor:pointer;transition:all .3s}
+.compat-cta:hover{background:var(--sage-dark);transform:translateY(-1px)}
+.compat-q{font-family:'Montserrat',sans-serif;font-size:1.5rem;color:var(--dark);margin-bottom:1.5rem;letter-spacing:.02em}
+.compat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
+.compat-card{background:#fff;border:2px solid rgba(107,114,73,.15);border-radius:12px;padding:1rem .75rem;text-align:center;cursor:pointer;transition:all .3s;position:relative}
+.compat-card:hover{border-color:var(--sage);box-shadow:0 4px 16px rgba(107,114,73,.12)}
+.compat-card.selected{border-color:var(--sage);background:rgba(107,114,73,.06)}
+.compat-card.selected::after{content:'\2713';position:absolute;top:8px;right:8px;width:22px;height:22px;background:var(--sage);color:#fff;border-radius:50%;font-size:.75rem;display:flex;align-items:center;justify-content:center}
+.compat-card-icon{font-size:1.5rem;margin-bottom:.4rem;display:block;color:var(--teal)}
+.compat-card-label{font-size:.78rem;font-weight:600;color:var(--dark);line-height:1.3}
+.compat-grid-3{grid-template-columns:repeat(3,1fr)}
+.compat-grid-2{grid-template-columns:repeat(2,1fr)}
+.compat-option-card{background:#fff;border:2px solid rgba(107,114,73,.15);border-radius:12px;padding:1.1rem;text-align:center;cursor:pointer;transition:all .3s;position:relative}
+.compat-option-card:hover{border-color:var(--sage);box-shadow:0 4px 16px rgba(107,114,73,.12)}
+.compat-option-card.selected{border-color:var(--sage);background:rgba(107,114,73,.06)}
+.compat-option-card.selected::after{content:'\2713';position:absolute;top:8px;right:8px;width:22px;height:22px;background:var(--sage);color:#fff;border-radius:50%;font-size:.75rem;display:flex;align-items:center;justify-content:center}
+.compat-option-card .compat-card-label{font-size:.85rem}
+.compat-option-card .compat-card-sub{font-size:.72rem;color:var(--muted);margin-top:.25rem}
+.compat-conditions{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:1.5rem}
+.compat-condition-group h4{font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:700;color:var(--dark);margin-bottom:.75rem}
+.compat-condition-options{display:flex;flex-direction:column;gap:.5rem}
+.compat-condition-btn{background:#fff;border:2px solid rgba(107,114,73,.15);border-radius:10px;padding:.7rem 1rem;font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:500;color:var(--text);cursor:pointer;transition:all .3s;text-align:left}
+.compat-condition-btn:hover{border-color:var(--sage)}
+.compat-condition-btn.selected{border-color:var(--sage);background:rgba(107,114,73,.06);font-weight:600}
+.compat-next-wrap{text-align:center;margin-top:1.5rem;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none}
+.compat-next-wrap.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.compat-next{background:var(--sage);color:#fff;font-family:'Montserrat',sans-serif;font-size:.9rem;font-weight:600;padding:.75rem 2.5rem;border-radius:10px;border:none;cursor:pointer;transition:all .3s}
+.compat-next:hover{background:var(--sage-dark)}
+.compat-back{background:none;border:none;color:var(--muted);font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;margin-right:1rem;transition:color .3s}
+.compat-back:hover{color:var(--dark)}
+/* Twenty-four rules were deleted here on 11 Aug 2026: a 180px scoring ring
+   with a 3rem percentage in the middle, a verdict line, three risk pills, a
+   recommendation card, a restart button and a confetti animation.
+
+   None of the markup for any of it still existed. It was the result screen of
+   an earlier version of this quiz, the one that showed a number like "80%
+   compatible", and it is what Kirsty was remembering in the 11 Aug meeting
+   when she asked to move away from a fixed percentage. The markup had gone;
+   the stylesheet had not.
+
+   It was not harmless. The old .compat-badge carried opacity:0 and only
+   became visible with a .visible class that nothing added any more. The new
+   verdict badge, several hundred lines below, reused that class name, was
+   styled correctly, was in the page, and could not be seen. */
+@media(max-width:768px){
+  .compat-quiz{padding:1.5rem}
+  .compat-grid{grid-template-columns:repeat(2,1fr)}
+  .compat-grid-3{grid-template-columns:repeat(2,1fr)}
+  .compat-conditions{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .compat-grid{grid-template-columns:1fr}
+  .compat-grid-3{grid-template-columns:1fr}
+  .compat-grid-2{grid-template-columns:1fr}
+}
+
+/* FAQ Page */
+/* The header band is charcoal, not teal.
+   Kirsty's 12 August requests ask for the navy replaced with Natural Trace
+   teal and then, on the next line, for the header background back to a dark
+   colour. The second supersedes the first: teal was tried on this band and she
+   wants it back. Bryan confirmed the hex, which the document gave as #2024f,
+   five digits and not a colour.
+
+   It is also the more legible of the two, by some distance. Against teal the
+   subtitle measured 3.44:1 and the eyebrow 1.95:1, where small text needs 4.5.
+   Against charcoal they are 6.47:1 and 4.74:1. Both of those were failing in
+   production and neither was caught, because contrast-audit.mjs only measures
+   pages with photographs behind the text and this band is a flat colour. */
+.faq-page-hero{padding:8rem 0 4rem;background:var(--charcoal);text-align:center}
+/* Was a style attribute on the span in faq.njk. Moved here so it can be
+   overridden: an inline style beats every selector short of !important,
+   which made this label untouchable by the seasonal themes. */
+.faq-page-hero .section-label{color:var(--sage-light)}
+.faq-page-hero h1{color:#fff;font-size:clamp(2.5rem,5vw,3.5rem);margin-bottom:1rem}
+.faq-page-hero p{color:rgba(255,255,255,.6);font-size:1.1rem;max-width:600px;margin:0 auto}
+.faq-section{padding:4rem 0 5rem;background:var(--offwhite)}
+.faq-categories{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;margin-bottom:3rem}
+.faq-cat-btn{font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:600;padding:.6rem 1.4rem;border-radius:8px;border:1.5px solid rgba(107,114,73,.2);background:#fff;color:var(--text);cursor:pointer;transition:all .3s}
+.faq-cat-btn:hover{border-color:var(--sage);color:var(--sage)}
+.faq-cat-btn.active{background:var(--sage);color:#fff;border-color:var(--sage)}
+.faq-grid{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
+.faq-item{background:#fff;border-radius:12px;border:1px solid rgba(0,0,0,.06);overflow:hidden;transition:box-shadow .3s}
+.faq-item:hover{box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.faq-question{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;cursor:pointer;gap:1rem;font-family:'Montserrat',sans-serif;font-size:.95rem;font-weight:600;color:var(--dark);background:none;border:none;width:100%;text-align:left}
+.faq-question:hover{color:var(--sage)}
+.faq-question svg{width:20px;height:20px;flex-shrink:0;stroke:var(--muted);stroke-width:2;fill:none;transition:transform .3s}
+.faq-item.open .faq-question svg{transform:rotate(180deg)}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease}
+.faq-item.open .faq-answer{max-height:500px}
+.faq-answer-inner{padding:0 1.5rem 1.5rem;font-family:'Montserrat',sans-serif;font-size:.9rem;line-height:1.8;color:var(--muted)}
+.faq-cta-bar{padding:4rem 0;background:#fff;text-align:center}
+
+/* Insights */
+.insights-listing{padding:8rem 0 4rem}
+.insights-header{text-align:center;margin-bottom:3rem}
+.insights-header .section-label{display:block;font-size:.82rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);margin-bottom:.55rem}
+.insights-header h1{font-family:'Montserrat',sans-serif;font-size:clamp(2rem,5vw,3.2rem);color:var(--dark);margin-bottom:.75rem}
+.insights-subtitle{font-size:1rem;color:var(--muted);max-width:600px;margin:0 auto}
+.insights-grid{display:flex;flex-direction:column;gap:2.5rem;max-width:800px;margin:0 auto}
+
+/* ---------------------------------------------------------------------------
+   Insights pagination.
+
+   Numbered rather than a Load More button, so every page is a real URL that
+   can be linked, bookmarked and indexed, and 2022 is one click away instead of
+   eight presses.
+--------------------------------------------------------------------------- */
+.insights-page-of{font-size:.42em;font-weight:400;color:var(--muted);vertical-align:middle;letter-spacing:0}
+/* Contained, and off to one side.
+
+   It was a centred row on a hairline rule with no background of its own, which
+   made it read as the end of the article list rather than as a control: it
+   disappeared into the page while scrolling past. A rule is a separator, not a
+   surface, and nothing on this site says "you can press me" without one.
+
+   So it gets a surface, and in exchange it stops taking the full width and
+   sitting in the middle. Right-aligned and only as wide as its contents, which
+   is where a reader's hand and eye already are after a column of cards, and
+   quieter than the centred bar even though it is now more visible.
+
+   Deliberately not a floating rail pinned to the side of the window. That is a
+   pattern for lists that never end, it covers content at every scroll position
+   rather than at one, and it would be more intrusive than what it replaced,
+   not less. Two pages do not need a control that follows you. */
+.insights-pager{
+  display:flex;align-items:center;gap:.5rem;
+  width:fit-content;max-width:100%;
+  /* Right edge lined up with the cards, not with the container.
+     .insights-grid is capped at 800px and centred, so margin-right:0 put the
+     pager 192px past the right edge of the column it belongs to, floating in
+     the gutter and looking like it had come loose. The calc is that gutter;
+     max() collapses it to nothing once the viewport is narrower than the
+     grid's cap, where there is no gutter to sit in. */
+  margin:2.75rem max(0px, calc(50% - 400px)) 0 auto;
+  padding:.4rem .6rem;
+  background:#fff;border:1px solid var(--soft-sage);border-radius:14px;
+  box-shadow:0 1px 3px rgba(0,0,0,.05);
+  font-family:'Montserrat',sans-serif;font-size:.82rem}
+.insights-pager-numbers{display:flex;align-items:center;gap:.35rem;list-style:none;margin:0;padding:0}
+.insights-pager-num{
+  display:flex;align-items:center;justify-content:center;
+  /* 36px inside a padded container, so the outer target is still comfortably
+     over the 40px anything-tappable wants. */
+  min-width:36px;height:36px;padding:0 .5rem;border-radius:9px;
+  color:var(--text);text-decoration:none;transition:background .2s,color .2s}
+a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
+.insights-pager-num.is-current{background:var(--sage);color:#fff;font-weight:700}
+.insights-pager-step{
+  display:inline-flex;align-items:center;gap:.4rem;min-height:36px;padding:0 .35rem;
+  color:var(--sage);text-decoration:none;font-weight:600;white-space:nowrap}
+.insights-pager-step:hover{color:var(--dark)}
+/* Kept in the layout rather than removed, so the numbers stay centred on the
+   first and last pages instead of sliding sideways as you page through. */
+.insights-pager-step.is-off{color:var(--disabled-ink);pointer-events:none}
+@media(max-width:560px){
+  /* Centred on a phone, because right-aligned in a single column reads as an
+     accident rather than as a decision, and there is no column of cards beside
+     it to align to. */
+  .insights-pager{margin-inline:auto;gap:.3rem;font-size:.8rem}
+  /* The words go and the arrows stay. Newer and Older cost more width than
+     they are worth next to numbered buttons on a 360px screen. */
+  .insights-pager-step{font-size:0;gap:0;padding:0 .25rem}
+  .insights-pager-step [aria-hidden]{font-size:1.15rem}
+}
+
+/* ---------------------------------------------------------------------------
+   Latest from Insights, on the home page.
+
+   The brief was recent news visible without being the highlight of the page,
+   so this is the quietest block on it: no cards, no images, no borders around
+   anything. Three dates and three headlines on a single rule, sitting between
+   the industries and the closing call to action.
+
+   Cards were the obvious answer and the wrong one. They are the loudest
+   pattern on this site, and three photographs directly above the final call to
+   action would pull the eye straight past it.
+--------------------------------------------------------------------------- */
+.home-insights{padding:3.5rem 0 1rem;background:#fff}
+.home-insights .container{max-width:1000px}
+.home-insights-head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+  padding-bottom:.9rem;border-bottom:1px solid var(--soft-sage)}
+.home-insights-head h2{
+  font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0}
+.home-insights-all{
+  font-family:'Montserrat',sans-serif;font-size:.82rem;font-weight:600;
+  color:var(--sage);text-decoration:none;white-space:nowrap}
+.home-insights-all:hover{color:var(--dark);text-decoration:underline;text-underline-offset:3px}
+.home-insights-list{list-style:none;margin:0;padding:0}
+.home-insights-list li{
+  display:flex;align-items:baseline;gap:1.25rem;
+  padding:.85rem 0;border-bottom:1px solid rgba(222,223,222,.55)}
+.home-insights-list li:last-child{border-bottom:0}
+.home-insights-list time{
+  flex:0 0 auto;min-width:8.5rem;font-size:.78rem;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+.home-insights-list a{
+  color:var(--text);text-decoration:none;font-size:.94rem;line-height:1.5;
+  transition:color .2s}
+.home-insights-list a:hover{color:var(--sage);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:600px){
+  /* The date goes above the headline rather than beside it. Sharing a line
+     leaves roughly 12 characters for a headline that averages sixty. */
+  .home-insights-list li{flex-direction:column;align-items:flex-start;gap:.2rem}
+  .home-insights-list time{min-width:0}
+}
+.insight-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);transition:box-shadow .3s}
+.insight-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1)}
+.insight-card-image img{width:100%;height:280px;object-fit:cover;display:block}
+.insight-card-content{padding:1.5rem 1.75rem 1.75rem}
+.insight-card-content time{font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+/* .6rem measured as a 3px ink gap to the summary below on a phone, which is
+   not a gap, it is a collision. The margin was set when the Insights index
+   held three cards; it holds nineteen now and the fault repeats down the whole
+   page. Measured from ink rather than from the box, which is why the number
+   looks larger than the gap it produces. */
+.insight-card-content h2{font-family:'Montserrat',sans-serif;font-size:1.4rem;color:var(--dark);margin:.5rem 0 .95rem;line-height:1.3}
+.insight-card-content h2 a{color:inherit;text-decoration:none}
+.insight-card-content h2 a:hover{color:var(--sage)}
+.insight-card-content p{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:.75rem}
+.insight-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.75rem}
+.insight-tag{font-size:.72rem;font-weight:600;padding:.25rem .65rem;border-radius:20px;background:rgba(107,114,73,.08);color:var(--sage-ink);letter-spacing:.02em}
+.read-more{font-size:.85rem;font-weight:600;color:var(--sage);text-decoration:none;transition:color .3s}
+.read-more:hover{color:var(--dark)}
+.insights-empty{text-align:center;padding:4rem 0}
+
+/* Insight Post */
+.insight-post{padding:8rem 0 4rem}
+.insight-post .container{max-width:760px;margin:0 auto;padding:0 2rem}
+.insight-post-header{margin-bottom:2rem}
+.insight-post-header .section-label{display:block;font-size:.82rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);margin-bottom:.55rem}
+.insight-post-header h1{font-family:'Montserrat',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--dark);line-height:1.2;margin-bottom:.75rem}
+.insight-meta{font-size:.82rem;color:var(--muted);margin-bottom:.75rem}
+.insight-meta time{font-weight:600;letter-spacing:.03em}
+.insight-author{margin-left:.5rem;color:var(--sage)}
+.back-link{font-size:.85rem;font-weight:600;color:var(--sage);text-decoration:none;display:inline-block;margin-bottom:1.5rem;transition:color .3s}
+.back-link:hover{color:var(--dark)}
+/* The banner, whatever shape it arrives in.
+
+   Header images are uploaded through the CMS and the archive proves nobody
+   checks the aspect ratio first: the nineteen articles carry everything from
+   4.22:1 to 0.75:1. With width:100% and height:auto that meant a square photo
+   became a 760px tall banner and a portrait one 1013px, which is most of a
+   laptop screen before a word of the article.
+
+   So the rule is a ceiling rather than a fixed ratio. Anything landscape is
+   already under it and renders untouched, which matters because cropping a
+   4.22:1 strip to a fixed 16:9 would throw away half its width. Only images
+   too tall to be a banner are cropped, which is exactly the set that needed
+   fixing.
+
+   40% rather than centre, because a photograph of a person that is too tall
+   for a banner almost always has the face above the middle. */
+.insight-featured-image{margin:0 0 2rem;border-radius:12px;overflow:hidden}
+.insight-featured-image img{
+  width:100%;height:auto;max-height:520px;display:block;
+  object-fit:cover;object-position:center 40%}
+.insight-featured-image figcaption{
+  font-size:.82rem;line-height:1.5;color:var(--muted);
+  padding:.7rem .2rem 0}
+@media(max-width:700px){
+  /* A 520px banner is most of a phone screen. */
+  .insight-featured-image img{max-height:300px}
+}
+.insight-body{font-family:'Montserrat',-apple-system,sans-serif;font-size:.95rem;line-height:1.85;color:var(--text)}
+/* h1 as well as h2. Two of the migrated WordPress articles open the body with
+   an h1 rather than a paragraph, and .insight-body only ever styled h2 and h3,
+   so those two got browser defaults and their headline sat 4px off the
+   paragraph under it. The article already has an h1 in its header, so this is
+   a second one inside the prose; it is set to match h2 rather than compete
+   with the title above. */
+.insight-body h1{font-family:'Montserrat',sans-serif;font-size:1.65rem;color:var(--dark);margin:2rem 0 .85rem;line-height:1.25}
+.insight-body h2{font-family:'Montserrat',sans-serif;font-size:1.5rem;color:var(--dark);margin:2rem 0 .75rem}
+.insight-body h3{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:700;color:var(--dark);margin:1.5rem 0 .5rem}
+.insight-body p{margin-bottom:1.25rem}
+.insight-body ul,.insight-body ol{margin:0 0 1.25rem 1.5rem}
+.insight-body li{margin-bottom:.5rem}
+.insight-body a{color:var(--sage);text-decoration:underline;text-underline-offset:2px}
+.insight-body a:hover{color:var(--dark)}
+
+/* ---------------------------------------------------------------------------
+   Migrated WordPress article bodies.
+
+   The sixteen articles brought over from natural-trace.com on 12 August 2026
+   carry the markup WordPress and its editors produced, which is the price of
+   migrating them faithfully rather than retyping them. The layout audit found
+   44 faults across nine of them on the first build. All of them are here.
+
+   None of this is styling the articles. It is stopping other people's markup
+   from breaking a 760px column.
+--------------------------------------------------------------------------- */
+
+/* Bare URLs used as their own link text. Several articles cite sources by
+   pasting the address, and a 90 character URL has nowhere to break: one of
+   them ran 519px past the right edge of a 390px phone, taking the page's
+   horizontal scroll with it. anywhere rather than break-word because
+   break-word will not break inside a long unspaced token, which is exactly
+   what a URL is. */
+.insight-body{overflow-wrap:break-word}
+.insight-body a{overflow-wrap:anywhere}
+
+/* Images, however they were inserted. WordPress writes width and height
+   attributes and sometimes an inline width on the figure, all sized for a
+   wider column than this one. */
+.insight-body img{max-width:100%;height:auto;display:block}
+.insight-body figure{max-width:100%;margin:1.75rem 0}
+.insight-body figure[style]{width:auto!important}
+
+/* Captions. */
+.insight-body figcaption,.insight-body .wp-caption-text{
+  font-size:.82rem;line-height:1.5;color:var(--muted);margin-top:.6rem}
+
+/* Floated images. The editor's alignright and alignleft assume a wide column
+   and a desktop; in a 760px measure they collide with the text beside them,
+   which is what the audit reported as overlap. Floated above 700px with a
+   sensible cap, stacked below it. */
+@media(min-width:701px){
+  .insight-body .alignright{float:right;margin:.4rem 0 1.25rem 1.75rem;max-width:44%}
+  .insight-body .alignleft{float:left;margin:.4rem 1.75rem 1.25rem 0;max-width:44%}
+}
+@media(max-width:700px){
+  .insight-body .alignright,.insight-body .alignleft{float:none;margin:1.75rem 0;max-width:100%}
+}
+.insight-body .aligncenter{margin-inline:auto}
+/* A float has no height, so without this the next heading rides up beside it
+   and the article looks like two documents shuffled together. */
+.insight-body p:last-child::after{content:'';display:block;clear:both}
+
+/* LinkedIn's own classes, which arrived by way of the editor.
+
+   Two articles were assembled by pasting from LinkedIn's article reader, so
+   they carry ember-view, reader-text-block__paragraph and app-aware-link, plus
+   the ember IDs that go with them. Those class names mean nothing here, but
+   they are not inert: one empty reader-text-block paragraph measured 522px
+   past the right edge. Neutralised rather than stripped from the source,
+   because editing the markup means editing the articles, and these were
+   migrated on the promise that nothing in them was rewritten. */
+.insight-body .reader-text-block__paragraph,.insight-body .ember-view{
+  max-width:100%;overflow-wrap:anywhere}
+
+/* Anything else wide enough to push the page sideways. */
+.insight-body table{display:block;overflow-x:auto;max-width:100%}
+.insight-body pre{overflow-x:auto;max-width:100%}
+.insight-body iframe,.insight-body video{max-width:100%}
+.insight-body blockquote{border-left:3px solid var(--sage);padding:.75rem 1.25rem;margin:1.5rem 0;background:rgba(107,114,73,.04);border-radius:0 8px 8px 0;font-style:italic;color:var(--muted)}
+.insight-body strong{color:var(--dark)}
+.insight-footer{display:flex;justify-content:space-between;align-items:center;margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,.06)}
+.cta-link{font-size:.85rem;font-weight:600;color:var(--sage);text-decoration:none;transition:color .3s}
+.cta-link:hover{color:var(--dark)}
+.faq-cta-bar h2{font-size:clamp(1.8rem,3vw,2.4rem);color:var(--dark);margin-bottom:.75rem}
+.faq-cta-bar p{color:var(--muted);font-size:1rem;margin-bottom:1.5rem}
+@media(max-width:768px){.faq-categories{gap:.35rem}.faq-question{font-size:.88rem;padding:1rem 1.25rem}.faq-answer-inner{padding:0 1.25rem 1.25rem;font-size:.85rem}}
+
+/* ============================================================
+   Clean Prototype 2026: new homepage + IA components
+   Montserrat only. No Bebas Neue.
+   ============================================================ */
+
+/* Hero supporting points */
+
+
+
+
+/* Section 2: The Challenge */
+.challenge{padding:6rem 0;background:var(--offwhite)}
+.challenge-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:4rem;align-items:center}
+/* 1.02rem to 1.08rem, 16.3px to 17.3px. Kirsty asked for the Our Story text to
+   be larger. This is the class that sets it, and it also sets the About intro,
+   the homepage challenge lead and the three technology page leads, so the
+   whole family moves together rather than Our Story drifting off on its own.
+   Same principle as the 12 Aug type pass. */
+.challenge-lead{font-size:1.08rem;line-height:1.8;color:var(--text);margin-bottom:2rem}
+/* The "Life science · Food Science · Bioinformatics" line, and the equivalent
+   eyebrow on the homepage and the two technology pages. .8rem was 12.8px,
+   which is below the 14px floor the rest of the site keeps to. Letterspacing
+   comes down from 2.2px to 1.9px because tracking that suited 12.8px sets too
+   loose at 15px. */
+.challenge-sub{font-size:.94rem;font-weight:700;letter-spacing:1.9px;text-transform:uppercase;color:var(--sage-ink);margin-bottom:1.1rem}
+.challenge-list{list-style:none;display:grid;gap:.7rem}
+/* "'Naturaldetect features' text too small". This list is that block, and the
+   same rule sets the Challenge list on the home page and the feature lists on
+   NaturalTag and NaturalCloud, so all four move together. Body copy beside it
+   is 1.02rem; these were .93 and grey, which is why they read as a footnote to
+   the paragraph rather than as the product's features. */
+.challenge-list li{position:relative;padding-left:1.6rem;font-size:1.02rem;line-height:1.7;color:var(--text)}
+.challenge-list li::before{content:'';position:absolute;left:0;top:.55rem;width:7px;height:7px;border-radius:2px;background:var(--gold)}
+.challenge-close{margin-top:2rem;padding:1.25rem 1.5rem;border-left:3px solid var(--sage);background:#fff;border-radius:0 12px 12px 0;font-size:.95rem;line-height:1.7;color:var(--dark);box-shadow:var(--shadow)}
+/* The callout is usually the last thing in its section, where the section's own
+   padding gives it room. On the About page it opens the story and body copy
+   follows straight after, with nothing between the shadow and the first line.
+   Only add the gap where something actually follows. */
+.challenge-close:not(:last-child){margin-bottom:2rem}
+.challenge-media{position:relative;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:4/5}
+.challenge-media img{width:100%;height:100%;object-fit:cover}
+.challenge-media::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,30,46,0) 45%,rgba(26,30,46,.55) 100%)}
+
+/* The Challenge, rebuilt to Kirsty's 12 Aug layout: one centred column ending
+   in three beats and a chevron into the section that answers them. */
+.challenge-compact{padding:6rem 0 4.5rem}
+.challenge-head{text-align:center;max-width:var(--section-head-width);margin:0 auto 3rem}
+.challenge-head .section-subtitle{max-width:620px;margin-inline:auto;text-wrap:balance}
+
+/* Three across on a real screen, stacked below. A grid rather than flex so the
+   three columns are equal whatever the sentences do: the middle point is half
+   the length of the other two, and with flex it would have taken half the room
+   and left the outer two cramped. */
+.challenge-points{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;max-width:940px;margin:0 auto;padding:0}
+.challenge-point{display:flex;align-items:flex-start;gap:.9rem;padding:0 1.6rem}
+/* The dividers are borders on the items rather than separate elements, so they
+   disappear on their own when the list stacks. */
+.challenge-point + .challenge-point{border-left:1px solid var(--soft-sage)}
+.challenge-point p{font-size:.95rem;line-height:1.55;color:var(--text);margin:0}
+.challenge-point-icon{flex:0 0 auto;width:2.9rem;height:2.9rem;border-radius:50%;
+  display:grid;place-items:center;background:rgba(107,114,73,.09);color:var(--sage-dark)}
+.challenge-point-icon svg{width:1.4rem;height:1.4rem;display:block}
+/* One point carries the turn. Two would be none.
+   The emphasis is in the text only. The filled circle it also had was doing the
+   same job twice and made the third badge read as a different kind of thing
+   from the first two rather than as the same thing, emphasised. */
+.challenge-point.is-emphasis p{color:var(--sage-dark);font-weight:600}
+
+/* The chevron sits on a rule that runs the width of the points above it. */
+.challenge-turn{position:relative;max-width:940px;margin:3.25rem auto 0;text-align:center}
+.challenge-turn::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:var(--soft-sage)}
+.challenge-turn-link{position:relative;display:inline-grid;place-items:center;
+  width:2.6rem;height:2.6rem;border-radius:50%;background:var(--sage);color:#fff;
+  transition:background .25s ease,transform .25s ease}
+.challenge-turn-link svg{width:1.15rem;height:1.15rem;display:block}
+.challenge-turn-link:hover{background:var(--sage-dark);transform:translateY(2px)}
+.challenge-turn-link:focus-visible{outline:2px solid var(--sage-dark);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.challenge-turn-link{transition:none}
+  .challenge-turn-link:hover{transform:none}}
+
+@media(max-width:900px){
+  .challenge-points{grid-template-columns:1fr;gap:1.5rem;max-width:520px}
+  .challenge-point{padding:0}
+  .challenge-point + .challenge-point{border-left:0}
+  .challenge-turn{max-width:520px;margin-top:2.5rem}
+}
+
+/* Section 3: Value Proposition */
+.valueprop{padding:6rem 0;background:#fff}
+/* The wrapper is wide, the subtitle inside it is not. Both were capped at
+   760px, which is a sensible line length for a paragraph and too narrow for a
+   heading: half the section titles on the site were wrapping onto two lines
+   inside a container with 400px of unused room either side. Widening the
+   wrapper and capping the subtitle separately gets the titles onto one line
+   without shrinking any type, and keeps body copy at a readable measure. */
+.vp-head{max-width:var(--section-head-width);margin:0 auto var(--section-head-gap);text-align:center}
+.vp-head .section-subtitle{max-width:640px}
+.vp-head .section-subtitle{margin:0 auto}
+.vp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+/* Five cards over three columns, last row centred under the first. Flex
+   rather than grid, because a 3-column grid leaves the last two hanging on
+   the left. Scoped to this one section: .vp-grid is shared with the About
+   page, which positions its cards with grid-column and stops working the
+   moment the container is not a grid. */
+.vp-grid-centred{display:flex;flex-wrap:wrap;justify-content:center}
+.vp-grid-centred > .vp-card{flex:0 1 calc(33.333% - 1rem);min-width:0}
+.vp-card{background:#EDEEE9;border:1px solid transparent;border-radius:16px;padding:1.65rem 1.5rem;transition:transform .35s,box-shadow .35s,border-color .35s;display:flex;flex-direction:column}
+.vp-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(107,114,73,.35)}
+.vp-num{font-size:.7rem;font-weight:700;letter-spacing:.14em;color:var(--gold);margin-bottom:1rem}
+.vp-card h3{font-size:1.06rem;font-weight:700;color:var(--dark);line-height:1.3;letter-spacing:-.01em;margin:0}
+/* A card heading that is a direct child has to space itself. On the homepage
+   the heading sits inside .vp-card-head next to its icon and that wrapper
+   supplies the gap, which is why margin:0 was right there and left every card
+   on About and NaturalTag with its title resting 1px above the first bullet.
+   1.1rem matches what .vp-card-head gives, so both shapes now read the same. */
+.vp-card > h3{margin-bottom:1.1rem}
+.vp-block{margin-bottom:1rem}
+.vp-block:last-child{margin-bottom:0}
+/* --muted is a colour for light surfaces. On the navy compatibility panel it
+   measured 2.47:1. Same class, opposite background, so the section it is on
+   has to say so; the How It Works sections already do this with gold. */
+.compat-section .section-label{color:var(--gold-light)}
+.vp-block-label{display:block;font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+.vp-block p{font-size:.89rem;line-height:1.65;color:var(--text)}
+.vp-block.is-value{padding-top:1rem;border-top:1px solid #EEF0EA}
+.vp-block.is-value .vp-block-label{color:var(--sage-ink)}
+
+/* Section 4: How It Works */
+.howitworks{padding:6rem 0;background:var(--dark);position:relative;overflow:hidden}
+.howitworks .section-title{color:#fff}
+.howitworks .section-label{color:var(--gold-light)}
+
+/* Why We Exist over a photograph, at Kirsty's request, using the homepage hero
+   treatment she pointed at.
+
+   background-blend-mode:luminosity is what does the work. It keeps the
+   photograph's light and shade and takes its hue and saturation from the navy
+   underneath, so a bright green field and a blue sky become one navy duotone
+   instead of two competing colours behind white text. The flat 88% scrim on
+   top is not the hero's directional gradient: this section is centred text
+   rather than a left-hand column, so there is no side that can afford to be
+   lighter.
+
+   The class only appears when an image is set, so clearing the CMS field
+   returns the flat charcoal the 11 August meeting asked for. */
+.howitworks.howitworks-photo{
+  background-color:var(--charcoal);
+  background-image:
+    linear-gradient(rgba(32,36,47,.74),rgba(32,36,47,.74)),
+    var(--why-bg);
+  background-size:cover,cover;
+  /* Weighted low. The vision photograph is half sky, and sky is the brightest
+     thing in it even after the duotone, so framing on the crop rows keeps the
+     scrim doing less work for the same contrast. */
+  background-position:center,center 78%;
+  background-repeat:no-repeat,no-repeat;
+  background-blend-mode:normal,luminosity;
+}
+/* Was three inline styles on a loop in about.njk, which meant the body copy of
+   a whole section could not be changed without editing a template. */
+.why-body{max-width:760px;margin:0 auto}
+.why-body p{color:rgba(255,255,255,.82);font-size:1.02rem;line-height:1.85;margin-bottom:1.15rem}
+.why-body p:last-child{margin-bottom:0}
+.how-head{text-align:center;max-width:var(--section-head-width);margin:0 auto var(--section-head-gap)}
+.how-head .section-subtitle{max-width:640px;margin-inline:auto}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;position:relative}
+.how-step{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:2rem 1.5rem;transition:background .35s,border-color .35s}
+.how-step:hover{background:rgba(255,255,255,.07);border-color:rgba(191,176,96,.4)}
+/* The step number.
+   Was a 44px filled gold badge until 11 Aug 2026. The badge was the loudest
+   thing in the section: four saturated gold squares pulling the eye before
+   any of the four step names, which are what the section is actually for.
+   Set as type instead, large and quiet. The numeral still gives the sequence
+   and no longer competes with the words next to it. The colour is gold at
+   55% over the navy, which is decoration rather than text: the step name and
+   body carry all the meaning, so this does not need to meet a text contrast
+   floor and should not be darkened to try. */
+.how-step-num{font-size:2.6rem;font-weight:600;line-height:1;letter-spacing:-.03em;color:rgba(191,176,96,.55);margin-bottom:.7rem}
+.how-step h3{color:#fff;font-size:1.02rem;font-weight:700;margin-bottom:.6rem;letter-spacing:-.01em}
+.how-step p{color:rgba(255,255,255,.62);font-size:.88rem;line-height:1.65}
+
+
+
+/* Section 5: Industry tiles on home */
+.home-industries{padding:6rem 0;background:var(--offwhite)}
+.home-industries .industries-header{text-align:center;max-width:var(--section-head-width);margin:0 auto var(--section-head-gap)}
+.home-industries .industries-header .section-subtitle{max-width:640px;margin-inline:auto}
+
+/* Final CTA */
+.finalcta{padding:6rem 0;background:#fff}
+.finalcta-inner{background:linear-gradient(135deg,var(--sage) 0%,var(--sage-dark) 100%);border-radius:24px;padding:4rem 3rem;text-align:center;position:relative;overflow:hidden}
+/* The decorative mark in the top right corner of every CTA panel.
+   Was a plain 320px circle bleeding off the corner at 6% white. Kirsty asked
+   for the Natural Trace leaf instead, treated the way the LinkedIn banner
+   treats it: the whole mark, tonal against its own background rather than
+   stamped on it in brand colour.
+
+   The shape comes from the icon used as a mask, not as a background image, so
+   the fill is a colour this stylesheet controls. Painting the PNG directly
+   would put mid-sage on sage and either disappear or read as a smudge; masking
+   means the leaf is a fixed percentage of white over whatever the panel
+   gradient is doing underneath it, which is what makes it tonal.
+
+   border-radius stays at 50% deliberately. If --cta-mark is unset, or a
+   browser has no mask support, both mask declarations drop and what is left is
+   the circle this rule started as. The icon is a circle inscribed in a square
+   image, so the radius never clips the mark when the mask does apply. */
+/* 7.5% white, not more. The headline is centred and unconstrained on the wide
+   pages, so between roughly 1000px and 1500px it runs across this corner and
+   no position avoids that. At this weight the mark reads as a watermark the
+   text passes over, which is the LinkedIn treatment; at the 10% it started on
+   it read as two things colliding. Measured at 1024, 1280 and 1440. */
+.finalcta-inner::after{content:'';position:absolute;right:1.75rem;top:1.75rem;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.075);pointer-events:none;
+  -webkit-mask:var(--cta-mark) no-repeat center/contain;mask:var(--cta-mark) no-repeat center/contain}
+@media(max-width:900px){
+  .finalcta-inner::after{right:1.25rem;top:1.25rem;width:110px;height:110px;background:rgba(255,255,255,.07)}
+}
+/* Under 560px the panel is 1.5rem of padding either side of text that wraps to
+   four or five lines, so there is no corner left the headline is not already
+   using. A watermark behind wrapped text is noise, not branding. */
+@media(max-width:560px){
+  .finalcta-inner::after{display:none}
+}
+.finalcta h2{color:#fff;font-size:clamp(1.7rem,3.2vw,2.4rem);margin-bottom:1rem;letter-spacing:-.02em;position:relative}
+.finalcta p{color:rgba(255,255,255,.95);font-size:1rem;line-height:1.75;max-width:620px;margin:0 auto 2rem;position:relative}
+.finalcta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative}
+
+/* Use-cases page */
+.usecases{padding:6rem 0;background:#fff}
+.usecase{display:grid;grid-template-columns:.9fr 1.1fr;gap:3rem;align-items:center;margin-bottom:4rem;padding-bottom:4rem;border-bottom:1px solid #EEF0EA}
+.usecase:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.usecase:nth-child(even) .usecase-media{order:2}
+.usecase-media{border-radius:20px;overflow:hidden;box-shadow:var(--shadow);aspect-ratio:4/3}
+.usecase-media img{width:100%;height:100%;object-fit:cover}
+.usecase-sector{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sage-ink);background:rgba(107,114,73,.1);padding:.35rem .8rem;border-radius:6px;margin-bottom:.9rem}
+.usecase h3{font-size:1.45rem;font-weight:700;color:var(--dark);letter-spacing:-.02em;margin-bottom:1.5rem}
+.usecase-block{margin-bottom:1.15rem}
+.usecase-block h4{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+.usecase-block p{font-size:.93rem;line-height:1.7;color:var(--text)}
+.usecase-block.is-outcome{padding:1rem 1.25rem;background:var(--offwhite);border-radius:12px;border-left:3px solid var(--gold)}
+
+/* Solutions feature lists */
+.sol-list{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem 2rem;margin-top:1.5rem}
+.sol-list li{list-style:none;position:relative;padding-left:1.6rem;font-size:.95rem;line-height:1.65;color:var(--text)}
+.sol-list li::before{content:'';position:absolute;left:0;top:.5rem;width:7px;height:7px;border-radius:50%;background:var(--sage)}
+
+@media(max-width:980px){
+  .challenge-grid{grid-template-columns:1fr;gap:2.5rem}
+  .vp-grid{grid-template-columns:repeat(2,1fr)}
+  .how-grid{grid-template-columns:repeat(4,1fr);gap:.9rem}
+  .usecase{grid-template-columns:1fr;gap:1.75rem}
+  .usecase:nth-child(even) .usecase-media{order:0}
+  .sol-list{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .vp-grid{grid-template-columns:1fr}
+  .how-grid{grid-template-columns:1fr}
+  .finalcta-inner{padding:2.5rem 1.5rem}
+  .challenge{padding:4rem 0}
+  .valueprop,.howitworks,.home-industries,.finalcta,.usecases{padding:4rem 0}
+}
+
+
+/* Hero: two-column grid. Replaces the absolutely-positioned visual, which
+   overlapped the headline between roughly 1150px and 1600px viewport width. */
+.hero-content{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,400px);gap:clamp(1.75rem,3vw,3.5rem);align-items:center}
+/* Sized so "Protect the Ingredients" holds one line inside the narrower copy column */
+.hero h1{font-size:clamp(2.2rem,3.4vw,3.3rem)}
+/* white-space:nowrap used to live here, left from the same reveal animation.
+   It was harmless while the hero ran the full width of the page. In a two
+   column hero the headline has 563px, and at 1920px the type reaches 62px, at
+   which "Protect the Ingredients" is 644px wide. It could not wrap, so the
+   mask above simply cut it in half. Removed, so the worst case is now an ugly
+   wrap rather than missing words. The size below is set so it does not come to
+   that. */
+@media(max-width:520px){.hero h1{font-size:1.95rem}}
+.hero-copy{min-width:0}
+.hero h1{max-width:none}
+.hero-visual{position:relative;right:auto;top:auto;width:100%;height:auto;aspect-ratio:11/10;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+@media(max-width:1080px){
+  .hero-content{grid-template-columns:1fr}
+  .hero-visual{display:none}
+}
+
+
+/* Value Proposition: 5 cards on a 6-column grid: 3 across, then 2 across full
+   width. Avoids the empty sixth cell left by a plain 3-column grid. */
+.vp-grid{grid-template-columns:repeat(6,1fr)}
+.vp-card{grid-column:span 2}
+.vp-card:nth-child(4),.vp-card:nth-child(5){grid-column:span 3}
+.vp-card:nth-child(4) .vp-block p,.vp-card:nth-child(5) .vp-block p{max-width:46ch}
+@media(max-width:980px){
+  .vp-grid{grid-template-columns:repeat(2,1fr)}
+  .vp-card,.vp-card:nth-child(4),.vp-card:nth-child(5){grid-column:span 1}
+  .vp-card:nth-child(5){grid-column:1 / -1}
+  .vp-card:nth-child(5) .vp-block p{max-width:none}
+}
+@media(max-width:640px){
+  .vp-grid{grid-template-columns:1fr}
+  .vp-card:nth-child(5){grid-column:span 1}
+}
+/* About page reuses .vp-grid for 2-up and 4-up blocks: keep those even */
+.about-grid-2 .vp-card,.about-grid-2 .vp-card:nth-child(4),.about-grid-2 .vp-card:nth-child(5){grid-column:span 3}
+
+/* Why Customers Choose: two cards whose bullet lists must start on the same
+   line as each other.
+
+   They did not, and the reason matters more than the fix. The grid was capped
+   at 900px in a style attribute, which left the longer of the two headings
+   367px of text in 390px of card. That is 23px of slack, and Windows sets
+   Montserrat a few per cent wider than Linux does, so the heading held on one
+   line here and wrapped to two on Bryan's screen. Every measurement in this
+   file taken on Linux is optimistic by about that much; anything relying on
+   less than a tenth of the line to spare is not actually fixed.
+
+   1040px gives the same heading roughly 70px of room, which survives the
+   difference. Below 980px the cards stack full width and the cap is moot. */
+.choose-grid{max-width:1040px;margin-inline:auto}
+
+/* And the alignment is made structural rather than left to luck. Both cards
+   share the grid's rows, so the heading row is as tall as the taller heading
+   and both lists start at the top of the second row whatever the copy does or
+   whichever machine renders it. Setting the row gap here because taking the
+   card off flex would otherwise hand the spacing to the grid's 1.5rem. */
+.choose-grid{grid-template-rows:auto auto;row-gap:0}
+@supports (grid-template-rows:subgrid){
+  .choose-grid .vp-card{display:grid;grid-template-rows:subgrid;grid-row:span 2;align-content:start}
+}
+/* margin-top:0, the same as the NaturalTag list. The h3 above already carries
+   17.6px of margin-bottom, so anything here is added to it, and this pairing is
+   meant to measure the same on both pages.
+
+   Two wrong answers were tried first and both were caught by the spacing audit
+   rather than by eye. A row-gap on the card is also honoured by flex, so when
+   the stacked layout put the card back on flex the gap and the margin both
+   applied: 19px on NaturalTag against 62px here. Replacing it with a 1.35rem
+   margin still stacked on the h3's own 17.6px: 39px against 18px. */
+.choose-grid .sol-list{grid-template-columns:1fr;margin-top:0}
+/* Stacks at 1060px rather than the 980px the rest of the value grids use.
+   Between those two widths the container, not the 1040px cap, sets the grid,
+   and the card falls to roughly 400px against a heading that needs 367px. That
+   is the same thin margin that caused this, so the band where it is thin is
+   the band that stacks. Full width, one card per row, no heading anywhere near
+   wrapping. */
+@media(max-width:1060px){
+  /* One card per row, so a shared row would pair a card with nothing. Back to
+     the ordinary flex card. */
+  .choose-grid{grid-template-rows:none;grid-template-columns:1fr;row-gap:1.5rem}
+  .choose-grid .vp-card{display:flex;grid-row:auto;grid-column:1 / -1}
+}
+@media(max-width:980px){.about-grid-2 .vp-card,.about-grid-2 .vp-card:nth-child(4),.about-grid-2 .vp-card:nth-child(5){grid-column:span 1}}
+
+/* Solutions pages: product logo panel in place of a stock photo */
+.solution-mark{display:flex;align-items:center;justify-content:center;padding:clamp(2rem,5vw,4rem);border-radius:24px;background:linear-gradient(150deg,#FFFFFF 0%,var(--offwhite) 55%,var(--soft-sage) 100%);border:1px solid rgba(107,114,73,.14);box-shadow:var(--shadow);aspect-ratio:4/3;position:relative;overflow:hidden}
+.solution-mark::after{content:'';position:absolute;right:-90px;bottom:-90px;width:280px;height:280px;border-radius:50%;background:rgba(107,114,73,.06)}
+.solution-mark img{position:relative;width:100%;max-width:260px;height:auto;object-fit:contain}
+/* The photograph version of the same slot. Same aspect ratio and same corner
+   radius as .solution-mark, so a page with a photograph and a page still on
+   the logo panel sit at the same height and read as the same layout.
+
+   4:3 against a 3:2 source crops about eleven per cent off each side. Checked
+   on both: the vial and the instrument are central enough to survive it. */
+.solution-photo{border-radius:24px;overflow:hidden;aspect-ratio:4/3;border:1px solid rgba(26,30,46,.08);box-shadow:var(--shadow);background:var(--offwhite)}
+/* --photo-zoom lets an editor crop tighter without a new file. Kirsty asked for
+   the NaturalTag vial cropped in a little more, and cover has already used all
+   the width the panel can take, so the only way further in is to scale. The
+   panel clips it. */
+.solution-photo img{width:100%;height:100%;object-fit:cover;display:block;
+  transform:scale(var(--photo-zoom,1));transform-origin:var(--photo-zoom-origin,center)}
+
+/* The same panel, playing a video.
+
+   contain rather than cover, which is the opposite of the photograph above and
+   deliberate. A photograph can lose its edges to a 4:3 crop without losing its
+   subject. This is a recording of a user interface: crop it and the crop takes
+   the toolbar, the sidebar or the map legend, which is the part being sold.
+   Letterboxed against the panel's own background instead.
+
+   16:10 rather than the 4:3 the photo panel uses, because the recording is
+   roughly 2:1 and a 4:3 box would band it top and bottom with more empty
+   panel than picture. */
+.solution-video{aspect-ratio:16/10;background:var(--offwhite);display:flex}
+.solution-video video{width:100%;height:100%;object-fit:contain;display:block}
+
+/* Reduced motion is handled in main.js, not here. CSS can hide a video and it
+   can fade one, but it cannot pause one, and a paused video is the whole point
+   of the request. There was a @media(prefers-reduced-motion) block here
+   setting a custom property, which did nothing at all. */
+
+
+/* .btn-outline is white-on-dark and disappears on light sections. This is the
+   light-background equivalent. */
+.btn-line{background:transparent;color:var(--sage-dark);border:1.5px solid rgba(107,114,73,.4)}
+.btn-line:hover{border-color:var(--sage);background:rgba(107,114,73,.07);transform:translateY(-3px)}
+
+
+/* Kirsty's positioning line. It used to sit above the H1 as an eyebrow, which
+   is the badge-above-the-headline pattern Bryan flagged on 6 Aug 2026. Same
+   words, verbatim, now opening the lead paragraph underneath the headline. */
+.hero-lead{max-width:600px;margin:0 0 1rem;font-size:1.08rem;line-height:1.75;color:rgba(255,255,255,.72)}
+.hero-lead strong{color:#fff;font-weight:600}
+/* The positioning line, on its own row above the description at Kirsty's
+   request. Everything else about it is .hero-lead; this only tightens the gap
+   below so the two sentences read as one block rather than two paragraphs
+   that happen to be adjacent. */
+.hero-lead-positioning{margin-bottom:.55rem}
+@media(max-width:520px){.hero-lead{font-size:1rem}}
+
+
+/* Hero supporting claims, set as one sentence. A list left the fifth line
+   orphaned, because it is a coda rather than a fifth peer. */
+.hero-claims{max-width:660px;margin:0 0 2.4rem;font-size:.95rem;line-height:1.7;color:rgba(255,255,255,.62)}
+
+
+/* How It Works supporting facts: two ruled columns instead of chips. */
+.how-facts{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:0 3.5rem;margin:3.25rem auto 0;max-width:880px}
+.how-facts li{padding:.95rem .25rem;border-top:1px solid rgba(255,255,255,.1);font-size:.92rem;line-height:1.55;color:#fff;font-weight:600}
+.how-facts li:nth-last-child(-n+2){border-bottom:1px solid rgba(255,255,255,.1)}
+
+@media(max-width:760px){
+  .how-facts{grid-template-columns:1fr;gap:0}
+  .how-facts li:nth-last-child(-n+2){border-bottom:none}
+  .how-facts li:last-child{border-bottom:1px solid rgba(255,255,255,.1)}
+}
+@media(max-width:520px){
+  .hero-claims{font-size:.84rem;gap:.35rem .85rem;margin-top:1.6rem}
+  .hero-claims li{padding-right:.85rem}
+}
+
+
+/* Cookie consent bar. Nothing that sets a cookie loads before a choice. */
+.consent{position:fixed;left:1rem;right:1rem;bottom:1rem;z-index:9998;max-width:640px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:1rem;justify-content:space-between;background:var(--dark);color:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:1.1rem 1.35rem;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.consent[hidden]{display:none}
+.consent p{font-size:.86rem;line-height:1.6;margin:0;flex:1 1 300px}
+.consent a{color:var(--gold-light);text-decoration:underline;text-underline-offset:2px}
+.consent-actions{display:flex;gap:.6rem;flex:0 0 auto}
+.consent button{font-family:'Montserrat',sans-serif;font-size:.83rem;font-weight:600;padding:.55rem 1.2rem;border-radius:8px;cursor:pointer;transition:all .25s;border:1px solid transparent}
+.consent-accept{background:var(--sage);color:#fff}
+.consent-accept:hover{background:var(--sage-light)}
+.consent-decline{background:transparent;color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.22)}
+.consent-decline:hover{border-color:rgba(255,255,255,.5);color:#fff}
+@media(max-width:520px){.consent{padding:1rem}.consent-actions{width:100%}.consent button{flex:1}}
+
+
+/* Link out to a section that used to live on this page. Quiet on purpose: it is
+   a route onward, not a call to action competing with the buttons. */
+.section-more{margin-top:2.5rem;text-align:center;font-size:.95rem}
+.section-more a{color:var(--sage-dark);font-weight:600;border-bottom:1px solid rgba(107,114,73,.35);padding-bottom:2px;transition:border-color .25s ease}
+.section-more a:hover{border-bottom-color:var(--sage)}
+/* .finalcta p already sets margin:0 auto 2rem, and (0,1,1) beats (0,1,0), so a
+   bare .finalcta-alt rule was being ignored and the link sat flush against the
+   buttons. Matching the element as well takes it to (0,2,1). */
+.finalcta p.finalcta-alt{margin:2.75rem auto 0;font-size:1.22rem}
+.finalcta-alt a{color:rgba(255,255,255,.95);border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:2px;transition:color .25s ease,border-color .25s ease}
+.finalcta-alt a:hover{color:#fff;border-bottom-color:rgba(255,255,255,.7)}
+
+
+/* ===========================================================================
+   Kirsty's review, 8 August 2026. Item numbers match the tracker.
+   =========================================================================== */
+
+/* A10  The About hero subtitle was set in the muted grey used for secondary
+        text, which made the line read as a caption rather than as part of the
+        opening statement. Same weight as before, the colour is what changes. */
+.section-subtitle-strong{color:var(--text)}
+/* Emphasis inside a sub-headline. Sage rather than a heavier grey, because at
+   this size a weight change alone barely registers against a line that is
+   already 1.1rem. #535A38 on the two surfaces this line sits on measures 7.4:1
+   and 7.9:1, so it clears 4.5:1 with room rather than by a hair. */
+.section-subtitle strong{font-weight:700;color:var(--sage-dark)}
+
+/* A headline break the editor sets, not the browser. Suppressed on phones,
+   where the column is too narrow for a chosen break to be an improvement on
+   the one the browser would have made anyway. */
+@media(max-width:700px){
+  .section-title br{display:none}
+}
+
+/* A12  Long headings were breaking wherever the box happened to end. */
+.section-title{text-wrap:balance}
+
+/* A13  More air after the opening paragraph of Our Story. */
+.vp-head + div > .challenge-lead:first-of-type{margin-bottom:2.1rem}
+
+/* A14  Why We Exist: a larger heading, and charcoal rather than the teal it
+        carried between 8 and 11 Aug. Scoped by id because the .howitworks
+        class is also used twice on the NaturalTag page.
+
+        The gold rounded square above Vision and Mission is gone with it. It
+        held a bullet character, so it read as a dot in a box rather than as an
+        icon, and there is nothing for it to be an icon of: the same element on
+        the homepage carries the numbers 01 to 04, which is a job. Here it was
+        decoration standing in for artwork that never arrived. Removed at the
+        11 Aug meeting, and the heading below it grows to take the space. */
+/* background-color, not the background shorthand. The shorthand resets
+   background-image to none, and because this is an ID it beat the photograph
+   rule further up the file with no warning: the section rendered flat charcoal
+   and the CMS field looked like it did nothing. */
+#why-we-exist{background-color:var(--charcoal)}
+#why-we-exist .section-title{font-size:clamp(2.2rem,4.4vw,3rem)}
+#why-we-exist .how-step h3{font-size:1.35rem;margin-bottom:.85rem;letter-spacing:-.015em}
+/* The cards are four per cent white over their section. On the navy that read
+   as a card. On charcoal it lands within a couple of steps of the background
+   and the border is doing all the work, so the fill and the edge both come up.
+   Measured rather than guessed: the card is now #2B2F3A against #20242F. */
+#why-we-exist .how-step{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.13)}
+/* The card body copy is .62 white everywhere else, which was fine over a flat
+   section. Over the photograph the card sits on a lighter backdrop and .62
+   measured 3.76:1 where 14px needs 4.5. .82 measures well clear. Scoped to this
+   section so the homepage steps, which are still on flat navy, do not move. */
+#why-we-exist .how-step p{color:rgba(255,255,255,.82)}
+/* Vision is two lines and Mission is six, and the grid stretches both to the
+   taller one, which left half the Vision card empty. Top aligned, each card is
+   the height of what is in it. */
+#why-we-exist .how-grid{align-items:start}
+
+/* A17  The 01-04 counters became a branded diamond on 11 Aug, then a tick on
+        12 Aug, which is what Kirsty asked for both times: these four cards are
+        not a sequence, so a counter was reading as an order of operations that
+        does not exist. The tick is drawn in the template, not here, so this
+        rule only sets the box and the colour it inherits. */
+.vp-mark{display:block;width:22px;height:22px;margin-bottom:.9rem;color:var(--sage)}
+.vp-mark svg{width:100%;height:100%;display:block}
+
+/* A21  Food matrices, promoted out of a bullet into its own section. */
+.matrices-section{padding:5rem 0;background:var(--offwhite)}
+.matrices-section .industries-header{text-align:center;max-width:var(--section-head-width);margin:0 auto 2.5rem}
+.matrices-section .industries-header .section-subtitle{max-width:640px;margin-inline:auto}
+.matrix-chips{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;max-width:820px;margin:0 auto;padding:0}
+.matrix-chips li{font-size:.92rem;font-weight:600;color:var(--teal);background:rgba(59,102,107,.09);border:1px solid rgba(59,102,107,.18);border-radius:999px;padding:.55rem 1.15rem}
+
+/* A26  Keeps "Product Authentication" together on the Careers heading. */
+/* Keeps a phrase together when there is room for it, and gets out of the way
+   when there is not. "Product Authentication" is held on one line in the
+   Careers heading on Kirsty's request; once that heading grew by 14% in the
+   12 August type pass, the phrase needed 437px inside a 343px phone and pushed
+   the page sideways by 47. It can never fit at that width, so below 560px the
+   rule releases rather than overflowing. A heading that wraps is a heading; a
+   heading that overflows is a horizontal scrollbar. */
+.nowrap{white-space:nowrap}
+@media(max-width:560px){.nowrap{white-space:normal}}
+
+/* A27  The three solution pages shared one hero. Each now carries its product
+        colour, as a tint behind it and on the eyebrow, rather than a full
+        colour block that would fight the photography below. */
+/* The product mark blended into the hero, at Kirsty's request: once the hero
+   panel became a photograph, the NaturalTag, NaturalDetect and NaturalCloud
+   icons had nowhere left to be.
+
+   Same technique as the call-to-action watermark. The icon is used as a mask
+   rather than as a background image, so the fill is a colour this stylesheet
+   controls: the mark is a fixed percentage of the page's own brand colour over
+   the page's own tint, which is what makes it read as part of the background
+   rather than as a logo dropped on top of it.
+
+   Behind the text, not beside it. There is no clear space in this hero large
+   enough for a mark at a size worth having, and a dark tint under dark text on
+   a light background raises contrast slightly rather than lowering it. It was
+   measured all the same; see the contrast audit, which now covers these three
+   pages for exactly this reason.
+
+   Inside @supports because the fallback here is not benign. The call-to-action
+   mark degrades to the circle it replaced; this one would degrade to a filled
+   square across a quarter of the hero. */
+@supports ((mask-image:url(#m)) or (-webkit-mask-image:url(#m))){
+  .solution-hero-mark{position:relative;overflow:hidden}
+  .solution-hero-mark > .container{position:relative;z-index:1}
+  /* Smaller and lower than it started. Kirsty: the cloud "looks a bit lost and
+     impacts the text". It was a 440px mark centred on the copy, which is a
+     watermark competing with a paragraph rather than an accent. It sits below
+     the text block now, further off the edge, and two thirds the size. */
+  .solution-hero-mark::after{content:'';position:absolute;left:-9%;top:auto;bottom:-7%;
+    width:clamp(170px,20vw,290px);aspect-ratio:1;z-index:0;pointer-events:none;
+    -webkit-mask:var(--hero-mark) no-repeat center/contain;mask:var(--hero-mark) no-repeat center/contain}
+  .hero-tag.solution-hero-mark::after{background:rgba(107,114,73,.11)}
+  .hero-detect.solution-hero-mark::after{background:rgba(59,102,107,.11)}
+  .hero-cloud.solution-hero-mark::after{background:rgba(162,147,73,.14)}
+  /* Off the left edge on a phone the mark is mostly gone and what is left is a
+     stripe. Centred behind the copy instead, and quieter. */
+  /* On a phone it was centred behind the copy, which Kirsty found worse than on
+     desktop and she was right: a full-width column of text has no margin for a
+     mark to hide in. Bottom right corner, small, half off the edge. */
+  @media(max-width:820px){
+    .solution-hero-mark::after{left:auto;right:-12%;bottom:-6%;transform:none;width:min(38vw,160px)}
+    .hero-tag.solution-hero-mark::after{background:rgba(107,114,73,.09)}
+    .hero-detect.solution-hero-mark::after{background:rgba(59,102,107,.09)}
+    .hero-cloud.solution-hero-mark::after{background:rgba(162,147,73,.11)}
+  }
+}
+.hero-tag{background:linear-gradient(180deg,rgba(107,114,73,.13),var(--offwhite) 78%)}
+.hero-tag .section-label{color:var(--sage-dark)}
+.hero-detect{background:linear-gradient(180deg,rgba(59,102,107,.13),var(--offwhite) 78%)}
+.hero-detect .section-label{color:var(--teal)}
+.hero-cloud{background:linear-gradient(180deg,rgba(162,147,73,.15),var(--offwhite) 78%)}
+/* --gold-ink, not --gold. The NaturalCloud hero is gold text on a gold tint,
+   and #8A7C33 measured 3.62:1 against it where 18px text needs 4.5. It has
+   been failing since the hero was given its brand colour on 11 Aug; it only
+   surfaced when the technology pages were added to the contrast audit on
+   12 Aug, and it fails identically with the new background mark removed, so
+   the mark is not the cause. */
+.hero-cloud .section-label{color:var(--gold-ink)}
+
+/* A28 A32 A33  The one line that says what each product does was set at the
+        same size and grey as ordinary supporting text. */
+.hero-tag .section-subtitle,
+.hero-detect .section-subtitle,
+.hero-cloud .section-subtitle{font-size:1.45rem;line-height:1.45;font-weight:700;max-width:720px}
+.hero-tag .section-subtitle{color:var(--sage-dark)}
+.hero-detect .section-subtitle{color:var(--teal)}
+.hero-cloud .section-subtitle{color:var(--gold-ink)}
+
+/* A22  Education sat in a flex column above the bullets and was being fed bare
+        list items by the script, so the first line rendered unlike everything
+        under it. It is a labelled line now and the bullets below are uniform. */
+.team-modal-body .tm-edu-item{display:block;font-size:.88rem;color:var(--teal);font-weight:600;line-height:1.6}
+.team-modal-body .tm-bio li{font-size:.88rem;color:#333;line-height:1.65;margin-bottom:.5rem;font-weight:400}
+.team-modal-body .tm-bio li:first-child{font-weight:400}
+
+@media(max-width:900px){
+  .how-grid{grid-template-columns:repeat(2,1fr)}
+  /* The numeral does not scale with the card. At two across on a phone the
+     card is roughly a third of its desktop width while a 2.6rem numeral is
+     still 2.6rem, so it stops being a quiet marker and becomes the biggest
+     thing on the screen, twice the size of the step name it belongs to.
+     Measured at 390px: numeral 41.6px against a 17px heading. */
+  .how-step-num{font-size:1.9rem;margin-bottom:.5rem}
+}
+
+/* ===========================================================================
+   White hero, and How It Works as Section 4. 8 August 2026.
+   =========================================================================== */
+
+/* The hero background. Kirsty's lab photograph tinted into the brand navy,
+   the same #1A1E2E she picked out of the How It Works section.
+
+   Three layers, and the order matters:
+
+     1  a left to right gradient of the navy, near solid where the copy sits
+        and thinning towards the right where there is nothing but picture
+     2  the photograph, blended into the navy behind it with luminosity, so it
+        contributes its light and shade but none of its own colour
+     3  the navy itself as the base colour
+
+   luminosity rather than a plain dark sheet is what makes this read as one
+   tinted image instead of a photo with a grey blanket over it. The photograph
+   is a bright room: a near white wall across the top and a wooden bench full
+   of high contrast colour across the bottom. Dropping the saturation is what
+   lets a single tint hold the whole frame together.
+
+   The gradient is not decoration. Measured against the rendered pixels, white
+   body copy over the untinted photograph fails WCAG AA in the upper left where
+   the lab wall is. The numbers are in the comment on .hero-lab .hero-lead.
+
+   To revert to the white hero: delete the two background lines and the
+   background-blend-mode line, put background:#fff back, and restore the
+   hero-is-light body class in base.njk. Nothing else in this block is about
+   colour. */
+.hero.hero-lab{
+  min-height:auto;
+  background-color:var(--dark);
+  background-image:
+    linear-gradient(100deg,
+      rgba(26,30,46,.95) 0%,
+      rgba(26,30,46,.88) 44%,
+      rgba(26,30,46,.52) 100%),
+    var(--hero-bg,url('/assets/images/ingredients-lab.webp'));
+  background-size:cover,cover;
+  background-position:center,center;
+  background-repeat:no-repeat,no-repeat;
+  background-blend-mode:normal,luminosity;
+}
+/* The headline sets the column widths, not the other way round.
+
+   Sizes here are measured with Montserrat actually loaded. An earlier pass
+   measured them with the browser falling back to the system sans, which is
+   around 18% narrower, and every number that came out of it was wrong:
+   "Protect the Ingredients" is roughly 700px at 57.6px, not 594px. */
+.hero.hero-lab .hero-content{
+  display:grid;
+  grid-template-columns:minmax(0,1.38fr) minmax(0,.82fr);
+  gap:3rem;
+  align-items:center;
+  padding:10rem 2rem 6rem;
+}
+.hero.hero-lab .hero-copy{max-width:none}
+/* Set so "Protect the Ingredients" stays on one line at every width from a
+   360px phone up. Measured in a browser with Montserrat loaded. */
+.hero.hero-lab h1{color:#fff;max-width:none;margin-bottom:1.5rem;font-size:clamp(1.5rem,3.85vw,3.4rem)}
+/* Back on a dark ground the sage end of this gradient goes muddy, so the
+   second line runs light gold into gold, which is the pairing that was here
+   before the hero went white. */
+.hero.hero-lab h1 em{background:linear-gradient(120deg,var(--gold-light),var(--gold));-webkit-background-clip:text;background-clip:text}
+/* Contrast, measured against the rendered pixels rather than assumed. At the
+   left edge of the copy column the background samples around #22262F, which
+   puts this at roughly 11:1 and the ticks below at about 9:1. WCAG AA wants
+   4.5:1 for body text. There is room to spare, which there needs to be: the
+   background is a photograph and the pixel under any given letter changes
+   with the viewport width. */
+.hero.hero-lab .hero-lead{color:rgba(255,255,255,.82);max-width:520px}
+.hero.hero-lab .hero-lead strong{color:#fff}
+.hero.hero-lab .hero-ticks li{color:rgba(255,255,255,.86)}
+/* The teal tick disappears against navy. Gold is the accent that reads on it,
+   and it is what the How It Works numbers use. */
+.hero.hero-lab .hero-ticks li::before{border-color:var(--gold-light)}
+/* .6 measured 4.68:1 against the brightest pixel behind it, which clears AA
+   by 0.18. That is too thin a margin on a background that is a photograph:
+   the pixel under any letter moves with the viewport. .68 takes it to a
+   little over 5.5:1 and still reads as the quietest line in the block. */
+.hero.hero-lab .hero-ticks-coda{color:rgba(255,255,255,.68)}
+
+/* The four claims were one run-on sentence. The mockup ticks them. */
+.hero-ticks{list-style:none;margin:2rem 0 .35rem;padding:0;display:grid;gap:.6rem}
+.hero-ticks li{position:relative;padding-left:1.9rem;font-size:1rem;color:var(--text);line-height:1.5}
+.hero-ticks li::before{
+  content:'';position:absolute;left:.15rem;top:.28rem;width:.42rem;height:.78rem;
+  border:solid var(--teal);border-width:0 2.5px 2.5px 0;transform:rotate(45deg);
+}
+.hero-ticks-coda{margin:0 0 2.25rem 1.9rem;font-size:.95rem;color:var(--muted)}
+
+.hero.hero-lab .hero-actions{margin-top:.5rem}
+/* .btn-outline is a white border for dark backgrounds. This is its counterpart. */
+.btn-outline-dark{background:transparent;color:var(--dark);border:1.5px solid rgba(26,30,46,.22)}
+.btn-outline-dark:hover{border-color:var(--sage);color:var(--sage-dark);background:rgba(107,114,73,.05);transform:translateY(-3px)}
+/* Kept as its own rule rather than folded into .btn-outline-dark, because that
+   class is also used on the light sections further down the page. */
+.hero.hero-lab .btn-outline-dark{color:#fff;border-color:rgba(255,255,255,.34)}
+.hero.hero-lab .btn-outline-dark:hover{color:#fff;border-color:var(--gold-light);background:rgba(255,255,255,.07)}
+
+/* The product shot sits in the grid rather than being pinned to the viewport.
+   It is now a photograph on top of a photograph, so it needs an edge of its own
+   or it dissolves into the background. A pale hairline and a deep shadow do
+   that without putting a visible card behind it. */
+.hero.hero-lab .hero-visual{
+  position:relative;right:auto;top:auto;width:100%;height:auto;
+  /* Kirsty's product shot is 2:3 portrait. The frame was 5:4 landscape,
+     left over from the previous image, and object-fit:cover would have
+     taken the top off the bottle and the capsules off the bottom. 3:4 is
+     close enough to the source to crop only the empty margins, and it
+     still sits shorter than the copy column beside it. */
+  aspect-ratio:3/4;
+  border-radius:16px;overflow:hidden;
+  /* Solid ground behind the picture. Without it a transparent PNG, or the
+     moment before the photograph loads, shows the lab background through the
+     frame and the whole thing reads as a pane of glass. */
+  background:#12151F;
+  box-shadow:0 30px 70px rgba(0,0,0,.45);
+  border:1px solid rgba(255,255,255,.14);
+}
+.hero.hero-lab .hero-visual img{filter:none}
+.hero.hero-lab .hero-visual::after{border-color:rgba(255,255,255,.06);background:none}
+
+@media(min-width:1600px){.hero.hero-lab .hero-visual{right:auto;top:auto}}
+@media(max-width:1100px){.hero.hero-lab .hero-visual{width:100%;height:auto}}
+@media(max-width:900px){
+  .hero.hero-lab .hero-content{grid-template-columns:1fr;gap:2.5rem;padding:7.5rem 2rem 4rem}
+  .hero.hero-lab .hero-visual{display:block;max-width:420px}
+}
+/* Small phones get their side padding back as headline width. Without this the
+   line breaks at 375px, which is an iPhone SE and an iPhone mini. */
+@media(max-width:480px){
+  .hero.hero-lab .hero-content{padding-left:1.25rem;padding-right:1.25rem}
+}
+
+/* Kept, unused, for one reason. These five rules are what a light hero needs
+   from the navigation, and working them out the first time took a while: the
+   logo swaps to its colour version, the links take the scrolled colour, and the
+   burger bars go dark. Putting hero-is-light back on the body in base.njk turns
+   the whole thing on again. Deleting them would mean rediscovering them. */
+body.hero-is-light #navbar:not(.scrolled) .logo-color{display:block}
+body.hero-is-light #navbar:not(.scrolled) .logo-white{display:none}
+body.hero-is-light #navbar:not(.scrolled) .nav-links a{color:#4B5563}
+body.hero-is-light #navbar:not(.scrolled) .nav-links a:hover{color:var(--sage)}
+/* The .nav-toggle span rule that used to sit here was dead — the burger is an
+   svg, not spans — and its intent, var(--dark), is now the default on
+   .nav-toggle itself. See the note there. */
+
+/* How It Works, Section 4 of the copy, now on the homepage.
+   Compact by design: the request was to cut the amount of scrolling. */
+.howitworks-compact{padding:4.5rem 0}
+.howitworks-compact .how-head{text-align:center;max-width:var(--section-head-width);margin:0 auto 2.5rem}
+.how-grid-compact{list-style:none;padding:0;margin:0}
+.how-grid-compact .how-step{padding:1.4rem 1.25rem}
+.how-grid-compact .how-step h3{margin:.5rem 0 .55rem}
+.how-grid-compact .how-step p{font-size:.88rem;line-height:1.55}
+
+/* The detail behind a disclosure. Native <details>, so it opens on tap and on
+   Enter, and assistive technology announces its state without any script. */
+.how-more{max-width:880px;margin:2.25rem auto 0;border-top:1px solid rgba(255,255,255,.12);padding-top:1.1rem}
+.how-more summary{
+  cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:.55rem;
+  font-size:.95rem;font-weight:600;color:#fff;padding:.35rem 0;
+}
+.how-more summary::-webkit-details-marker{display:none}
+.how-more summary::after{
+  content:'';width:.5rem;height:.5rem;border:solid rgba(255,255,255,.75);
+  border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-2px);transition:transform .25s;
+}
+.how-more[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
+.how-more summary:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:4px}
+.how-more .how-facts{margin-top:1.1rem}
+
+/* Anchor targets were landing underneath the fixed navigation, so the first
+   line of a section was hidden. Applies to the new "How it works" button, the
+   "Contact Us" button that now points at the form, and every other in-page
+   link. The value is the nav height plus a little air. */
+/* Anything that can be linked to needs to clear the fixed navigation.
+   .industry-card[id] was missing, and it is what the nav and footer point at:
+   a visitor following "Branded Ingredients" from the menu landed with the top
+   of the card cut off behind the navigation bar. 96px is the nav height plus a
+   little; the cards get more, so the section heading stays in shot and the
+   arrival reads as a page rather than as a fragment. */
+/* form[id] is here because the contact CTA points at the form itself. Without
+   it the form's first field lands under the fixed navigation, which is the
+   same fault the industry cards had. */
+section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
+.industry-card[id]{scroll-margin-top:160px}
+
+/* The food matrices grid on the NaturalTag page was pinned to three columns by
+   an inline style, which no media query could override. On a phone that left
+   three 100px columns and the headings inside them were cut off by the
+   section's overflow. */
+.how-grid-3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){.how-grid-3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.how-grid-3{grid-template-columns:1fr}}
+
+/* Value proposition cards, rebuilt to the design of 10 August.
+
+   The 01 to 05 counters are replaced by an icon in a circle beside the
+   heading, the "Customer problem" label is gone because the sentence under it
+   was already the problem, and the cards sit on a soft neutral rather than
+   white so they read as one block on a white page. */
+/* A photograph across the top of a value card.
+   The card's padding moves to .vp-card-body so the picture can reach the card's
+   edges, rather than being pulled out with negative margins that would have to
+   be kept in step with the padding by hand. width and height are on the img so
+   the browser reserves the right box before the file arrives and the cards
+   below do not jump as the five pictures load. */
+.vp-card-photo{padding:0;overflow:hidden}
+/* 21/9, not the 16/9 the pictures are. Kirsty asked for the height reduced and
+   the width kept, so the card crops a band out of the middle of each photograph
+   rather than showing all of it. Three quarters of the height it was. */
+.vp-photo{width:100%;height:auto;aspect-ratio:21/9;object-fit:cover;object-position:center;display:block}
+.vp-card-photo .vp-card-body{padding:1.5rem}
+.vp-card-photo .vp-card-head{margin-bottom:.9rem}
+
+.vp-card-head{display:flex;align-items:flex-start;gap:.85rem;margin-bottom:1.1rem}
+.vp-card-head h3{min-width:0;overflow-wrap:anywhere}
+.vp-icon{
+  flex:0 0 auto;width:2.6rem;height:2.6rem;border-radius:50%;
+  background:#fff;color:var(--sage);
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.vp-icon svg{width:1.3rem;height:1.3rem;display:block}
+.vp-card .vp-block p{font-size:.86rem;line-height:1.6}
+.vp-card .vp-block.is-value{padding-top:.85rem;border-top:1px solid rgba(26,30,46,.1)}
+.vp-card:hover .vp-icon{color:var(--sage-dark)}
+
+/* Value cards on a phone.
+
+   Five cards stacked ran to 3,479px, four full screens, a third of the whole
+   homepage. They are five parallel options rather than five sequential points,
+   so reading them one after another down a column is the wrong shape. They
+   swipe sideways instead, one at a time, with the next one peeking to show
+   there is more.
+
+   Scroll snap does all of it in CSS. No script, so nothing to break, and the
+   cards stay in the page for search engines and for anyone who lands here with
+   scripting off.
+
+   The container is focusable and named, because a scrollable region a mouse can
+   reach has to be reachable from a keyboard too. */
+.vp-swipe-hint{display:none}
+@media(max-width:720px){
+  .vp-grid-centred{
+    display:flex;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    gap:.9rem;
+    /* This line is the whole reason the carousel worked or did not.
+
+       .vp-grid-centred carries justify-content:center for the desktop layout,
+       where it centres a row of three. Left in place here it centres 1458px of
+       cards inside a 342px scroll container, which splits the 1116px of
+       overflow evenly across both ends. Overflow past the right edge is
+       scrollable. Overflow past the left edge is not: scrollLeft cannot go
+       below zero. So exactly half of it, 558px, sat permanently off the left
+       of the screen and the first card could not be reached by any amount of
+       swiping. Measured at 390px: scrollLeft 0 with card one at x -535, and
+       cards two, three and four the only ones ever visible. */
+    justify-content:flex-start;
+    /* Bleed to the screen edges so a card can sit centred with its neighbour
+       showing, then pad the ends back so the first and last still align. */
+    margin-inline:calc(50% - 50vw);
+    padding:.25rem 1.5rem 1.25rem;
+    scrollbar-width:none;
+  }
+  .vp-grid-centred::-webkit-scrollbar{display:none}
+  .vp-grid-centred > .vp-card{
+    flex:0 0 82%;
+    scroll-snap-align:center;
+  }
+  .vp-grid-centred:focus-visible{outline:2px solid var(--sage);outline-offset:4px;border-radius:18px}
+  /* A quiet instruction, shown only where the swipe exists. */
+  .vp-swipe-hint{display:block;text-align:center;font-size:.82rem;color:var(--muted);margin-top:-.35rem}
+}
+
+/* Compatibility verdict.
+
+   Three states, and the colour carries meaning, so it cannot be the only thing
+   that does. Each badge says its verdict in words as well: someone who cannot
+   tell sage from amber still reads "Compatibility Assessment Recommended". */
+/* .72rem to 1.05rem, at Kirsty's request on 13 Aug: the verdict is the point of
+   the screen and it was set smaller than the note underneath it. The padding
+   and the letterspacing come up with it so the pill stays a pill rather than a
+   large word in a tight box. */
+.compat-badge{
+  display:inline-block;font-family:'Montserrat',sans-serif;font-size:1.05rem;
+  font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:.55rem 1.4rem;border-radius:999px;margin-bottom:1.15rem;
+}
+.compat-badge-compatible{background:rgba(107,114,73,.16);color:var(--sage-dark);border:1px solid rgba(107,114,73,.35)}
+.compat-badge-conditions{background:rgba(162,147,73,.16);color:#7A6D2E;border:1px solid rgba(162,147,73,.4)}
+.compat-badge-testing{background:rgba(59,102,107,.14);color:var(--teal);border:1px solid rgba(59,102,107,.34)}
+
+/* The badge on a phone.
+
+   The verdict wording changed on 20 August 2026 to Kirsty's copy, and two of
+   the three badges got considerably longer: "Potentially Compatible" is 22
+   characters and "Compatibility Assessment Recommended" is 36, where the
+   longest before was "Testing required" at 15.
+
+   Measured at 375px, the badge sits in a 263px column. At the desktop metrics
+   above — 1.05rem, 700 weight, .12em tracking, uppercase — those two wrapped
+   to two and three lines inside a 999px pill, which stops reading as a badge
+   and starts reading as a blob. Nothing overflowed the page; it simply looked
+   broken.
+
+   Bringing the size and the tracking down at this width puts "Potentially
+   Compatible" back on one line and holds the longest one to two. The radius
+   comes down with them, because a stadium curve only reads as deliberate on a
+   single line — on two it wants to be a label.
+
+   This does not undo Kirsty's 13 August request to size the verdict up. That
+   was about the verdict being smaller than the note beneath it, and it still
+   is not: .92rem here against .8rem for .compat-result-note. Desktop is
+   untouched, where all three fit on one line with room to spare. */
+@media(max-width:600px){
+  .compat-badge{
+    font-size:.92rem;letter-spacing:.05em;
+    padding:.5rem 1.05rem;border-radius:14px;max-width:100%;
+  }
+}
+.compat-result-note{font-size:.8rem;color:var(--muted);max-width:440px;margin:1.5rem auto 1.75rem;line-height:1.6}
+
+/* The tested-product line on the compatibility result. Quieter than the
+   verdict but not small print: it is the only sentence on that screen that is
+   a fact rather than a screen. */
+.compat-evidence{font-size:.9rem;line-height:1.6;max-width:440px;margin:1.25rem auto 0;padding:.75rem 1rem;border-radius:10px}
+.compat-evidence:empty{display:none}
+.compat-evidence-yes{background:rgba(107,114,73,.1);color:var(--sage-dark)}
+.compat-evidence-no{background:rgba(59,102,107,.1);color:var(--teal)}
+
+/* ---------------------------------------------------------------------------
+   The five value cards, laid out in one place.
+
+   Bryan: the rule above "OUR VALUE" does not sit at the same height across a
+   row, on desktop or on mobile. It cannot, in a flex row: flex sizes the cards
+   and then each one lays its own contents out, so the divider lands wherever
+   that card's problem text happens to stop. Two lines of copy in one card and
+   three in the next puts them a line apart.
+
+   Grid with subgrid fixes it properly. Every card lends its four parts to the
+   grid's rows, so a band of cards shares one row for the picture, one for the
+   heading, one for the problem and one for the value. The divider is the top
+   of the fourth row, and a row has one top.
+
+   Two levels of it, because the card's padding lives on an inner wrapper so the
+   photograph can reach the card's edges: the card is a subgrid of the section,
+   and the body is a subgrid of the card.
+
+   The whole layout is here rather than spread through the file. It was three
+   separate additions in three media blocks, each fighting the generic .vp-grid
+   and .vp-card rules further up on source order alone, and it produced 24px
+   cards before it produced aligned ones. Every regime states its own columns
+   and its own spans, so none of them depends on what did or did not reach it.
+
+   Three regimes:
+     up to 720px    a sideways carousel, one card at a time
+     721 to 980     two across, the fifth centred under them
+     981 and up     three across, the last two centred under them
+--------------------------------------------------------------------------- */
+@supports (grid-template-rows:subgrid){
+  .vp-grid-centred{display:grid;gap:1.5rem}
+  .vp-grid-centred > .vp-card-photo{
+    display:grid;grid-template-rows:subgrid;grid-row:span 4;padding:0;
+  }
+  .vp-grid-centred > .vp-card-photo > .vp-card-body{
+    display:grid;grid-template-rows:subgrid;grid-row:span 3;align-content:start;row-gap:.9rem;
+  }
+  /* The row gaps do the spacing between the four parts now, so the parts stop
+     carrying their own bottom margins and cannot double up with them. */
+  .vp-grid-centred > .vp-card-photo .vp-card-head,
+  .vp-grid-centred > .vp-card-photo .vp-block{margin-bottom:0}
+  /* The heading sits at the bottom of its row, not the top. A shared row is as
+     tall as the tallest heading in the band, so a one-line heading in a band
+     with a two-line one has a spare line somewhere. Above the heading it is a
+     little air under the picture; below it, it is 37px between a heading and
+     its paragraph next to a card with 15px, which the spacing audit called and
+     was right to. */
+  .vp-grid-centred > .vp-card-photo .vp-card-head{align-self:end}
+
+  @media(min-width:981px){
+    .vp-grid-centred{grid-template-columns:repeat(6,1fr)}
+    .vp-grid-centred > .vp-card{grid-column:span 2}
+    /* One empty column at each end, so the last two are centred under the
+       first three and every card is the same width. The rule further up gives
+       them three columns each, which is half the row: the same card drawn half
+       again as large for no reason but that there are two of them. */
+    .vp-grid-centred > .vp-card:nth-child(4){grid-column:2 / span 2}
+    .vp-grid-centred > .vp-card:nth-child(5){grid-column:4 / span 2}
+  }
+  @media(min-width:721px) and (max-width:980px){
+    .vp-grid-centred{grid-template-columns:repeat(4,1fr)}
+    .vp-grid-centred > .vp-card{grid-column:span 2}
+    .vp-grid-centred > .vp-card:nth-child(5){grid-column:2 / span 2}
+  }
+  @media(max-width:720px){
+    /* The carousel, unchanged in behaviour: still one card at a time, still
+       scroll-snapped, still no script. A grid flowing sideways rather than a
+       flex row, so the cards can share rows here too. Two cards are on screen
+       at once, so the alignment shows. */
+    .vp-grid-centred{
+      grid-auto-flow:column;
+      grid-template-columns:none;
+      grid-auto-columns:82%;
+      grid-template-rows:auto auto auto auto;
+      gap:.9rem;
+    }
+    .vp-grid-centred > .vp-card{grid-column:auto}
+  }
+}

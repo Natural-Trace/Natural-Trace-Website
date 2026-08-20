@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Content Manager | Natural Trace</title>
+  <link rel="icon" href="../assets/logos/NT%20icon%20without%20logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Natural Trace styling for the panel. See the notes at the top of that
+       file before changing it, and before changing the version pin below. -->
+  <link rel="stylesheet" href="theme.css" />
+</head>
+<body>
+  <!--
+    The Decap version is pinned exactly, not to a range.
+
+    It used to load decap-cms@^3.0.0, which means "whatever unpkg is serving
+    today". That is fine for a panel with no customisation and wrong for this
+    one: theme.css and preview.js both target Decap's internals, so a release
+    published at any hour could change the panel Kirsty logs into with nobody
+    having touched this repository.
+
+    To upgrade, follow docs/cms-admin-theme.md. It is a five minute job and it
+    ends with someone looking at the panel.
+  -->
+  <script src="https://unpkg.com/decap-cms@3.15.1/dist/decap-cms.js"></script>
+
+  <!-- Must load after the line above: it calls into window.CMS. -->
+  <script src="preview.js"></script>
+</body>
+</html>
