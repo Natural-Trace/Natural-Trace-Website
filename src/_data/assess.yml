@@ -17,7 +17,7 @@ compat_confirm_title: Thanks, we have what we need
 compat_confirm_desc: Compatibility depends on your specific formulation and
   process conditions. Send this through and one of our scientists will review it
   with you.
-compat_result_cta: Talk to our team
+compat_result_cta: Request a compatibility assessment
 compat_result_cta_url: /contact/
 compat_result_note: This is a first screen based on three answers, not a
   laboratory result. Compatibility is confirmed on your own formulation.
@@ -143,18 +143,19 @@ compat_outcomes:
   compatible:
     label: Compatible
     title: Your product is a strong candidate for NaturalTag™
-    body: Your answers indicate that NaturalTag™ is likely compatible with your
-      product. The next step is to confirm compatibility through laboratory
-      testing.
+    body: Based on your answers, NaturalTag™ is likely to be compatible with your
+      product. The next step is a compatibility assessment using your formulation
+      to confirm performance and the best approach for your application.
   conditions:
-    label: Likely compatible
-    title: Sounds like you are compatible
-    body: Products like yours are in use with NaturalTag today. There may be an
-      adjustment to make to the dose, or to the point in your process where the
-      tag goes in. Our scientists will work that out with you.
+    label: Potentially Compatible
+    title: Your product is potentially compatible for NaturalTag™
+    body: Based on your answers, NaturalTag™ may be suitable for your product.
+      Some applications may require adjustments to the dose or where NaturalTag™
+      is introduced into the process. A compatibility assessment will help us
+      determine the best approach for your formulation.
   testing:
-    label: Testing required
-    title: Let's dive in and understand your product more
-    body: We would want to look at this one properly before saying yes. Send us a
-      sample, we will run the assessment on your actual formulation and give you
-      a straight answer.
+    label: Compatibility Assessment Recommended
+    title: Let's assess your product
+    body: Your formulation or conditions mean we would like to assess your product
+      before confirming compatibility. Send us a sample and our team can test
+      NaturalTag™ with your formulation and determine the best way forward.

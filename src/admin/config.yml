@@ -974,14 +974,14 @@ collections:
                   - {label: "Badge", name: "label", widget: "string"}
                   - {label: "Heading", name: "title", widget: "string"}
                   - {label: "Body", name: "body", widget: "text"}
-              - label: "Likely compatible"
+              - label: "Potentially Compatible"
                 name: "conditions"
                 widget: "object"
                 fields:
                   - {label: "Badge", name: "label", widget: "string"}
                   - {label: "Heading", name: "title", widget: "string"}
                   - {label: "Body", name: "body", widget: "text"}
-              - label: "Testing required"
+              - label: "Compatibility Assessment Recommended"
                 name: "testing"
                 widget: "object"
                 fields:

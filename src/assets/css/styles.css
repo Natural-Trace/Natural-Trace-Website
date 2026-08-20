@@ -2217,7 +2217,7 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
 
    Three states, and the colour carries meaning, so it cannot be the only thing
    that does. Each badge says its verdict in words as well: someone who cannot
-   tell sage from amber still reads "Testing required". */
+   tell sage from amber still reads "Compatibility Assessment Recommended". */
 /* .72rem to 1.05rem, at Kirsty's request on 13 Aug: the verdict is the point of
    the screen and it was set smaller than the note underneath it. The padding
    and the letterspacing come up with it so the pill stays a pill rather than a
@@ -2230,6 +2230,35 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
 .compat-badge-compatible{background:rgba(107,114,73,.16);color:var(--sage-dark);border:1px solid rgba(107,114,73,.35)}
 .compat-badge-conditions{background:rgba(162,147,73,.16);color:#7A6D2E;border:1px solid rgba(162,147,73,.4)}
 .compat-badge-testing{background:rgba(59,102,107,.14);color:var(--teal);border:1px solid rgba(59,102,107,.34)}
+
+/* The badge on a phone.
+
+   The verdict wording changed on 20 August 2026 to Kirsty's copy, and two of
+   the three badges got considerably longer: "Potentially Compatible" is 22
+   characters and "Compatibility Assessment Recommended" is 36, where the
+   longest before was "Testing required" at 15.
+
+   Measured at 375px, the badge sits in a 263px column. At the desktop metrics
+   above — 1.05rem, 700 weight, .12em tracking, uppercase — those two wrapped
+   to two and three lines inside a 999px pill, which stops reading as a badge
+   and starts reading as a blob. Nothing overflowed the page; it simply looked
+   broken.
+
+   Bringing the size and the tracking down at this width puts "Potentially
+   Compatible" back on one line and holds the longest one to two. The radius
+   comes down with them, because a stadium curve only reads as deliberate on a
+   single line — on two it wants to be a label.
+
+   This does not undo Kirsty's 13 August request to size the verdict up. That
+   was about the verdict being smaller than the note beneath it, and it still
+   is not: .92rem here against .8rem for .compat-result-note. Desktop is
+   untouched, where all three fit on one line with room to spare. */
+@media(max-width:600px){
+  .compat-badge{
+    font-size:.92rem;letter-spacing:.05em;
+    padding:.5rem 1.05rem;border-radius:14px;max-width:100%;
+  }
+}
 .compat-result-note{font-size:.8rem;color:var(--muted);max-width:440px;margin:1.5rem auto 1.75rem;line-height:1.6}
 
 /* The tested-product line on the compatibility result. Quieter than the
