@@ -29,11 +29,11 @@
 <section class="howitworks howitworks-compact" id="how-it-works">
   <div class="container">
     <div class="how-head">
-      <span class="section-label">{{ home.how_label }}</span>
-      <h2 class="section-title">{{ home.how_title }}</h2>
+      <span class="section-label">{{ home.how_it_works.label }}</span>
+      <h2 class="section-title">{{ home.how_it_works.title }}</h2>
     </div>
     <ol class="how-grid how-grid-compact">
-      {% for step in home.how_steps %}
+      {% for step in home.how_it_works.steps %}
       <li class="how-step">
         <div class="how-step-num">{{ step.num }}</div>
         <h3>{{ step.title }}</h3>
@@ -41,11 +41,11 @@
       </li>
       {% endfor %}
     </ol>
-    {% if home.how_features %}
+    {% if home.how_it_works.features %}
     <details class="how-more" open>
-      <summary>{{ home.how_features_label }}</summary>
+      <summary>{{ home.how_it_works.features_label }}</summary>
       <ul class="how-facts">
-        {% for feature in home.how_features %}<li>{{ feature }}</li>{% endfor %}
+        {% for feature in home.how_it_works.features %}<li>{{ feature }}</li>{% endfor %}
       </ul>
     </details>
     {% endif %}

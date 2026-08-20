@@ -181,6 +181,41 @@ back with the wording, and the answer key still reports 63/124/901.
   do about it. See `scripts/claim-check.mjs` for the house style.
 - Do not add a dependency without a reason. The site has one: `js-yaml`.
 
+### Grouping a CMS panel into sections
+
+`src/_data/home.yml` is nested into eight objects — `hero`, `challenge`,
+`value_prop`, `how_it_works`, `industries`, `partners`, `insights`,
+`final_cta` — and `config.yml` renders each as a collapsed `object` widget
+labelled with its position on the page, "1. Hero" through "8. Closing call to
+action".
+
+It was forty-one fields in one flat list until 20 Aug. Decap has no way to group
+flat fields: the panel had been faking it with prefixes typed into each label
+("Challenge:", "Value Prop:"), and the hero's fourteen fields carried no prefix
+at all, so the panel opened on fourteen boxes with nothing to say which part of
+the page they controlled. Nesting the data is the only real fix.
+
+**The other collections are still flat.** Same pattern applies if any of them
+gets the same complaint; about.yml and the three solution files are the next
+worst. Three things make it safe to repeat:
+
+- Transform the YAML as *text*, never by loading and re-dumping it. `home.yml`
+  carries 80 comment lines, including Kirsty's sign-off condition on the
+  positioning line and why `hero.claims_coda` is deliberately empty.
+  `js-yaml` round-tripping deletes all of them, which is the failure this file
+  already records happening twice.
+- Snapshot `_site` before and `diff -r` after. A pure regrouping must leave
+  every rendered page byte-identical; only `_site/admin/config.yml` may differ.
+  That is what proves no template reference was missed.
+- Run `node scripts/cms-audit.mjs` — not part of `npm run check`, only CI. It
+  walks nested fields and is what catches a config name that no longer matches
+  its data key.
+
+To see the panel without logging in: add `local_backend: true` to
+`_site/admin/config.yml` (the build output, never the source), run
+`npx decap-server`, and log in at `/admin/`. The local backend writes to real
+files, so look and do not save.
+
 ## Where decisions are written down
 
 Records live in the attached claude.ai project, not in the repo. The ones that

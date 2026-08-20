@@ -1,231 +1,238 @@
 # Home page content: Clean Prototype Copy Guide 2026
 # Editable via Decap CMS or directly
 
-# Hero Section
-# The hero background. Tinted into the brand navy by CSS, so anything put here
-# will come out navy whatever colour it starts as. Landscape, 1600px wide or
-# more. A busy or bright picture is fine, the tint handles it.
-hero_bg_image: "/assets/images/ingredients-lab.webp"
-# Decorative, so the alt text is not rendered. Kept as a description of what
-# the picture is, for whoever picks the next one.
-hero_bg_image_alt: "Berries, botanicals and powders on a bench in a food laboratory"
-hero_image: "/assets/images/home-hero-product.webp"
-hero_image_alt: "Botanical powder, capsules and an unlabelled supplement bottle, the powder marked with the Natural Trace leaf"
-hero_title_line1: "Protect the Ingredients"
-hero_title_line2: "Behind Your Brand"
-# Positioning statement, verbatim from the copy guide. Do not shorten without
-# Kirsty's sign-off. Rendered in bold at the start of the hero lead paragraph,
-# directly under the headline.
-# The ampersand is bound to the words either side of it, the same rule the
-# "Why Customers Choose" card headings follow: an ampersand joins two things
-# and is not left at the end of a line holding one of them. Without this the
-# line broke as "…for Food & / Nutraceutical Ingredients." on a phone. The
-# words are unchanged; &amp; is only how a bare & is written once the field
-# goes through the safe filter.
-# "and Products" added 18 Aug at Alex Bond's request. His argument is that the
-# line as written reads as ingredients-only, which loses anyone protecting a
-# finished product. The non-breaking space keeps "and Products" from wrapping
-# alone onto its own line on a phone.
-hero_slogan: "In-Product Authentication for Food&nbsp;&amp;&nbsp;Nutraceutical Ingredients and&nbsp;Products"
-hero_desc: "Natural Trace gives every ingredient a unique, detectable identity, verifiable throughout the supply chain."
-# Rendered as a single sentence: items joined with commas and "and", then the
-# coda after a comma. Kirsty wrote these as five short lines; the fifth is a
-# coda, not a peer, which is why it read as an orphan when set as a list.
-# These read as a ticked list now rather than one running sentence, so each one
-# starts with a capital.
-#
-# The fourth said "suspicious" until 14 Aug. "Counterfeit" is the stronger
-# claim and was deliberately left alone until someone owned it; Alex Bond,
-# Director of Business Development US, asked for it on 13 Aug. It moves in step
-# with the fourth value card below, which now carries the same word. Changing
-# one without the other leaves the page arguing with itself.
-hero_claims:
-  - "Verify presence"
-  - "Protect branded ingredients"
-  - "Confirm authorised manufacturing"
-  - "Investigate counterfeit products"
-# Emptied on Kirsty's 12 Aug request. It used to trail the four ticks as
-# "...all through the supply chain", saying the same thing the description
-# above now says in a full sentence. The template only renders this line
-# when it has a value, so an empty string removes it cleanly and it can be
-# brought back from the panel without touching code.
-hero_claims_coda: ""
-hero_cta: "Request a Compatibility Assessment"
-hero_cta_url: "/contact/"
-hero_cta_secondary: "How it works"
-hero_cta_secondary_url: "#how-it-works"
+hero:
+  # Hero Section
+  # The hero background. Tinted into the brand navy by CSS, so anything put here
+  # will come out navy whatever colour it starts as. Landscape, 1600px wide or
+  # more. A busy or bright picture is fine, the tint handles it.
+  bg_image: "/assets/images/ingredients-lab.webp"
+  # Decorative, so the alt text is not rendered. Kept as a description of what
+  # the picture is, for whoever picks the next one.
+  bg_image_alt: "Berries, botanicals and powders on a bench in a food laboratory"
+  image: "/assets/images/home-hero-product.webp"
+  image_alt: "Botanical powder, capsules and an unlabelled supplement bottle, the powder marked with the Natural Trace leaf"
+  title_line1: "Protect the Ingredients"
+  title_line2: "Behind Your Brand"
+  # Positioning statement, verbatim from the copy guide. Do not shorten without
+  # Kirsty's sign-off. Rendered in bold at the start of the hero lead paragraph,
+  # directly under the headline.
+  # The ampersand is bound to the words either side of it, the same rule the
+  # "Why Customers Choose" card headings follow: an ampersand joins two things
+  # and is not left at the end of a line holding one of them. Without this the
+  # line broke as "…for Food & / Nutraceutical Ingredients." on a phone. The
+  # words are unchanged; &amp; is only how a bare & is written once the field
+  # goes through the safe filter.
+  # "and Products" added 18 Aug at Alex Bond's request. His argument is that the
+  # line as written reads as ingredients-only, which loses anyone protecting a
+  # finished product. The non-breaking space keeps "and Products" from wrapping
+  # alone onto its own line on a phone.
+  slogan: "In-Product Authentication for Food&nbsp;&amp;&nbsp;Nutraceutical Ingredients and&nbsp;Products"
+  desc: "Natural Trace gives every ingredient a unique, detectable identity, verifiable throughout the supply chain."
+  # Rendered as a single sentence: items joined with commas and "and", then the
+  # coda after a comma. Kirsty wrote these as five short lines; the fifth is a
+  # coda, not a peer, which is why it read as an orphan when set as a list.
+  # These read as a ticked list now rather than one running sentence, so each one
+  # starts with a capital.
+  #
+  # The fourth said "suspicious" until 14 Aug. "Counterfeit" is the stronger
+  # claim and was deliberately left alone until someone owned it; Alex Bond,
+  # Director of Business Development US, asked for it on 13 Aug. It moves in step
+  # with the fourth value card below, which now carries the same word. Changing
+  # one without the other leaves the page arguing with itself.
+  claims:
+    - "Verify presence"
+    - "Protect branded ingredients"
+    - "Confirm authorised manufacturing"
+    - "Investigate counterfeit products"
+  # Emptied on Kirsty's 12 Aug request. It used to trail the four ticks as
+  # "...all through the supply chain", saying the same thing the description
+  # above now says in a full sentence. The template only renders this line
+  # when it has a value, so an empty string removes it cleanly and it can be
+  # brought back from the panel without touching code.
+  claims_coda: ""
+  cta: "Request a Compatibility Assessment"
+  cta_url: "/contact/"
+  cta_secondary: "How it works"
+  cta_secondary_url: "#how-it-works"
 
-# Section 2: The Challenge
-challenge_label: "The Challenge"
-challenge_title: "Your Product is Unique.<br>Can You Prove It's Yours?"
-challenge_subtitle: "Premium ingredients move through complex supply chains, often passing between multiple suppliers, manufacturers and markets."
-# Three beats, not six bullets and two paragraphs.
-#
-# Kirsty asked for shorter wording and sent a layout for it on 12 Aug. The
-# section used to carry a lead paragraph, a labelled list of six statements and
-# a closing sentence, all saying the same thing at three different lengths. The
-# lead said documentation can be copied and testing can be inconclusive; the
-# list said supply chains are complex; the close said Natural Trace puts the
-# proof in the product. That is these three points.
-#
-# The third is the turn the whole section exists to make, so it is marked and
-# reads as a question rather than a statement. Only one point should carry
-# emphasis: two is no emphasis at all.
-challenge_points:
-  - icon: "document"
-    text: "Documentation can tell you where it should have come from."
-  - icon: "microscope"
-    text: "Traditional testing is often inconclusive."
-  - icon: "question"
-    text: "But can the product itself prove it's yours?"
-    emphasis: true
+challenge:
+  # Section 2: The Challenge
+  label: "The Challenge"
+  title: "Your Product is Unique.<br>Can You Prove It's Yours?"
+  subtitle: "Premium ingredients move through complex supply chains, often passing between multiple suppliers, manufacturers and markets."
+  # Three beats, not six bullets and two paragraphs.
+  #
+  # Kirsty asked for shorter wording and sent a layout for it on 12 Aug. The
+  # section used to carry a lead paragraph, a labelled list of six statements and
+  # a closing sentence, all saying the same thing at three different lengths. The
+  # lead said documentation can be copied and testing can be inconclusive; the
+  # list said supply chains are complex; the close said Natural Trace puts the
+  # proof in the product. That is these three points.
+  #
+  # The third is the turn the whole section exists to make, so it is marked and
+  # reads as a question rather than a statement. Only one point should carry
+  # emphasis: two is no emphasis at all.
+  points:
+    - icon: "document"
+      text: "Documentation can tell you where it should have come from."
+    - icon: "microscope"
+      text: "Traditional testing is often inconclusive."
+    - icon: "question"
+      text: "But can the product itself prove it's yours?"
+      emphasis: true
 
-# Section 3: Value Proposition
-vp_label: "Our Value"
-vp_title: "Proof That Travels With Your Ingredients"
-vp_subtitle: "Independent, scientific evidence that confirms what's really in your supply chain, not just what the paperwork says."
-vp_value_label: "Our value"
-# The five card photographs are Kirsty's, uploaded 13 Aug. They are 16:9 and
-# the card crops them to a shallower band, at her request, so the picture is a
-# strip across the top rather than a third of the card.
-vp_cards:
-  - title: "Verify Ingredient Authenticity"
-    image: "/assets/images/01_verify_ingredient_authenticity.webp"
-    image_alt: "A dish of pale botanical powder on a laboratory bench beside a measuring spoon and fresh leaves"
-    icon: "target"
-    problem: "Ingredients can be substituted, diluted, adulterated, or falsely labelled before they reach you."
-    value: "Confirm an ingredient or finished product is genuine by detecting its embedded identity, not just its label."
-  - title: "Confirm Authorized Manufacturing"
-    image: "/assets/images/02_confirm_authorized_manufacturing_landscape.webp"
-    image_alt: "A technician in a hairnet and mask reading a tablet in front of stainless steel production vessels"
-    icon: "factory"
-    problem: "Contract manufacturers may overproduce, substitute materials, use undeclared facilities, or divert product into unauthorized channels."
-    value: "Verify what was actually produced, with which materials, by which authorized partner, and that production stayed within the approved process."
-  - title: "Verify Origin, Beyond Paperwork"
-    image: "/assets/images/03_verify_origin_beyond_paperwork_landscape.webp"
-    image_alt: "A tall stack of bound paper documents held together with clips"
-    icon: "origin"
-    problem: "Documents can be lost, altered, or disconnected from the physical product as it moves through the supply chain."
-    value: "Confirm the true origin, custody, movement, and destination of the physical product itself."
-  # Retitled 14 Aug at Alex Bond's request, to carry "counterfeit" as a
-  # keyword. The problem line deliberately still opens with "Suspicious or
-  # counterfeit": the title names the case people search for, the body keeps
-  # the wider one, so the card does not narrow to counterfeits only.
-  - title: "Investigate Counterfeit Products"
-    image: "/assets/images/04_investigate_objective_evidence_landscape.webp"
-    image_alt: "A magnifying glass held over an amber supplement bottle in front of a row of sample vials"
-    icon: "search"
-    problem: "Suspicious or counterfeit products are hard to prove without independent, scientific proof."
-    value: "Support investigations and enforcement with objective scientific evidence, not assumptions."
-  - title: "Protect Brand & Commercial Value"
-    image: "/assets/images/05_protect_brand_commercial_value_landscape.webp"
-    image_alt: "A plain carton labelled Premium Ingredients on a wooden surface among green leaves"
-    icon: "shield"
-    problem: "Counterfeit, diverted, or grey-market products erode revenue, reputation, and customer trust."
-    value: "Distinguish genuine products from unauthorized ones and strengthen confidence across the supply chain."
+value_prop:
+  # Section 3: Value Proposition
+  label: "Our Value"
+  title: "Proof That Travels With Your Ingredients"
+  subtitle: "Independent, scientific evidence that confirms what's really in your supply chain, not just what the paperwork says."
+  value_label: "Our value"
+  # The five card photographs are Kirsty's, uploaded 13 Aug. They are 16:9 and
+  # the card crops them to a shallower band, at her request, so the picture is a
+  # strip across the top rather than a third of the card.
+  cards:
+    - title: "Verify Ingredient Authenticity"
+      image: "/assets/images/01_verify_ingredient_authenticity.webp"
+      image_alt: "A dish of pale botanical powder on a laboratory bench beside a measuring spoon and fresh leaves"
+      icon: "target"
+      problem: "Ingredients can be substituted, diluted, adulterated, or falsely labelled before they reach you."
+      value: "Confirm an ingredient or finished product is genuine by detecting its embedded identity, not just its label."
+    - title: "Confirm Authorized Manufacturing"
+      image: "/assets/images/02_confirm_authorized_manufacturing_landscape.webp"
+      image_alt: "A technician in a hairnet and mask reading a tablet in front of stainless steel production vessels"
+      icon: "factory"
+      problem: "Contract manufacturers may overproduce, substitute materials, use undeclared facilities, or divert product into unauthorized channels."
+      value: "Verify what was actually produced, with which materials, by which authorized partner, and that production stayed within the approved process."
+    - title: "Verify Origin, Beyond Paperwork"
+      image: "/assets/images/03_verify_origin_beyond_paperwork_landscape.webp"
+      image_alt: "A tall stack of bound paper documents held together with clips"
+      icon: "origin"
+      problem: "Documents can be lost, altered, or disconnected from the physical product as it moves through the supply chain."
+      value: "Confirm the true origin, custody, movement, and destination of the physical product itself."
+    # Retitled 14 Aug at Alex Bond's request, to carry "counterfeit" as a
+    # keyword. The problem line deliberately still opens with "Suspicious or
+    # counterfeit": the title names the case people search for, the body keeps
+    # the wider one, so the card does not narrow to counterfeits only.
+    - title: "Investigate Counterfeit Products"
+      image: "/assets/images/04_investigate_objective_evidence_landscape.webp"
+      image_alt: "A magnifying glass held over an amber supplement bottle in front of a row of sample vials"
+      icon: "search"
+      problem: "Suspicious or counterfeit products are hard to prove without independent, scientific proof."
+      value: "Support investigations and enforcement with objective scientific evidence, not assumptions."
+    - title: "Protect Brand & Commercial Value"
+      image: "/assets/images/05_protect_brand_commercial_value_landscape.webp"
+      image_alt: "A plain carton labelled Premium Ingredients on a wooden surface among green leaves"
+      icon: "shield"
+      problem: "Counterfeit, diverted, or grey-market products erode revenue, reputation, and customer trust."
+      value: "Distinguish genuine products from unauthorized ones and strengthen confidence across the supply chain."
 
-# Section 4: How It Works
-# Moved here from the NaturalTag page on 8 Aug. Kirsty flagged that Section 4 of
-# the approved copy was missing from the homepage and that this was it.
-#
-# The four steps sit on one row and the detail below is a disclosure, so the
-# section costs about one screen rather than four. It is a <details> element,
-# not a hover: hover does not exist on a phone and cannot be reached from a
-# keyboard.
-how_label: "How It Works"
-# Inverted on 18 Aug at Alex Wild's suggestion. "Four Steps From Ingredient to
-# Evidence" leads with the count, which is the least interesting part; this
-# leads with the outcome and keeps the count as the reassurance that it is
-# short. Renders on the homepage and the NaturalTag page from this one field.
-how_title: "From Ingredient to Evidence in Four Steps"
-how_steps:
-  - num: "01"
-    title: "Tag"
-    description: "Add NaturalTag™ into your ingredient during production."
-  - num: "02"
-    title: "Produce"
-    description: "Manufacture and distribute as normal."
-  - num: "03"
-    title: "Test"
-    description: "Test any sample whenever authenticity is questioned."
-  - num: "04"
-    title: "Authenticate"
-    description: "Confirm authenticity using NaturalDetect™ testing and manage results through NaturalCloud™."
-how_features_label: "What that means in practice"
-how_features:
-  - "Invisible at recommended use levels"
-  - "Food-grade authentication"
-  - "No impact on product performance"
-  - "Detectable even after cooking or blending into final product"
-  - "Compatible with existing manufacturing"
-  - "Designed for commercial scale"
+how_it_works:
+  # Section 4: How It Works
+  # Moved here from the NaturalTag page on 8 Aug. Kirsty flagged that Section 4 of
+  # the approved copy was missing from the homepage and that this was it.
+  #
+  # The four steps sit on one row and the detail below is a disclosure, so the
+  # section costs about one screen rather than four. It is a <details> element,
+  # not a hover: hover does not exist on a phone and cannot be reached from a
+  # keyboard.
+  label: "How It Works"
+  # Inverted on 18 Aug at Alex Wild's suggestion. "Four Steps From Ingredient to
+  # Evidence" leads with the count, which is the least interesting part; this
+  # leads with the outcome and keeps the count as the reassurance that it is
+  # short. Renders on the homepage and the NaturalTag page from this one field.
+  title: "From Ingredient to Evidence in Four Steps"
+  steps:
+    - num: "01"
+      title: "Tag"
+      description: "Add NaturalTag™ into your ingredient during production."
+    - num: "02"
+      title: "Produce"
+      description: "Manufacture and distribute as normal."
+    - num: "03"
+      title: "Test"
+      description: "Test any sample whenever authenticity is questioned."
+    - num: "04"
+      title: "Authenticate"
+      description: "Confirm authenticity using NaturalDetect™ testing and manage results through NaturalCloud™."
+  features_label: "What that means in practice"
+  features:
+    - "Invisible at recommended use levels"
+    - "Food-grade authentication"
+    - "No impact on product performance"
+    - "Detectable even after cooking or blending into final product"
+    - "Compatible with existing manufacturing"
+    - "Designed for commercial scale"
 
-# Section 5: Industry Tiles
-industries_label: "Industries"
-industries_title: "The First Authentication Platform Validated for Premium Food and Nutraceutical Ingredients."
-industry_tiles:
-  - name: "Nutraceuticals & Dietary Supplements"
-    description: "Protect premium ingredients from counterfeiting and substitution."
-    image: "/assets/images/industry-nutraceuticals.webp"
-    image_alt: "An unlabelled supplement bottle surrounded by bowls of capsules, tablets and softgels"
-    url: "/industries/"
-  - name: "Branded Ingredients"
-    description: "Protect the value behind your ingredient brand."
-    image: "/assets/images/industry-food-ingredients.webp"
-    image_alt: "Pallets of sealed ingredient sacks and fibre drums in a warehouse"
-    url: "/industries/"
-  - name: "Functional Foods"
-    description: "Protect functional claims and premium formulations."
-    image: "/assets/images/industry-functional-foods.webp"
-    image_alt: "Bowls of protein and botanical powders beside a shaker bottle and capsules"
-    url: "/industries/"
-  - name: "Agri-food"
-    description: "Strengthen confidence across agri-food supply chains."
-    image: "/assets/images/industry-agri-food.webp"
-    image_alt: "A punnet of picked strawberries in front of rows of strawberry plants"
-    url: "/industries/"
+industries:
+  # Section 5: Industry Tiles
+  label: "Industries"
+  title: "The First Authentication Platform Validated for Premium Food and Nutraceutical Ingredients."
+  tiles:
+    - name: "Nutraceuticals & Dietary Supplements"
+      description: "Protect premium ingredients from counterfeiting and substitution."
+      image: "/assets/images/industry-nutraceuticals.webp"
+      image_alt: "An unlabelled supplement bottle surrounded by bowls of capsules, tablets and softgels"
+      url: "/industries/"
+    - name: "Branded Ingredients"
+      description: "Protect the value behind your ingredient brand."
+      image: "/assets/images/industry-food-ingredients.webp"
+      image_alt: "Pallets of sealed ingredient sacks and fibre drums in a warehouse"
+      url: "/industries/"
+    - name: "Functional Foods"
+      description: "Protect functional claims and premium formulations."
+      image: "/assets/images/industry-functional-foods.webp"
+      image_alt: "Bowls of protein and botanical powders beside a shaker bottle and capsules"
+      url: "/industries/"
+    - name: "Agri-food"
+      description: "Strengthen confidence across agri-food supply chains."
+      image: "/assets/images/industry-agri-food.webp"
+      image_alt: "A punnet of picked strawberries in front of rows of strawberry plants"
+      url: "/industries/"
 
-# Partners Trust Bar
-trust_label: "Our Partners"
-trust_logos:
-  - url: "https://www.blueincube.com/"
-    image: "/assets/partners/Blue InCube.png"
-    alt: "Blue InCube"
-  - url: "https://nutrasteward.com/"
-    image: "/assets/partners/NutraSteward.jpg"
-    alt: "NutraSteward"
-  - url: "https://www.foodplant.com.sg/"
-    image: "/assets/partners/FoodPlant.png"
-    alt: "FoodPlant"
-  - url: "https://trackvision.ai/"
-    image: "/assets/partners/Trackvision AI.png"
-    alt: "TrackVision"
-  - url: "https://startupbootcamp.org/"
-    image: "/assets/partners/Startupbootcamp.svg"
-    alt: "Startupbootcamp"
-  - url: "https://www.ingredientsnetwork.com/"
-    image: "/assets/partners/Ingredients Network.jpg"
-    alt: "Ingredients Network"
-  - url: "https://chemetindia.com/"
-    image: "/assets/partners/Chemet.png"
-    alt: "Chemet"
-  - url: "https://crnusa.org/"
-    image: "/assets/partners/CRN.png"
-    alt: "Council for Responsible Nutrition"
-# To add a partner: drop the logo file into src/assets/partners/ and add a
-# url / image / alt block above. See the README in that folder.
+partners:
+  # Partners Trust Bar
+  label: "Our Partners"
+  logos:
+    - url: "https://www.blueincube.com/"
+      image: "/assets/partners/Blue InCube.png"
+      alt: "Blue InCube"
+    - url: "https://nutrasteward.com/"
+      image: "/assets/partners/NutraSteward.jpg"
+      alt: "NutraSteward"
+    - url: "https://www.foodplant.com.sg/"
+      image: "/assets/partners/FoodPlant.png"
+      alt: "FoodPlant"
+    - url: "https://trackvision.ai/"
+      image: "/assets/partners/Trackvision AI.png"
+      alt: "TrackVision"
+    - url: "https://startupbootcamp.org/"
+      image: "/assets/partners/Startupbootcamp.svg"
+      alt: "Startupbootcamp"
+    - url: "https://www.ingredientsnetwork.com/"
+      image: "/assets/partners/Ingredients Network.jpg"
+      alt: "Ingredients Network"
+    - url: "https://chemetindia.com/"
+      image: "/assets/partners/Chemet.png"
+      alt: "Chemet"
+    - url: "https://crnusa.org/"
+      image: "/assets/partners/CRN.png"
+      alt: "Council for Responsible Nutrition"
+  # To add a partner: drop the logo file into src/assets/partners/ and add a
+  # url / image / alt block above. See the README in that folder.
 
-# Final Call to Action
-# Latest from Insights, the quiet strip above the closing call to action.
-# Three most recent dated articles, pulled automatically. Nothing to maintain
-# here beyond these two lines of copy: publishing an article updates it.
-insights_title: "Latest from Insights"
-insights_link: "All insights"
+insights:
+  # Final Call to Action
+  # Latest from Insights, the quiet strip above the closing call to action.
+  # Three most recent dated articles, pulled automatically. Nothing to maintain
+  # here beyond these two lines of copy: publishing an article updates it.
+  title: "Latest from Insights"
+  link: "All insights"
 
-final_cta_title: "Ready to protect your products with confidence?"
-final_cta_text: "Whether you're protecting a premium ingredient, verifying manufacturing partners or investigating suspicious products, Natural Trace can help."
-final_cta_primary: "Request a Compatibility Assessment"
-final_cta_primary_url: "/contact/"
-final_cta_secondary: ""            # blank hides the second button entirely
-final_cta_secondary_url: "/contact/"
-
+final_cta:
+  title: "Ready to protect your products with confidence?"
+  text: "Whether you're protecting a premium ingredient, verifying manufacturing partners or investigating suspicious products, Natural Trace can help."
+  primary: "Request a Compatibility Assessment"
+  primary_url: "/contact/"
+  secondary: ""            # blank hides the second button entirely
+  secondary_url: "/contact/"

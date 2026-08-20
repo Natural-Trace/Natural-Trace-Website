@@ -58,6 +58,28 @@ collections:
   # File entries keep their original names and paths, so the entry named
   # "home" still edits src/_data/home.yml wherever it sits.
 
+  # ── Home ─────────────────────────────────────────────────────────────
+  #
+  # Eight object fields, one per band of the page, numbered in the order a
+  # visitor scrolls past them.
+  #
+  # Until 20 Aug this was forty-one fields in one flat list. The hero was
+  # fourteen of them, and there was nothing between "Hero Claims Closing
+  # Phrase" and "Challenge: Label" to say that a new part of the page had
+  # started. The only grouping was a prefix typed into each label by hand —
+  # "Challenge:", "Value Prop:" — which the hero fields did not carry at all,
+  # so the panel opened on fourteen boxes with nothing to say what part of the
+  # page they controlled.
+  #
+  # The numbers are the point of the change. "3. Why Customers Choose Us"
+  # tells an editor where on the page they are about to change something,
+  # without opening the site and counting sections. If the page order ever
+  # changes, renumber these in the same commit: numbers that lie are worse
+  # than no numbers.
+  #
+  # All eight start collapsed, so the panel opens as a contents page rather
+  # than a scroll. Opening one is a single click; finding the right field in a
+  # list of forty-one was not.
   - name: "home"
     label: "Home"
     files:
@@ -66,118 +88,169 @@ collections:
         label: "Home"
         file: "src/_data/home.yml"
         fields:
-          - {label: "Hero Background Image", name: "hero_bg_image", widget: "image"}
-          - {label: "Hero Background Alt", name: "hero_bg_image_alt", widget: "string"}
-          - {label: "Hero Image", name: "hero_image", widget: "image"}
-          - {label: "Hero Image Alt", name: "hero_image_alt", widget: "string"}
-          - {label: "Hero Title Line 1", name: "hero_title_line1", widget: "string"}
-          - {label: "Hero Title Line 2 (italic)", name: "hero_title_line2", widget: "string"}
-          - {label: "Hero Category Line", name: "hero_slogan", widget: "string", hint: "Shown in bold on its own line above the description. Write the ampersand as &amp; with &nbsp; either side, so it cannot be left at the end of a line on a phone."}
-          - {label: "Hero Description", name: "hero_desc", widget: "text"}
-          - {label: "Hero Claims (joined into one sentence)", name: "hero_claims", widget: "list", field: {label: "Claim", name: "claim", widget: "string"}}
-          - {label: "Hero Claims Closing Phrase", name: "hero_claims_coda", widget: "string"}
-          - {label: "Primary CTA Text", name: "hero_cta", widget: "string"}
-          - label: "Primary CTA URL"
-            name: "hero_cta_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
-          - {label: "Secondary CTA Text", name: "hero_cta_secondary", widget: "string"}
-          - label: "Secondary CTA URL"
-            name: "hero_cta_secondary_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
-          - {label: "Challenge: Label", name: "challenge_label", widget: "string"}
-          - {label: "Challenge: Headline", name: "challenge_title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line."}
-          - {label: "Challenge: Subtitle", name: "challenge_subtitle", widget: "text", required: false}
-          - label: "Challenge: Points"
-            name: "challenge_points"
-            widget: "list"
-            summary: "{{fields.text}}"
-            hint: "Three reads best. They sit side by side, so keep each one to a single short sentence."
-            fields:
-              - {label: "Point", name: "text", widget: "text"}
-              - {label: "Icon", name: "icon", widget: "select", options: ["document", "microscope", "question"], hint: "document is a certificate, microscope is laboratory testing, question is the turn."}
-              - {label: "Highlight this one", name: "emphasis", widget: "boolean", required: false, default: false, hint: "Fills the circle and colours the text. Use it on one point only: two highlighted points is the same as none."}
-
-          - {label: "Value Prop: Label", name: "vp_label", widget: "string"}
-          - {label: "Value Prop: Headline", name: "vp_title", widget: "string"}
-          - {label: "Value Prop: Subcopy", name: "vp_subtitle", widget: "text"}
-          - {label: "Value Prop: Value Label", name: "vp_value_label", widget: "string"}
-          - label: "Value Prop: Cards"
-            name: "vp_cards"
-            widget: "list"
-            summary: "{{fields.title}}"
-            fields:
-              - {label: "Card Title", name: "title", widget: "string"}
-              - {label: "Card Image", name: "image", widget: "image", required: false, hint: "Sits across the top of the card and is cropped to a wide banner, so a landscape picture works best. Leave it empty and the icon below is shown instead."}
-              - {label: "Card Image Description", name: "image_alt", widget: "string", required: false, hint: "For screen readers and for when the picture fails to load. Describe what is in it."}
-              - {label: "Icon", name: "icon", widget: "select", options: ["target", "factory", "origin", "search", "shield"], hint: "Only used when the card has no image. target is a bullseye, origin is a diamond, search is a magnifying glass."}
-              - {label: "Customer Problem", name: "problem", widget: "text", hint: "Shown without a label above it, so write it as a sentence that reads as the problem."}
-              - {label: "Our value", name: "value", widget: "text"}
-
-          - {label: "How It Works: Label", name: "how_label", widget: "string"}
-          - {label: "How It Works: Headline", name: "how_title", widget: "string"}
-          - label: "How It Works: Steps"
-            name: "how_steps"
-            widget: "list"
-            label_singular: "step"
+          - label: "1. Hero — the opening screen"
+            name: "hero"
+            widget: "object"
             collapsed: true
-            summary: "{{fields.num}} {{fields.title}}"
+            hint: "The first screen a visitor sees: headline, positioning line, the ticked claims and the two buttons."
             fields:
-              - {label: "Number", name: "num", widget: "string"}
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-          - {label: "How It Works: Detail Link Text", name: "how_features_label", widget: "string", hint: "The line a visitor clicks to open the list below it."}
-          - {label: "How It Works: Detail Points", name: "how_features", widget: "list", field: {label: "Point", name: "point", widget: "string"}}
-          - {label: "Industries: Label", name: "industries_label", widget: "string"}
-          - {label: "Industries: Headline", name: "industries_title", widget: "text"}
-          - label: "Industries: Tiles"
-            name: "industry_tiles"
-            widget: "list"
-            summary: "{{fields.name}}"
-            fields:
-              - {label: "Name", name: "name", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-              - {label: "Image", name: "image", widget: "image"}
-              - {label: "Image Alt", name: "image_alt", widget: "string"}
-              - label: "Link URL"
-                name: "url"
+              - {label: "Background image", name: "bg_image", widget: "image", hint: "Tinted to the brand navy by CSS, so it comes out navy whatever colour it starts as. Landscape, 1600px wide or more. A busy or bright picture is fine, the tint handles it."}
+              - {label: "Background image description", name: "bg_image_alt", widget: "string", hint: "Not displayed and not read aloud — the background is decorative, so screen readers skip it. Kept as a note of what the picture shows, for whoever chooses the next one."}
+              - {label: "Product image", name: "image", widget: "image", hint: "The picture beside the headline."}
+              - {label: "Product image description", name: "image_alt", widget: "string", hint: "Read aloud by screen readers and shown if the image fails to load. Describe what is in it."}
+              - {label: "Headline, first line", name: "title_line1", widget: "string"}
+              - {label: "Headline, second line (italic)", name: "title_line2", widget: "string"}
+              - {label: "Positioning line", name: "slogan", widget: "string", hint: "Shown in bold on its own line above the description. Verbatim from the copy guide — do not shorten it without Kirsty's sign-off. Write the ampersand as &amp; with &nbsp; either side, so it cannot be left stranded at the end of a line on a phone."}
+              - {label: "Description", name: "desc", widget: "text"}
+              - {label: "Ticked claims", name: "claims", widget: "list", field: {label: "Claim", name: "claim", widget: "string"}, hint: "Shown as a ticked list, so start each one with a capital."}
+              - {label: "Closing phrase after the claims", name: "claims_coda", widget: "string", required: false, hint: "Deliberately empty since 12 Aug — it used to repeat what the description already says. The line disappears when this is empty and comes back when it is filled, with no code change."}
+              - {label: "Primary button text", name: "cta", widget: "string"}
+              - label: "Primary button link"
+                name: "cta_url"
+                widget: "string"
+                pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+                hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+              - {label: "Secondary button text", name: "cta_secondary", widget: "string"}
+              - label: "Secondary button link"
+                name: "cta_secondary_url"
                 widget: "string"
                 pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
                 hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
-          - {label: "Partners: Label", name: "trust_label", widget: "string"}
-          - label: "Partner logos"
-            name: "trust_logos"
-            label_singular: "partner"
-            widget: "list"
+          - label: "2. The Challenge"
+            name: "challenge"
+            widget: "object"
             collapsed: true
-            summary: "{{fields.alt}}"
-            hint: "The rail on the home page. It scrolls, so it holds as many as you add. Below about six the rail can show the same logo twice at both ends, so tell a developer if the list ever gets that short."
+            hint: "The band directly under the hero that states the problem, as three points side by side."
             fields:
-              - {label: "Their website", name: "url", widget: "string", hint: "Full address, starting https://. Clicking the logo opens this in a new tab."}
-              - {label: "Logo", name: "image", widget: "image", media_folder: "/src/assets/partners", public_folder: "/assets/partners", hint: "Trim the empty space around the logo before uploading, or it renders smaller than the ones beside it. PNG with a transparent background is best."}
-              - {label: "Company name", name: "alt", widget: "string", hint: "Read aloud by screen readers, and shown if the image fails to load."}
+              - {label: "Small label above the headline", name: "label", widget: "string"}
+              - {label: "Headline", name: "title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line."}
+              - {label: "Subtitle", name: "subtitle", widget: "text", required: false}
+              - label: "Points"
+                name: "points"
+                widget: "list"
+                summary: "{{fields.text}}"
+                hint: "Three reads best. They sit side by side, so keep each one to a single short sentence."
+                fields:
+                  - {label: "Point", name: "text", widget: "text"}
+                  - {label: "Icon", name: "icon", widget: "select", options: ["document", "microscope", "question"], hint: "document is a certificate, microscope is laboratory testing, question is the turn."}
+                  - {label: "Highlight this one", name: "emphasis", widget: "boolean", required: false, default: false, hint: "Fills the circle and colours the text. Use it on one point only: two highlighted points is the same as none."}
 
-          - {label: "Latest from Insights: heading", name: "insights_title", widget: "string", hint: "The small label above the three most recent articles near the bottom of the home page. The articles themselves are pulled automatically, so publishing one updates this section with no work here."}
-          - {label: "Latest from Insights: link text", name: "insights_link", widget: "string", hint: "Goes to the Insights page."}
-          - {label: "Final CTA: Headline", name: "final_cta_title", widget: "string"}
-          - {label: "Final CTA: Text", name: "final_cta_text", widget: "text"}
-          - {label: "Final CTA: Primary Button", name: "final_cta_primary", widget: "string"}
-          - label: "Final CTA: Primary URL"
-            name: "final_cta_primary_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
-          - {label: "Final CTA: Secondary Button", name: "final_cta_secondary", widget: "string", required: false, hint: "Leave empty to show only one button."}
-          - label: "Final CTA: Secondary URL"
-            name: "final_cta_secondary_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+          - label: "3. Why Customers Choose Us"
+            name: "value_prop"
+            widget: "object"
+            collapsed: true
+            hint: "The card grid answering the challenge above. Each card pairs a customer problem with what Natural Trace does about it."
+            fields:
+              - {label: "Small label above the headline", name: "label", widget: "string"}
+              - {label: "Headline", name: "title", widget: "string"}
+              - {label: "Subcopy", name: "subtitle", widget: "text"}
+              - {label: "Wording above the value half of each card", name: "value_label", widget: "string", hint: "Printed on every card, above the lower half. Changing it here changes it on all of them."}
+              - label: "Cards"
+                name: "cards"
+                widget: "list"
+                summary: "{{fields.title}}"
+                fields:
+                  - {label: "Card title", name: "title", widget: "string"}
+                  - {label: "Card image", name: "image", widget: "image", required: false, hint: "Sits across the top of the card and is cropped to a wide banner, so a landscape picture works best. Leave it empty and the icon below is shown instead."}
+                  - {label: "Card image description", name: "image_alt", widget: "string", required: false, hint: "For screen readers and for when the picture fails to load. Describe what is in it."}
+                  - {label: "Icon", name: "icon", widget: "select", options: ["target", "factory", "origin", "search", "shield"], hint: "Only used when the card has no image. target is a bullseye, origin is a diamond, search is a magnifying glass."}
+                  - {label: "Customer problem", name: "problem", widget: "text", hint: "Shown without a label above it, so write it as a sentence that reads as the problem."}
+                  - {label: "Our value", name: "value", widget: "text"}
+
+          - label: "4. How It Works"
+            name: "how_it_works"
+            widget: "object"
+            collapsed: true
+            hint: "The numbered steps. This section also appears on the NaturalTag page, built from these same words, so editing it here changes both places."
+            fields:
+              - {label: "Small label above the headline", name: "label", widget: "string"}
+              - {label: "Headline", name: "title", widget: "string"}
+              - label: "Steps"
+                name: "steps"
+                widget: "list"
+                label_singular: "step"
+                collapsed: true
+                summary: "{{fields.num}} {{fields.title}}"
+                fields:
+                  - {label: "Number", name: "num", widget: "string"}
+                  - {label: "Title", name: "title", widget: "string"}
+                  - {label: "Description", name: "description", widget: "text"}
+              - {label: "Detail link text", name: "features_label", widget: "string", hint: "The line a visitor clicks to open the list below it."}
+              - {label: "Detail points", name: "features", widget: "list", field: {label: "Point", name: "point", widget: "string"}}
+
+          - label: "5. Industries"
+            name: "industries"
+            widget: "object"
+            collapsed: true
+            hint: "The tiles linking out to the industry pages."
+            fields:
+              - {label: "Small label above the headline", name: "label", widget: "string"}
+              - {label: "Headline", name: "title", widget: "text"}
+              - label: "Tiles"
+                name: "tiles"
+                widget: "list"
+                summary: "{{fields.name}}"
+                fields:
+                  - {label: "Name", name: "name", widget: "string"}
+                  - {label: "Description", name: "description", widget: "text"}
+                  - {label: "Image", name: "image", widget: "image"}
+                  - {label: "Image description", name: "image_alt", widget: "string", hint: "Read aloud by screen readers and shown if the image fails to load."}
+                  - label: "Link"
+                    name: "url"
+                    widget: "string"
+                    pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+                    hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+
+          - label: "6. Partner logos"
+            name: "partners"
+            widget: "object"
+            collapsed: true
+            hint: "The scrolling logo rail below the industry tiles."
+            fields:
+              - {label: "Small label above the rail", name: "label", widget: "string"}
+              - label: "Logos"
+                name: "logos"
+                label_singular: "partner"
+                widget: "list"
+                collapsed: true
+                summary: "{{fields.alt}}"
+                hint: "The rail scrolls, so it holds as many as you add. Below about six it can show the same logo twice at both ends, so tell a developer if the list ever gets that short."
+                fields:
+                  - {label: "Their website", name: "url", widget: "string", hint: "Full address, starting https://. Clicking the logo opens this in a new tab."}
+                  - {label: "Logo", name: "image", widget: "image", media_folder: "/src/assets/partners", public_folder: "/assets/partners", hint: "Trim the empty space around the logo before uploading, or it renders smaller than the ones beside it. PNG with a transparent background is best."}
+                  - {label: "Company name", name: "alt", widget: "string", hint: "Read aloud by screen readers, and shown if the image fails to load."}
+
+          - label: "7. Latest from Insights"
+            name: "insights"
+            widget: "object"
+            collapsed: true
+            hint: "The strip of recent articles near the bottom. The articles themselves are pulled in automatically, so publishing one updates this section with no work here."
+            fields:
+              - {label: "Heading", name: "title", widget: "string"}
+              - {label: "Link text", name: "link", widget: "string", hint: "Goes to the Insights page."}
+
+          - label: "8. Closing call to action"
+            name: "final_cta"
+            widget: "object"
+            collapsed: true
+            hint: "The last band on the page, above the footer."
+            fields:
+              - {label: "Headline", name: "title", widget: "string"}
+              - {label: "Text", name: "text", widget: "text"}
+              - {label: "Primary button text", name: "primary", widget: "string"}
+              - label: "Primary button link"
+                name: "primary_url"
+                widget: "string"
+                pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+                hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+              - {label: "Secondary button text", name: "secondary", widget: "string", required: false, hint: "Leave empty to show only one button."}
+              - label: "Secondary button link"
+                name: "secondary_url"
+                widget: "string"
+                pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+                hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
 

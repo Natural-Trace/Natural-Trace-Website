@@ -13,15 +13,15 @@
    a site served from the root and 404s on natural-trace.github.io, so the
    background was missing in production only and looked fine in every local
    preview. Same failure class as the nav bug on 11 Aug. #}
-<section class="hero hero-lab" style="--hero-bg:url('{{ home.hero_bg_image | url }}')">
+<section class="hero hero-lab" style="--hero-bg:url('{{ home.hero.bg_image | url }}')">
   <div class="hero-content">
     <div class="hero-copy">
       <h1>
         {# data-single-line is read by scripts/layout-audit.mjs. The headline
            breaking across three lines is the fault this whole hero was rebuilt
            around; this makes it fail a check rather than wait to be noticed. #}
-        <span class="hero-line"><span class="hero-line-inner" data-single-line>{{ home.hero_title_line1 }}</span></span>
-        <span class="hero-line"><span class="hero-line-inner" data-single-line><em>{{ home.hero_title_line2 }}</em></span></span>
+        <span class="hero-line"><span class="hero-line-inner" data-single-line>{{ home.hero.title_line1 }}</span></span>
+        <span class="hero-line"><span class="hero-line-inner" data-single-line><em>{{ home.hero.title_line2 }}</em></span></span>
       </h1>
       {# Kirsty's positioning line, verbatim. It sat above the H1 as an eyebrow
          label, then opened the lead paragraph, and is its own paragraph now:
@@ -32,19 +32,19 @@
          Both carry .hero-lead so the width, size and colour stay defined once.
          The modifier only closes the gap between them, so they read as a pair
          rather than as two unrelated paragraphs. #}
-      <p class="hero-lead hero-lead-positioning"><strong>{{ home.hero_slogan | safe }}.</strong></p>
-      <p class="hero-lead">{{ home.hero_desc }}</p>
+      <p class="hero-lead hero-lead-positioning"><strong>{{ home.hero.slogan | safe }}.</strong></p>
+      <p class="hero-lead">{{ home.hero.desc }}</p>
       {# The mockup shows these as a ticked list rather than one long sentence. #}
       <ul class="hero-ticks">
-        {% for c in home.hero_claims %}<li>{{ c }}</li>{% endfor %}
+        {% for c in home.hero.claims %}<li>{{ c }}</li>{% endfor %}
       </ul>
-      {% if home.hero_claims_coda %}<p class="hero-ticks-coda">...{{ home.hero_claims_coda }}.</p>{% endif %}
+      {% if home.hero.claims_coda %}<p class="hero-ticks-coda">...{{ home.hero.claims_coda }}.</p>{% endif %}
       <div class="hero-actions">
-        <a href="{{ home.hero_cta_url }}" class="btn btn-primary" style="cursor:pointer">{{ home.hero_cta }}</a>
-        <a href="{{ home.hero_cta_secondary_url }}" class="btn btn-outline-dark" style="cursor:pointer">{{ home.hero_cta_secondary }}</a>
+        <a href="{{ home.hero.cta_url }}" class="btn btn-primary" style="cursor:pointer">{{ home.hero.cta }}</a>
+        <a href="{{ home.hero.cta_secondary_url }}" class="btn btn-outline-dark" style="cursor:pointer">{{ home.hero.cta_secondary }}</a>
       </div>
     </div>
-    <div class="hero-visual"><img src="{{ home.hero_image }}" alt="{{ home.hero_image_alt }}" loading="eager"></div>
+    <div class="hero-visual"><img src="{{ home.hero.image }}" alt="{{ home.hero.image_alt }}" loading="eager"></div>
   </div>
 </section>
 
@@ -78,13 +78,13 @@
 <section class="challenge challenge-compact" id="challenge">
   <div class="container">
     <div class="challenge-head">
-      <span class="section-label">{{ home.challenge_label }}</span>
+      <span class="section-label">{{ home.challenge.label }}</span>
       {# safe: the headline carries a <br> so it breaks where an editor put it. #}
-      <h2 class="section-title">{{ home.challenge_title | softBreak | safe }}</h2>
-      {% if home.challenge_subtitle %}<p class="section-subtitle">{{ home.challenge_subtitle }}</p>{% endif %}
+      <h2 class="section-title">{{ home.challenge.title | softBreak | safe }}</h2>
+      {% if home.challenge.subtitle %}<p class="section-subtitle">{{ home.challenge.subtitle }}</p>{% endif %}
     </div>
     <ul class="challenge-points">
-      {% for point in home.challenge_points %}
+      {% for point in home.challenge.points %}
       <li class="challenge-point{% if point.emphasis %} is-emphasis{% endif %}">
         <span class="challenge-point-icon" aria-hidden="true">{{ challengeIcons[point.icon] | safe }}</span>
         <p>{{ point.text }}</p>
@@ -92,7 +92,7 @@
       {% endfor %}
     </ul>
     <div class="challenge-turn">
-      <a class="challenge-turn-link" href="#value" aria-label="{{ home.vp_title }}">
+      <a class="challenge-turn-link" href="#value" aria-label="{{ home.value_prop.title }}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9.5 12 15.5 18 9.5"/></svg>
       </a>
     </div>
@@ -113,14 +113,14 @@
 <section class="valueprop" id="value">
   <div class="container">
     <div class="vp-head">
-      <span class="section-label">{{ home.vp_label }}</span>
-      <h2 class="section-title">{{ home.vp_title }}</h2>
-      <p class="section-subtitle">{{ home.vp_subtitle }}</p>
+      <span class="section-label">{{ home.value_prop.label }}</span>
+      <h2 class="section-title">{{ home.value_prop.title }}</h2>
+      <p class="section-subtitle">{{ home.value_prop.subtitle }}</p>
     </div>
     {# tabindex and a label because on a phone this is a scrollable region.
        Anything a pointer can scroll has to be reachable from a keyboard. #}
     <div class="vp-grid vp-grid-centred" tabindex="0" role="group"
-         aria-label="{{ home.vp_title }}">
+         aria-label="{{ home.value_prop.title }}">
       {#- A photograph across the top of the card, at Kirsty's request on 12 Aug.
           When one is set it replaces the icon rather than joining it: her layout
           has one image per card, and an icon beside the heading under a
@@ -130,7 +130,7 @@
           The padding moves to an inner wrapper on photo cards so the picture
           can reach the card's edges without negative margins that would have to
           be kept in step with the card's padding by hand. -#}
-      {% for card in home.vp_cards %}
+      {% for card in home.value_prop.cards %}
       <article class="vp-card{% if card.image %} vp-card-photo{% endif %}">
         {% if card.image %}
         <img class="vp-photo" src="{{ card.image }}" alt="{{ card.image_alt }}" loading="lazy" width="800" height="450">
@@ -147,7 +147,7 @@
             <p>{{ card.problem }}</p>
           </div>
           <div class="vp-block is-value">
-            <span class="vp-block-label">{{ home.vp_value_label }}</span>
+            <span class="vp-block-label">{{ home.value_prop.value_label }}</span>
             <p>{{ card.value }}</p>
           </div>
         </div>
@@ -170,11 +170,11 @@
 <section class="home-industries" id="industries">
   <div class="container">
     <div class="industries-header">
-      <span class="section-label">{{ home.industries_label }}</span>
-      <h2 class="section-title">{{ home.industries_title }}</h2>
+      <span class="section-label">{{ home.industries.label }}</span>
+      <h2 class="section-title">{{ home.industries.title }}</h2>
     </div>
     <div class="industries-grid">
-      {% for industry in home.industry_tiles %}
+      {% for industry in home.industries.tiles %}
       <a class="industry-card" href="{{ industry.url }}">
         <img src="{{ industry.image }}" alt="{{ industry.image_alt }}" loading="lazy">
         <div class="industry-card-overlay"><h3>{{ industry.name }}</h3><p>{{ industry.description }}</p></div>
@@ -187,7 +187,7 @@
 <!-- Partners Trust Bar -->
 <div class="trust-bar">
   <div class="container">
-    <span class="trust-label">{{ home.trust_label }}</span>
+    <span class="trust-label">{{ home.partners.label }}</span>
   </div>
   {#
     Continuous logo rail. The set is repeated four times and the track slides by
@@ -206,7 +206,7 @@
     <div class="trust-track">
       {% for i in range(0, 4) %}
       <div class="trust-set"{% if i > 0 %} aria-hidden="true"{% endif %}>
-        {% for logo in home.trust_logos %}
+        {% for logo in home.partners.logos %}
         <a class="trust-logo" href="{{ logo.url }}" target="_blank" rel="noopener"{% if i > 0 %} tabindex="-1"{% endif %}><img src="{{ logo.image }}" alt="{% if i == 0 %}{{ logo.alt }}{% endif %}"></a>
         {% endfor %}
       </div>
@@ -234,8 +234,8 @@
 <section class="home-insights" aria-labelledby="home-insights-title">
   <div class="container">
     <div class="home-insights-head">
-      <h2 id="home-insights-title">{{ home.insights_title }}</h2>
-      <a class="home-insights-all" href="/insights/">{{ home.insights_link }}</a>
+      <h2 id="home-insights-title">{{ home.insights.title }}</h2>
+      <a class="home-insights-all" href="/insights/">{{ home.insights.link }}</a>
     </div>
     <ul class="home-insights-list">
       {% for post in collections.insightsLatest %}
@@ -253,13 +253,13 @@
 <section class="finalcta">
   <div class="container">
     <div class="finalcta-inner">
-      <h2>{{ home.final_cta_title }}</h2>
-      <p>{{ home.final_cta_text }}</p>
+      <h2>{{ home.final_cta.title }}</h2>
+      <p>{{ home.final_cta.text }}</p>
       <div class="finalcta-actions">
-        <a href="{{ home.final_cta_primary_url }}" class="btn btn-white" style="cursor:pointer">{{ home.final_cta_primary }}</a>
+        <a href="{{ home.final_cta.primary_url }}" class="btn btn-white" style="cursor:pointer">{{ home.final_cta.primary }}</a>
         {# Second button only renders when someone has given it a label, so it
            can be removed and restored from the CMS without touching code. #}
-        {% if home.final_cta_secondary %}<a href="{{ home.final_cta_secondary_url }}" class="btn btn-ghost" style="cursor:pointer">{{ home.final_cta_secondary }}</a>{% endif %}
+        {% if home.final_cta.secondary %}<a href="{{ home.final_cta.secondary_url }}" class="btn btn-ghost" style="cursor:pointer">{{ home.final_cta.secondary }}</a>{% endif %}
       </div>
       <p class="finalcta-alt"><a href="/assess/">Or check your product yourself in 60 seconds</a></p>
     </div>
