@@ -124,15 +124,38 @@ for (const c of claims) {
         + `        Either it was reworded, in which case it is a new claim and needs\n`
         + `        reviewing again, or it was removed, in which case set status: withdrawn.`);
     }
-  } else if (c.field) {
-    /* No phrase, so the claim is about a block of data rather than a sentence.
-       Checking the key is present is the most this can honestly assert. */
+  }
+
+  /* The field says where in the file the claim lives. Dotted, since the data
+     files were regrouped into sections on 20 August 2026: choose.groups rather
+     than choose_groups.
+
+     This used to be an `else if` on the phrase check, so an entry carrying both
+     a phrase and a field only ever had its phrase looked at. Two entries had
+     been pointing at keys that did not exist — detect-coa-wording and
+     detect-standards named `capabilities`, tag-robust-stability and tag-facility
+     named `benefits` — and neither the build nor anybody reading the register
+     had any way to notice. Checking both is what makes the field mean something
+     rather than being a comment that happens to be indented. */
+  if (c.field && c.status !== 'withdrawn') {
     let parsed = null;
     try { parsed = yaml.load(text); } catch { /* markdown front matter, skip */ }
-    if (parsed && typeof parsed === 'object' && !(c.field in parsed) && c.status !== 'withdrawn') {
-      problems.push(`${id}: field "${c.field}" is gone from ${c.source}`);
+    if (parsed && typeof parsed === 'object') {
+      let node = parsed, missing = null, walked = [];
+      for (const seg of String(c.field).split('.')) {
+        if (node && typeof node === 'object' && !Array.isArray(node) && seg in node) {
+          node = node[seg]; walked.push(seg);
+        } else { missing = seg; break; }
+      }
+      if (missing !== null) {
+        problems.push(`${id}: field "${c.field}" is not in ${c.source}`
+          + (walked.length ? `\n        "${walked.join('.')}" resolves, "${missing}" under it does not.` : '')
+          + `\n        Either the file was regrouped and this path is stale, or the claim moved.`);
+      }
     }
-  } else {
+  }
+
+  if (!c.phrase && !c.field) {
     problems.push(`${id}: needs either a phrase or a field to check against`);
   }
 }

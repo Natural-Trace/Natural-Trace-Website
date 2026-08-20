@@ -9,11 +9,11 @@ permalink: /contact/
   <div class="container">
     <div class="contact-grid">
       <div class="contact-info">
-        <span class="section-label">{{ contact.section_label }}</span>
-        <h2 class="section-title">{{ contact.title }}</h2>
-        <p class="section-subtitle" style="margin-bottom:2.5rem">{{ contact.subtitle | safe }}</p>
+        <span class="section-label">{{ contact.intro.label }}</span>
+        <h2 class="section-title">{{ contact.intro.title }}</h2>
+        <p class="section-subtitle" style="margin-bottom:2.5rem">{{ contact.intro.subtitle | safe }}</p>
 
-        {% for item in contact.info_items %}
+        {% for item in contact.intro.info_items %}
         <div class="contact-info-item delay-{{ loop.index + 1 }}">
           <div class="contact-info-item-dot"></div>
           <div><h4>{{ item.label }}</h4><p>{{ item.description | safe }}</p></div>
@@ -21,8 +21,8 @@ permalink: /contact/
         {% endfor %}
       </div>
       <div class="contact-form">
-        <h3>{{ contact.form.title }}</h3>
-        <p>{{ contact.form.subtitle }}</p>
+        <h3>{{ contact.form.labels.title }}</h3>
+        <p>{{ contact.form.labels.subtitle }}</p>
         <form id="contactForm"
               onsubmit="return handleContactSubmit(event)"
               data-hs-enabled="{{ integrations.hubspot.enabled }}"
@@ -34,17 +34,17 @@ permalink: /contact/
               data-fallback-subject="{{ integrations.fallback.subject_prefix }}">
           <div class="form-row">
             <div class="form-group">
-              <label>{{ contact.form.first_name_label }}<span class="req" aria-hidden="true">*</span></label>
-              <input type="text" name="firstName" required placeholder="{{ contact.form.first_name_placeholder }}">
+              <label>{{ contact.form.labels.first_name_label }}<span class="req" aria-hidden="true">*</span></label>
+              <input type="text" name="firstName" required placeholder="{{ contact.form.labels.first_name_placeholder }}">
             </div>
             <div class="form-group">
-              <label>{{ contact.form.last_name_label }}<span class="req" aria-hidden="true">*</span></label>
-              <input type="text" name="lastName" required placeholder="{{ contact.form.last_name_placeholder }}">
+              <label>{{ contact.form.labels.last_name_label }}<span class="req" aria-hidden="true">*</span></label>
+              <input type="text" name="lastName" required placeholder="{{ contact.form.labels.last_name_placeholder }}">
             </div>
           </div>
           <div class="form-group">
-            <label>{{ contact.form.email_label }}<span class="req" aria-hidden="true">*</span></label>
-            <input type="email" name="email" required placeholder="{{ contact.form.email_placeholder }}">
+            <label>{{ contact.form.labels.email_label }}<span class="req" aria-hidden="true">*</span></label>
+            <input type="email" name="email" required placeholder="{{ contact.form.labels.email_placeholder }}">
           </div>
           {#
             Company and Job Title share a row, so adding a field does not make
@@ -55,16 +55,16 @@ permalink: /contact/
           #}
           <div class="form-row">
             <div class="form-group">
-              <label>{{ contact.form.company_label }}<span class="req" aria-hidden="true">*</span></label>
-              <input type="text" name="company" required placeholder="{{ contact.form.company_placeholder }}">
+              <label>{{ contact.form.labels.company_label }}<span class="req" aria-hidden="true">*</span></label>
+              <input type="text" name="company" required placeholder="{{ contact.form.labels.company_placeholder }}">
             </div>
             <div class="form-group">
-              <label>{{ contact.form.job_title_label }}<span class="req" aria-hidden="true">*</span></label>
-              <input type="text" name="jobTitle" required placeholder="{{ contact.form.job_title_placeholder }}">
+              <label>{{ contact.form.labels.job_title_label }}<span class="req" aria-hidden="true">*</span></label>
+              <input type="text" name="jobTitle" required placeholder="{{ contact.form.labels.job_title_placeholder }}">
             </div>
           </div>
           <div class="form-group">
-            <label>{{ contact.form.inquiry_type_label }}</label>
+            <label>{{ contact.form.labels.inquiry_type_label }}</label>
             {# Not required, and it is the only field here that is not.
                inquiry_type is a custom HubSpot property and is not marked
                required on that side, confirmed 7 Aug by posting a payload with
@@ -72,22 +72,22 @@ permalink: /contact/
                sending, so an unanswered Topic is simply absent rather than a
                blank that HubSpot would reject. #}
             <select name="inquiryType">
-              <option value="" selected>{{ contact.form.inquiry_type_placeholder }}</option>
-              {% for type in contact.inquiry_types %}
+              <option value="" selected>{{ contact.form.labels.inquiry_type_placeholder }}</option>
+              {% for type in contact.form.types %}
               <option value="{{ type.value }}">{{ type.label | safe }}</option>
               {% endfor %}
             </select>
           </div>
           <div class="form-group">
-            <label>{{ contact.form.message_label }}<span class="req" aria-hidden="true">*</span></label>
-            <textarea name="message" required placeholder="{{ contact.form.message_placeholder }}"></textarea>
+            <label>{{ contact.form.labels.message_label }}<span class="req" aria-hidden="true">*</span></label>
+            <textarea name="message" required placeholder="{{ contact.form.labels.message_placeholder }}"></textarea>
           </div>
           <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
             <label>Do not fill this in
               <input type="text" name="_botcheck" tabindex="-1" autocomplete="off">
             </label>
           </div>
-          <button type="submit" class="form-submit">{{ contact.form.submit_text }}</button>
+          <button type="submit" class="form-submit">{{ contact.form.labels.submit_text }}</button>
         </form>
         <div class="form-success" id="formSuccess">
           <h4>{{ contact.success.title }}</h4>

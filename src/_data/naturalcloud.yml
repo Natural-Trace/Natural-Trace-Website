@@ -1,53 +1,56 @@
-# NaturalCloud™: Clean Prototype Copy Guide 2026
-label: "Solutions"
-title: "NaturalCloud™"
-hero: "Authentication Data That Works for Your Business"
-intro: "NaturalCloud™ is the digital platform that securely stores authentication records and NaturalDetect™ test results, giving companies a centralized view of verification activity across their supply chain."
-# Empty on purpose. NaturalCloud's imagery is a video Kirsty is having made,
-# and a stand-in photograph would be worse than the mark. Put a path here
-# when it arrives and the page switches from the logo panel to the picture;
-# the keys exist so the admin panel and this file agree either way.
-hero_image: ""
-hero_image_alt: ""
-# Which part of the photograph stays in frame when the 4:3 panel trims it.
-# Middle unless someone has a reason.
-hero_image_position: "50% 50%"
-# How far into the photograph to crop. 1 is the whole frame as the panel
-# already trims it; higher scales in and the panel clips the rest.
-# NaturalTag is at 1.18 because Kirsty asked for the vial cropped closer
-# on 13 Aug and the panel had already used all the width it could take.
-hero_image_zoom: "1"
-# The product mark, blended into the hero background. Only its shape is used;
-# the colour comes from the stylesheet, so it always sits tonally on this
-# page's tint. That means a flat single-colour graphic on a transparent
-# background works and a photograph does not. Clear it to remove the mark.
-hero_mark: "/assets/logos/NaturalCloud-icon.png"
+hero:
+  # NaturalCloud™: Clean Prototype Copy Guide 2026
+  label: "Solutions"
+  title: "NaturalCloud™"
+  tagline: "Authentication Data That Works for Your Business"
+  intro: "NaturalCloud™ is the digital platform that securely stores authentication records and NaturalDetect™ test results, giving companies a centralized view of verification activity across their supply chain."
+  # Empty on purpose. NaturalCloud's imagery is a video Kirsty is having made,
+  # and a stand-in photograph would be worse than the mark. Put a path here
+  # when it arrives and the page switches from the logo panel to the picture;
+  # the keys exist so the admin panel and this file agree either way.
+  image: ""
+  image_alt: ""
+  # Which part of the photograph stays in frame when the 4:3 panel trims it.
+  # Middle unless someone has a reason.
+  image_position: "50% 50%"
+  # How far into the photograph to crop. 1 is the whole frame as the panel
+  # already trims it; higher scales in and the panel clips the rest.
+  # NaturalTag is at 1.18 because Kirsty asked for the vial cropped closer
+  # on 13 Aug and the panel had already used all the width it could take.
+  image_zoom: "1"
+  # The product mark, blended into the hero background. Only its shape is used;
+  # the colour comes from the stylesheet, so it always sits tonally on this
+  # page's tint. That means a flat single-colour graphic on a transparent
+  # background works and a photograph does not. Clear it to remove the mark.
+  mark: "/assets/logos/NaturalCloud-icon.png"
 
-# The heatmap recording of the portal, added 12 Aug 2026. Set this and the
-# panel plays it instead of showing the logo mark; empty it and the mark comes
-# back, with no code change either way.
-#
-# It is a crop and a re-encode of "NaturalTrace Heatmap Video.mp4", which is
-# kept in assets/video as the master. The original is 3840x2160 and 3.5MB for
-# a panel that renders around 500px wide, and the top of the frame was a
-# browser window with natural-trace.trackvision.ai/admin/... in the address
-# bar. Cropped to the portal and encoded at 1280px: 216KB, 6% of the original,
-# and no internal URL on a public page.
-hero_video: "/assets/video/naturalcloud-heatmap.mp4"
-hero_video_poster: "/assets/video/naturalcloud-heatmap-poster.webp"
-hero_video_alt: "The NaturalCloud portal showing NaturalTag test results plotted on a world map"
-hero_logo: "/assets/logos/NaturalCloud-icon.png"
-hero_logo_alt: "NaturalCloud"
+  # The heatmap recording of the portal, added 12 Aug 2026. Set this and the
+  # panel plays it instead of showing the logo mark; empty it and the mark comes
+  # back, with no code change either way.
+  #
+  # It is a crop and a re-encode of "NaturalTrace Heatmap Video.mp4", which is
+  # kept in assets/video as the master. The original is 3840x2160 and 3.5MB for
+  # a panel that renders around 500px wide, and the top of the frame was a
+  # browser window with natural-trace.trackvision.ai/admin/... in the address
+  # bar. Cropped to the portal and encoded at 1280px: 216KB, 6% of the original,
+  # and no internal URL on a public page.
+  video: "/assets/video/naturalcloud-heatmap.mp4"
+  video_poster: "/assets/video/naturalcloud-heatmap-poster.webp"
+  video_alt: "The NaturalCloud portal showing NaturalTag test results plotted on a world map"
+  logo: "/assets/logos/NaturalCloud-icon.png"
+  logo_alt: "NaturalCloud"
 
-features_title: "Benefits"
 features:
-  - "Surveillance insights"
-  - "Centralized secure records"
-  - "Counterfeit investigation documentation"
-  - "Quality & regulatory visibility"
-  - "Ordering portal"
+  title: "Benefits"
+  items:
+    - "Surveillance insights"
+    - "Centralized secure records"
+    - "Counterfeit investigation documentation"
+    - "Quality & regulatory visibility"
+    - "Ordering portal"
 
-cta_primary: "Request a Compatibility Assessment"
-cta_primary_url: "/contact/"
-cta_secondary: "Discover the Value of Connected Authentication Data"
-cta_secondary_url: "/contact/"
+final_cta:
+  primary: "Request a Compatibility Assessment"
+  primary_url: "/contact/"
+  secondary: "Discover the Value of Connected Authentication Data"
+  secondary_url: "/contact/"

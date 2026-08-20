@@ -8,12 +8,12 @@ permalink: /industries/use-cases/
 <section class="usecases" style="padding-top:9rem">
   <div class="container">
     <div class="vp-head">
-      <span class="section-label">{{ usecases.label }}</span>
-      <h2 class="section-title">{{ usecases.title }}</h2>
-      <p class="section-subtitle">{{ usecases.subtitle }}</p>
+      <span class="section-label">{{ usecases.intro.label }}</span>
+      <h2 class="section-title">{{ usecases.intro.title }}</h2>
+      <p class="section-subtitle">{{ usecases.intro.subtitle }}</p>
     </div>
 
-    {% for case in usecases.cases %}
+    {% for case in usecases.cases.items %}
     <article class="usecase">
       <div class="usecase-media">
         <img src="{{ case.image }}" alt="{{ case.image_alt }}" loading="lazy">
@@ -22,15 +22,15 @@ permalink: /industries/use-cases/
         <span class="usecase-sector">{{ case.sector }}</span>
         <h3>{{ case.title }}</h3>
         <div class="usecase-block">
-          <h4>{{ usecases.challenge_label }}</h4>
+          <h4>{{ usecases.cases.challenge_label }}</h4>
           <p>{{ case.challenge }}</p>
         </div>
         <div class="usecase-block">
-          <h4>{{ usecases.solution_label }}</h4>
+          <h4>{{ usecases.cases.solution_label }}</h4>
           <p>{{ case.solution }}</p>
         </div>
         <div class="usecase-block is-outcome">
-          <h4>{{ usecases.outcome_label }}</h4>
+          <h4>{{ usecases.cases.outcome_label }}</h4>
           <p>{{ case.outcome }}</p>
         </div>
       </div>
@@ -42,9 +42,9 @@ permalink: /industries/use-cases/
 <section class="finalcta">
   <div class="container">
     <div class="finalcta-inner">
-      <h2>{{ usecases.cta_title }}</h2>
+      <h2>{{ usecases.final_cta.title }}</h2>
       <div class="finalcta-actions">
-        <a href="{{ usecases.cta_url }}" class="btn btn-white" style="cursor:pointer">{{ usecases.cta_title }}</a>
+        <a href="{{ usecases.final_cta.url }}" class="btn btn-white" style="cursor:pointer">{{ usecases.final_cta.title }}</a>
       </div>
     </div>
   </div>

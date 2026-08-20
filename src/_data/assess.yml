@@ -1,161 +1,169 @@
-compat_label: Product Compatibility
-compat_title: Assess My Product
-compat_subtitle: Find out in 60 seconds whether Natural Trace is compatible with your product.
-compat_welcome_title: Check Product Compatibility
-compat_welcome_desc: Answer three quick questions about your product so we can
-  understand your formulation and process conditions.
-compat_welcome_cta: Check Compatibility
-compat_step1_question: What type of product do you make?
-compat_step2_question: How is your product formulated?
-compat_step2_hint: Select all that apply
-compat_step3_question: What are your processing conditions?
-compat_step3_temp_label: Max Processing Temperature
-compat_step3_ph_label: pH Range
-compat_btn_next: Next
-compat_btn_back: Back
-compat_confirm_title: Thanks, we have what we need
-compat_confirm_desc: Compatibility depends on your specific formulation and
-  process conditions. Send this through and one of our scientists will review it
-  with you.
-compat_result_cta: Request a compatibility assessment
-compat_result_cta_url: /contact/
-compat_result_note: This is a first screen based on three answers, not a
-  laboratory result. Compatibility is confirmed on your own formulation.
-compat_ph_options:
-  - label: pH 5 to 9
-    risk: low
-  - label: pH 3 to 5, or 9 to 11
-    risk: medium
-  - label: Below pH 3, or above pH 11
-    risk: high
-  - label: Not sure
-    risk: medium
-compat_temp_options:
-  - label: Below 60°C
-    risk: low
-  - label: 60 to 100°C
-    risk: medium
-  - label: Above 100°C
-    risk: high
-  - label: Not sure
-    risk: medium
-compat_formulation_risk:
-  rtd: high
-  softgel: medium
-  drops: medium
-  tablet: low
-  gummy: medium
-  capsule: low
-  chewable: low
-  bar: medium
-  powder: low
-  effervescent: medium
-  liquid: medium
-  lozenge: high
-compat_evidence_yes: We have tested a product in this category and format, and it worked.
-compat_evidence_no: We have tested a product in this category and format and it
-  did not work, which is why this needs a look rather than a yes.
-compat_evidence:
-  - category: herbal
-    forms:
-      - powder
-      - capsule
-    outcome: compatible
-    ph: ""
-    temperature: ""
-    products: ""
-    note: Ginger and curcumin extract. Confirmed working, Bryan, 11 Aug 2026.
-  - category: herbal
-    forms:
-      - powder
-    outcome: compatible
-    ph: ""
-    temperature: ""
-    products: ""
-    note: Botanical flower material, fresh and dried. Confirmed working, Bryan, 11
-      Aug 2026.
-  - category: joint
-    forms:
-      - capsule
-      - powder
-    outcome: compatible
-    ph: ""
-    temperature: ""
-    products: ""
-    note: Powder-filled capsules. Confirmed working, Bryan, 11 Aug 2026.
-  - category: vitamins
-    forms:
-      - drops
-      - liquid
-    outcome: compatible
-    ph: ""
-    temperature: ""
-    products: ""
-    note: "Liquid drops and a syrup. Confirmed working, Bryan, 11 Aug 2026. Worth
-      recording the pH on these two: liquid and drops both score medium on form,
-      and a measured pH is what turns that into a fact."
-  - category: immune
-    forms:
-      - powder
-    outcome: compatible
-    ph: ""
-    temperature: ""
-    products: ""
-    note: Berry powder. Confirmed working, Bryan, 11 Aug 2026.
-  - category: specialty
-    forms:
-      - effervescent
-    outcome: compatible
-    ph: ""
-    temperature: ""
-    products: ""
-    note: "Effervescent tablet. Confirmed working, Bryan, 11 Aug 2026. This is the
-      most useful row here: effervescent scores medium on form alone, and it
-      means an effervescent product now comes back compatible rather than
-      qualified."
-  - category: specialty
-    forms:
-      - capsule
-    outcome: compatible
-    ph: ""
-    temperature: ""
-    products: ""
-    note: Confirmed working, Bryan, 11 Aug 2026.
-  - category: ingredients
-    forms:
-      - liquid
-      - powder
-    outcome: compatible
-    ph: ""
-    temperature: ""
-    products: ""
-    note: Lecithin in both oil and powder form. 100% accuracy and 100% specificity,
-      n=15 in each arm.
-  - category: sports
-    forms:
-      - powder
-    outcome: compatible
-    ph: ""
-    temperature: ""
-    products: ""
-    note: Dairy protein powders. 100% accuracy and 100% specificity, n=12 and n=21.
-compat_outcomes:
-  compatible:
-    label: Compatible
-    title: Your product is a strong candidate for NaturalTag™
-    body: Based on your answers, NaturalTag™ is likely to be compatible with your
-      product. The next step is a compatibility assessment using your formulation
-      to confirm performance and the best approach for your application.
-  conditions:
-    label: Potentially Compatible
-    title: Your product is potentially compatible for NaturalTag™
-    body: Based on your answers, NaturalTag™ may be suitable for your product.
-      Some applications may require adjustments to the dose or where NaturalTag™
-      is introduced into the process. A compatibility assessment will help us
-      determine the best approach for your formulation.
-  testing:
-    label: Compatibility Assessment Recommended
-    title: Let's assess your product
-    body: Your formulation or conditions mean we would like to assess your product
-      before confirming compatibility. Send us a sample and our team can test
-      NaturalTag™ with your formulation and determine the best way forward.
+intro:
+  label: Product Compatibility
+  title: Assess My Product
+  subtitle: Find out in 60 seconds whether Natural Trace is compatible with your product.
+welcome:
+  title: Check Product Compatibility
+  description: Answer three quick questions about your product so we can
+    understand your formulation and process conditions.
+  button: Check Compatibility
+questions:
+  step1: What type of product do you make?
+  step2: How is your product formulated?
+  step2_hint: Select all that apply
+  step3: What are your processing conditions?
+  step3_temp_label: Max Processing Temperature
+  step3_ph_label: pH Range
+navigation:
+  next: Next
+  back: Back
+confirm:
+  title: Thanks, we have what we need
+  description: Compatibility depends on your specific formulation and
+    process conditions. Send this through and one of our scientists will review it
+    with you.
+result:
+  cta: Request a compatibility assessment
+  cta_url: /contact/
+  note: This is a first screen based on three answers, not a
+    laboratory result. Compatibility is confirmed on your own formulation.
+  outcomes:
+    compatible:
+      label: Compatible
+      title: Your product is a strong candidate for NaturalTag™
+      body: Based on your answers, NaturalTag™ is likely to be compatible with your
+        product. The next step is a compatibility assessment using your formulation
+        to confirm performance and the best approach for your application.
+    conditions:
+      label: Potentially Compatible
+      title: Your product is potentially compatible for NaturalTag™
+      body: Based on your answers, NaturalTag™ may be suitable for your product.
+        Some applications may require adjustments to the dose or where NaturalTag™
+        is introduced into the process. A compatibility assessment will help us
+        determine the best approach for your formulation.
+    testing:
+      label: Compatibility Assessment Recommended
+      title: Let's assess your product
+      body: Your formulation or conditions mean we would like to assess your product
+        before confirming compatibility. Send us a sample and our team can test
+        NaturalTag™ with your formulation and determine the best way forward.
+scoring:
+  ph_options:
+    - label: pH 5 to 9
+      risk: low
+    - label: pH 3 to 5, or 9 to 11
+      risk: medium
+    - label: Below pH 3, or above pH 11
+      risk: high
+    - label: Not sure
+      risk: medium
+  temp_options:
+    - label: Below 60°C
+      risk: low
+    - label: 60 to 100°C
+      risk: medium
+    - label: Above 100°C
+      risk: high
+    - label: Not sure
+      risk: medium
+  formulation_risk:
+    rtd: high
+    softgel: medium
+    drops: medium
+    tablet: low
+    gummy: medium
+    capsule: low
+    chewable: low
+    bar: medium
+    powder: low
+    effervescent: medium
+    liquid: medium
+    lozenge: high
+evidence:
+  yes: We have tested a product in this category and format, and it worked.
+  no: We have tested a product in this category and format and it
+    did not work, which is why this needs a look rather than a yes.
+  items:
+    - category: herbal
+      forms:
+        - powder
+        - capsule
+      outcome: compatible
+      ph: ""
+      temperature: ""
+      products: ""
+      note: Ginger and curcumin extract. Confirmed working, Bryan, 11 Aug 2026.
+    - category: herbal
+      forms:
+        - powder
+      outcome: compatible
+      ph: ""
+      temperature: ""
+      products: ""
+      note: Botanical flower material, fresh and dried. Confirmed working, Bryan, 11
+        Aug 2026.
+    - category: joint
+      forms:
+        - capsule
+        - powder
+      outcome: compatible
+      ph: ""
+      temperature: ""
+      products: ""
+      note: Powder-filled capsules. Confirmed working, Bryan, 11 Aug 2026.
+    - category: vitamins
+      forms:
+        - drops
+        - liquid
+      outcome: compatible
+      ph: ""
+      temperature: ""
+      products: ""
+      note: "Liquid drops and a syrup. Confirmed working, Bryan, 11 Aug 2026. Worth
+        recording the pH on these two: liquid and drops both score medium on form,
+        and a measured pH is what turns that into a fact."
+    - category: immune
+      forms:
+        - powder
+      outcome: compatible
+      ph: ""
+      temperature: ""
+      products: ""
+      note: Berry powder. Confirmed working, Bryan, 11 Aug 2026.
+    - category: specialty
+      forms:
+        - effervescent
+      outcome: compatible
+      ph: ""
+      temperature: ""
+      products: ""
+      note: "Effervescent tablet. Confirmed working, Bryan, 11 Aug 2026. This is the
+        most useful row here: effervescent scores medium on form alone, and it
+        means an effervescent product now comes back compatible rather than
+        qualified."
+    - category: specialty
+      forms:
+        - capsule
+      outcome: compatible
+      ph: ""
+      temperature: ""
+      products: ""
+      note: Confirmed working, Bryan, 11 Aug 2026.
+    - category: ingredients
+      forms:
+        - liquid
+        - powder
+      outcome: compatible
+      ph: ""
+      temperature: ""
+      products: ""
+      note: Lecithin in both oil and powder form. 100% accuracy and 100% specificity,
+        n=15 in each arm.
+    - category: sports
+      forms:
+        - powder
+      outcome: compatible
+      ph: ""
+      temperature: ""
+      products: ""
+      note: Dairy protein powders. 100% accuracy and 100% specificity, n=12 and n=21.

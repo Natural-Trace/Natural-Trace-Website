@@ -1,51 +1,54 @@
-section_label: "Careers"
-title: "Help Build the Future of Product Authentication"
-intro: "We are building in-product authentication for food and nutraceutical ingredients. If that problem interests you, we would like to hear from you."
+intro:
+  label: "Careers"
+  title: "Help Build the Future of Product Authentication"
+  text: "We are building in-product authentication for food and nutraceutical ingredients. If that problem interests you, we would like to hear from you."
 
-tab_openings_label: "Open Positions"
-tab_internship_label: "Internships"
+  openings_tab: "Open Positions"
+  internship_tab: "Internships"
 
-no_openings:
-  title: "No Open Positions Right Now"
-  description: "We don't have any openings at the moment, but we're always growing. Check back soon or explore our internship programme."
+openings:
+  empty:
+    title: "No Open Positions Right Now"
+    description: "We don't have any openings at the moment, but we're always growing. Check back soon or explore our internship programme."
 
-positions: []
+  positions: []
 
-internship:
-  title: "R&amp;D / Lab Internship"
-  description: "We offer hands-on internship placements in our R&amp;D and laboratory teams. You'll work alongside scientists on real projects involving molecular biology, qPCR assay development, and supply chain traceability."
-  expectations_label: "What you can expect:"
-  expectations:
-    - "Exposure to qPCR, DNA extraction, and assay design"
-    - "Hands-on work with real client data and sample matrices"
-    - "Mentorship from experienced research scientists"
-    - "Flexible placement duration (min. 3 months)"
-  location: "Based in Singapore"
+internships:
+  details:
+    title: "R&amp;D / Lab Internship"
+    description: "We offer hands-on internship placements in our R&amp;D and laboratory teams. You'll work alongside scientists on real projects involving molecular biology, qPCR assay development, and supply chain traceability."
+    expectations_label: "What you can expect:"
+    expectations:
+      - "Exposure to qPCR, DNA extraction, and assay design"
+      - "Hands-on work with real client data and sample matrices"
+      - "Mentorship from experienced research scientists"
+      - "Flexible placement duration (min. 3 months)"
+    location: "Based in Singapore"
 
-internship_form:
-  title: "Apply for an Internship"
-  subtitle: "Tell us about yourself and we'll be in touch."
-  first_name_label: "First Name"
-  first_name_placeholder: "Your first name"
-  last_name_label: "Last Name"
-  last_name_placeholder: "Your last name"
-  email_label: "Email"
-  email_placeholder: "your@email.com"
-  university_label: "University / Institution"
-  university_placeholder: "Your university or institution"
-  interest_label: "Area of Interest"
-  interest_placeholder: "Select an area"
-  message_label: "Tell us about yourself"
-  message_placeholder: "Your background, what you're studying, and what you hope to learn..."
-  submit_text: "Submit Application"
+  form:
+    title: "Apply for an Internship"
+    subtitle: "Tell us about yourself and we'll be in touch."
+    first_name_label: "First Name"
+    first_name_placeholder: "Your first name"
+    last_name_label: "Last Name"
+    last_name_placeholder: "Your last name"
+    email_label: "Email"
+    email_placeholder: "your@email.com"
+    university_label: "University / Institution"
+    university_placeholder: "Your university or institution"
+    interest_label: "Area of Interest"
+    interest_placeholder: "Select an area"
+    message_label: "Tell us about yourself"
+    message_placeholder: "Your background, what you're studying, and what you hope to learn..."
+    submit_text: "Submit Application"
 
-areas_of_interest:
-  - "Molecular Biology"
-  - "qPCR / Assay Development"
-  - "DNA Extraction / Sample Processing"
-  - "Data Analysis"
-  - "General Lab Work"
+  areas:
+    - "Molecular Biology"
+    - "qPCR / Assay Development"
+    - "DNA Extraction / Sample Processing"
+    - "Data Analysis"
+    - "General Lab Work"
 
-success:
-  title: "Application Received"
-  message: "Thank you for your interest in Natural Trace. Our team will review your application and get back to you."
+  success:
+    title: "Application Received"
+    message: "Thank you for your interest in Natural Trace. Our team will review your application and get back to you."

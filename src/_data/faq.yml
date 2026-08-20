@@ -1,91 +1,94 @@
-# FAQ: Clean Prototype Copy Guide 2026
-section_label: "FAQ"
-title: "Frequently Asked Questions"
-subtitle: "Answers on regulatory status, safety, integration and detection."
+intro:
+  # FAQ: Clean Prototype Copy Guide 2026
+  label: "FAQ"
+  title: "Frequently Asked Questions"
+  subtitle: "Answers on regulatory status, safety, integration and detection."
 
-categories:
-  - id: "regulatory"
-    label: "Regulatory"
-  - id: "safety"
-    label: "Safety"
-  - id: "integration"
-    label: "Integration"
-  - id: "detection"
-    label: "Detection"
+content:
+  categories:
+    - id: "regulatory"
+      label: "Regulatory"
+    - id: "safety"
+      label: "Safety"
+    - id: "integration"
+      label: "Integration"
+    - id: "detection"
+      label: "Detection"
 
-questions:
-  # Regulatory
-  - category: "regulatory"
-    question: "Is NaturalTag™ approved for use in food products?"
-    # CLAIM REVIEW: "compatible with global food regulatory frameworks" was flagged 30 July
-    answer: "NaturalTag™ is composed entirely of inactivated probiotics that are already widely used in food and dietary supplement production. These inactivated probiotics are compatible with global food regulatory frameworks."
-  - category: "regulatory"
-    question: "Does it meet Non-GMO requirements?"
-    answer: "Yes. NaturalTag™ uses naturally occurring organisms with no genetic modification. Fully compatible with Non-GMO certification standards."
-  - category: "regulatory"
-    question: "Which countries or regions can I use it in?"
-    # Rewritten 18 Aug 2026, before search indexing was switched on.
-    #
-    # It used to read: "NaturalTag has established food-safety status across the
-    # EU, US, APAC, and many other jurisdictions." The 30 July review flagged
-    # that as the highest-risk item on the site, because it contradicts the
-    # About Us page, which claims a self-determined FDA GRAS status. That is one
-    # jurisdiction, and it is our own determination rather than a regulator's.
-    # Those two sentences cannot both be true, and the weaker one is the one
-    # with evidence behind it.
-    #
-    # This page carries FAQPage structured data, so its answers are the ones a
-    # search engine shows as a drop-down and an AI assistant quotes back at a
-    # prospect word for word. It is the worst place on the site to keep a claim
-    # that does not hold.
-    #
-    # Replaced with a procedural answer that asserts nothing rather than one
-    # that asserts less. Importing "self-determined FDA GRAS status" here would
-    # move a still-unresolved claim onto the most quotable page we have.
-    # Restore a substantive answer once the regulatory position is signed off;
-    # the original wording is preserved above so nothing is lost.
-    answer: "Regulatory requirements differ by market and by product category, so we confirm the position for each product rather than stating a blanket one. Tell us your product type and the markets you sell into, and we will come back with the position for your case."
+  questions:
+    # Regulatory
+    - category: "regulatory"
+      question: "Is NaturalTag™ approved for use in food products?"
+      # CLAIM REVIEW: "compatible with global food regulatory frameworks" was flagged 30 July
+      answer: "NaturalTag™ is composed entirely of inactivated probiotics that are already widely used in food and dietary supplement production. These inactivated probiotics are compatible with global food regulatory frameworks."
+    - category: "regulatory"
+      question: "Does it meet Non-GMO requirements?"
+      answer: "Yes. NaturalTag™ uses naturally occurring organisms with no genetic modification. Fully compatible with Non-GMO certification standards."
+    - category: "regulatory"
+      question: "Which countries or regions can I use it in?"
+      # Rewritten 18 Aug 2026, before search indexing was switched on.
+      #
+      # It used to read: "NaturalTag has established food-safety status across the
+      # EU, US, APAC, and many other jurisdictions." The 30 July review flagged
+      # that as the highest-risk item on the site, because it contradicts the
+      # About Us page, which claims a self-determined FDA GRAS status. That is one
+      # jurisdiction, and it is our own determination rather than a regulator's.
+      # Those two sentences cannot both be true, and the weaker one is the one
+      # with evidence behind it.
+      #
+      # This page carries FAQPage structured data, so its answers are the ones a
+      # search engine shows as a drop-down and an AI assistant quotes back at a
+      # prospect word for word. It is the worst place on the site to keep a claim
+      # that does not hold.
+      #
+      # Replaced with a procedural answer that asserts nothing rather than one
+      # that asserts less. Importing "self-determined FDA GRAS status" here would
+      # move a still-unresolved claim onto the most quotable page we have.
+      # Restore a substantive answer once the regulatory position is signed off;
+      # the original wording is preserved above so nothing is lost.
+      answer: "Regulatory requirements differ by market and by product category, so we confirm the position for each product rather than stating a blanket one. Tell us your product type and the markets you sell into, and we will come back with the position for your case."
 
-  # Safety
-  - category: "safety"
-    question: "What exactly is in the NaturalTag™?"
-    answer: "A proprietary formulated blend of inactivated (non-living) probiotics. No synthetic chemicals, dyes, or foreign substances."
-  - category: "safety"
-    question: "Will it affect taste, texture, or shelf life?"
-    # CLAIM REVIEW: sensory panel claim and "zero impact" absolute both flagged 30 July
-    answer: "No. Applied at trace parts-per-million concentrations, undetectable by sensory evaluation. Zero impact on product characteristics."
-  - category: "safety"
-    question: "Is it safe for consumers with allergies?"
-    answer: "Contains no common allergens. Standard food-grade probiotics with extensive safety histories."
+    # Safety
+    - category: "safety"
+      question: "What exactly is in the NaturalTag™?"
+      answer: "A proprietary formulated blend of inactivated (non-living) probiotics. No synthetic chemicals, dyes, or foreign substances."
+    - category: "safety"
+      question: "Will it affect taste, texture, or shelf life?"
+      # CLAIM REVIEW: sensory panel claim and "zero impact" absolute both flagged 30 July
+      answer: "No. Applied at trace parts-per-million concentrations, undetectable by sensory evaluation. Zero impact on product characteristics."
+    - category: "safety"
+      question: "Is it safe for consumers with allergies?"
+      answer: "Contains no common allergens. Standard food-grade probiotics with extensive safety histories."
 
-  # Integration
-  - category: "integration"
-    question: "Will I need to change my manufacturing process?"
-    answer: "NaturalTag integrates into existing mixing and formulation processes with minimal process disruption."
-  - category: "integration"
-    question: "How long does onboarding take?"
-    answer: "Typical onboarding takes 4 to 6 weeks: compatibility testing, validation, and integration."
-  - category: "integration"
-    question: "Can it be used in complex matrices, such as oils, powders, and liquids?"
-    answer: "NaturalTag™ has been validated across multiple matrices."
+    # Integration
+    - category: "integration"
+      question: "Will I need to change my manufacturing process?"
+      answer: "NaturalTag integrates into existing mixing and formulation processes with minimal process disruption."
+    - category: "integration"
+      question: "How long does onboarding take?"
+      answer: "Typical onboarding takes 4 to 6 weeks: compatibility testing, validation, and integration."
+    - category: "integration"
+      question: "Can it be used in complex matrices, such as oils, powders, and liquids?"
+      answer: "NaturalTag™ has been validated across multiple matrices."
 
-  # Detection
-  - category: "detection"
-    question: "How is the NaturalTag™ detected downstream?"
-    answer: "NaturalTag™ is detected by collecting a product sample and analysing it using our proprietary NaturalDetect™ test method. The test confirms whether the authentic NaturalTag™ signature is present with high specificity, providing objective results without the need for subjective interpretation."
-  - category: "detection"
-    question: "Can the NaturalTag™ be removed, transferred, or counterfeited?"
-    # CLAIM REVIEW: prohibited impossibility claim, retired 30 July
-    answer: "No. NaturalTag™ is incorporated directly into the product during manufacturing, becoming part of the product matrix. It cannot be replicated or removed."
-  - category: "detection"
-    question: "What does a result look like?"
-    # CLAIM REVIEW: the calling pipeline has a third verdict (Inconclusive); "certificate of analysis" should be Certificate of Authenticity
-    answer: "NaturalDetect™ provides a clear binary result: Authenticated or Not Authenticated. A certificate of analysis is generated automatically via NaturalCloud™."
-  - category: "detection"
-    question: "For how long can the NaturalTag™ be detected?"
-    # CLAIM REVIEW: longest completed study window is far shorter than typical shelf life
-    answer: "NaturalTag™ remains detectable throughout the standard shelf life of tagged products."
+    # Detection
+    - category: "detection"
+      question: "How is the NaturalTag™ detected downstream?"
+      answer: "NaturalTag™ is detected by collecting a product sample and analysing it using our proprietary NaturalDetect™ test method. The test confirms whether the authentic NaturalTag™ signature is present with high specificity, providing objective results without the need for subjective interpretation."
+    - category: "detection"
+      question: "Can the NaturalTag™ be removed, transferred, or counterfeited?"
+      # CLAIM REVIEW: prohibited impossibility claim, retired 30 July
+      answer: "No. NaturalTag™ is incorporated directly into the product during manufacturing, becoming part of the product matrix. It cannot be replicated or removed."
+    - category: "detection"
+      question: "What does a result look like?"
+      # CLAIM REVIEW: the calling pipeline has a third verdict (Inconclusive); "certificate of analysis" should be Certificate of Authenticity
+      answer: "NaturalDetect™ provides a clear binary result: Authenticated or Not Authenticated. A certificate of analysis is generated automatically via NaturalCloud™."
+    - category: "detection"
+      question: "For how long can the NaturalTag™ be detected?"
+      # CLAIM REVIEW: longest completed study window is far shorter than typical shelf life
+      answer: "NaturalTag™ remains detectable throughout the standard shelf life of tagged products."
 
-cta_title: "Still Have Questions?"
-cta_text: "Our team can walk you through compatibility, validation and reporting for your specific product."
-cta_button: "Talk to our team"
+final_cta:
+  title: "Still Have Questions?"
+  text: "Our team can walk you through compatibility, validation and reporting for your specific product."
+  button: "Talk to our team"

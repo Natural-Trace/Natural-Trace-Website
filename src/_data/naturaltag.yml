@@ -1,67 +1,73 @@
-# NaturalTag™: Clean Prototype Copy Guide 2026
-label: "Solutions"
-title: "NaturalTag™"
-hero: "Authentication Built Into Your Product"
-intro: "NaturalTag™ is a food-grade, in-product authentication tag made from inactivated probiotics. Incorporated in small quantities directly into products during manufacturing, it provides a permanent product identity that enables objective authentication beyond packaging and documentation."
-# NaturalTag carries the Natural Trace mark; there is no separate product lockup.
-# Kirsty's product photograph, 11 Aug. When this is set the hero shows the
-# photograph; when it is empty it falls back to the logo panel below, which is
-# what NaturalCloud still uses while its video is being made.
-hero_image: "/assets/images/naturaltag-product.webp"
-hero_image_alt: "A gloved hand holding a labelled vial of NaturalTag in front of a stainless steel fermentation vessel"
-# Where the crop sits. The photograph is 3:2 and the panel is 4:3, so about
-# 12% of the width is cut. Centred, that left the vial at 41% across and
-# Kirsty asked for it centred. Pushed hard left it sits at 47%, which is as
-# close to the middle as this frame allows: to do better the vial would have
-# to be nearer the middle of the original photograph.
-hero_image_position: "0% 50%"
-# How far into the photograph to crop. 1 is the whole frame as the panel
-# already trims it; higher scales in and the panel clips the rest.
-# NaturalTag is at 1.18 because Kirsty asked for the vial cropped closer
-# on 13 Aug and the panel had already used all the width it could take.
-hero_image_zoom: "1.18"
-# The product mark, blended into the hero background. Only its shape is used;
-# the colour comes from the stylesheet, so it always sits tonally on this
-# page's tint. That means a flat single-colour graphic on a transparent
-# background works and a photograph does not. Clear it to remove the mark.
-hero_mark: "/assets/logos/NaturalTag-icon.png"
-hero_logo: "/assets/logos/NaturalTag-icon.png"
-hero_logo_alt: "NaturalTag, carrying the Natural Trace mark"
+hero:
+  # NaturalTag™: Clean Prototype Copy Guide 2026
+  label: "Solutions"
+  title: "NaturalTag™"
+  tagline: "Authentication Built Into Your Product"
+  intro: "NaturalTag™ is a food-grade, in-product authentication tag made from inactivated probiotics. Incorporated in small quantities directly into products during manufacturing, it provides a permanent product identity that enables objective authentication beyond packaging and documentation."
+  # NaturalTag carries the Natural Trace mark; there is no separate product lockup.
+  # Kirsty's product photograph, 11 Aug. When this is set the hero shows the
+  # photograph; when it is empty it falls back to the logo panel below, which is
+  # what NaturalCloud still uses while its video is being made.
+  image: "/assets/images/naturaltag-product.webp"
+  image_alt: "A gloved hand holding a labelled vial of NaturalTag in front of a stainless steel fermentation vessel"
+  # Where the crop sits. The photograph is 3:2 and the panel is 4:3, so about
+  # 12% of the width is cut. Centred, that left the vial at 41% across and
+  # Kirsty asked for it centred. Pushed hard left it sits at 47%, which is as
+  # close to the middle as this frame allows: to do better the vial would have
+  # to be nearer the middle of the original photograph.
+  image_position: "0% 50%"
+  # How far into the photograph to crop. 1 is the whole frame as the panel
+  # already trims it; higher scales in and the panel clips the rest.
+  # NaturalTag is at 1.18 because Kirsty asked for the vial cropped closer
+  # on 13 Aug and the panel had already used all the width it could take.
+  image_zoom: "1.18"
+  # The product mark, blended into the hero background. Only its shape is used;
+  # the colour comes from the stylesheet, so it always sits tonally on this
+  # page's tint. That means a flat single-colour graphic on a transparent
+  # background works and a photograph does not. Clear it to remove the mark.
+  mark: "/assets/logos/NaturalTag-icon.png"
+  logo: "/assets/logos/NaturalTag-icon.png"
+  logo_alt: "NaturalTag, carrying the Natural Trace mark"
 
-why_title: "Why NaturalTag™?"
-why_items:
-  - "Prove ingredient authenticity"
-  - "Ideal for complex botanicals"
-  - "Verify authorised manufacturing"
-  - "Detect counterfeit, substituted, diluted and adulterated products"
-  - "Support market investigations"
-  - "Strengthen customer confidence"
+why:
+  title: "Why NaturalTag™?"
+  items:
+    - "Prove ingredient authenticity"
+    - "Ideal for complex botanicals"
+    - "Verify authorised manufacturing"
+    - "Detect counterfeit, substituted, diluted and adulterated products"
+    - "Support market investigations"
+    - "Strengthen customer confidence"
 
-features_title: "NaturalTag™ Features"
 features:
-  - "Each NaturalTag™ carries unique signature"
-  - "Food-grade"
-  - "Non-GMO"
-  - "Compatible with existing manufacturing"
-  - "Invisible after integration, no impact on product performance"
-  - "Applied at parts-per-million"
-  - "Robust stability, survives supply chain handling"                                  # CLAIM REVIEW
-  - "Manufactured in Singapore in SFA, ISO22000, GMP, FDA registered facility"          # CLAIM REVIEW
+  title: "NaturalTag™ Features"
+  items:
+    - "Each NaturalTag™ carries unique signature"
+    - "Food-grade"
+    - "Non-GMO"
+    - "Compatible with existing manufacturing"
+    - "Invisible after integration, no impact on product performance"
+    - "Applied at parts-per-million"
+    - "Robust stability, survives supply chain handling"                                  # CLAIM REVIEW
+    - "Manufactured in Singapore in SFA, ISO22000, GMP, FDA registered facility"          # CLAIM REVIEW
 
-matrices_label: "Food Matrices"
-matrices_title: "Food Matrices Validated"
 matrices:
-  - group: "Nutraceuticals"
-    items: "Powders, Capsules, Tablets, Sachets, Liquids, Drops, Functional Foods, Beverages, and Botanicals"
-  - group: "Premium Matrices"
-    items: "Botanicals, Edible Oils, Honey, Coffee, Alcohol, Vinegar"
-  - group: "Fresh & Bulk Commodities"
-    items: "Fruits, Seafood, Nuts, Agri-chemicals"
+  label: "Food Matrices"
+  title: "Food Matrices Validated"
+  items:
+    - group: "Nutraceuticals"
+      items: "Powders, Capsules, Tablets, Sachets, Liquids, Drops, Functional Foods, Beverages, and Botanicals"
+    - group: "Premium Matrices"
+      items: "Botanicals, Edible Oils, Honey, Coffee, Alcohol, Vinegar"
+    - group: "Fresh & Bulk Commodities"
+      items: "Fruits, Seafood, Nuts, Agri-chemicals"
 
-video_label: "End-to-End Traceability"
-video_title: "Authentication Across the Supply Chain"
-video_description: "NaturalTag™ travels with your product through every stage of the supply chain. NaturalCloud™ records the journey."
-video_src: "/assets/video/NaturalTag Process.mp4"
+video:
+  label: "End-to-End Traceability"
+  title: "Authentication Across the Supply Chain"
+  description: "NaturalTag™ travels with your product through every stage of the supply chain. NaturalCloud™ records the journey."
+  src: "/assets/video/NaturalTag Process.mp4"
 
-cta_text: "Request a Compatibility Assessment"
-cta_url: "/contact/"
+final_cta:
+  text: "Request a Compatibility Assessment"
+  url: "/contact/"

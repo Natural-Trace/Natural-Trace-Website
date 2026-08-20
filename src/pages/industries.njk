@@ -8,12 +8,12 @@ permalink: /industries/
 <section class="home-industries" style="padding-top:9rem">
   <div class="container">
     <div class="industries-header">
-      <span class="section-label">{{ industries.label }}</span>
-      <h2 class="section-title">{{ industries.title }}</h2>
-      <p class="section-subtitle" style="margin:0 auto">{{ industries.subtitle }}</p>
+      <span class="section-label">{{ industries.intro.label }}</span>
+      <h2 class="section-title">{{ industries.intro.title }}</h2>
+      <p class="section-subtitle" style="margin:0 auto">{{ industries.intro.subtitle }}</p>
     </div>
     <div class="industries-grid">
-      {% for industry in industries.industries %}
+      {% for industry in industries.sectors.items %}
       <div class="industry-card delay-{{ loop.index }}" id="{{ industry.id }}">
         <img src="{{ industry.image }}" alt="{{ industry.image_alt }}" loading="lazy">
         <div class="industry-card-overlay"><h3>{{ industry.name }}</h3><p>{{ industry.description }}</p></div>
@@ -26,11 +26,11 @@ permalink: /industries/
 <section class="finalcta">
   <div class="container">
     <div class="finalcta-inner">
-      <h2>{{ industries.cta_title }}</h2>
-      <p>{{ industries.cta_description }}</p>
+      <h2>{{ industries.final_cta.title }}</h2>
+      <p>{{ industries.final_cta.description }}</p>
       <div class="finalcta-actions">
-        <a href="{{ industries.cta_button_primary_url }}" class="btn btn-white" style="cursor:pointer">{{ industries.cta_button_primary_text }}</a>
-        <a href="{{ industries.cta_button_secondary_url }}" class="btn btn-ghost" style="cursor:pointer">{{ industries.cta_button_secondary_text }}</a>
+        <a href="{{ industries.final_cta.primary_url }}" class="btn btn-white" style="cursor:pointer">{{ industries.final_cta.primary_text }}</a>
+        <a href="{{ industries.final_cta.secondary_url }}" class="btn btn-ghost" style="cursor:pointer">{{ industries.final_cta.secondary_text }}</a>
       </div>
     </div>
   </div>

@@ -203,9 +203,19 @@ flat fields: the panel had been faking it with prefixes typed into each label
 at all, so the panel opened on fourteen boxes with nothing to say which part of
 the page they controlled. Nesting the data is the only real fix.
 
-**The other collections are still flat.** Same pattern applies if any of them
-gets the same complaint; about.yml and the three solution files are the next
-worst. Three things make it safe to repeat:
+**Every other page collection was regrouped the same way on 20 Aug**, in panel
+order and numbered to match the page: about (34 fields into 9 sections), the
+three solution pages, industries, use-cases, careers, FAQ, contact, and the
+quiz. The quiz panel is the one worth knowing about — its eight sections
+separate wording from scoring, and section 7 says outright that editing it
+changes which result a visitor is given.
+
+Two files were deliberately left flat. `site.yml` is settings rather than page
+sections, a flat list of sixteen reads fine, and it is referenced 63 times
+across 13 templates including `structured-data.njk`, so the risk is real and
+the gain is not. `team.json` is a list of people, not a page.
+
+Three things make it safe to repeat:
 
 - Transform the YAML as *text*, never by loading and re-dumping it. `home.yml`
   carries 80 comment lines, including Kirsty's sign-off condition on the
@@ -222,7 +232,41 @@ worst. Three things make it safe to repeat:
 To see the panel without logging in: add `local_backend: true` to
 `_site/admin/config.yml` (the build output, never the source), run
 `npx decap-server`, and log in at `/admin/`. The local backend writes to real
-files, so look and do not save.
+files, so look and do not save. Decap reads the config once at boot, so a hash
+change does not pick up an edit — reload the page.
+
+### Three ways a regrouping breaks quietly
+
+All three were hit on 20 Aug. None of them errors in a way that points at the
+cause, and two of them do not error at all.
+
+- **Nunjucks keywords cannot be property names.** `no_openings` was renamed to
+  `none`, and `careers.openings.none` parses as a lookup with no name. The build
+  dies with "expected name as lookup value, got none" at a line number offset by
+  the front matter, so it points several lines away from the real one. `null`,
+  `true` and `false` will do the same.
+- **A dotted prefix is not a global.** `home.njk` contains
+  `home.industries.label`, because the Home entry has its own industries section
+  *and* there is a global called `industries`. A rename that matches on the
+  identifier before the dot will rewrite the inner one. Nothing errors: Nunjucks
+  resolves the missing property to an empty string, and the home page silently
+  rendered an empty section label and heading.
+- **A failed build leaves the last good `_site` in place.** `diff -r` then
+  reports no differences, which reads as "nothing broke" when it means "nothing
+  ran". Check that the build actually wrote its files before trusting the diff.
+
+### The claim register uses dotted field paths
+
+`field:` in `docs/claim-review.yml` is now a path — `choose.groups`,
+`result.outcomes` — because the data files are nested. `scripts/claim-check.mjs`
+walks it and names the segment that failed.
+
+It also checks `field:` on entries that carry a `phrase:`, which it did not
+before: the check was an `else if`, so an entry with both only ever had its
+phrase looked at. Four entries had been pointing at keys that have never
+existed — `detect-coa-wording` and `detect-standards` named `capabilities`,
+`tag-robust-stability` and `tag-facility` named `benefits` — and nothing could
+have told you. All four now point at `features.items`.
 
 ## Where decisions are written down
 

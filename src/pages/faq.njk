@@ -12,22 +12,22 @@ permalink: /faq/
        recolour this label for a red hero and the audit failed it at 2.57:1.
        The rule now lives in styles.css under .faq-page-hero .section-label,
        which looks identical and can be overridden. #}
-    <span class="section-label">{{ faq.section_label }}</span>
-    <h1>{{ faq.title }}</h1>
-    <p>{{ faq.subtitle }}</p>
+    <span class="section-label">{{ faq.intro.label }}</span>
+    <h1>{{ faq.intro.title }}</h1>
+    <p>{{ faq.intro.subtitle }}</p>
   </div>
 </section>
 <section class="faq-section">
   <div class="container">
     <div class="faq-categories" id="faqCats">
       <button class="faq-cat-btn active" onclick="filterFaq('all')">All</button>
-      {% for cat in faq.categories %}
+      {% for cat in faq.content.categories %}
       <button class="faq-cat-btn" onclick="filterFaq('{{ cat.id }}')">{{ cat.label }}</button>
       {% endfor %}
     </div>
     <div class="faq-grid" id="faqGrid">
 
-      {% for q in faq.questions %}
+      {% for q in faq.content.questions %}
       <div class="faq-item" data-cat="{{ q.category }}">
         <button class="faq-question" onclick="toggleFaqItem(this)">
           <span>{{ q.question }}</span>
@@ -42,8 +42,8 @@ permalink: /faq/
 </section>
 <section class="faq-cta-bar">
   <div class="container">
-    <h2>{{ faq.cta_title }}</h2>
-    <p>{{ faq.cta_text }}</p>
-    <a href="/contact/" class="btn btn-primary" style="cursor:pointer">{{ faq.cta_button }}</a>
+    <h2>{{ faq.final_cta.title }}</h2>
+    <p>{{ faq.final_cta.text }}</p>
+    <a href="/contact/" class="btn btn-primary" style="cursor:pointer">{{ faq.final_cta.button }}</a>
   </div>
 </section>

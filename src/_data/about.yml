@@ -1,139 +1,148 @@
 # About Us page: Clean Prototype Copy Guide 2026
 
-# Hero
-label: "About Natural Trace"
-# The break is set here rather than left to the browser. Balanced wrapping was
-# putting a long line between two short ones, which is the shape Bryan flagged
-# on 12 Aug. Two lines with the noun phrase kept whole reads as a decision;
-# whatever the algorithm picks at a given window width does not. The <br> is
-# suppressed below 700px, where the column is too narrow to honour it.
-title: "Protecting the Future of<br>Premium Ingredients"
-# Kirsty's two requests for this line: same weight and colour as the text
-# around it, and do not let it split over two lines.
-#
-# The first was already true and is now true again: it is 400 weight in
-# #2C3345, the same as the paragraph beneath it. The bold sage "authenticity"
-# that sat here on 12 Aug has been taken out.
-#
-# The second needed three words cut. Measured: the sentence set 508px, and the
-# narrowest this column ever gets while the hero is still two columns is 450px,
-# at a 1000px window. "be able to" is the only part of the sentence carrying no
-# meaning, and without it the line sets 426px, so it holds one line at every
-# desktop width with 24px to spare. On a phone the column is 281px and no
-# sentence of this length fits on one line at any readable size, so it wraps
-# there; the non-breaking space keeps "prove its" together so "its" cannot end
-# up alone at the start of the second line.
-#
-# Putting "be able to" back will bring the two-line split back with it.
-subtitle: "Every premium ingredient should prove&nbsp;its authenticity."
-intro: "Natural Trace helps food and nutraceutical companies protect the value of their premium ingredients through in-product authentication."
-disciplines: "Life science · Food Science · Bioinformatics"
-intro_secondary: "Combining food science, molecular biology and digital technology, we help businesses verify authenticity, strengthen customer trust and protect commercial value throughout global supply chains."
-# Bryan's ingredient photograph, replacing the stock apple imagery Kirsty asked
-# to be rid of. It is in the repo rather than hotlinked from Unsplash, so it
-# cannot be pulled, rate-limited or re-licensed out from under the page.
-hero_image: "/assets/images/about-ingredients.webp"
-hero_image_alt: "Botanical powders and capsules in petri dishes and a glass jar on a stainless steel laboratory bench"
-hero_cta: "Meet Our Team"
-hero_cta_url: "/team/"
+hero:
+  # Hero
+  label: "About Natural Trace"
+  # The break is set here rather than left to the browser. Balanced wrapping was
+  # putting a long line between two short ones, which is the shape Bryan flagged
+  # on 12 Aug. Two lines with the noun phrase kept whole reads as a decision;
+  # whatever the algorithm picks at a given window width does not. The <br> is
+  # suppressed below 700px, where the column is too narrow to honour it.
+  title: "Protecting the Future of<br>Premium Ingredients"
+  # Kirsty's two requests for this line: same weight and colour as the text
+  # around it, and do not let it split over two lines.
+  #
+  # The first was already true and is now true again: it is 400 weight in
+  # #2C3345, the same as the paragraph beneath it. The bold sage "authenticity"
+  # that sat here on 12 Aug has been taken out.
+  #
+  # The second needed three words cut. Measured: the sentence set 508px, and the
+  # narrowest this column ever gets while the hero is still two columns is 450px,
+  # at a 1000px window. "be able to" is the only part of the sentence carrying no
+  # meaning, and without it the line sets 426px, so it holds one line at every
+  # desktop width with 24px to spare. On a phone the column is 281px and no
+  # sentence of this length fits on one line at any readable size, so it wraps
+  # there; the non-breaking space keeps "prove its" together so "its" cannot end
+  # up alone at the start of the second line.
+  #
+  # Putting "be able to" back will bring the two-line split back with it.
+  subtitle: "Every premium ingredient should prove&nbsp;its authenticity."
+  intro: "Natural Trace helps food and nutraceutical companies protect the value of their premium ingredients through in-product authentication."
+  disciplines: "Life science · Food Science · Bioinformatics"
+  intro_secondary: "Combining food science, molecular biology and digital technology, we help businesses verify authenticity, strengthen customer trust and protect commercial value throughout global supply chains."
+  # Bryan's ingredient photograph, replacing the stock apple imagery Kirsty asked
+  # to be rid of. It is in the repo rather than hotlinked from Unsplash, so it
+  # cannot be pulled, rate-limited or re-licensed out from under the page.
+  image: "/assets/images/about-ingredients.webp"
+  image_alt: "Botanical powders and capsules in petri dishes and a glass jar on a stainless steel laboratory bench"
+  cta: "Meet Our Team"
+  cta_url: "/team/"
 
-# Our Story
-story_label: "Our Story"
-story_title: "From a Simple Question<br>to a New Approach"
-story_question: "What happens to an ingredient's identity once it leaves the control of the company that created it?"
-story_body:
-  - "Behind every differentiated ingredient is significant investment in research, formulation, manufacturing, intellectual property, and customer trust. Yet once that ingredient enters a wider production network, proving that it is still present, and distinguishing it from generic alternatives, can become increasingly difficult."
-  - "That challenge inspired Natural Trace."
-  - "Founded in Singapore in 2021, Natural Trace set out to create a new approach to authentication: one in which a unique, verifiable identity is incorporated directly into the ingredient."
-  - "Today, our technology helps companies protect their ingredients, verify manufacturing sources, and investigate products when identity or presence is questioned."
+story:
+  # Our Story
+  label: "Our Story"
+  title: "From a Simple Question<br>to a New Approach"
+  question: "What happens to an ingredient's identity once it leaves the control of the company that created it?"
+  body:
+    - "Behind every differentiated ingredient is significant investment in research, formulation, manufacturing, intellectual property, and customer trust. Yet once that ingredient enters a wider production network, proving that it is still present, and distinguishing it from generic alternatives, can become increasingly difficult."
+    - "That challenge inspired Natural Trace."
+    - "Founded in Singapore in 2021, Natural Trace set out to create a new approach to authentication: one in which a unique, verifiable identity is incorporated directly into the ingredient."
+    - "Today, our technology helps companies protect their ingredients, verify manufacturing sources, and investigate products when identity or presence is questioned."
 
-# Why We Exist
-why_label: "Why We Exist"
-why_title: "Science that Protects Commercial Value"
-# The background photograph, tinted the way the homepage hero is tinted rather
-# than laid down raw: the section is white text on a dark field and a bright
-# sky behind it would take the contrast below readable. Clearing this field
-# returns the section to the flat charcoal it had before, which is what the
-# 11 August meeting asked for, so the two requests can both be honoured
-# without a developer.
-why_bg_image: "/assets/images/vision.webp"
-why_body:
-  - "Global supply chains have become increasingly complex. Documentation records what should have happened. Natural Trace adds evidence that proves it."
-  - "We exist to help companies protect the value behind differentiated ingredients through objective, science-based verification."
-  - "By combining in-product identity with proprietary laboratory detection, Natural Trace gives businesses an additional way to protect intellectual property, strengthen manufacturing control, and support confidence across commercial relationships."
+why:
+  # Why We Exist
+  label: "Why We Exist"
+  title: "Science that Protects Commercial Value"
+  # The background photograph, tinted the way the homepage hero is tinted rather
+  # than laid down raw: the section is white text on a dark field and a bright
+  # sky behind it would take the contrast below readable. Clearing this field
+  # returns the section to the flat charcoal it had before, which is what the
+  # 11 August meeting asked for, so the two requests can both be honoured
+  # without a developer.
+  bg_image: "/assets/images/vision.webp"
+  body:
+    - "Global supply chains have become increasingly complex. Documentation records what should have happened. Natural Trace adds evidence that proves it."
+    - "We exist to help companies protect the value behind differentiated ingredients through objective, science-based verification."
+    - "By combining in-product identity with proprietary laboratory detection, Natural Trace gives businesses an additional way to protect intellectual property, strengthen manufacturing control, and support confidence across commercial relationships."
 
-# Vision & Mission
-vision_label: "Our Vision"
-vision_text: "A world where every great product comes with a trusted provenance story"
-mission_label: "Our Mission"
-mission_text: "To become the global leader for in-product authentication for food and nutraceutical ingredients."
-# Emptied on Kirsty's 12 Aug request: the paragraph under Our Mission said
-# again, at length, what the mission statement above it had already said.
-# Kept as a field rather than deleted so the panel can put something back
-# here without a developer.
-mission_body: ""
+vision:
+  # Vision & Mission
+  label: "Our Vision"
+  text: "A world where every great product comes with a trusted provenance story"
+mission:
+  label: "Our Mission"
+  text: "To become the global leader for in-product authentication for food and nutraceutical ingredients."
+  # Emptied on Kirsty's 12 Aug request: the paragraph under Our Mission said
+  # again, at length, what the mission statement above it had already said.
+  # Kept as a field rather than deleted so the panel can put something back
+  # here without a developer.
+  body: ""
 
-# What Makes Us Different
-different_label: "What Makes Us Different"
-different_title: ""   # blank on purpose: it repeated the first card below
-different_cards:
-  - title: "Identity Built into the Ingredient"
-    body: "Traditional authentication relies on packaging, labels or paperwork that can become separated from the product. NaturalTag™ becomes part of the ingredient itself, allowing identity to travel with the product throughout manufacturing and distribution."
-  - title: "Branded Ingredient Differentiation"
-    body: "Many premium ingredients become difficult to distinguish once incorporated into finished products. Natural Trace gives ingredients a unique, detectable identity that allows companies to objectively verify the presence of their branded ingredient downstream."
-  - title: "Downstream Verification"
-    body: "Conventional analytical testing can confirm chemical composition but often cannot verify the specific commercial source of an ingredient. Natural Trace enables objective verification of authorised ingredients throughout the supply chain using proprietary detection methods."
-  - title: "Production-Source Identification"
-    body: "Knowing what is in a product is only part of the picture. Natural Trace can help distinguish authorised manufacturing from unauthorised production by assigning unique authentication identities to approved manufacturing sources."
+different:
+  # What Makes Us Different
+  label: "What Makes Us Different"
+  title: ""   # blank on purpose: it repeated the first card below
+  cards:
+    - title: "Identity Built into the Ingredient"
+      body: "Traditional authentication relies on packaging, labels or paperwork that can become separated from the product. NaturalTag™ becomes part of the ingredient itself, allowing identity to travel with the product throughout manufacturing and distribution."
+    - title: "Branded Ingredient Differentiation"
+      body: "Many premium ingredients become difficult to distinguish once incorporated into finished products. Natural Trace gives ingredients a unique, detectable identity that allows companies to objectively verify the presence of their branded ingredient downstream."
+    - title: "Downstream Verification"
+      body: "Conventional analytical testing can confirm chemical composition but often cannot verify the specific commercial source of an ingredient. Natural Trace enables objective verification of authorised ingredients throughout the supply chain using proprietary detection methods."
+    - title: "Production-Source Identification"
+      body: "Knowing what is in a product is only part of the picture. Natural Trace can help distinguish authorised manufacturing from unauthorised production by assigning unique authentication identities to approved manufacturing sources."
 
-# Why Customers Choose Natural Trace
-# CLAIM REVIEW: every bullet in this block was flagged in the 30 July copy review
-# and has NOT been cleared. Do not publish without sign-off. See the change log.
-choose_label: "Why Customers Choose Natural Trace"
-# Was "Designed for Real-World Manufacturing. Backed by Science." until
-# 11 Aug 2026. That version carried an invisible word joiner (U+2060) after
-# the hyphen, because the browser otherwise broke the compound and the
-# heading read "Designed for Real- / World Manufacturing." No hyphen, no
-# joiner: this line is now plain text and survives being retyped in the CMS.
-choose_title: "Designed for Industry. Backed by Science."
-# The ampersands are tied to the words either side of them with non-breaking
-# spaces. Kirsty marked the break in "Made for Food & / Nutraceutical
-# Manufacturing": an ampersand joins two things and should not be left at the
-# end of a line with only one of them. Bound this way the headings break as
-# "Made for Food & Nutraceutical / Manufacturing" and "Built on Scientific &
-# Regulatory / Foundations", which is where the sense divides anyway.
-# &amp; rather than a bare &, because these go through the safe filter.
-choose_groups:
-  - title: "Made for Food&nbsp;&amp;&nbsp;Nutraceutical Manufacturing"
-    items:
-      - "100% natural, food-grade authentication"          # CLAIM REVIEW
-      - "Compatible with existing manufacturing processes"
-      - "Added at parts-per-million with no impact on taste, appearance or functionality"    # CLAIM REVIEW
-  - title: "Built on Scientific&nbsp;&amp;&nbsp;Regulatory Foundations"
-    items:
-      - "Manufactured in ISO 22000, SFA and FDA-registered facilities"   # CLAIM REVIEW
-      - "Self-determined FDA GRAS status"                               # CLAIM REVIEW
-      - "Detectable after commercial manufacturing using proprietary PCR methods"
+choose:
+  # Why Customers Choose Natural Trace
+  # CLAIM REVIEW: every bullet in this block was flagged in the 30 July copy review
+  # and has NOT been cleared. Do not publish without sign-off. See the change log.
+  label: "Why Customers Choose Natural Trace"
+  # Was "Designed for Real-World Manufacturing. Backed by Science." until
+  # 11 Aug 2026. That version carried an invisible word joiner (U+2060) after
+  # the hyphen, because the browser otherwise broke the compound and the
+  # heading read "Designed for Real- / World Manufacturing." No hyphen, no
+  # joiner: this line is now plain text and survives being retyped in the CMS.
+  title: "Designed for Industry. Backed by Science."
+  # The ampersands are tied to the words either side of them with non-breaking
+  # spaces. Kirsty marked the break in "Made for Food & / Nutraceutical
+  # Manufacturing": an ampersand joins two things and should not be left at the
+  # end of a line with only one of them. Bound this way the headings break as
+  # "Made for Food & Nutraceutical / Manufacturing" and "Built on Scientific &
+  # Regulatory / Foundations", which is where the sense divides anyway.
+  # &amp; rather than a bare &, because these go through the safe filter.
+  groups:
+    - title: "Made for Food&nbsp;&amp;&nbsp;Nutraceutical Manufacturing"
+      items:
+        - "100% natural, food-grade authentication"          # CLAIM REVIEW
+        - "Compatible with existing manufacturing processes"
+        - "Added at parts-per-million with no impact on taste, appearance or functionality"    # CLAIM REVIEW
+    - title: "Built on Scientific&nbsp;&amp;&nbsp;Regulatory Foundations"
+      items:
+        - "Manufactured in ISO 22000, SFA and FDA-registered facilities"   # CLAIM REVIEW
+        - "Self-determined FDA GRAS status"                               # CLAIM REVIEW
+        - "Detectable after commercial manufacturing using proprietary PCR methods"
 
-# A21 Food matrices, given its own section rather than one bullet inside the
-# card above. Wording is Alex's version, which Kirsty preferred.
-#
-# CLAIM REVIEW: "Validated across 20+" was flagged on 30 July and has not been
-# cleared. It was one bullet before. It is a headline now, so it is more
-# exposed, not less. Do not publish this section without sign-off.
-matrices_label: "Food Matrices"
-matrices_title: "Validated Across 20+ Categories Most at Risk of Fraud"   # CLAIM REVIEW
-matrices_items:
-  - "Nutraceuticals"
-  - "Dietary Supplements"
-  - "Fruit"
-  - "Coffee"
-  - "Honey"
-  - "Nuts"
-  - "Seafood"
-  - "Oils"
-  - "Vinegar"
-  - "Tobacco"
+matrices:
+  # A21 Food matrices, given its own section rather than one bullet inside the
+  # card above. Wording is Alex's version, which Kirsty preferred.
+  #
+  # CLAIM REVIEW: "Validated across 20+" was flagged on 30 July and has not been
+  # cleared. It was one bullet before. It is a headline now, so it is more
+  # exposed, not less. Do not publish this section without sign-off.
+  label: "Food Matrices"
+  title: "Validated Across 20+ Categories Most at Risk of Fraud"   # CLAIM REVIEW
+  items:
+    - "Nutraceuticals"
+    - "Dietary Supplements"
+    - "Fruit"
+    - "Coffee"
+    - "Honey"
+    - "Nuts"
+    - "Seafood"
+    - "Oils"
+    - "Vinegar"
+    - "Tobacco"
 
-cta_title: "Request a Compatibility Assessment"
-cta_url: "/contact/"
+final_cta:
+  title: "Request a Compatibility Assessment"
+  url: "/contact/"

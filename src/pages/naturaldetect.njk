@@ -15,35 +15,35 @@ permalink: /naturaldetect/
    The class only appears when a mark is set, so clearing the field in the
    panel removes it. The url filter is required: HtmlBasePlugin does not
    look inside a style attribute. #}
-<section class="challenge hero-detect{% if naturaldetect.hero_mark %} solution-hero-mark{% endif %}"
-  style="padding-top:9rem{% if naturaldetect.hero_mark %};--hero-mark:url('{{ naturaldetect.hero_mark | url }}'){% endif %}">
+<section class="challenge hero-detect{% if naturaldetect.hero.mark %} solution-hero-mark{% endif %}"
+  style="padding-top:9rem{% if naturaldetect.hero.mark %};--hero-mark:url('{{ naturaldetect.hero.mark | url }}'){% endif %}">
   <div class="container">
     <div class="challenge-grid">
       <div class="challenge-text">
-        <span class="section-label">{{ naturaldetect.label }}</span>
-        <h2 class="section-title">{{ naturaldetect.title }}</h2>
-        <p class="section-subtitle">{{ naturaldetect.hero }}</p>
-        <p class="challenge-lead" style="margin-top:1.5rem">{{ naturaldetect.intro }}</p>
-        <p class="challenge-sub">{{ naturaldetect.features_title }}</p>
+        <span class="section-label">{{ naturaldetect.hero.label }}</span>
+        <h2 class="section-title">{{ naturaldetect.hero.title }}</h2>
+        <p class="section-subtitle">{{ naturaldetect.hero.tagline }}</p>
+        <p class="challenge-lead" style="margin-top:1.5rem">{{ naturaldetect.hero.intro }}</p>
+        <p class="challenge-sub">{{ naturaldetect.features.title }}</p>
         <ul class="challenge-list">
-          {% for item in naturaldetect.features %}<li>{{ item }}</li>{% endfor %}
+          {% for item in naturaldetect.features.items %}<li>{{ item }}</li>{% endfor %}
         </ul>
         <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem">
-          <a href="{{ naturaldetect.cta_primary_url }}" class="btn btn-primary" style="cursor:pointer">{{ naturaldetect.cta_primary }}</a>
-          <a href="{{ naturaldetect.cta_secondary_url }}" class="btn btn-line" style="cursor:pointer">{{ naturaldetect.cta_secondary }}</a>
+          <a href="{{ naturaldetect.final_cta.primary_url }}" class="btn btn-primary" style="cursor:pointer">{{ naturaldetect.final_cta.primary }}</a>
+          <a href="{{ naturaldetect.final_cta.secondary_url }}" class="btn btn-line" style="cursor:pointer">{{ naturaldetect.final_cta.secondary }}</a>
         </div>
       </div>
       {# A photograph if there is one, the logo panel if not. NaturalCloud is
          still on the panel: its imagery is a video Kirsty is having made, and
          a stand-in photograph would be worse than the mark. #}
-      {% if naturaldetect.hero_image %}
+      {% if naturaldetect.hero.image %}
       <div class="solution-photo">
-        <img src="{{ naturaldetect.hero_image }}" alt="{{ naturaldetect.hero_image_alt }}" loading="lazy"
-          style="{% if naturaldetect.hero_image_position %}object-position:{{ naturaldetect.hero_image_position }};{% endif %}{% if naturaldetect.hero_image_zoom %}--photo-zoom:{{ naturaldetect.hero_image_zoom }};--photo-zoom-origin:{{ naturaldetect.hero_image_position or "center" }}{% endif %}">
+        <img src="{{ naturaldetect.hero.image }}" alt="{{ naturaldetect.hero.image_alt }}" loading="lazy"
+          style="{% if naturaldetect.hero.image_position %}object-position:{{ naturaldetect.hero.image_position }};{% endif %}{% if naturaldetect.hero.image_zoom %}--photo-zoom:{{ naturaldetect.hero.image_zoom }};--photo-zoom-origin:{{ naturaldetect.hero.image_position or "center" }}{% endif %}">
       </div>
       {% else %}
       <div class="solution-mark">
-        <img src="{{ naturaldetect.hero_logo }}" alt="{{ naturaldetect.hero_logo_alt }}" loading="lazy">
+        <img src="{{ naturaldetect.hero.logo }}" alt="{{ naturaldetect.hero.logo_alt }}" loading="lazy">
       </div>
       {% endif %}
     </div>
@@ -53,10 +53,10 @@ permalink: /naturaldetect/
 <section class="finalcta">
   <div class="container">
     <div class="finalcta-inner">
-      <h2>{{ naturaldetect.cta_primary }}</h2>
+      <h2>{{ naturaldetect.final_cta.primary }}</h2>
       <p>Send us your product details and one of our scientists will review compatibility with you.</p>
       <div class="finalcta-actions">
-        <a href="{{ naturaldetect.cta_primary_url }}" class="btn btn-white" style="cursor:pointer">{{ naturaldetect.cta_primary }}</a>
+        <a href="{{ naturaldetect.final_cta.primary_url }}" class="btn btn-white" style="cursor:pointer">{{ naturaldetect.final_cta.primary }}</a>
       </div>
     </div>
   </div>

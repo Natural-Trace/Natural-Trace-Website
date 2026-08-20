@@ -9,19 +9,19 @@ permalink: /about/
   <div class="container">
     <div class="challenge-grid">
       <div class="challenge-text">
-        <span class="section-label">{{ about.label }}</span>
+        <span class="section-label">{{ about.hero.label }}</span>
         {# safe on both: the headline carries a <br> and the sub-headline carries
            a <strong> and a non-breaking space, the same arrangement the Story
            headline below already uses. #}
-        <h2 class="section-title">{{ about.title | softBreak | safe }}</h2>
-        <p class="section-subtitle section-subtitle-strong">{{ about.subtitle | safe }}</p>
-        <p class="challenge-lead" style="margin-top:1.5rem">{{ about.intro }}</p>
-        <p class="challenge-sub">{{ about.disciplines }}</p>
-        <p class="challenge-lead">{{ about.intro_secondary }}</p>
-        <a href="{{ about.hero_cta_url }}" class="btn btn-primary" style="cursor:pointer">{{ about.hero_cta }}</a>
+        <h2 class="section-title">{{ about.hero.title | softBreak | safe }}</h2>
+        <p class="section-subtitle section-subtitle-strong">{{ about.hero.subtitle | safe }}</p>
+        <p class="challenge-lead" style="margin-top:1.5rem">{{ about.hero.intro }}</p>
+        <p class="challenge-sub">{{ about.hero.disciplines }}</p>
+        <p class="challenge-lead">{{ about.hero.intro_secondary }}</p>
+        <a href="{{ about.hero.cta_url }}" class="btn btn-primary" style="cursor:pointer">{{ about.hero.cta }}</a>
       </div>
       <div class="challenge-media">
-        <img src="{{ about.hero_image }}" alt="{{ about.hero_image_alt }}" loading="lazy">
+        <img src="{{ about.hero.image }}" alt="{{ about.hero.image_alt }}" loading="lazy">
       </div>
     </div>
   </div>
@@ -30,12 +30,12 @@ permalink: /about/
 <section class="valueprop" id="story">
   <div class="container">
     <div class="vp-head">
-      <span class="section-label">{{ about.story_label }}</span>
-      <h2 class="section-title">{{ about.story_title | softBreak | safe }}</h2>
+      <span class="section-label">{{ about.story.label }}</span>
+      <h2 class="section-title">{{ about.story.title | softBreak | safe }}</h2>
     </div>
     <div style="max-width:780px;margin:0 auto">
-      <p class="challenge-close" style="margin-top:0;font-size:1.1rem;font-weight:600">{{ about.story_question }}</p>
-      {% for para in about.story_body %}
+      <p class="challenge-close" style="margin-top:0;font-size:1.1rem;font-weight:600">{{ about.story.question }}</p>
+      {% for para in about.story.body %}
       <p class="challenge-lead" style="margin-bottom:1.15rem">{{ para }}</p>
       {% endfor %}
     </div>
@@ -52,31 +52,31 @@ permalink: /about/
 
    is-photo is what turns the treatment on. With no image the class is absent
    and the section is the flat charcoal it was before. #}
-<section class="howitworks{% if about.why_bg_image %} howitworks-photo{% endif %}" id="why-we-exist"
-  {%- if about.why_bg_image %} style="--why-bg:url('{{ about.why_bg_image | url }}')"{% endif %}>
+<section class="howitworks{% if about.why.bg_image %} howitworks-photo{% endif %}" id="why-we-exist"
+  {%- if about.why.bg_image %} style="--why-bg:url('{{ about.why.bg_image | url }}')"{% endif %}>
   <div class="container">
     <div class="how-head">
-      <span class="section-label">{{ about.why_label }}</span>
-      <h2 class="section-title">{{ about.why_title }}</h2>
+      <span class="section-label">{{ about.why.label }}</span>
+      <h2 class="section-title">{{ about.why.title }}</h2>
     </div>
     <div class="why-body">
-      {% for para in about.why_body %}
+      {% for para in about.why.body %}
       <p>{{ para }}</p>
       {% endfor %}
     </div>
     <div class="how-grid" style="grid-template-columns:repeat(2,1fr);margin-top:3.5rem;max-width:900px;margin-left:auto;margin-right:auto">
       <div class="how-step">
-        <h3>{{ about.vision_label }}</h3>
-        <p>{{ about.vision_text }}</p>
+        <h3>{{ about.vision.label }}</h3>
+        <p>{{ about.vision.text }}</p>
       </div>
       <div class="how-step">
-        <h3>{{ about.mission_label }}</h3>
-        <p>{{ about.mission_text }}</p>
+        <h3>{{ about.mission.label }}</h3>
+        <p>{{ about.mission.text }}</p>
         {#- Only when it has something in it. The field was emptied on 12 Aug
             rather than deleted, so without this guard the section renders an
             empty paragraph and 0.75rem of unexplained space under the mission
             statement. -#}
-        {% if about.mission_body %}<p style="margin-top:.75rem">{{ about.mission_body }}</p>{% endif %}
+        {% if about.mission.body %}<p style="margin-top:.75rem">{{ about.mission.body }}</p>{% endif %}
       </div>
     </div>
   </div>
@@ -85,11 +85,11 @@ permalink: /about/
 <section class="valueprop" id="different">
   <div class="container">
     <div class="vp-head">
-      <h2 class="section-title">{{ about.different_label }}</h2>
-      {% if about.different_title %}<p class="section-subtitle">{{ about.different_title }}</p>{% endif %}
+      <h2 class="section-title">{{ about.different.label }}</h2>
+      {% if about.different.title %}<p class="section-subtitle">{{ about.different.title }}</p>{% endif %}
     </div>
     <div class="vp-grid about-grid-2">
-      {% for card in about.different_cards %}
+      {% for card in about.different.cards %}
       <article class="vp-card delay-{{ loop.index }}">
         {# A tick, at Kirsty's request, in place of the diamond that replaced the
            01-04 counters on 11 Aug. Inline rather than an image file so it
@@ -110,8 +110,8 @@ permalink: /about/
 <section class="home-industries" id="why-choose">
   <div class="container">
     <div class="industries-header">
-      <span class="section-label">{{ about.choose_label }}</span>
-      <h2 class="section-title">{{ about.choose_title }}</h2>
+      <span class="section-label">{{ about.choose.label }}</span>
+      <h2 class="section-title">{{ about.choose.title }}</h2>
     </div>
     {# The width and the row alignment are in the stylesheet now, not in style
        attributes here. The old inline max-width:900px left the longer heading
@@ -119,7 +119,7 @@ permalink: /about/
        Bryan's: Windows sets Montserrat a few per cent wider than Linux does,
        and 23px is inside that margin. #}
     <div class="vp-grid about-grid-2 choose-grid">
-      {% for group in about.choose_groups %}
+      {% for group in about.choose.groups %}
       <article class="vp-card delay-{{ loop.index }}">
         {# safe: these titles carry &nbsp; around their ampersand so the
            heading cannot break with the & stranded at the end of a line. #}
@@ -138,11 +138,11 @@ permalink: /about/
 <section class="matrices-section" id="food-matrices">
   <div class="container">
     <div class="industries-header">
-      <span class="section-label">{{ about.matrices_label }}</span>
-      <h2 class="section-title">{{ about.matrices_title }}</h2>
+      <span class="section-label">{{ about.matrices.label }}</span>
+      <h2 class="section-title">{{ about.matrices.title }}</h2>
     </div>
     <ul class="matrix-chips">
-      {% for item in about.matrices_items %}<li>{{ item }}</li>{% endfor %}
+      {% for item in about.matrices.items %}<li>{{ item }}</li>{% endfor %}
     </ul>
   </div>
 </section>
@@ -150,9 +150,9 @@ permalink: /about/
 <section class="finalcta">
   <div class="container">
     <div class="finalcta-inner">
-      <h2>{{ about.cta_title }}</h2>
+      <h2>{{ about.final_cta.title }}</h2>
       <div class="finalcta-actions">
-        <a href="{{ about.cta_url }}" class="btn btn-white" style="cursor:pointer">{{ about.cta_title }}</a>
+        <a href="{{ about.final_cta.url }}" class="btn btn-white" style="cursor:pointer">{{ about.final_cta.title }}</a>
       </div>
     </div>
   </div>

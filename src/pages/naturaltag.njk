@@ -15,31 +15,31 @@ permalink: /naturaltag/
    The class only appears when a mark is set, so clearing the field in the
    panel removes it. The url filter is required: HtmlBasePlugin does not
    look inside a style attribute. #}
-<section class="challenge hero-tag{% if naturaltag.hero_mark %} solution-hero-mark{% endif %}"
-  style="padding-top:9rem{% if naturaltag.hero_mark %};--hero-mark:url('{{ naturaltag.hero_mark | url }}'){% endif %}">
+<section class="challenge hero-tag{% if naturaltag.hero.mark %} solution-hero-mark{% endif %}"
+  style="padding-top:9rem{% if naturaltag.hero.mark %};--hero-mark:url('{{ naturaltag.hero.mark | url }}'){% endif %}">
   <div class="container">
     <div class="challenge-grid">
       <div class="challenge-text">
-        <span class="section-label">{{ naturaltag.label }}</span>
-        <h2 class="section-title">{{ naturaltag.title }}</h2>
-        <p class="section-subtitle">{{ naturaltag.hero }}</p>
-        <p class="challenge-lead" style="margin-top:1.5rem">{{ naturaltag.intro }}</p>
-        <a href="{{ naturaltag.cta_url }}" class="btn btn-primary" style="cursor:pointer">{{ naturaltag.cta_text }}</a>
+        <span class="section-label">{{ naturaltag.hero.label }}</span>
+        <h2 class="section-title">{{ naturaltag.hero.title }}</h2>
+        <p class="section-subtitle">{{ naturaltag.hero.tagline }}</p>
+        <p class="challenge-lead" style="margin-top:1.5rem">{{ naturaltag.hero.intro }}</p>
+        <a href="{{ naturaltag.final_cta.url }}" class="btn btn-primary" style="cursor:pointer">{{ naturaltag.final_cta.text }}</a>
       </div>
       {# A photograph if there is one, the logo panel if not. NaturalCloud is
          still on the panel: its imagery is a video Kirsty is having made, and
          a stand-in photograph would be worse than the mark. #}
-      {% if naturaltag.hero_image %}
+      {% if naturaltag.hero.image %}
       <div class="solution-photo">
         {# object-position lets an editor move the crop without a new file.
            The NaturalTag photograph is 3:2 and this panel is 4:3, so 12% of the
            width is cropped; centred, that put the vial at 41% across. #}
-        <img src="{{ naturaltag.hero_image }}" alt="{{ naturaltag.hero_image_alt }}" loading="lazy"
-          style="{% if naturaltag.hero_image_position %}object-position:{{ naturaltag.hero_image_position }};{% endif %}{% if naturaltag.hero_image_zoom %}--photo-zoom:{{ naturaltag.hero_image_zoom }};--photo-zoom-origin:{{ naturaltag.hero_image_position or "center" }}{% endif %}">
+        <img src="{{ naturaltag.hero.image }}" alt="{{ naturaltag.hero.image_alt }}" loading="lazy"
+          style="{% if naturaltag.hero.image_position %}object-position:{{ naturaltag.hero.image_position }};{% endif %}{% if naturaltag.hero.image_zoom %}--photo-zoom:{{ naturaltag.hero.image_zoom }};--photo-zoom-origin:{{ naturaltag.hero.image_position or "center" }}{% endif %}">
       </div>
       {% else %}
       <div class="solution-mark">
-        <img src="{{ naturaltag.hero_logo }}" alt="{{ naturaltag.hero_logo_alt }}" loading="lazy">
+        <img src="{{ naturaltag.hero.logo }}" alt="{{ naturaltag.hero.logo_alt }}" loading="lazy">
       </div>
       {% endif %}
     </div>
@@ -50,15 +50,15 @@ permalink: /naturaltag/
   <div class="container">
     <div class="vp-grid about-grid-2">
       <article class="vp-card">
-        <h3>{{ naturaltag.why_title }}</h3>
+        <h3>{{ naturaltag.why.title }}</h3>
         <ul class="sol-list" style="grid-template-columns:1fr;margin-top:0">
-          {% for item in naturaltag.why_items %}<li>{{ item }}</li>{% endfor %}
+          {% for item in naturaltag.why.items %}<li>{{ item }}</li>{% endfor %}
         </ul>
       </article>
       <article class="vp-card">
-        <h3>{{ naturaltag.features_title }}</h3>
+        <h3>{{ naturaltag.features.title }}</h3>
         <ul class="sol-list" style="grid-template-columns:1fr;margin-top:0">
-          {% for item in naturaltag.features %}<li>{{ item }}</li>{% endfor %}
+          {% for item in naturaltag.features.items %}<li>{{ item }}</li>{% endfor %}
         </ul>
       </article>
     </div>
@@ -83,12 +83,12 @@ permalink: /naturaltag/
     <div class="how-head">
       {# The label used to print matrices_title, so the eyebrow and the heading
          said two unrelated things. #}
-      <span class="section-label">{{ naturaltag.matrices_label }}</span>
-      <h2 class="section-title">{{ naturaltag.video_title }}</h2>
-      <p  style="color:rgba(255,255,255,.65);font-size:.98rem;line-height:1.8">{{ naturaltag.video_description }}</p>
+      <span class="section-label">{{ naturaltag.matrices.label }}</span>
+      <h2 class="section-title">{{ naturaltag.video.title }}</h2>
+      <p  style="color:rgba(255,255,255,.65);font-size:.98rem;line-height:1.8">{{ naturaltag.video.description }}</p>
     </div>
     <div class="how-grid how-grid-3">
-      {% for m in naturaltag.matrices %}
+      {% for m in naturaltag.matrices.items %}
       <div class="how-step">
         <h3>{{ m.group }}</h3>
         <p>{{ m.items }}</p>
@@ -96,7 +96,7 @@ permalink: /naturaltag/
       {% endfor %}
     </div>
     <div  style="margin-top:3.5rem;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg)">
-      <video src="{{ naturaltag.video_src }}" muted loop playsinline autoplay style="width:100%;display:block"></video>
+      <video src="{{ naturaltag.video.src }}" muted loop playsinline autoplay style="width:100%;display:block"></video>
     </div>
   </div>
 </section>
@@ -106,7 +106,7 @@ permalink: /naturaltag/
     <div class="finalcta-inner">
       <h2>Your product's identity starts at the source.</h2>
       <div class="finalcta-actions">
-        <a href="{{ naturaltag.cta_url }}" class="btn btn-white" style="cursor:pointer">{{ naturaltag.cta_text }}</a>
+        <a href="{{ naturaltag.final_cta.url }}" class="btn btn-white" style="cursor:pointer">{{ naturaltag.final_cta.text }}</a>
       </div>
     </div>
   </div>

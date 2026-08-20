@@ -15,21 +15,21 @@ permalink: /naturalcloud/
    The class only appears when a mark is set, so clearing the field in the
    panel removes it. The url filter is required: HtmlBasePlugin does not
    look inside a style attribute. #}
-<section class="challenge hero-cloud{% if naturalcloud.hero_mark %} solution-hero-mark{% endif %}"
-  style="padding-top:9rem{% if naturalcloud.hero_mark %};--hero-mark:url('{{ naturalcloud.hero_mark | url }}'){% endif %}">
+<section class="challenge hero-cloud{% if naturalcloud.hero.mark %} solution-hero-mark{% endif %}"
+  style="padding-top:9rem{% if naturalcloud.hero.mark %};--hero-mark:url('{{ naturalcloud.hero.mark | url }}'){% endif %}">
   <div class="container">
     <div class="challenge-grid">
       <div class="challenge-text">
-        <span class="section-label">{{ naturalcloud.label }}</span>
-        <h2 class="section-title">{{ naturalcloud.title }}</h2>
-        <p class="section-subtitle">{{ naturalcloud.hero }}</p>
-        <p class="challenge-lead" style="margin-top:1.5rem">{{ naturalcloud.intro }}</p>
-        <p class="challenge-sub">{{ naturalcloud.features_title }}</p>
+        <span class="section-label">{{ naturalcloud.hero.label }}</span>
+        <h2 class="section-title">{{ naturalcloud.hero.title }}</h2>
+        <p class="section-subtitle">{{ naturalcloud.hero.tagline }}</p>
+        <p class="challenge-lead" style="margin-top:1.5rem">{{ naturalcloud.hero.intro }}</p>
+        <p class="challenge-sub">{{ naturalcloud.features.title }}</p>
         <ul class="challenge-list">
-          {% for item in naturalcloud.features %}<li>{{ item }}</li>{% endfor %}
+          {% for item in naturalcloud.features.items %}<li>{{ item }}</li>{% endfor %}
         </ul>
         <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem">
-          <a href="{{ naturalcloud.cta_primary_url }}" class="btn btn-primary" style="cursor:pointer">{{ naturalcloud.cta_primary }}</a>
+          <a href="{{ naturalcloud.final_cta.primary_url }}" class="btn btn-primary" style="cursor:pointer">{{ naturalcloud.final_cta.primary }}</a>
         </div>
       </div>
       {# The video if there is one, then a photograph, then the logo panel.
@@ -50,22 +50,22 @@ permalink: /naturalcloud/
          The 25KB poster is what keeps the panel from being empty in the
          meantime, and it is the video's own first frame, so the switch from
          still to moving is invisible. #}
-      {% if naturalcloud.hero_video %}
+      {% if naturalcloud.hero.video %}
       <div class="solution-photo solution-video">
         <video
-          src="{{ naturalcloud.hero_video }}"
-          {% if naturalcloud.hero_video_poster %}poster="{{ naturalcloud.hero_video_poster }}"{% endif %}
+          src="{{ naturalcloud.hero.video }}"
+          {% if naturalcloud.hero.video_poster %}poster="{{ naturalcloud.hero.video_poster }}"{% endif %}
           autoplay muted loop playsinline preload="metadata"
-          aria-label="{{ naturalcloud.hero_video_alt }}"></video>
+          aria-label="{{ naturalcloud.hero.video_alt }}"></video>
       </div>
-      {% elif naturalcloud.hero_image %}
+      {% elif naturalcloud.hero.image %}
       <div class="solution-photo">
-        <img src="{{ naturalcloud.hero_image }}" alt="{{ naturalcloud.hero_image_alt }}" loading="lazy"
-          style="{% if naturalcloud.hero_image_position %}object-position:{{ naturalcloud.hero_image_position }};{% endif %}{% if naturalcloud.hero_image_zoom %}--photo-zoom:{{ naturalcloud.hero_image_zoom }};--photo-zoom-origin:{{ naturalcloud.hero_image_position or "center" }}{% endif %}">
+        <img src="{{ naturalcloud.hero.image }}" alt="{{ naturalcloud.hero.image_alt }}" loading="lazy"
+          style="{% if naturalcloud.hero.image_position %}object-position:{{ naturalcloud.hero.image_position }};{% endif %}{% if naturalcloud.hero.image_zoom %}--photo-zoom:{{ naturalcloud.hero.image_zoom }};--photo-zoom-origin:{{ naturalcloud.hero.image_position or "center" }}{% endif %}">
       </div>
       {% else %}
       <div class="solution-mark">
-        <img src="{{ naturalcloud.hero_logo }}" alt="{{ naturalcloud.hero_logo_alt }}" loading="lazy">
+        <img src="{{ naturalcloud.hero.logo }}" alt="{{ naturalcloud.hero.logo_alt }}" loading="lazy">
       </div>
       {% endif %}
     </div>
@@ -75,9 +75,9 @@ permalink: /naturalcloud/
 <section class="finalcta">
   <div class="container">
     <div class="finalcta-inner">
-      <h2>{{ naturalcloud.cta_secondary }}</h2>
+      <h2>{{ naturalcloud.final_cta.secondary }}</h2>
       <div class="finalcta-actions">
-        <a href="{{ naturalcloud.cta_primary_url }}" class="btn btn-white" style="cursor:pointer">{{ naturalcloud.cta_primary }}</a>
+        <a href="{{ naturalcloud.final_cta.primary_url }}" class="btn btn-white" style="cursor:pointer">{{ naturalcloud.final_cta.primary }}</a>
       </div>
     </div>
   </div>

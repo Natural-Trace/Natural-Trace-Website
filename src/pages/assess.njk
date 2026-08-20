@@ -16,9 +16,9 @@ summary: "Check in 60 seconds whether Natural Trace is compatible with your prod
 <section class="compat-section">
   <div class="container">
     <div style="text-align:center;margin-bottom:2rem">
-      <span class="section-label">{{ assess.compat_label }}</span>
-      <h2 class="section-title" style="color:#fff">{{ assess.compat_title }}</h2>
-      <p style="color:rgba(255,255,255,.6);max-width:600px;margin:0 auto">{{ assess.compat_subtitle }}</p>
+      <span class="section-label">{{ assess.intro.label }}</span>
+      <h2 class="section-title" style="color:#fff">{{ assess.intro.title }}</h2>
+      <p style="color:rgba(255,255,255,.6);max-width:600px;margin:0 auto">{{ assess.intro.subtitle }}</p>
     </div>
     <div class="compat-quiz" id="compatQuiz">
       <!-- Progress bar -->
@@ -31,48 +31,48 @@ summary: "Check in 60 seconds whether Natural Trace is compatible with your prod
       <div class="compat-screen active" id="compatWelcome">
         <div class="compat-welcome">
           <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="margin-bottom:1rem"><circle cx="32" cy="32" r="30" stroke="var(--sage)" stroke-width="2.5" fill="rgba(107,114,73,.08)"/><path d="M22 32l6 6 14-14" stroke="var(--sage)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-          <h3>{{ assess.compat_welcome_title }}</h3>
-          <p>{{ assess.compat_welcome_desc }}</p>
-          <button class="compat-cta" onclick="compatStart()">{{ assess.compat_welcome_cta }}</button>
+          <h3>{{ assess.welcome.title }}</h3>
+          <p>{{ assess.welcome.description }}</p>
+          <button class="compat-cta" onclick="compatStart()">{{ assess.welcome.button }}</button>
         </div>
       </div>
 
       <!-- Step 1: Product Category -->
       <div class="compat-screen" id="compatStep1">
-        <p class="compat-q">{{ assess.compat_step1_question }}</p>
+        <p class="compat-q">{{ assess.questions.step1 }}</p>
         <div class="compat-grid" id="compatCategories"></div>
         <div class="compat-next-wrap" id="compatNext1">
-          <button class="compat-next" onclick="compatGoStep(2)">{{ assess.compat_btn_next }}</button>
+          <button class="compat-next" onclick="compatGoStep(2)">{{ assess.navigation.next }}</button>
         </div>
       </div>
 
       <!-- Step 2: Formulation -->
       <div class="compat-screen" id="compatStep2">
-        <p class="compat-q">{{ assess.compat_step2_question }}</p>
-        <p style="color:var(--muted);font-size:.82rem;margin-top:-.75rem;margin-bottom:1rem">{{ assess.compat_step2_hint }}</p>
+        <p class="compat-q">{{ assess.questions.step2 }}</p>
+        <p style="color:var(--muted);font-size:.82rem;margin-top:-.75rem;margin-bottom:1rem">{{ assess.questions.step2_hint }}</p>
         <div class="compat-grid compat-grid-3" id="compatFormulations"></div>
         <div class="compat-next-wrap" id="compatNext2">
-          <button class="compat-back" onclick="compatGoStep(1)">{{ assess.compat_btn_back }}</button>
-          <button class="compat-next" onclick="compatGoStep(3)">{{ assess.compat_btn_next }}</button>
+          <button class="compat-back" onclick="compatGoStep(1)">{{ assess.navigation.back }}</button>
+          <button class="compat-next" onclick="compatGoStep(3)">{{ assess.navigation.next }}</button>
         </div>
       </div>
 
       <!-- Step 3: Processing Conditions -->
       <div class="compat-screen" id="compatStep3">
-        <p class="compat-q">{{ assess.compat_step3_question }}</p>
+        <p class="compat-q">{{ assess.questions.step3 }}</p>
         <div class="compat-conditions">
           <div class="compat-condition-group">
-            <h4>{{ assess.compat_step3_temp_label }}</h4>
+            <h4>{{ assess.questions.step3_temp_label }}</h4>
             <div class="compat-condition-options" id="compatTempOptions"></div>
           </div>
           <div class="compat-condition-group">
-            <h4>{{ assess.compat_step3_ph_label }}</h4>
+            <h4>{{ assess.questions.step3_ph_label }}</h4>
             <div class="compat-condition-options" id="compatPhOptions"></div>
           </div>
         </div>
         <div class="compat-next-wrap" id="compatNext3">
-          <button class="compat-back" onclick="compatGoStep(2)">{{ assess.compat_btn_back }}</button>
-          <button class="compat-next" onclick="compatShowResult()">{{ assess.compat_btn_next }}</button>
+          <button class="compat-back" onclick="compatGoStep(2)">{{ assess.navigation.back }}</button>
+          <button class="compat-next" onclick="compatShowResult()">{{ assess.navigation.next }}</button>
         </div>
       </div>
 
@@ -92,8 +92,8 @@ summary: "Check in 60 seconds whether Natural Trace is compatible with your prod
           {# Anything actually tested in this category and format. It is the
              only line on this screen that is a fact rather than a screen. #}
           <p id="compatResultEvidence" class="compat-evidence"></p>
-          <p class="compat-result-note">{{ assess.compat_result_note }}</p>
-          <a class="compat-cta" href="{{ assess.compat_result_cta_url }}" style="text-decoration:none;display:inline-block">{{ assess.compat_result_cta }}</a>
+          <p class="compat-result-note">{{ assess.result.note }}</p>
+          <a class="compat-cta" href="{{ assess.result.cta_url }}" style="text-decoration:none;display:inline-block">{{ assess.result.cta }}</a>
         </div>
       </div>
     </div>
@@ -104,15 +104,15 @@ summary: "Check in 60 seconds whether Natural Trace is compatible with your prod
    they belong with the rest of the content and not buried in a script. #}
 <script type="application/json" id="compatModel">
 {
-  "ph": {{ assess.compat_ph_options | dump | safe }},
-  "temp": {{ assess.compat_temp_options | dump | safe }},
-  "formulationRisk": {{ assess.compat_formulation_risk | dump | safe }},
-  "evidence": {{ assess.compat_evidence | dump | safe }},
+  "ph": {{ assess.scoring.ph_options | dump | safe }},
+  "temp": {{ assess.scoring.temp_options | dump | safe }},
+  "formulationRisk": {{ assess.scoring.formulation_risk | dump | safe }},
+  "evidence": {{ assess.evidence.items | dump | safe }},
   "evidenceLabels": {
-    "compatible": {{ assess.compat_evidence_yes | dump | safe }},
-    "notCompatible": {{ assess.compat_evidence_no | dump | safe }}
+    "compatible": {{ assess.evidence.yes | dump | safe }},
+    "notCompatible": {{ assess.evidence.no | dump | safe }}
   },
-  "outcomes": {{ assess.compat_outcomes | dump | safe }}
+  "outcomes": {{ assess.result.outcomes | dump | safe }}
 }
 </script>
 {%- if themes.enabled %}

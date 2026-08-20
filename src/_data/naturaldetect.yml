@@ -1,39 +1,42 @@
-# NaturalDetect™: Clean Prototype Copy Guide 2026
-label: "Solutions"
-title: "NaturalDetect™"
-hero: "Verify Products with Scientific Confidence"
-intro: "NaturalDetect™ is a proprietary PCR-based laboratory test that confirms whether a product contains the authentic NaturalTag™ signature."
-# Kirsty's photograph, 11 Aug. Also the answer to the magnifying glass she
-# asked to be rid of: this is the actual instrument doing the actual test,
-# which says more than a symbol of looking closely at something.
-hero_image: "/assets/images/naturaldetect.webp"
-hero_image_alt: "A gloved hand loading a PCR tube strip into a qPCR instrument, its screen showing amplification curves mid-run"
-# Which part of the photograph stays in frame when the 4:3 panel trims it.
-# Middle unless someone has a reason.
-hero_image_position: "50% 50%"
-# How far into the photograph to crop. 1 is the whole frame as the panel
-# already trims it; higher scales in and the panel clips the rest.
-# NaturalTag is at 1.18 because Kirsty asked for the vial cropped closer
-# on 13 Aug and the panel had already used all the width it could take.
-hero_image_zoom: "1"
-# The product mark, blended into the hero background. Only its shape is used;
-# the colour comes from the stylesheet, so it always sits tonally on this
-# page's tint. That means a flat single-colour graphic on a transparent
-# background works and a photograph does not. Clear it to remove the mark.
-hero_mark: "/assets/logos/NaturalDetect-icon.png"
-hero_logo: "/assets/logos/NaturalDetect-icon.png"
-hero_logo_alt: "NaturalDetect"
+hero:
+  # NaturalDetect™: Clean Prototype Copy Guide 2026
+  label: "Solutions"
+  title: "NaturalDetect™"
+  tagline: "Verify Products with Scientific Confidence"
+  intro: "NaturalDetect™ is a proprietary PCR-based laboratory test that confirms whether a product contains the authentic NaturalTag™ signature."
+  # Kirsty's photograph, 11 Aug. Also the answer to the magnifying glass she
+  # asked to be rid of: this is the actual instrument doing the actual test,
+  # which says more than a symbol of looking closely at something.
+  image: "/assets/images/naturaldetect.webp"
+  image_alt: "A gloved hand loading a PCR tube strip into a qPCR instrument, its screen showing amplification curves mid-run"
+  # Which part of the photograph stays in frame when the 4:3 panel trims it.
+  # Middle unless someone has a reason.
+  image_position: "50% 50%"
+  # How far into the photograph to crop. 1 is the whole frame as the panel
+  # already trims it; higher scales in and the panel clips the rest.
+  # NaturalTag is at 1.18 because Kirsty asked for the vial cropped closer
+  # on 13 Aug and the panel had already used all the width it could take.
+  image_zoom: "1"
+  # The product mark, blended into the hero background. Only its shape is used;
+  # the colour comes from the stylesheet, so it always sits tonally on this
+  # page's tint. That means a flat single-colour graphic on a transparent
+  # background works and a photograph does not. Clear it to remove the mark.
+  mark: "/assets/logos/NaturalDetect-icon.png"
+  logo: "/assets/logos/NaturalDetect-icon.png"
+  logo_alt: "NaturalDetect"
 
-features_title: "NaturalDetect™ Features"
 features:
-  - "Rapid laboratory verification"
-  - "Objective scientific evidence"
-  - "High PCR analytical sensitivity"
-  - "Client ready Certificate of Analysis reporting"                                                # CLAIM REVIEW: canon is Certificate of Authenticity
-  - "Testing available at Natural Trace Singapore Lab or partnered third-party laboratories"
-  - "Standards compliance: ISO 22174, ISO 17025, ISO20837, ISO21571 and MIQE 2.0 Guidelines"        # CLAIM REVIEW: 17025 and MIQE 2.0 were retired 30 July
+  title: "NaturalDetect™ Features"
+  items:
+    - "Rapid laboratory verification"
+    - "Objective scientific evidence"
+    - "High PCR analytical sensitivity"
+    - "Client ready Certificate of Analysis reporting"                                                # CLAIM REVIEW: canon is Certificate of Authenticity
+    - "Testing available at Natural Trace Singapore Lab or partnered third-party laboratories"
+    - "Standards compliance: ISO 22174, ISO 17025, ISO20837, ISO21571 and MIQE 2.0 Guidelines"        # CLAIM REVIEW: 17025 and MIQE 2.0 were retired 30 July
 
-cta_primary: "Request a Compatibility Assessment"
-cta_primary_url: "/contact/"
-cta_secondary: "Learn more about testing"
-cta_secondary_url: "/faq/"
+final_cta:
+  primary: "Request a Compatibility Assessment"
+  primary_url: "/contact/"
+  secondary: "Learn more about testing"
+  secondary_url: "/faq/"

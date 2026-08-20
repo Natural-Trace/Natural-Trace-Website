@@ -269,63 +269,125 @@ collections:
         label: "About Us"
         file: "src/_data/about.yml"
         fields:
-          - {label: "Label", name: "label", widget: "string"}
-          - {label: "Headline", name: "title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line. The break is ignored on phones."}
-          - {label: "Sub-headline", name: "subtitle", widget: "text", hint: "Wrap a word in <strong> to emphasise it. Type &nbsp; between two words to stop them being split across a line break."}
-          - {label: "Intro", name: "intro", widget: "text"}
-          - {label: "Disciplines Line", name: "disciplines", widget: "string"}
-          - {label: "Secondary Intro", name: "intro_secondary", widget: "text"}
-          - {label: "Hero Image", name: "hero_image", widget: "image"}
-          - {label: "Hero Image Alt", name: "hero_image_alt", widget: "string"}
-          - {label: "Hero CTA Text", name: "hero_cta", widget: "string"}
-          - label: "Hero CTA URL"
-            name: "hero_cta_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
-          - {label: "Story: Label", name: "story_label", widget: "string"}
-          - {label: "Story: Headline", name: "story_title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line."}
-          - {label: "Story: Opening Question", name: "story_question", widget: "text"}
-          - {label: "Story: Paragraphs", name: "story_body", widget: "list", field: {label: "Paragraph", name: "para", widget: "text"}}
-          - {label: "Why We Exist: Label", name: "why_label", widget: "string"}
-          - {label: "Why We Exist: Headline", name: "why_title", widget: "string"}
-          - {label: "Why We Exist: Background Image", name: "why_bg_image", widget: "image", required: false, hint: "Sits behind the section, tinted to the brand navy so white text stays readable. A wide landscape photograph works best. Leave empty for a plain dark background."}
-          - {label: "Why We Exist: Paragraphs", name: "why_body", widget: "list", field: {label: "Paragraph", name: "para", widget: "text"}}
-          - {label: "Vision Label", name: "vision_label", widget: "string"}
-          - {label: "Vision Text", name: "vision_text", widget: "text"}
-          - {label: "Mission Label", name: "mission_label", widget: "string"}
-          - {label: "Mission Text", name: "mission_text", widget: "text"}
-          - {label: "Mission Body", name: "mission_body", widget: "text"}
-          - {label: "Different: Label", name: "different_label", widget: "string"}
-          - {label: "Different: Sub-headline", name: "different_title", widget: "string", required: false, hint: "Optional. Leave it empty and only the What Makes Us Different heading shows, which is how it reads now."}
-          - label: "Different: Cards"
-            name: "different_cards"
-            widget: "list"
-            summary: "{{fields.title}}"
+          - label: "1. Hero — the top of the page"
+            name: "hero"
+            widget: "object"
+            collapsed: true
+            hint: "The opening band: heading, the two intro paragraphs, the photograph and the button."
             fields:
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Body", name: "body", widget: "text"}
-          - {label: "Why Choose: Label", name: "choose_label", widget: "string"}
-          - {label: "Why Choose: Headline", name: "choose_title", widget: "string"}
-          - label: "Why Choose: Groups"
-            name: "choose_groups"
-            widget: "list"
-            summary: "{{fields.title}}"
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line. The break is ignored on phones."}
+            - {label: "Subheading", name: "subtitle", widget: "text", hint: "Wrap a word in <strong> to emphasise it. Type &nbsp; between two words to stop them being split across a line break."}
+            - {label: "Intro paragraph", name: "intro", widget: "text"}
+            - {label: "Disciplines line", name: "disciplines", widget: "string"}
+            - {label: "Second intro paragraph", name: "intro_secondary", widget: "text"}
+            - {label: "Photograph", name: "image", widget: "image"}
+            - {label: "Photograph description", name: "image_alt", widget: "string"}
+            - {label: "Button text", name: "cta", widget: "string"}
+            - label: "Button link"
+              name: "cta_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+
+          - label: "2. Our story"
+            name: "story"
+            widget: "object"
+            collapsed: true
+            hint: "The founding story, told as a question and an answer."
             fields:
-              - {label: "Group Title", name: "title", widget: "string", hint: "Write the ampersand as &amp; and put &nbsp; either side of it, so the heading cannot break with the & left at the end of a line."}
-              - {label: "Items", name: "items", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
-          - {label: "Food Matrices: Label", name: "matrices_label", widget: "string"}
-          - {label: "Food Matrices: Headline", name: "matrices_title", widget: "string", hint: "CLAIM REVIEW: the 20+ figure has not been signed off. Do not publish this section without approval."}
-          - {label: "Food Matrices: Categories", name: "matrices_items", widget: "list", field: {label: "Category", name: "item", widget: "string"}}
-          - {label: "CTA Title", name: "cta_title", widget: "string"}
-          - label: "CTA URL"
-            name: "cta_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line."}
+            - {label: "Opening question", name: "question", widget: "text"}
+            - {label: "Paragraphs", name: "body", widget: "list", field: {label: "Paragraph", name: "para", widget: "text"}}
+
+          - label: "3. Why we exist"
+            name: "why"
+            widget: "object"
+            collapsed: true
+            hint: "The band with the full-width background photograph behind it."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Background photograph", name: "bg_image", widget: "image", required: false, hint: "Sits behind the section, tinted to the brand navy so white text stays readable. A wide landscape photograph works best. Leave empty for a plain dark background."}
+            - {label: "Paragraphs", name: "body", widget: "list", field: {label: "Paragraph", name: "para", widget: "text"}}
+
+          - label: "4. Vision"
+            name: "vision"
+            widget: "object"
+            collapsed: true
+            hint: "One line. Sits beside the mission."
+            fields:
+            - {label: "Small label", name: "label", widget: "string"}
+            - {label: "Text", name: "text", widget: "text"}
+
+          - label: "5. Mission"
+            name: "mission"
+            widget: "object"
+            collapsed: true
+            hint: "Sits beside the vision."
+            fields:
+            - {label: "Small label", name: "label", widget: "string"}
+            - {label: "Text", name: "text", widget: "text"}
+            - {label: "Longer text", name: "body", widget: "text"}
+
+          - label: "6. What makes us different"
+            name: "different"
+            widget: "object"
+            collapsed: true
+            hint: "The card grid."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string", required: false, hint: "Optional. Leave it empty and only the What Makes Us Different heading shows, which is how it reads now."}
+            - label: "Cards"
+              name: "cards"
+              widget: "list"
+              summary: "{{fields.title}}"
+              fields:
+                - {label: "Title", name: "title", widget: "string"}
+                - {label: "Body", name: "body", widget: "text"}
+
+          - label: "7. Why customers choose us"
+            name: "choose"
+            widget: "object"
+            collapsed: true
+            hint: "The grouped list of reasons. Several registered claims live in here, so check docs/claim-review.yml before rewording any of them."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - label: "Groups"
+              name: "groups"
+              widget: "list"
+              summary: "{{fields.title}}"
+              fields:
+                - {label: "Group Title", name: "title", widget: "string", hint: "Write the ampersand as &amp; and put &nbsp; either side of it, so the heading cannot break with the & left at the end of a line."}
+                - {label: "Items", name: "items", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+
+          - label: "8. Product matrices"
+            name: "matrices"
+            widget: "object"
+            collapsed: true
+            hint: "The list of product types the tag has been used in."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string", hint: "CLAIM REVIEW: the 20+ figure has not been signed off. Do not publish this section without approval."}
+            - {label: "Product types", name: "items", widget: "list", field: {label: "Category", name: "item", widget: "string"}}
+
+          - label: "9. Closing call to action"
+            name: "final_cta"
+            widget: "object"
+            collapsed: true
+            hint: "The last band on the page, above the footer."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - label: "Button link"
+              name: "url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
-  # ── Solutions: NaturalTag ─────
+    # ── Solutions: NaturalTag ─────
       - name: "team-data"
         label: "All Team Members"
         file: "src/_data/team.json"
@@ -363,75 +425,95 @@ collections:
         label: "Careers"
         file: "src/_data/careers.yml"
         fields:
-          - {label: "Section Label", name: "section_label", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Intro", name: "intro", widget: "text"}
-          - {label: "Open Positions Tab Label", name: "tab_openings_label", widget: "string"}
-          - {label: "Internships Tab Label", name: "tab_internship_label", widget: "string"}
-          - label: "No Openings Message"
-            name: "no_openings"
-            widget: "object"
-            fields:
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-          - label: "Open Positions"
-            name: "positions"
-            widget: "list"
-            summary: "{{fields.title}} ({{fields.location}})"
-            required: false
-            fields:
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Department", name: "department", widget: "string"}
-              - {label: "Location", name: "location", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-
-          # The internship side of the page, and the form on it. Same gap as the
-          # contact form had: all of this reads as editable copy and none of it
-          # was reachable from the panel.
-          - label: "Internship: intro"
-            name: "internship"
+          - label: "1. Page introduction"
+            name: "intro"
             widget: "object"
             collapsed: true
+            hint: "The heading, the opening paragraph, and the wording on the two tabs below it."
             fields:
-              - {label: "Heading", name: "title", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-              - {label: "Expectations heading", name: "expectations_label", widget: "string"}
-              - {label: "Expectations", name: "expectations", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
-              - {label: "Location", name: "location", widget: "string"}
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Opening paragraph", name: "text", widget: "text"}
+            - {label: "First tab wording", name: "openings_tab", widget: "string"}
+            - {label: "Second tab wording", name: "internship_tab", widget: "string"}
 
-          - label: "Internship: application form"
-            name: "internship_form"
+          - label: "2. Open positions"
+            name: "openings"
             widget: "object"
             collapsed: true
+            hint: "The roles on the first tab, and what shows when there are none."
             fields:
-              - {label: "Form Heading", name: "title", widget: "string"}
-              - {label: "Form Intro", name: "subtitle", widget: "text"}
-              - {label: "First Name: label", name: "first_name_label", widget: "string"}
-              - {label: "First Name: placeholder", name: "first_name_placeholder", widget: "string"}
-              - {label: "Last Name: label", name: "last_name_label", widget: "string"}
-              - {label: "Last Name: placeholder", name: "last_name_placeholder", widget: "string"}
-              - {label: "Email: label", name: "email_label", widget: "string"}
-              - {label: "Email: placeholder", name: "email_placeholder", widget: "string"}
-              - {label: "University: label", name: "university_label", widget: "string"}
-              - {label: "University: placeholder", name: "university_placeholder", widget: "string"}
-              - {label: "Area of interest: label", name: "interest_label", widget: "string"}
-              - {label: "Area of interest: placeholder", name: "interest_placeholder", widget: "string"}
-              - {label: "Message: label", name: "message_label", widget: "string"}
-              - {label: "Message: placeholder", name: "message_placeholder", widget: "string"}
-              - {label: "Submit button", name: "submit_text", widget: "string"}
+            - label: "Shown when there are no openings"
+              name: "empty"
+              widget: "object"
+              fields:
+                - {label: "Title", name: "title", widget: "string"}
+                - {label: "Description", name: "description", widget: "text"}
+            - label: "Positions"
+              name: "positions"
+              widget: "list"
+              summary: "{{fields.title}} ({{fields.location}})"
+              required: false
+              fields:
+                - {label: "Title", name: "title", widget: "string"}
+                - {label: "Department", name: "department", widget: "string"}
+                - {label: "Location", name: "location", widget: "string"}
+                - {label: "Description", name: "description", widget: "text"}
 
-          - {label: "Internship: areas of interest", name: "areas_of_interest", widget: "list", field: {label: "Area", name: "area", widget: "string"}}
+            # The internship side of the page, and the form on it. Same gap as the
+            # contact form had: all of this reads as editable copy and none of it
+            # was reachable from the panel.
 
-          - label: "Internship: after sending"
-            name: "success"
+          - label: "3. Internships"
+            name: "internships"
             widget: "object"
             collapsed: true
+            hint: "The second tab: the description, the application form and its confirmation message."
             fields:
-              - {label: "Heading", name: "title", widget: "string"}
-              - {label: "Message", name: "message", widget: "text"}
+            - label: "Description"
+              name: "details"
+              widget: "object"
+              collapsed: true
+              fields:
+                - {label: "Heading", name: "title", widget: "string"}
+                - {label: "Description", name: "description", widget: "text"}
+                - {label: "Expectations heading", name: "expectations_label", widget: "string"}
+                - {label: "Expectations", name: "expectations", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+                - {label: "Location", name: "location", widget: "string"}
+
+            - label: "Application form"
+              name: "form"
+              widget: "object"
+              collapsed: true
+              fields:
+                - {label: "Form Heading", name: "title", widget: "string"}
+                - {label: "Form Intro", name: "subtitle", widget: "text"}
+                - {label: "First Name: label", name: "first_name_label", widget: "string"}
+                - {label: "First Name: placeholder", name: "first_name_placeholder", widget: "string"}
+                - {label: "Last Name: label", name: "last_name_label", widget: "string"}
+                - {label: "Last Name: placeholder", name: "last_name_placeholder", widget: "string"}
+                - {label: "Email: label", name: "email_label", widget: "string"}
+                - {label: "Email: placeholder", name: "email_placeholder", widget: "string"}
+                - {label: "University: label", name: "university_label", widget: "string"}
+                - {label: "University: placeholder", name: "university_placeholder", widget: "string"}
+                - {label: "Area of interest: label", name: "interest_label", widget: "string"}
+                - {label: "Area of interest: placeholder", name: "interest_placeholder", widget: "string"}
+                - {label: "Message: label", name: "message_label", widget: "string"}
+                - {label: "Message: placeholder", name: "message_placeholder", widget: "string"}
+                - {label: "Submit button", name: "submit_text", widget: "string"}
+
+            - {label: "Areas of interest", name: "areas", widget: "list", field: {label: "Area", name: "area", widget: "string"}}
+
+            - label: "Confirmation message"
+              name: "success"
+              widget: "object"
+              collapsed: true
+              fields:
+                - {label: "Heading", name: "title", widget: "string"}
+                - {label: "Message", name: "message", widget: "text"}
 
 
-  # ── Contact ─────
+    # ── Contact ─────
 
   - name: "solutions"
     label: "Solutions"
@@ -441,198 +523,299 @@ collections:
         label: "NaturalTag"
         file: "src/_data/naturaltag.yml"
         fields:
-          - {label: "Label", name: "label", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Hero Line", name: "hero", widget: "string"}
-          - {label: "Intro", name: "intro", widget: "text"}
-          - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
-          - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
-          - label: "Product Photograph: Which part to keep"
-            name: "hero_image_position"
-            widget: "select"
-            required: false
-            hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
-            options:
-              - {label: "Middle", value: "50% 50%"}
-              - {label: "Left", value: "0% 50%"}
-              - {label: "Right", value: "100% 50%"}
-              - {label: "Top", value: "50% 0%"}
-              - {label: "Bottom", value: "50% 100%"}
-          - label: "Product Photograph: How far to crop in"
-            name: "hero_image_zoom"
-            widget: "select"
-            required: false
-            hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
-            options:
-              - {label: "No extra crop", value: "1"}
-              - {label: "A little closer", value: "1.1"}
-              - {label: "Closer", value: "1.18"}
-              - {label: "Much closer", value: "1.3"}
-          - {label: "Product Mark (background watermark)", name: "hero_mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
-          - {label: "Product Logo", name: "hero_logo", widget: "image"}
-          - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
-          - {label: "Why Heading", name: "why_title", widget: "string"}
-          - {label: "Why Items", name: "why_items", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
-          - {label: "Features Heading", name: "features_title", widget: "string"}
-          - {label: "Features", name: "features", widget: "list", field: {label: "Feature", name: "feature", widget: "string"}}
-          - {label: "Matrices Label", name: "matrices_label", widget: "string"}
-          - {label: "Matrices Heading", name: "matrices_title", widget: "string"}
-          - label: "Matrices"
-            name: "matrices"
-            widget: "list"
-            summary: "{{fields.group}}"
+          - label: "1. Hero — the top of the page"
+            name: "hero"
+            widget: "object"
+            collapsed: true
+            hint: "The opening band: the product name, the one-line description, and the photograph or logo panel beside it."
             fields:
-              - {label: "Group", name: "group", widget: "string"}
-              - {label: "Items", name: "items", widget: "text"}
-          - {label: "Video Label", name: "video_label", widget: "string"}
-          - {label: "Video Title", name: "video_title", widget: "string"}
-          - {label: "Video Description", name: "video_description", widget: "text"}
-          - {label: "Video File Path", name: "video_src", widget: "string"}
-          - {label: "CTA Text", name: "cta_text", widget: "string"}
-          - label: "CTA URL"
-            name: "cta_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Small label above the title", name: "label", widget: "string"}
+            - {label: "Title", name: "title", widget: "string"}
+            - {label: "One-line description", name: "tagline", widget: "string"}
+            - {label: "Intro paragraph", name: "intro", widget: "text"}
+            - {label: "Product photograph", name: "image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
+            - {label: "Photograph description", name: "image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
+            - label: "Photograph: which part to keep"
+              name: "image_position"
+              widget: "select"
+              required: false
+              hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
+              options:
+                - {label: "Middle", value: "50% 50%"}
+                - {label: "Left", value: "0% 50%"}
+                - {label: "Right", value: "100% 50%"}
+                - {label: "Top", value: "50% 0%"}
+                - {label: "Bottom", value: "50% 100%"}
+            - label: "Photograph: zoom"
+              name: "image_zoom"
+              widget: "select"
+              required: false
+              hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
+              options:
+                - {label: "No extra crop", value: "1"}
+                - {label: "A little closer", value: "1.1"}
+                - {label: "Closer", value: "1.18"}
+                - {label: "Much closer", value: "1.3"}
+            - {label: "Mark", name: "mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
+            - {label: "Logo", name: "logo", widget: "image"}
+            - {label: "Logo description", name: "logo_alt", widget: "string"}
+
+          - label: "2. Why it matters"
+            name: "why"
+            widget: "object"
+            collapsed: true
+            hint: "The reasons band under the hero."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Points", name: "items", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+
+          - label: "3. What it does"
+            name: "features"
+            widget: "object"
+            collapsed: true
+            hint: "The list of capabilities."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Points", name: "items", widget: "list", field: {label: "Feature", name: "feature", widget: "string"}}
+
+          - label: "4. Product matrices"
+            name: "matrices"
+            widget: "object"
+            collapsed: true
+            hint: "The grouped list of product types the tag has been used in."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - label: "Groups"
+              name: "items"
+              widget: "list"
+              summary: "{{fields.group}}"
+              fields:
+                - {label: "Group", name: "group", widget: "string"}
+                - {label: "Items", name: "items", widget: "text"}
+
+          - label: "5. Video"
+            name: "video"
+            widget: "object"
+            collapsed: true
+            hint: "The explainer video and the words around it."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Description", name: "description", widget: "text"}
+            - {label: "Video file", name: "src", widget: "string"}
+
+          - label: "6. Closing call to action"
+            name: "final_cta"
+            widget: "object"
+            collapsed: true
+            hint: "The last band on the page, above the footer."
+            fields:
+            - {label: "Button text", name: "text", widget: "string"}
+            - label: "Button link"
+              name: "url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
-  # ── Solutions: NaturalDetect ─────
+    # ── Solutions: NaturalDetect ─────
       - name: "naturaldetect"
         label: "NaturalDetect"
         file: "src/_data/naturaldetect.yml"
         fields:
-          - {label: "Label", name: "label", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Hero Line", name: "hero", widget: "string"}
-          - {label: "Intro", name: "intro", widget: "text"}
-          - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
-          - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
-          - label: "Product Photograph: Which part to keep"
-            name: "hero_image_position"
-            widget: "select"
-            required: false
-            hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
-            options:
-              - {label: "Middle", value: "50% 50%"}
-              - {label: "Left", value: "0% 50%"}
-              - {label: "Right", value: "100% 50%"}
-              - {label: "Top", value: "50% 0%"}
-              - {label: "Bottom", value: "50% 100%"}
-          - label: "Product Photograph: How far to crop in"
-            name: "hero_image_zoom"
-            widget: "select"
-            required: false
-            hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
-            options:
-              - {label: "No extra crop", value: "1"}
-              - {label: "A little closer", value: "1.1"}
-              - {label: "Closer", value: "1.18"}
-              - {label: "Much closer", value: "1.3"}
-          - {label: "Product Mark (background watermark)", name: "hero_mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
-          - {label: "Product Logo", name: "hero_logo", widget: "image"}
-          - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
-          - {label: "Features Heading", name: "features_title", widget: "string"}
-          - {label: "Features", name: "features", widget: "list", field: {label: "Feature", name: "feature", widget: "string"}}
-          - {label: "Primary CTA", name: "cta_primary", widget: "string"}
-          - label: "Primary CTA URL"
-            name: "cta_primary_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
-          - {label: "Secondary CTA", name: "cta_secondary", widget: "string"}
-          - label: "Secondary CTA URL"
-            name: "cta_secondary_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+          - label: "1. Hero — the top of the page"
+            name: "hero"
+            widget: "object"
+            collapsed: true
+            hint: "The opening band: the product name, the one-line description, and the photograph or logo panel beside it."
+            fields:
+            - {label: "Small label above the title", name: "label", widget: "string"}
+            - {label: "Title", name: "title", widget: "string"}
+            - {label: "One-line description", name: "tagline", widget: "string"}
+            - {label: "Intro paragraph", name: "intro", widget: "text"}
+            - {label: "Product photograph", name: "image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
+            - {label: "Photograph description", name: "image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
+            - label: "Photograph: which part to keep"
+              name: "image_position"
+              widget: "select"
+              required: false
+              hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
+              options:
+                - {label: "Middle", value: "50% 50%"}
+                - {label: "Left", value: "0% 50%"}
+                - {label: "Right", value: "100% 50%"}
+                - {label: "Top", value: "50% 0%"}
+                - {label: "Bottom", value: "50% 100%"}
+            - label: "Photograph: zoom"
+              name: "image_zoom"
+              widget: "select"
+              required: false
+              hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
+              options:
+                - {label: "No extra crop", value: "1"}
+                - {label: "A little closer", value: "1.1"}
+                - {label: "Closer", value: "1.18"}
+                - {label: "Much closer", value: "1.3"}
+            - {label: "Mark", name: "mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
+            - {label: "Logo", name: "logo", widget: "image"}
+            - {label: "Logo description", name: "logo_alt", widget: "string"}
+
+          - label: "2. What it does"
+            name: "features"
+            widget: "object"
+            collapsed: true
+            hint: "The list of capabilities below the hero."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Points", name: "items", widget: "list", field: {label: "Feature", name: "feature", widget: "string"}}
+
+          - label: "3. Closing call to action"
+            name: "final_cta"
+            widget: "object"
+            collapsed: true
+            hint: "The last band on the page, above the footer."
+            fields:
+            - {label: "Primary button text", name: "primary", widget: "string"}
+            - label: "Primary button link"
+              name: "primary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Secondary button text", name: "secondary", widget: "string"}
+            - label: "Secondary button link"
+              name: "secondary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
-  # ── Solutions: NaturalCloud ─────
-      # SOLUTIONS: NATURALCLOUD
+    # ── Solutions: NaturalCloud ─────
+        # SOLUTIONS: NATURALCLOUD
       - name: "naturalcloud"
         label: "NaturalCloud"
         file: "src/_data/naturalcloud.yml"
         fields:
-          - {label: "Label", name: "label", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Hero Line", name: "hero", widget: "string"}
-          - {label: "Intro", name: "intro", widget: "text"}
-          - {label: "Product Photograph", name: "hero_image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
-          - {label: "Product Photograph: Alt Text", name: "hero_image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
-          - label: "Product Photograph: Which part to keep"
-            name: "hero_image_position"
-            widget: "select"
-            required: false
-            hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
-            options:
-              - {label: "Middle", value: "50% 50%"}
-              - {label: "Left", value: "0% 50%"}
-              - {label: "Right", value: "100% 50%"}
-              - {label: "Top", value: "50% 0%"}
-              - {label: "Bottom", value: "50% 100%"}
-          - label: "Product Photograph: How far to crop in"
-            name: "hero_image_zoom"
-            widget: "select"
-            required: false
-            hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
-            options:
-              - {label: "No extra crop", value: "1"}
-              - {label: "A little closer", value: "1.1"}
-              - {label: "Closer", value: "1.18"}
-              - {label: "Much closer", value: "1.3"}
-          - {label: "Product Mark (background watermark)", name: "hero_mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
-          - {label: "Product Logo", name: "hero_logo", widget: "image"}
-          - {label: "Product Logo Alt", name: "hero_logo_alt", widget: "string"}
-          - {label: "Hero video", name: "hero_video", widget: "file", required: false, hint: "Plays on a loop in the panel, with no sound and no play button. Setting this hides the hero image and the logo below. Clear it to go back to them. MP4, around 1280px wide."}
-          - {label: "Hero video still", name: "hero_video_poster", widget: "image", required: false, hint: "Shown until the video has loaded. A frame from the video itself is best, so the switch from still to moving is invisible."}
-          - {label: "Hero video description", name: "hero_video_alt", widget: "string", required: false, hint: "For screen readers. Describe what the video shows."}
-          - {label: "Benefits Heading", name: "features_title", widget: "string"}
-          - {label: "Benefits", name: "features", widget: "list", field: {label: "Benefit", name: "benefit", widget: "string"}}
-          - {label: "Primary CTA", name: "cta_primary", widget: "string"}
-          - label: "Primary CTA URL"
-            name: "cta_primary_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
-          - {label: "Secondary CTA", name: "cta_secondary", widget: "string"}
-          - label: "Secondary CTA URL"
-            name: "cta_secondary_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+          - label: "1. Hero — the top of the page"
+            name: "hero"
+            widget: "object"
+            collapsed: true
+            hint: "The opening band: the product name, the one-line description, and the photograph or logo panel beside it."
+            fields:
+            - {label: "Small label above the title", name: "label", widget: "string"}
+            - {label: "Title", name: "title", widget: "string"}
+            - {label: "One-line description", name: "tagline", widget: "string"}
+            - {label: "Intro paragraph", name: "intro", widget: "text"}
+            - {label: "Product photograph", name: "image", widget: "image", required: false, hint: "Landscape. Shown instead of the logo panel when set; clear it to go back to the logo. NaturalCloud has none yet, which is why its page still shows the mark."}
+            - {label: "Photograph description", name: "image_alt", widget: "string", required: false, hint: "What is in the picture, for anyone using a screen reader. Only needed if a photograph is set."}
+            - label: "Photograph: which part to keep"
+              name: "image_position"
+              widget: "select"
+              required: false
+              hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame."
+              options:
+                - {label: "Middle", value: "50% 50%"}
+                - {label: "Left", value: "0% 50%"}
+                - {label: "Right", value: "100% 50%"}
+                - {label: "Top", value: "50% 0%"}
+                - {label: "Bottom", value: "50% 100%"}
+            - label: "Photograph: zoom"
+              name: "image_zoom"
+              widget: "select"
+              required: false
+              hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file."
+              options:
+                - {label: "No extra crop", value: "1"}
+                - {label: "A little closer", value: "1.1"}
+                - {label: "Closer", value: "1.18"}
+                - {label: "Much closer", value: "1.3"}
+            - {label: "Mark", name: "mark", widget: "image", required: false, hint: "Blended faintly into the hero background. Only its shape is used and the colour comes from the page, so use a flat single-colour graphic on a transparent background. Leave empty for no mark."}
+            - {label: "Logo", name: "logo", widget: "image"}
+            - {label: "Logo description", name: "logo_alt", widget: "string"}
+            - {label: "Video", name: "video", widget: "file", required: false, hint: "Plays on a loop in the panel, with no sound and no play button. Setting this hides the hero image and the logo below. Clear it to go back to them. MP4, around 1280px wide."}
+            - {label: "Video still", name: "video_poster", widget: "image", required: false, hint: "Shown until the video has loaded. A frame from the video itself is best, so the switch from still to moving is invisible."}
+            - {label: "Video description", name: "video_alt", widget: "string", required: false, hint: "For screen readers. Describe what the video shows."}
+
+          - label: "2. What it does"
+            name: "features"
+            widget: "object"
+            collapsed: true
+            hint: "The list of capabilities below the hero."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Points", name: "items", widget: "list", field: {label: "Benefit", name: "benefit", widget: "string"}}
+
+          - label: "3. Closing call to action"
+            name: "final_cta"
+            widget: "object"
+            collapsed: true
+            hint: "The last band on the page, above the footer."
+            fields:
+            - {label: "Primary button text", name: "primary", widget: "string"}
+            - label: "Primary button link"
+              name: "primary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Secondary button text", name: "secondary", widget: "string"}
+            - label: "Secondary button link"
+              name: "secondary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
-  # ── Industries ─────
-      # FAQ
+    # ── Industries ─────
+        # FAQ
       - name: "faq"
         label: "FAQ"
         file: "src/_data/faq.yml"
         fields:
-          - {label: "Section Label", name: "section_label", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Subtitle", name: "subtitle", widget: "text"}
-          - label: "Categories"
-            name: "categories"
-            widget: "list"
-            summary: "{{fields.label}}"
+          - label: "1. Page introduction"
+            name: "intro"
+            widget: "object"
+            collapsed: true
+            hint: "The heading and standfirst at the top of the FAQ page."
             fields:
-              - {label: "Internal name", name: "id", widget: "string", hint: "Used to link questions to this tab. Changing it detaches every question filed under it, so leave it alone unless you are also updating the questions."}
-              - {label: "Tab name visitors see", name: "label", widget: "string"}
-          - label: "Questions"
-            name: "questions"
-            widget: "list"
-            summary: "{{fields.question}}"
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Standfirst", name: "subtitle", widget: "text"}
+
+          - label: "2. Questions and answers"
+            name: "content"
+            widget: "object"
+            collapsed: true
+            hint: "The filter buttons and the questions themselves. Several registered claims live in here, so check docs/claim-review.yml before rewording an answer."
             fields:
-              - label: "Which tab"
-                name: "category"
-                widget: "select"
-                hint: "The tab this question appears under. These match the internal names above."
-                options: ["regulatory", "safety", "integration", "detection"]
-              - {label: "Question", name: "question", widget: "string"}
-              - {label: "Answer", name: "answer", widget: "text"}
-          - {label: "CTA Title", name: "cta_title", widget: "string"}
-          - {label: "CTA Text", name: "cta_text", widget: "text"}
-          - {label: "CTA Button", name: "cta_button", widget: "string"}
+            - label: "Filter categories"
+              name: "categories"
+              widget: "list"
+              summary: "{{fields.label}}"
+              fields:
+                - {label: "Internal name", name: "id", widget: "string", hint: "Used to link questions to this tab. Changing it detaches every question filed under it, so leave it alone unless you are also updating the questions."}
+                - {label: "Tab name visitors see", name: "label", widget: "string"}
+            - label: "Questions"
+              name: "questions"
+              widget: "list"
+              summary: "{{fields.question}}"
+              fields:
+                - label: "Which tab"
+                  name: "category"
+                  widget: "select"
+                  hint: "The tab this question appears under. These match the internal names above."
+                  options: ["regulatory", "safety", "integration", "detection"]
+                - {label: "Question", name: "question", widget: "string"}
+                - {label: "Answer", name: "answer", widget: "text"}
+
+          - label: "3. Closing call to action"
+            name: "final_cta"
+            widget: "object"
+            collapsed: true
+            hint: "The last band on the page, above the footer."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Text", name: "text", widget: "text"}
+            - {label: "Button text", name: "button", widget: "string"}
 
   - name: "industries"
     label: "Industries"
@@ -642,71 +825,111 @@ collections:
         label: "Industries"
         file: "src/_data/industries.yml"
         fields:
-          - {label: "Label", name: "label", widget: "string"}
-          - {label: "Headline", name: "title", widget: "string"}
-          - {label: "Subtitle", name: "subtitle", widget: "text"}
-          - label: "Industries"
-            name: "industries"
-            widget: "list"
-            summary: "{{fields.name}}"
+          - label: "1. Page introduction"
+            name: "intro"
+            widget: "object"
+            collapsed: true
+            hint: "The heading and standfirst at the top of the Industries page."
             fields:
-              - {label: "Internal name", name: "id", widget: "string", hint: "Used in links that jump straight to this industry, e.g. /industries/#agri-food. Changing it breaks those links."}
-              - {label: "Name", name: "name", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-              - {label: "Image", name: "image", widget: "image"}
-              - {label: "Image Alt", name: "image_alt", widget: "string"}
-          - {label: "CTA Label", name: "cta_label", widget: "string"}
-          - {label: "CTA Title", name: "cta_title", widget: "string"}
-          - {label: "CTA Description", name: "cta_description", widget: "text"}
-          - {label: "CTA Primary Text", name: "cta_button_primary_text", widget: "string"}
-          - label: "CTA Primary URL"
-            name: "cta_button_primary_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
-          - {label: "CTA Secondary Text", name: "cta_button_secondary_text", widget: "string"}
-          - label: "CTA Secondary URL"
-            name: "cta_button_secondary_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Standfirst", name: "subtitle", widget: "text"}
+
+          - label: "2. Sectors"
+            name: "sectors"
+            widget: "object"
+            collapsed: true
+            hint: "One entry per industry. These also feed the tiles on the home page."
+            fields:
+            - label: "Sectors"
+              name: "items"
+              widget: "list"
+              summary: "{{fields.name}}"
+              fields:
+                - {label: "Internal name", name: "id", widget: "string", hint: "Used in links that jump straight to this industry, e.g. /industries/#agri-food. Changing it breaks those links."}
+                - {label: "Name", name: "name", widget: "string"}
+                - {label: "Description", name: "description", widget: "text"}
+                - {label: "Image", name: "image", widget: "image"}
+                - {label: "Image Alt", name: "image_alt", widget: "string"}
+
+          - label: "3. Closing call to action"
+            name: "final_cta"
+            widget: "object"
+            collapsed: true
+            hint: "The last band on the page, above the footer."
+            fields:
+            - {label: "Small label", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Text", name: "description", widget: "text"}
+            - {label: "Primary button text", name: "primary_text", widget: "string"}
+            - label: "Primary button link"
+              name: "primary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Secondary button text", name: "secondary_text", widget: "string"}
+            - label: "Secondary button link"
+              name: "secondary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
-  # ── Industry Use-Cases ─────
-      # INDUSTRY USE-CASES
+    # ── Industry Use-Cases ─────
+        # INDUSTRY USE-CASES
       - name: "usecases"
         label: "Industry Use-Cases"
         file: "src/_data/usecases.yml"
         fields:
-          - {label: "Label", name: "label", widget: "string"}
-          - {label: "Headline", name: "title", widget: "string"}
-          - {label: "Subtitle", name: "subtitle", widget: "text"}
-          - label: "Use Cases"
-            name: "cases"
-            widget: "list"
-            summary: "{{fields.sector}} — {{fields.title}}"
+          - label: "1. Page introduction"
+            name: "intro"
+            widget: "object"
+            collapsed: true
+            hint: "The heading and standfirst at the top of the Use Cases page."
             fields:
-              - {label: "Sector", name: "sector", widget: "string"}
-              - {label: "Title", name: "title", widget: "string"}
-              - {label: "Challenge", name: "challenge", widget: "text"}
-              - {label: "How Natural Trace Helped", name: "solution", widget: "text"}
-              - {label: "Outcome", name: "outcome", widget: "text"}
-              - {label: "Image", name: "image", widget: "image"}
-              - {label: "Image Alt", name: "image_alt", widget: "string"}
-          - {label: "Challenge Label", name: "challenge_label", widget: "string"}
-          - {label: "Solution Label", name: "solution_label", widget: "string"}
-          - {label: "Outcome Label", name: "outcome_label", widget: "string"}
-          - {label: "CTA Title", name: "cta_title", widget: "string"}
-          - label: "CTA URL"
-            name: "cta_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Standfirst", name: "subtitle", widget: "text"}
+
+          - label: "2. Cases"
+            name: "cases"
+            widget: "object"
+            collapsed: true
+            hint: "One entry per case, plus the three wordings printed above each part of every card."
+            fields:
+            - label: "Cases"
+              name: "items"
+              widget: "list"
+              summary: "{{fields.sector}} — {{fields.title}}"
+              fields:
+                - {label: "Sector", name: "sector", widget: "string"}
+                - {label: "Title", name: "title", widget: "string"}
+                - {label: "Challenge", name: "challenge", widget: "text"}
+                - {label: "How Natural Trace Helped", name: "solution", widget: "text"}
+                - {label: "Outcome", name: "outcome", widget: "text"}
+                - {label: "Image", name: "image", widget: "image"}
+                - {label: "Image Alt", name: "image_alt", widget: "string"}
+            - {label: "Wording above the challenge", name: "challenge_label", widget: "string"}
+            - {label: "Wording above the solution", name: "solution_label", widget: "string"}
+            - {label: "Wording above the outcome", name: "outcome_label", widget: "string"}
+
+          - label: "3. Closing call to action"
+            name: "final_cta"
+            widget: "object"
+            collapsed: true
+            hint: "The last band on the page, above the footer."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - label: "Button link"
+              name: "url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
 
-  # ── Careers ─────
+    # ── Careers ─────
 
-  # Insights: news, updates, and articles
+    # Insights: news, updates, and articles
   - name: "insights"
     label: "Insights articles"
     label_singular: "article"
@@ -740,56 +963,71 @@ collections:
         label: "Contact"
         file: "src/_data/contact.yml"
         fields:
-          - {label: "Section Label", name: "section_label", widget: "string"}
-          - {label: "Title", name: "title", widget: "string"}
-          - {label: "Subtitle", name: "subtitle", widget: "text"}
-          - label: "Info Items"
-            name: "info_items"
-            widget: "list"
-            summary: "{{fields.label}}"
+          - label: "1. Page introduction"
+            name: "intro"
+            widget: "object"
+            collapsed: true
+            hint: "The heading, standfirst and the two blocks of contact detail beside the form."
             fields:
-              - {label: "Label", name: "label", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Standfirst", name: "subtitle", widget: "text"}
+            - label: "Contact detail blocks"
+              name: "info_items"
+              widget: "list"
+              summary: "{{fields.label}}"
+              fields:
+                - {label: "Label", name: "label", widget: "string"}
+                - {label: "Description", name: "description", widget: "text"}
 
-          # The form itself. Every label and placeholder on the contact form is
-          # here. Renaming a field is a copy change, not a developer change.
-          - label: "Contact Form"
+            # The form itself. Every label and placeholder on the contact form is
+            # here. Renaming a field is a copy change, not a developer change.
+
+          - label: "2. Enquiry form"
             name: "form"
             widget: "object"
             collapsed: true
+            hint: "Every label and placeholder on the form, and the options in its dropdown."
             fields:
-              - {label: "Form Heading", name: "title", widget: "string"}
-              - {label: "Form Intro", name: "subtitle", widget: "text"}
-              - {label: "First Name: label", name: "first_name_label", widget: "string"}
-              - {label: "First Name: placeholder", name: "first_name_placeholder", widget: "string"}
-              - {label: "Last Name: label", name: "last_name_label", widget: "string"}
-              - {label: "Last Name: placeholder", name: "last_name_placeholder", widget: "string"}
-              - {label: "Email: label", name: "email_label", widget: "string"}
-              - {label: "Email: placeholder", name: "email_placeholder", widget: "string"}
-              - {label: "Company: label", name: "company_label", widget: "string"}
-              - {label: "Company: placeholder", name: "company_placeholder", widget: "string"}
-              - {label: "Job Title: label", name: "job_title_label", widget: "string"}
-              - {label: "Job Title: placeholder", name: "job_title_placeholder", widget: "string"}
-              - {label: "Inquiry Type: label", name: "inquiry_type_label", widget: "string"}
-              - {label: "Inquiry Type: placeholder", name: "inquiry_type_placeholder", widget: "string"}
-              - {label: "Message: label", name: "message_label", widget: "string"}
-              - {label: "Message: placeholder", name: "message_placeholder", widget: "string"}
-              - {label: "Submit button", name: "submit_text", widget: "string"}
+            - label: "Labels and placeholders"
+              name: "labels"
+              widget: "object"
+              collapsed: true
+              fields:
+                - {label: "Form Heading", name: "title", widget: "string"}
+                - {label: "Form Intro", name: "subtitle", widget: "text"}
+                - {label: "First Name: label", name: "first_name_label", widget: "string"}
+                - {label: "First Name: placeholder", name: "first_name_placeholder", widget: "string"}
+                - {label: "Last Name: label", name: "last_name_label", widget: "string"}
+                - {label: "Last Name: placeholder", name: "last_name_placeholder", widget: "string"}
+                - {label: "Email: label", name: "email_label", widget: "string"}
+                - {label: "Email: placeholder", name: "email_placeholder", widget: "string"}
+                - {label: "Company: label", name: "company_label", widget: "string"}
+                - {label: "Company: placeholder", name: "company_placeholder", widget: "string"}
+                - {label: "Job Title: label", name: "job_title_label", widget: "string"}
+                - {label: "Job Title: placeholder", name: "job_title_placeholder", widget: "string"}
+                - {label: "Inquiry Type: label", name: "inquiry_type_label", widget: "string"}
+                - {label: "Inquiry Type: placeholder", name: "inquiry_type_placeholder", widget: "string"}
+                - {label: "Message: label", name: "message_label", widget: "string"}
+                - {label: "Message: placeholder", name: "message_placeholder", widget: "string"}
+                - {label: "Submit button", name: "submit_text", widget: "string"}
 
-          # WARNING: "Value sent to HubSpot" is data, not copy. It is written to
-          # the inquiry_type property on the contact record. Changing it changes
-          # what future enquiries are filed as, and does not rename anything
-          # already in HubSpot. Change the visible label freely; change the value
-          # only deliberately.
-          - label: "Inquiry Type options"
-            name: "inquiry_types"
-            widget: "list"
-            summary: "{{fields.label}}"
-            fields:
-              - {label: "Value sent to HubSpot", name: "value", widget: "string"}
-              - {label: "Label shown to the visitor", name: "label", widget: "string"}
+            # WARNING: "Value sent to HubSpot" is data, not copy. It is written to
+            # the inquiry_type property on the contact record. Changing it changes
+            # what future enquiries are filed as, and does not rename anything
+            # already in HubSpot. Change the visible label freely; change the value
+            # only deliberately.
+            - label: "Enquiry types"
+              name: "types"
+              widget: "list"
+              summary: "{{fields.label}}"
+              fields:
+                - {label: "Value sent to HubSpot", name: "value", widget: "string"}
+                - {label: "Label shown to the visitor", name: "label", widget: "string"}
 
-          - label: "After sending: success"
+
+          - label: "3. Message after a successful send"
+            hint: "Shown when the form reaches HubSpot."
             name: "success"
             widget: "object"
             collapsed: true
@@ -799,7 +1037,9 @@ collections:
 
           # Shown when the enquiry is handed to the visitor's email client
           # instead of going straight to HubSpot.
-          - label: "After sending: email fallback"
+
+          - label: "4. Message when the form falls back to email"
+            hint: "Shown when the send did not go through but the enquiry can still be emailed."
             name: "fallback"
             widget: "object"
             collapsed: true
@@ -807,7 +1047,9 @@ collections:
               - {label: "Heading", name: "title", widget: "string"}
               - {label: "Message", name: "message", widget: "text"}
 
-          - label: "After sending: failure"
+
+          - label: "5. Message when the form fails"
+            hint: "Shown when the send fails outright."
             name: "error"
             widget: "object"
             collapsed: true
@@ -815,7 +1057,9 @@ collections:
               - {label: "Heading", name: "title", widget: "string"}
               - {label: "Message", name: "message", widget: "text"}
 
-          - label: "Closing call to action"
+
+          - label: "6. Closing call to action"
+            hint: "The last band on the page, above the footer."
             name: "cta"
             widget: "object"
             collapsed: true
@@ -836,161 +1080,216 @@ collections:
         label: "Compatibility Quiz"
         file: "src/_data/assess.yml"
         fields:
-          - {label: "Quiz: Label", name: "compat_label", widget: "string"}
-          - {label: "Quiz: Title", name: "compat_title", widget: "string"}
-          - {label: "Quiz: Subtitle", name: "compat_subtitle", widget: "text"}
-          - {label: "Quiz: Welcome Title", name: "compat_welcome_title", widget: "string"}
-          - {label: "Quiz: Welcome Description", name: "compat_welcome_desc", widget: "text"}
-          - {label: "Quiz: Welcome Button", name: "compat_welcome_cta", widget: "string"}
-          - {label: "Quiz: Step 1 Question", name: "compat_step1_question", widget: "string"}
-          - {label: "Quiz: Step 2 Question", name: "compat_step2_question", widget: "string"}
-          - {label: "Quiz: Step 2 Hint", name: "compat_step2_hint", widget: "string"}
-          - {label: "Quiz: Step 3 Question", name: "compat_step3_question", widget: "string"}
-          - {label: "Quiz: Temperature Label", name: "compat_step3_temp_label", widget: "string"}
-          - {label: "Quiz: pH Label", name: "compat_step3_ph_label", widget: "string"}
-          - {label: "Quiz: Next Button", name: "compat_btn_next", widget: "string"}
-          - {label: "Quiz: Back Button", name: "compat_btn_back", widget: "string"}
-          - {label: "Quiz: Confirm Title", name: "compat_confirm_title", widget: "string", required: false, hint: "No longer shown. Kept so the old wording is not lost if the verdict is ever switched off."}
-          - {label: "Quiz: Confirm Description", name: "compat_confirm_desc", widget: "text", required: false, hint: "No longer shown. See above."}
-          - {label: "Quiz: Result CTA", name: "compat_result_cta", widget: "string"}
-          - label: "Quiz: Result CTA URL"
-            name: "compat_result_cta_url"
-            widget: "string"
-            pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
-            hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
-          - {label: "Quiz: Result Small Print", name: "compat_result_note", widget: "text"}
-
-          # The scoring. These are claims about what NaturalTag tolerates, taken
-          # from the NaturalTag Chemical Compatibility Guide v1.2. Changing a
-          # band or a risk level changes what the site tells a prospect about
-          # their product, so it is not a wording edit.
-          - label: "Scoring: pH Bands"
-            name: "compat_ph_options"
-            widget: "list"
-            label_singular: "band"
-            collapsed: true
-            summary: "{{fields.label}} — {{fields.risk}}"
-            hint: "From section 3.1 of the compatibility guide. Do not change a band without checking it against that document."
-            fields:
-              - {label: "What the visitor sees", name: "label", widget: "string"}
-              - {label: "Risk", name: "risk", widget: "select", options: ["low", "medium", "high"]}
-          - label: "Scoring: Temperature Bands"
-            name: "compat_temp_options"
-            widget: "list"
-            label_singular: "band"
-            collapsed: true
-            summary: "{{fields.label}} — {{fields.risk}}"
-            hint: "From section 3.4 of the compatibility guide. 60°C is the threshold that document states."
-            fields:
-              - {label: "What the visitor sees", name: "label", widget: "string"}
-              - {label: "Risk", name: "risk", widget: "select", options: ["low", "medium", "high"]}
-          - label: "Scoring: Risk by Product Form"
-            name: "compat_formulation_risk"
+          - label: "1. Page introduction"
+            name: "intro"
             widget: "object"
             collapsed: true
-            hint: "Low, medium or high for each form the quiz offers. These are the old quiz's own rankings re-expressed, and unlike the pH and temperature bands they have no cited source. Changing one changes what the site tells a prospect."
+            hint: "The heading above the quiz on the Assess My Product page."
             fields:
-              - {label: "Compressed Tablet", name: "tablet", widget: "select", options: ["low", "medium", "high"]}
-              - {label: "Hard Capsule", name: "capsule", widget: "select", options: ["low", "medium", "high"]}
-              - {label: "Chewable", name: "chewable", widget: "select", options: ["low", "medium", "high"]}
-              - {label: "Powder / Sachet", name: "powder", widget: "select", options: ["low", "medium", "high"]}
-              - {label: "Effervescent", name: "effervescent", widget: "select", options: ["low", "medium", "high"]}
-              - {label: "Drops", name: "drops", widget: "select", options: ["low", "medium", "high"]}
-              - {label: "Softgel", name: "softgel", widget: "select", options: ["low", "medium", "high"]}
-              - {label: "Bar", name: "bar", widget: "select", options: ["low", "medium", "high"]}
-              - {label: "Gummy", name: "gummy", widget: "select", options: ["low", "medium", "high"]}
-              - {label: "Liquid / Syrup", name: "liquid", widget: "select", options: ["low", "medium", "high"]}
-              - {label: "Lozenge", name: "lozenge", widget: "select", options: ["low", "medium", "high"]}
-              - {label: "RTD Beverage", name: "rtd", widget: "select", options: ["low", "medium", "high"]}
-          - {label: "Result: Tested and it worked", name: "compat_evidence_yes", widget: "string"}
-          - {label: "Result: Tested and it did not", name: "compat_evidence_no", widget: "text"}
-          - label: "Tested Products"
-            name: "compat_evidence"
-            widget: "list"
-            label_singular: "tested product"
-            collapsed: true
-            summary: "{{fields.category}} / {{fields.outcome}}"
-            hint: "What has actually been through the lab. A row here overrides the pH, temperature and form scoring, because a tested result beats a rule. A pass lifts \"compatible with conditions\" to \"compatible\". A failure drops any answer to \"testing required\", which is deliberately not symmetric: being wrong about a yes costs a client a failed trial, being wrong about a no costs a conversation."
-            fields:
-              - label: "Product category"
-                name: "category"
-                widget: "select"
-                hint: "Must match a category the quiz offers, or the row will never fire."
-                options:
-                  - {label: "Vitamins & Minerals", value: "vitamins"}
-                  - {label: "Omega-3 & Fish Oil", value: "omega"}
-                  - {label: "Probiotics & Gut Health", value: "probiotics"}
-                  - {label: "Joint & Bone", value: "joint"}
-                  - {label: "Collagen & Beauty", value: "collagen"}
-                  - {label: "Herbal & Botanical", value: "herbal"}
-                  - {label: "Sports Nutrition", value: "sports"}
-                  - {label: "Immune Support", value: "immune"}
-                  - {label: "Weight Management", value: "weight"}
-                  - {label: "Specialty Food Ingredients", value: "ingredients"}
-                  - {label: "Specialty Health", value: "specialty"}
-                  - {label: "Functional Foods", value: "functional"}
-              - label: "Product forms tested"
-                name: "forms"
-                widget: "select"
-                multiple: true
-                hint: "Tick every form this result covers. The row fires when a visitor picks any one of them."
-                options:
-                  - {label: "Compressed Tablet", value: "tablet"}
-                  - {label: "Hard Capsule", value: "capsule"}
-                  - {label: "Softgel", value: "softgel"}
-                  - {label: "Gummy", value: "gummy"}
-                  - {label: "Chewable", value: "chewable"}
-                  - {label: "Powder / Sachet", value: "powder"}
-                  - {label: "Liquid / Syrup", value: "liquid"}
-                  - {label: "Effervescent", value: "effervescent"}
-                  - {label: "Lozenge", value: "lozenge"}
-                  - {label: "Bar", value: "bar"}
-                  - {label: "RTD Beverage", value: "rtd"}
-                  - {label: "Drops", value: "drops"}
-              - label: "Outcome"
-                name: "outcome"
-                widget: "select"
-                default: "unconfirmed"
-                hint: "Leave on Unconfirmed until someone has the data in front of them. Compatible and Not compatible both change what a prospect is told about their own product."
-                options:
-                  - {label: "Unconfirmed — tested, result not to hand", value: "unconfirmed"}
-                  - {label: "Compatible — it worked", value: "compatible"}
-                  - {label: "Compatible with conditions", value: "conditions"}
-                  - {label: "Not compatible — it did not work", value: "not-compatible"}
-              - {label: "pH it was tested at", name: "ph", widget: "string", required: false, hint: "Free text, whatever is true. \"5.8\", \"3.2 to 4.1\", \"not measured\"."}
-              - {label: "Temperature it was tested at", name: "temperature", widget: "string", required: false, hint: "Free text. \"ambient\", \"up to 80°C\", \"retort, 121°C\"."}
-              - {label: "Product name", name: "products", widget: "string", required: false, hint: "OPTIONAL, AND PUBLISHED. This file builds into the live site. Only put a client's product name here if they have agreed to be named."}
-              - {label: "Internal note", name: "note", widget: "text", required: false, hint: "Not shown on the site. Accuracy, sample size, anything the next person needs."}
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Standfirst", name: "subtitle", widget: "text"}
 
-          - label: "Result: Compatible"
-            name: "compat_outcomes"
+          - label: "2. Start screen"
+            name: "welcome"
             widget: "object"
             collapsed: true
+            hint: "What a visitor sees before answering anything."
             fields:
-              - label: "Compatible"
-                name: "compatible"
-                widget: "object"
-                fields:
-                  - {label: "Badge", name: "label", widget: "string"}
-                  - {label: "Heading", name: "title", widget: "string"}
-                  - {label: "Body", name: "body", widget: "text"}
-              - label: "Potentially Compatible"
-                name: "conditions"
-                widget: "object"
-                fields:
-                  - {label: "Badge", name: "label", widget: "string"}
-                  - {label: "Heading", name: "title", widget: "string"}
-                  - {label: "Body", name: "body", widget: "text"}
-              - label: "Compatibility Assessment Recommended"
-                name: "testing"
-                widget: "object"
-                fields:
-                  - {label: "Badge", name: "label", widget: "string"}
-                  - {label: "Heading", name: "title", widget: "string"}
-                  - {label: "Body", name: "body", widget: "text"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Description", name: "description", widget: "text"}
+            - {label: "Button text", name: "button", widget: "string"}
+
+          - label: "3. The three questions"
+            name: "questions"
+            widget: "object"
+            collapsed: true
+            hint: "The wording of each step. The answer options themselves are in section 7."
+            fields:
+            - {label: "Question 1", name: "step1", widget: "string"}
+            - {label: "Question 2", name: "step2", widget: "string"}
+            - {label: "Question 2 hint", name: "step2_hint", widget: "string"}
+            - {label: "Question 3", name: "step3", widget: "string"}
+            - {label: "Question 3: temperature label", name: "step3_temp_label", widget: "string"}
+            - {label: "Question 3: pH label", name: "step3_ph_label", widget: "string"}
+
+          - label: "4. Next and Back buttons"
+            name: "navigation"
+            widget: "object"
+            collapsed: true
+            hint: "The wording on the two buttons that move between steps."
+            fields:
+            - {label: "Next button", name: "next", widget: "string"}
+            - {label: "Back button", name: "back", widget: "string"}
+
+          - label: "5. Between the last answer and the result"
+            name: "confirm"
+            widget: "object"
+            collapsed: true
+            hint: "The short holding screen after the third question."
+            fields:
+            - {label: "Heading", name: "title", widget: "string", required: false, hint: "No longer shown. Kept so the old wording is not lost if the verdict is ever switched off."}
+            - {label: "Description", name: "description", widget: "text", required: false, hint: "No longer shown. See above."}
+
+          - label: "6. The result screen"
+            name: "result"
+            widget: "object"
+            collapsed: true
+            hint: "The wording of all three results, plus the note and the button under them. Two of these are registered claims, so check docs/claim-review.yml before rewording a badge or a heading."
+            fields:
+            - {label: "Button text", name: "cta", widget: "string"}
+            - label: "Button link"
+              name: "cta_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Note under the result", name: "note", widget: "text"}
+
+            # The scoring. These are claims about what NaturalTag tolerates, taken
+            # from the NaturalTag Chemical Compatibility Guide v1.2. Changing a
+            # band or a risk level changes what the site tells a prospect about
+            # their product, so it is not a wording edit.
+            - label: "The three results"
+              name: "outcomes"
+              widget: "object"
+              collapsed: true
+              fields:
+                - label: "Compatible"
+                  name: "compatible"
+                  widget: "object"
+                  fields:
+                    - {label: "Badge", name: "label", widget: "string"}
+                    - {label: "Heading", name: "title", widget: "string"}
+                    - {label: "Body", name: "body", widget: "text"}
+                - label: "Potentially Compatible"
+                  name: "conditions"
+                  widget: "object"
+                  fields:
+                    - {label: "Badge", name: "label", widget: "string"}
+                    - {label: "Heading", name: "title", widget: "string"}
+                    - {label: "Body", name: "body", widget: "text"}
+                - label: "Compatibility Assessment Recommended"
+                  name: "testing"
+                  widget: "object"
+                  fields:
+                    - {label: "Badge", name: "label", widget: "string"}
+                    - {label: "Heading", name: "title", widget: "string"}
+                    - {label: "Body", name: "body", widget: "text"}
 
 
-  # ── About Us ─────
+    # ── About Us ─────
+
+
+          - label: "7. Scoring — changes who sees which result"
+            name: "scoring"
+            widget: "object"
+            collapsed: true
+            hint: "Not wording. Editing anything here changes the answer a visitor is given. The pH bands and the 60C threshold come from Compatibility Guide v1.2 and must not be moved without Ying Xiang."
+            fields:
+            - label: "pH bands"
+              name: "ph_options"
+              widget: "list"
+              label_singular: "band"
+              collapsed: true
+              summary: "{{fields.label}} — {{fields.risk}}"
+              hint: "From section 3.1 of the compatibility guide. Do not change a band without checking it against that document."
+              fields:
+                - {label: "What the visitor sees", name: "label", widget: "string"}
+                - {label: "Risk", name: "risk", widget: "select", options: ["low", "medium", "high"]}
+            - label: "Temperature bands"
+              name: "temp_options"
+              widget: "list"
+              label_singular: "band"
+              collapsed: true
+              summary: "{{fields.label}} — {{fields.risk}}"
+              hint: "From section 3.4 of the compatibility guide. 60°C is the threshold that document states."
+              fields:
+                - {label: "What the visitor sees", name: "label", widget: "string"}
+                - {label: "Risk", name: "risk", widget: "select", options: ["low", "medium", "high"]}
+            - label: "Risk by product format"
+              name: "formulation_risk"
+              widget: "object"
+              collapsed: true
+              hint: "Low, medium or high for each form the quiz offers. These are the old quiz's own rankings re-expressed, and unlike the pH and temperature bands they have no cited source. Changing one changes what the site tells a prospect."
+              fields:
+                - {label: "Compressed Tablet", name: "tablet", widget: "select", options: ["low", "medium", "high"]}
+                - {label: "Hard Capsule", name: "capsule", widget: "select", options: ["low", "medium", "high"]}
+                - {label: "Chewable", name: "chewable", widget: "select", options: ["low", "medium", "high"]}
+                - {label: "Powder / Sachet", name: "powder", widget: "select", options: ["low", "medium", "high"]}
+                - {label: "Effervescent", name: "effervescent", widget: "select", options: ["low", "medium", "high"]}
+                - {label: "Drops", name: "drops", widget: "select", options: ["low", "medium", "high"]}
+                - {label: "Softgel", name: "softgel", widget: "select", options: ["low", "medium", "high"]}
+                - {label: "Bar", name: "bar", widget: "select", options: ["low", "medium", "high"]}
+                - {label: "Gummy", name: "gummy", widget: "select", options: ["low", "medium", "high"]}
+                - {label: "Liquid / Syrup", name: "liquid", widget: "select", options: ["low", "medium", "high"]}
+                - {label: "Lozenge", name: "lozenge", widget: "select", options: ["low", "medium", "high"]}
+                - {label: "RTD Beverage", name: "rtd", widget: "select", options: ["low", "medium", "high"]}
+
+          - label: "8. Tested-product evidence"
+            name: "evidence"
+            widget: "object"
+            collapsed: true
+            hint: "Real results that override the scoring. Only name a client product here if they have agreed in writing to be named."
+            fields:
+            - {label: "Wording when we have tested it", name: "yes", widget: "string"}
+            - {label: "Wording when we have not", name: "no", widget: "text"}
+            - label: "Tested products"
+              name: "items"
+              widget: "list"
+              label_singular: "tested product"
+              collapsed: true
+              summary: "{{fields.category}} / {{fields.outcome}}"
+              hint: "What has actually been through the lab. A row here overrides the pH, temperature and form scoring, because a tested result beats a rule. A pass lifts \"compatible with conditions\" to \"compatible\". A failure drops any answer to \"testing required\", which is deliberately not symmetric: being wrong about a yes costs a client a failed trial, being wrong about a no costs a conversation."
+              fields:
+                - label: "Product category"
+                  name: "category"
+                  widget: "select"
+                  hint: "Must match a category the quiz offers, or the row will never fire."
+                  options:
+                    - {label: "Vitamins & Minerals", value: "vitamins"}
+                    - {label: "Omega-3 & Fish Oil", value: "omega"}
+                    - {label: "Probiotics & Gut Health", value: "probiotics"}
+                    - {label: "Joint & Bone", value: "joint"}
+                    - {label: "Collagen & Beauty", value: "collagen"}
+                    - {label: "Herbal & Botanical", value: "herbal"}
+                    - {label: "Sports Nutrition", value: "sports"}
+                    - {label: "Immune Support", value: "immune"}
+                    - {label: "Weight Management", value: "weight"}
+                    - {label: "Specialty Food Ingredients", value: "ingredients"}
+                    - {label: "Specialty Health", value: "specialty"}
+                    - {label: "Functional Foods", value: "functional"}
+                - label: "Product forms tested"
+                  name: "forms"
+                  widget: "select"
+                  multiple: true
+                  hint: "Tick every form this result covers. The row fires when a visitor picks any one of them."
+                  options:
+                    - {label: "Compressed Tablet", value: "tablet"}
+                    - {label: "Hard Capsule", value: "capsule"}
+                    - {label: "Softgel", value: "softgel"}
+                    - {label: "Gummy", value: "gummy"}
+                    - {label: "Chewable", value: "chewable"}
+                    - {label: "Powder / Sachet", value: "powder"}
+                    - {label: "Liquid / Syrup", value: "liquid"}
+                    - {label: "Effervescent", value: "effervescent"}
+                    - {label: "Lozenge", value: "lozenge"}
+                    - {label: "Bar", value: "bar"}
+                    - {label: "RTD Beverage", value: "rtd"}
+                    - {label: "Drops", value: "drops"}
+                - label: "Outcome"
+                  name: "outcome"
+                  widget: "select"
+                  default: "unconfirmed"
+                  hint: "Leave on Unconfirmed until someone has the data in front of them. Compatible and Not compatible both change what a prospect is told about their own product."
+                  options:
+                    - {label: "Unconfirmed — tested, result not to hand", value: "unconfirmed"}
+                    - {label: "Compatible — it worked", value: "compatible"}
+                    - {label: "Compatible with conditions", value: "conditions"}
+                    - {label: "Not compatible — it did not work", value: "not-compatible"}
+                - {label: "pH it was tested at", name: "ph", widget: "string", required: false, hint: "Free text, whatever is true. \"5.8\", \"3.2 to 4.1\", \"not measured\"."}
+                - {label: "Temperature it was tested at", name: "temperature", widget: "string", required: false, hint: "Free text. \"ambient\", \"up to 80°C\", \"retort, 121°C\"."}
+                - {label: "Product name", name: "products", widget: "string", required: false, hint: "OPTIONAL, AND PUBLISHED. This file builds into the live site. Only put a client's product name here if they have agreed to be named."}
+                - {label: "Internal note", name: "note", widget: "text", required: false, hint: "Not shown on the site. Accuracy, sample size, anything the next person needs."}
 
   - name: "settings"
     label: "Site & SEO Settings"

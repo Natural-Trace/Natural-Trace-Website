@@ -40,7 +40,7 @@ claims:
   - id: about-natural-food-grade
     status: open
     source: src/_data/about.yml
-    field: choose_groups
+    field: choose.groups
     phrase: '100% natural, food-grade authentication'
     published_on: ["/about/"]
     why: >
@@ -51,7 +51,7 @@ claims:
   - id: about-ppm-no-impact
     status: open
     source: src/_data/about.yml
-    field: choose_groups
+    field: choose.groups
     phrase: 'Added at parts-per-million with no impact on taste, appearance or functionality'
     published_on: ["/about/"]
     why: >
@@ -62,7 +62,7 @@ claims:
   - id: about-facilities
     status: open
     source: src/_data/about.yml
-    field: choose_groups
+    field: choose.groups
     phrase: 'Manufactured in ISO 22000, SFA and FDA-registered facilities'
     published_on: ["/about/"]
     why: >
@@ -73,7 +73,7 @@ claims:
   - id: about-gras
     status: open
     source: src/_data/about.yml
-    field: choose_groups
+    field: choose.groups
     phrase: 'Self-determined FDA GRAS status'
     published_on: ["/about/"]
     why: >
@@ -85,7 +85,7 @@ claims:
   - id: about-matrices-20
     status: open
     source: src/_data/about.yml
-    field: matrices_title
+    field: matrices.title
     phrase: 'Validated Across 20+ Categories Most at Risk of Fraud'
     published_on: ["/about/"]
     why: >
@@ -100,7 +100,7 @@ claims:
   - id: faq-global-frameworks
     status: open
     source: src/_data/faq.yml
-    field: questions
+    field: content.questions
     phrase: 'compatible with global food regulatory frameworks'
     published_on: ["/faq/"]
     why: >
@@ -111,7 +111,7 @@ claims:
   - id: faq-zero-impact
     status: open
     source: src/_data/faq.yml
-    field: questions
+    field: content.questions
     phrase: 'Zero impact on product characteristics'
     published_on: ["/faq/"]
     why: >
@@ -122,7 +122,7 @@ claims:
   - id: faq-cannot-be-removed
     status: open
     source: src/_data/faq.yml
-    field: questions
+    field: content.questions
     phrase: 'It cannot be replicated or removed.'
     published_on: ["/faq/"]
     why: >
@@ -134,7 +134,7 @@ claims:
   - id: faq-binary-result
     status: open
     source: src/_data/faq.yml
-    field: questions
+    field: content.questions
     phrase: 'NaturalDetect™ provides a clear binary result: Authenticated or Not Authenticated. A certificate of analysis is generated automatically via NaturalCloud™.'
     published_on: ["/faq/"]
     why: >
@@ -147,7 +147,7 @@ claims:
   - id: faq-shelf-life
     status: open
     source: src/_data/faq.yml
-    field: questions
+    field: content.questions
     phrase: 'NaturalTag™ remains detectable throughout the standard shelf life of tagged products.'
     published_on: ["/faq/"]
     why: >
@@ -159,7 +159,7 @@ claims:
   - id: detect-coa-wording
     status: open
     source: src/_data/naturaldetect.yml
-    field: capabilities
+    field: features.items
     phrase: 'Client ready Certificate of Analysis reporting'
     published_on: ["/naturaldetect/"]
     why: >
@@ -170,7 +170,7 @@ claims:
   - id: detect-standards
     status: open
     source: src/_data/naturaldetect.yml
-    field: capabilities
+    field: features.items
     phrase: 'Standards compliance: ISO 22174, ISO 17025, ISO20837, ISO21571 and MIQE 2.0 Guidelines'
     published_on: ["/naturaldetect/"]
     why: >
@@ -183,7 +183,7 @@ claims:
   - id: tag-robust-stability
     status: open
     source: src/_data/naturaltag.yml
-    field: benefits
+    field: features.items
     phrase: 'Robust stability, survives supply chain handling'
     published_on: ["/naturaltag/"]
     why: >
@@ -193,7 +193,7 @@ claims:
   - id: tag-facility
     status: open
     source: src/_data/naturaltag.yml
-    field: benefits
+    field: features.items
     phrase: 'Manufactured in Singapore in SFA, ISO22000, GMP, FDA registered facility'
     published_on: ["/naturaltag/"]
     why: >
@@ -208,7 +208,7 @@ claims:
   - id: assess-ph-bands
     status: open
     source: src/_data/assess.yml
-    field: compat_ph_options
+    field: scoring.ph_options
     published_on: ["/assess/"]
     why: >
       Bands taken from section 3.1 of the compatibility guide. Confirm they are
@@ -218,7 +218,7 @@ claims:
   - id: assess-temp-bands
     status: open
     source: src/_data/assess.yml
-    field: compat_temp_options
+    field: scoring.temp_options
     published_on: ["/assess/"]
     why: >
       Built on the single temperature threshold the guide states in section 3.4,
@@ -230,7 +230,7 @@ claims:
   - id: assess-formulation-risk
     status: open
     source: src/_data/assess.yml
-    field: compat_formulation_risk
+    field: scoring.formulation_risk
     published_on: ["/assess/"]
     why: >
       Judgement calls about which formulations are harder on the tag, not
@@ -240,7 +240,7 @@ claims:
   - id: assess-evidence-wording
     status: open
     source: src/_data/assess.yml
-    field: compat_evidence
+    field: evidence.items
     published_on: ["/assess/"]
     why: >
       The products field here publishes client names to the live site. Only name
@@ -255,7 +255,7 @@ claims:
   - id: assess-guide-scope
     status: open
     source: src/_data/assess.yml
-    field: compat_ph_options
+    field: scoring.ph_options
     published_on: ["/assess/"]
     why: >
       The NaturalTag Chemical Compatibility Guide v1.2, April 2026, is written
@@ -271,7 +271,7 @@ claims:
   - id: assess-raspberry-conflict
     status: open
     source: src/_data/assess.yml
-    field: compat_evidence
+    field: evidence.items
     published_on: []
     why: >
       Two records of the same result disagree. productList.csv lists raspberry
@@ -291,7 +291,7 @@ claims:
   - id: assess-outcome-conditions-title
     status: open
     source: src/_data/assess.yml
-    field: compat_outcomes
+    field: result.outcomes
     phrase: 'Your product is potentially compatible for NaturalTag™'
     published_on: ["/assess/"]
     why: >
@@ -325,7 +325,7 @@ claims:
   - id: assess-outcome-conditions-badge
     status: open
     source: src/_data/assess.yml
-    field: compat_outcomes
+    field: result.outcomes
     phrase: 'Potentially Compatible'
     published_on: ["/assess/"]
     why: >

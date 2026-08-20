@@ -9,21 +9,21 @@ permalink: /careers/
   <div class="container" style="max-width:900px">
     <a class="privacy-back" href="/">Back to Home</a>
     <div style="text-align:center;margin-bottom:3rem">
-      <span class="section-label">{{ careers.section_label }}</span>
-      <h2 class="section-title">{{ careers.title | replace("Product Authentication", "<span class=\"nowrap\">Product Authentication</span>") | safe }}</h2>
-      <p class="section-subtitle" style="margin:0 auto">{{ careers.intro }}</p>
+      <span class="section-label">{{ careers.intro.label }}</span>
+      <h2 class="section-title">{{ careers.intro.title | replace("Product Authentication", "<span class=\"nowrap\">Product Authentication</span>") | safe }}</h2>
+      <p class="section-subtitle" style="margin:0 auto">{{ careers.intro.text }}</p>
     </div>
 
     <!-- Tab navigation -->
     <div class="careers-tabs">
-      <button class="careers-tab active" onclick="switchCareersTab('openings')">{{ careers.tab_openings_label }}</button>
-      <button class="careers-tab" onclick="switchCareersTab('internship')">{{ careers.tab_internship_label }}</button>
+      <button class="careers-tab active" onclick="switchCareersTab('openings')">{{ careers.intro.openings_tab }}</button>
+      <button class="careers-tab" onclick="switchCareersTab('internship')">{{ careers.intro.internship_tab }}</button>
     </div>
 
     <!-- Tab: Open Positions -->
     <div class="careers-panel active" id="careers-openings">
-      {% if careers.positions | length %}
-      {% for position in careers.positions %}
+      {% if careers.openings.positions | length %}
+      {% for position in careers.openings.positions %}
       <div style="background:#fff;border-radius:16px;border:1px solid #E5E7EB;padding:2rem;margin-bottom:1.5rem">
         <h3 style="font-family:'Montserrat',sans-serif;font-size:1.3rem;color:var(--dark);margin-bottom:.5rem">{{ position.title }}</h3>
         <p style="font-size:.85rem;color:var(--sage);font-weight:600;margin-bottom:.75rem">{{ position.department }} &middot; {{ position.location }}</p>
@@ -33,8 +33,8 @@ permalink: /careers/
       {% else %}
       <div style="text-align:center;padding:4rem 2rem;background:#fff;border-radius:16px;border:1px solid #E5E7EB">
         <div style="font-size:2.5rem;margin-bottom:1rem;opacity:.4"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
-        <h3 style="font-family:'Montserrat',sans-serif;font-size:1.4rem;color:var(--dark);margin-bottom:.75rem">{{ careers.no_openings.title }}</h3>
-        <p style="font-size:.92rem;color:var(--muted);max-width:480px;margin:0 auto;line-height:1.7">{{ careers.no_openings.description }}</p>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:1.4rem;color:var(--dark);margin-bottom:.75rem">{{ careers.openings.empty.title }}</h3>
+        <p style="font-size:.92rem;color:var(--muted);max-width:480px;margin:0 auto;line-height:1.7">{{ careers.openings.empty.description }}</p>
       </div>
       {% endif %}
     </div>
@@ -43,58 +43,58 @@ permalink: /careers/
     <div class="careers-panel" id="careers-internship">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start">
         <div>
-          <h3 style="font-family:'Montserrat',sans-serif;font-size:1.3rem;color:var(--dark);margin-bottom:1rem">{{ careers.internship.title | safe }}</h3>
-          <p style="font-size:.92rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem">{{ careers.internship.description | safe }}</p>
+          <h3 style="font-family:'Montserrat',sans-serif;font-size:1.3rem;color:var(--dark);margin-bottom:1rem">{{ careers.internships.details.title | safe }}</h3>
+          <p style="font-size:.92rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem">{{ careers.internships.details.description | safe }}</p>
           <div style="font-size:.88rem;color:var(--muted);line-height:1.9">
-            <p style="font-weight:600;color:var(--dark);margin-bottom:.5rem">{{ careers.internship.expectations_label }}</p>
-            {% for item in careers.internship.expectations %}
+            <p style="font-weight:600;color:var(--dark);margin-bottom:.5rem">{{ careers.internships.details.expectations_label }}</p>
+            {% for item in careers.internships.details.expectations %}
             <p>&#8226; {{ item }}</p>
             {% endfor %}
           </div>
-          <p style="font-size:.85rem;color:var(--sage);font-weight:600;margin-top:1.5rem">{{ careers.internship.location }}</p>
+          <p style="font-size:.85rem;color:var(--sage);font-weight:600;margin-top:1.5rem">{{ careers.internships.details.location }}</p>
         </div>
         <div class="contact-form" style="margin:0">
-          <h3>{{ careers.internship_form.title }}</h3>
-          <p>{{ careers.internship_form.subtitle }}</p>
+          <h3>{{ careers.internships.form.title }}</h3>
+          <p>{{ careers.internships.form.subtitle }}</p>
           <form id="internshipForm" onsubmit="return handleInternshipSubmit(event)"
                 data-internship-email="{{ integrations.careers.internship_email }}"
                 data-internship-subject="{{ integrations.careers.internship_subject_prefix }}">
             <div class="form-row">
               <div class="form-group">
-                <label>{{ careers.internship_form.first_name_label }}<span class="req" aria-hidden="true">*</span></label>
-                <input type="text" name="firstName" required placeholder="{{ careers.internship_form.first_name_placeholder }}">
+                <label>{{ careers.internships.form.first_name_label }}<span class="req" aria-hidden="true">*</span></label>
+                <input type="text" name="firstName" required placeholder="{{ careers.internships.form.first_name_placeholder }}">
               </div>
               <div class="form-group">
-                <label>{{ careers.internship_form.last_name_label }}<span class="req" aria-hidden="true">*</span></label>
-                <input type="text" name="lastName" required placeholder="{{ careers.internship_form.last_name_placeholder }}">
+                <label>{{ careers.internships.form.last_name_label }}<span class="req" aria-hidden="true">*</span></label>
+                <input type="text" name="lastName" required placeholder="{{ careers.internships.form.last_name_placeholder }}">
               </div>
             </div>
             <div class="form-group">
-              <label>{{ careers.internship_form.email_label }}<span class="req" aria-hidden="true">*</span></label>
-              <input type="email" name="email" required placeholder="{{ careers.internship_form.email_placeholder }}">
+              <label>{{ careers.internships.form.email_label }}<span class="req" aria-hidden="true">*</span></label>
+              <input type="email" name="email" required placeholder="{{ careers.internships.form.email_placeholder }}">
             </div>
             <div class="form-group">
-              <label>{{ careers.internship_form.university_label }}<span class="req" aria-hidden="true">*</span></label>
-              <input type="text" name="university" required placeholder="{{ careers.internship_form.university_placeholder }}">
+              <label>{{ careers.internships.form.university_label }}<span class="req" aria-hidden="true">*</span></label>
+              <input type="text" name="university" required placeholder="{{ careers.internships.form.university_placeholder }}">
             </div>
             <div class="form-group">
-              <label>{{ careers.internship_form.interest_label }}<span class="req" aria-hidden="true">*</span></label>
+              <label>{{ careers.internships.form.interest_label }}<span class="req" aria-hidden="true">*</span></label>
               <select name="interest" required>
-                <option value="" disabled selected>{{ careers.internship_form.interest_placeholder }}</option>
-                {% for area in careers.areas_of_interest %}
+                <option value="" disabled selected>{{ careers.internships.form.interest_placeholder }}</option>
+                {% for area in careers.internships.areas %}
                 <option value="{{ area }}">{{ area }}</option>
                 {% endfor %}
               </select>
             </div>
             <div class="form-group">
-              <label>{{ careers.internship_form.message_label }}<span class="req" aria-hidden="true">*</span></label>
-              <textarea name="message" required placeholder="{{ careers.internship_form.message_placeholder }}"></textarea>
+              <label>{{ careers.internships.form.message_label }}<span class="req" aria-hidden="true">*</span></label>
+              <textarea name="message" required placeholder="{{ careers.internships.form.message_placeholder }}"></textarea>
             </div>
-            <button type="submit" class="form-submit">{{ careers.internship_form.submit_text }}</button>
+            <button type="submit" class="form-submit">{{ careers.internships.form.submit_text }}</button>
           </form>
           <div class="form-success" id="internshipSuccess">
-            <h4>{{ careers.success.title }}</h4>
-            <p>{{ careers.success.message }}</p>
+            <h4>{{ careers.internships.success.title }}</h4>
+            <p>{{ careers.internships.success.message }}</p>
           </div>
         </div>
       </div>

@@ -57,10 +57,10 @@ const verdictSrc = block(/function verdict\(\) \{/, '{', '}');
 
 /* Closure variables the lifted function reads. Same shape the page gives it. */
 let state = null;
-const tempOptions     = A.compat_temp_options;
-const phOptions       = A.compat_ph_options;
-const formulationRisk = A.compat_formulation_risk;
-const evidence        = A.compat_evidence;
+const tempOptions     = A.scoring.temp_options;
+const phOptions       = A.scoring.ph_options;
+const formulationRisk = A.scoring.formulation_risk;
+const evidence        = A.evidence.items;
 
 /* verdict() reads `state`, `tempOptions`, `phOptions`, `formulationRisk` and
    `evidence` by name. A direct eval, rather than (0, eval), is what makes the
@@ -93,8 +93,8 @@ for (const cat of categories) {
           phRisk: phOptions[p].risk || 'low',
           evidence: out.proven || '',
           key: out.key,
-          label: A.compat_outcomes[out.key].label,
-          title: A.compat_outcomes[out.key].title,
+          label: A.result.outcomes[out.key].label,
+          title: A.result.outcomes[out.key].title,
         });
       }
     }
@@ -118,8 +118,8 @@ const tally = rows.reduce((a, r) => (a[r.key] = (a[r.key] || 0) + 1, a), {});
 if (process.argv.includes('--json')) {
   console.log(JSON.stringify({ rows, covered, tally }, null, 2));
 } else {
-  const payload = JSON.stringify({ rows, covered, tally, outcomes: A.compat_outcomes,
-                                   note: A.compat_result_note });
+  const payload = JSON.stringify({ rows, covered, tally, outcomes: A.result.outcomes,
+                                   note: A.result.note });
   const html = (await readFile('scripts/assess-matrix.template.html', 'utf8'))
     .replace('/*__DATA__*/null', payload);
   await writeFile('docs/assess-matrix.html', html);

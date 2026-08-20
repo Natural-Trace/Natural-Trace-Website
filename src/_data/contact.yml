@@ -1,48 +1,50 @@
-section_label: "Contact"
-title: "Contact our team"
-subtitle: "Request a compatibility assessment or talk to our team about protecting a premium ingredient, verifying manufacturing partners, or investigating suspicious products."
+intro:
+  label: "Contact"
+  title: "Contact our team"
+  subtitle: "Request a compatibility assessment or talk to our team about protecting a premium ingredient, verifying manufacturing partners, or investigating suspicious products."
 
-# Countries only, no street addresses. Asked for in the 11 Aug meeting: a
-# contact page that lists one office reads as a one-office company.
-info_items:
-  - label: "Locations"
-    description: "Singapore, Switzerland, United States"
-  - label: "What We Do"
-    description: "In-product authentication via NaturalTag&trade; integration. We tag your product at source and verify it downstream with NaturalDetect&trade;."
+  # Countries only, no street addresses. Asked for in the 11 Aug meeting: a
+  # contact page that lists one office reads as a one-office company.
+  info_items:
+    - label: "Locations"
+      description: "Singapore, Switzerland, United States"
+    - label: "What We Do"
+      description: "In-product authentication via NaturalTag&trade; integration. We tag your product at source and verify it downstream with NaturalDetect&trade;."
 
 form:
-  title: "Send Us a Message"
-  subtitle: "Fill out the form below and our team will be in touch."
-  first_name_label: "First Name"
-  first_name_placeholder: "Your first name"
-  last_name_label: "Last Name"
-  last_name_placeholder: "Your last name"
-  email_label: "Email"
-  email_placeholder: "your@company.com"
-  company_label: "Company"
-  company_placeholder: "Your company name"
-  job_title_label: "Job Title"
-  job_title_placeholder: "Your role"
-  # The only optional field on the form. It is not labelled as such: required
-  # fields carry a red asterisk and optional ones carry nothing, so Topic is
-  # the one label on the form with no marker after it. Everything else is
-  # required on HubSpot's side and a blank value is never sent, which makes
-  # HubSpot reject the whole submission.
-  inquiry_type_label: "Topic"
-  inquiry_type_placeholder: "Select a topic"
-  message_label: "Message"
-  message_placeholder: "Tell us about your project or requirements..."
-  submit_text: "Send Message"
+  labels:
+    title: "Send Us a Message"
+    subtitle: "Fill out the form below and our team will be in touch."
+    first_name_label: "First Name"
+    first_name_placeholder: "Your first name"
+    last_name_label: "Last Name"
+    last_name_placeholder: "Your last name"
+    email_label: "Email"
+    email_placeholder: "your@company.com"
+    company_label: "Company"
+    company_placeholder: "Your company name"
+    job_title_label: "Job Title"
+    job_title_placeholder: "Your role"
+    # The only optional field on the form. It is not labelled as such: required
+    # fields carry a red asterisk and optional ones carry nothing, so Topic is
+    # the one label on the form with no marker after it. Everything else is
+    # required on HubSpot's side and a blank value is never sent, which makes
+    # HubSpot reject the whole submission.
+    inquiry_type_label: "Topic"
+    inquiry_type_placeholder: "Select a topic"
+    message_label: "Message"
+    message_placeholder: "Tell us about your project or requirements..."
+    submit_text: "Send Message"
 
-inquiry_types:
-  - value: "NaturalTag Integration"
-    label: "NaturalTag&trade; Integration"
-  - value: "Supply Chain Traceability"
-    label: "Supply Chain Traceability"
-  - value: "Partnership"
-    label: "Partnership Inquiry"
-  - value: "General"
-    label: "General Inquiry"
+  types:
+    - value: "NaturalTag Integration"
+      label: "NaturalTag&trade; Integration"
+    - value: "Supply Chain Traceability"
+      label: "Supply Chain Traceability"
+    - value: "Partnership"
+      label: "Partnership Inquiry"
+    - value: "General"
+      label: "General Inquiry"
 
 success:
   title: "Message Sent"
