@@ -59,6 +59,14 @@ This has happened twice:
 - 19 Aug 2026, `src/_data/assess.yml`, 114 comment lines, including every
   `CLAIM REVIEW` marker and the citations behind the compatibility scoring.
 
+`src/_data/home.yml` was going to be the third and the worst, at 80 lines. It
+had survived only because nobody had happened to save the Home entry yet, and
+regrouping that panel on 20 Aug made a save far more likely rather than less.
+Those 80 lines are now in `docs/content-decisions.md` and the file carries a
+signpost instead. **The remaining data files have not been swept** — `about.yml`
+and the three solution files are the next ones worth reading before someone
+opens them in the CMS.
+
 **Do not record anything durable as a YAML comment in a file listed in
 `src/admin/config.yml`.** It will be deleted, silently, by someone who was only
 fixing a typo.
@@ -229,3 +237,8 @@ matter for the quiz work:
 - `rollback-v1.md` (in `docs/`) — DNS, Pages and the domain cutover
 - `rollback-v2.md` (in `docs/`) — the quiz copy change and the CI claim gate,
   the versions everything was pinned at, and the checks to run after a revert
+- `content-decisions.md` (in `docs/`) — why the words in `src/_data/*.yml` say
+  what they say: who asked, when, and what was rejected. Covers home.yml today.
+  Read it before changing hero or challenge copy; it carries the one constraint
+  that spans two fields ("counterfeit" appears in the hero claims and in the
+  fourth value card, and the two have to move together)

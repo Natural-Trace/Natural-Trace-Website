@@ -80,6 +80,11 @@ collections:
   # All eight start collapsed, so the panel opens as a contents page rather
   # than a scroll. Opening one is a single click; finding the right field in a
   # list of forty-one was not.
+  #
+  # The hints below are the durable copy of anything an editor needs while
+  # typing. Decap never writes this file — it only reads it — so a hint here
+  # survives a save, and a comment in home.yml does not. Why the wording is what
+  # it is, and who asked for it, is in docs/content-decisions.md.
   - name: "home"
     label: "Home"
     files:
