@@ -9,7 +9,7 @@ cases:
     - sector: "Dietary Supplements"
       title: "Proving Presence"
       challenge: "A supplement brand needed a way to verify that its proprietary botanical blend was present in finished products, beyond standard ingredient testing."
-      solution: "NaturalTag was incorporated into the branded ingredient before manufacturing, allowing the finished product to be tested for the assigned tag."
+      solution: "NaturalTag™ was incorporated into the branded ingredient before manufacturing, allowing the finished product to be tested for the assigned tag."
       outcome: "The brand gained a practical way to verify the presence of its proprietary ingredient throughout the supply chain."
       # Bryan's pick, 12 Aug, closing the last of Kirsty's use-case image list.
       # In the repo rather than hotlinked from Unsplash, so the case study's
@@ -26,7 +26,7 @@ cases:
     - sector: "Agri-food: Fresh Produce"
       title: "Fruit Identity"
       challenge: "A premium berry farm wanted to prove the origin of its produce after it left the farm when growing under license."
-      solution: "NaturalTag was applied to pre-harvest treatments, allowing fruit to be authenticated later in the supply chain."
+      solution: "NaturalTag™ was applied to pre-harvest treatments, allowing fruit to be authenticated later in the supply chain."
       outcome: "The grower strengthened provenance verification and increased confidence for brand owners, customers and exporters."
       image: "/assets/images/usecase-fruit-identity.webp"
       image_alt: "Rows of strawberry plants growing under a polytunnel"

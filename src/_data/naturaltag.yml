@@ -9,7 +9,7 @@ hero:
   # photograph; when it is empty it falls back to the logo panel below, which is
   # what NaturalCloud still uses while its video is being made.
   image: "/assets/images/naturaltag-product.webp"
-  image_alt: "A gloved hand holding a labelled vial of NaturalTag in front of a stainless steel fermentation vessel"
+  image_alt: "A gloved hand holding a labelled vial of NaturalTag™ in front of a stainless steel fermentation vessel"
   # Where the crop sits. The photograph is 3:2 and the panel is 4:3, so about
   # 12% of the width is cut. Centred, that left the vial at 41% across and
   # Kirsty asked for it centred. Pushed hard left it sits at 47%, which is as
@@ -27,7 +27,7 @@ hero:
   # background works and a photograph does not. Clear it to remove the mark.
   mark: "/assets/logos/NaturalTag-icon.png"
   logo: "/assets/logos/NaturalTag-icon.png"
-  logo_alt: "NaturalTag, carrying the Natural Trace mark"
+  logo_alt: "NaturalTag™, carrying the Natural Trace mark"
 
 why:
   title: "Why NaturalTag™?"

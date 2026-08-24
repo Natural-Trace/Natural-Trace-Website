@@ -36,9 +36,9 @@ hero:
   # and no internal URL on a public page.
   video: "/assets/video/naturalcloud-heatmap.mp4"
   video_poster: "/assets/video/naturalcloud-heatmap-poster.webp"
-  video_alt: "The NaturalCloud portal showing NaturalTag test results plotted on a world map"
+  video_alt: "The NaturalCloud™ portal showing NaturalTag™ test results plotted on a world map"
   logo: "/assets/logos/NaturalCloud-icon.png"
-  logo_alt: "NaturalCloud"
+  logo_alt: "NaturalCloud™"
 
 features:
   title: "Benefits"

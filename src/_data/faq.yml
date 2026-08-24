@@ -63,7 +63,7 @@ content:
     # Integration
     - category: "integration"
       question: "Will I need to change my manufacturing process?"
-      answer: "NaturalTag integrates into existing mixing and formulation processes with minimal process disruption."
+      answer: "NaturalTag™ integrates into existing mixing and formulation processes with minimal process disruption."
     - category: "integration"
       question: "How long does onboarding take?"
       answer: "Typical onboarding takes 4 to 6 weeks: compatibility testing, validation, and integration."

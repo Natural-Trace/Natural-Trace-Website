@@ -23,7 +23,7 @@ hero:
   # background works and a photograph does not. Clear it to remove the mark.
   mark: "/assets/logos/NaturalDetect-icon.png"
   logo: "/assets/logos/NaturalDetect-icon.png"
-  logo_alt: "NaturalDetect"
+  logo_alt: "NaturalDetect™"
 
 features:
   title: "NaturalDetect™ Features"

@@ -9,7 +9,7 @@ intro:
     - label: "Locations"
       description: "Singapore, Switzerland, United States"
     - label: "What We Do"
-      description: "In-product authentication via NaturalTag&trade; integration. We tag your product at source and verify it downstream with NaturalDetect&trade;."
+      description: "In-product authentication via NaturalTag™ integration. We tag your product at source and verify it downstream with NaturalDetect™."
 
 form:
   labels:
@@ -38,7 +38,7 @@ form:
 
   types:
     - value: "NaturalTag Integration"
-      label: "NaturalTag&trade; Integration"
+      label: "NaturalTag™ Integration"
     - value: "Supply Chain Traceability"
       label: "Supply Chain Traceability"
     - value: "Partnership"
