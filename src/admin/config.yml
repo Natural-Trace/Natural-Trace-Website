@@ -1359,8 +1359,8 @@ collections:
               - {label: "Closing question", name: "cta_heading", widget: "string"}
               - {label: "Button text", name: "cta_text", widget: "string"}
               - {label: "Button link", name: "cta_url", widget: "string", hint: "Where the button goes. /contact/ unless there is a reason otherwise."}
-          - label: "2. Left jar (Milo)"
-            name: "milo"
+          - label: "2. Left jar (chocolate malt powder)"
+            name: "malt"
             widget: "object"
             collapsed: true
             hint: "Shown to someone who scanned the LEFT jar's QR code."

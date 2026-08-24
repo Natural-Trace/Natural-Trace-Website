@@ -1,7 +1,7 @@
 # QR scan tracking for event stands
 
 First used for the IP Week 2026 stand: two jars of near-identical brown powder
-(left: Milo, right: chocolate protein powder), one QR code per jar, and the
+(left: a chocolate malt powder, right: chocolate protein powder), one QR code per jar, and the
 question "could you tell which one is authentic?". Scanning a code reveals what
 that jar holds and counts the scan.
 
@@ -10,11 +10,11 @@ that jar holds and counts the scan.
 Three parts, in the order a scan meets them:
 
 1. **The printed QR codes** encode worker URLs, not site URLs:
-   - Left jar: `https://natural-trace-qr.natural-trace.workers.dev/milo`
+   - Left jar: `https://natural-trace-qr.natural-trace.workers.dev/malt`
    - Right jar: `https://natural-trace-qr.natural-trace.workers.dev/protein`
 2. **A Cloudflare worker** (`qr/worker.js`, a sibling of the CMS auth worker)
    records the scan and redirects to the site in one hop.
-3. **Two reveal pages** on the site, `/scan/milo/` and `/scan/protein/`,
+3. **Two reveal pages** on the site, `/scan/malt/` and `/scan/protein/`,
    content in `src/_data/scan.yml`, editable in the CMS under "Event QR pages".
    They are unlinked, out of the sitemap and noindex — their only audience is
    someone standing at the stand.
@@ -29,11 +29,11 @@ of scan: no cookie, no personal data stored, no consent needed, every scan
 counted.
 
 The redirect still carries UTM parameters (`utm_campaign=ip-week-2026`,
-`utm_content=milo`/`protein`), so the subset of visitors who *do* accept
+`utm_content=malt`/`protein`), so the subset of visitors who *do* accept
 cookies also appear in HubSpot attributed to the stand. The worker's number is
 the real one; HubSpot's is a floor, not a count.
 
-Each scan is stored as its own KV key (`milo:<timestamp>:<random>`) rather
+Each scan is stored as its own KV key (`malt:<timestamp>:<random>`) rather
 than incrementing a single counter, because KV is eventually consistent and a
 get-add-put on one key can lose simultaneous scans. Details in the comment at
 the top of `qr/worker.js`.
@@ -71,21 +71,25 @@ purpose — it exposes nothing but how many times each jar was scanned, and a
 secret would mean one more thing to manage for a number that goes on a slide
 anyway.
 
-Anything that is not `/milo`, `/protein` or `/stats` redirects to the homepage
+Anything that is not `/malt`, `/protein`, the `/milo` alias or `/stats` redirects to the homepage
 uncounted, so a mangled reprint of the URL fails soft.
 
 ## The next event
 
 One line per new code in `CODES` in `qr/worker.js` (plus a reveal page if the
-new stand needs one), redeploy, generate a new QR. Never rename or reuse a path
-that has already been printed — the paper keeps working as long as the path
-keeps existing.
+new stand needs one), redeploy, generate a new QR. Never reuse a path that has
+already been printed for something else — the paper keeps working as long as
+the path keeps meaning what it meant.
+
+Renaming one is survivable, as the `/milo` to `/malt` change showed: keep the
+old path in `CODES` pointing at the same bucket, and every code already in the
+world carries on working while new ones use the new name.
 
 ## Never say the two powders look identical
 
 The first draft of `scan.yml` said the jars were "to the eye, close to
 identical" and that "colour, texture and smell are easy to imitate". They are
-not identical: the Milo is a visibly darker, redder brown than the protein
+not identical: the malt powder is a visibly darker, redder brown than the protein
 powder, and the reader is holding their phone next to both jars when they read
 the sentence. A claim the visitor can disprove by looking up is worse than no
 claim, and on this stand it discredits the demonstration at the exact moment
@@ -106,10 +110,18 @@ works. Do not "tighten" it back to identical.
 The wording in `src/_data/scan.yml` is a first draft written 24 Aug 2026 and
 has not been through Kirsty. Two things to look at deliberately:
 
-- "Milo" is named on `/scan/milo/`. It is a Nestlé brand; the mention is
-  factual (the jar really holds Milo) and the page is noindex and event-only,
-  but naming a third-party brand on our own domain is Kirsty's call, at an IP
-  conference of all places. The generic fallback is "a chocolate malt drink".
+- **The brand in the left jar is not named, and must not be.** The first draft
+  named it. It was pulled on 24 Aug on Bryan's instruction: it is a third
+  party's mark, and putting it in our own copy at an IP conference is the wrong
+  place to be casual about someone else's trademark. It reads "a chocolate malt
+  powder" throughout. The demonstration does not need the brand — the point is
+  that two powders sold as the same thing cannot be told apart by looking, and
+  a name does no work in that sentence.
+
+  The URL went with it, `/scan/milo/` to `/scan/malt/`, because the address bar
+  is copy the visitor reads too. The worker still answers `/milo` and counts it
+  as malt, so nothing generated before the rename can break; see the comment
+  above `CODES` in `qr/worker.js` for when that alias can go.
 - The second card originally ended "no matter how similar two products look",
   an absolute nobody has approved, on a page that publishes. It now says the
   test "confirms the product's identity and origin at batch level" — the

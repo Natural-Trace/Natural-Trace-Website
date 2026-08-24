@@ -11,8 +11,9 @@
  *
  * Routes:
  *
- *   GET /milo      count a scan of the left jar, redirect to its reveal page
+ *   GET /malt      count a scan of the left jar, redirect to its reveal page
  *   GET /protein   count a scan of the right jar, redirect to its reveal page
+ *   GET /milo      legacy alias for /malt, counted as malt
  *   GET /stats     the counts, as JSON: per code, per day, and in total
  *   anything else  redirect to the homepage, uncounted
  *
@@ -36,17 +37,29 @@ const SITE = "https://natural-trace.com";
 // Adding a code for the next event is one line here plus a reveal page on the
 // site. The path is what gets printed, so keep it short and never rename one
 // that is already on paper somewhere.
+//
+// `code` is the counting bucket and `target` is where the scan lands. They are
+// separate so that two paths can share a bucket, which is what makes a rename
+// survivable: /milo was the original path for the left jar and was dropped on
+// 24 Aug because the brand name should not appear in a URL a visitor can read
+// in their address bar. It still resolves, and still counts as malt, so any
+// code generated before the rename keeps working. It can go once the printed
+// run for this event is retired.
+const UTM = "utm_source=qr&utm_medium=offline&utm_campaign=ip-week-2026";
+const MALT = { code: "malt", target: `${SITE}/scan/malt/?${UTM}&utm_content=malt` };
+
 const CODES = {
-  "/milo": `${SITE}/scan/milo/?utm_source=qr&utm_medium=offline&utm_campaign=ip-week-2026&utm_content=milo`,
-  "/protein": `${SITE}/scan/protein/?utm_source=qr&utm_medium=offline&utm_campaign=ip-week-2026&utm_content=protein`,
+  "/malt": MALT,
+  "/protein": { code: "protein", target: `${SITE}/scan/protein/?${UTM}&utm_content=protein` },
+  "/milo": MALT,
 };
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
-    const target = CODES[url.pathname];
-    if (target) return recordScan(url.pathname.slice(1), target, request, env, ctx);
+    const hit = CODES[url.pathname];
+    if (hit) return recordScan(hit.code, hit.target, request, env, ctx);
 
     if (url.pathname === "/stats") return stats(env);
 
@@ -72,8 +85,9 @@ function recordScan(code, target, request, env, ctx) {
 
 async function stats(env) {
   const out = {};
-  for (const path of Object.keys(CODES)) {
-    const code = path.slice(1);
+  // Unique buckets, not paths: /milo and /malt share one, and listing paths
+  // would report the same scans twice under two names.
+  for (const code of [...new Set(Object.values(CODES).map((c) => c.code))]) {
     const days = {};
     let total = 0;
 

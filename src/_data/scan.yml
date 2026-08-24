@@ -19,18 +19,17 @@ shared:
   cta_text: "Talk to us"
   cta_url: "/contact/"
 
-milo:
-  title: "This jar is a chocolate malt drink"
+malt:
+  title: "This jar is a chocolate malt powder"
   reveal: >-
-    The left jar holds Milo, a chocolate malt drink powder. The jar beside it
-    is chocolate protein powder — a different product at a different price.
-    You could see the two were not the same. You could not have said which
-    was which.
+    The left jar holds a chocolate malt powder. The jar beside it is chocolate
+    protein powder — a different product at a different price. You could see
+    the two were not the same. You could not have said which was which.
 
 protein:
   title: "This jar is chocolate protein powder"
   reveal: >-
-    The right jar holds chocolate protein powder. The jar beside it is Milo, a
-    chocolate malt drink powder — a different product at a different price.
-    You could see the two were not the same. You could not have said which
-    was which.
+    The right jar holds chocolate protein powder. The jar beside it is a
+    chocolate malt powder — a different product at a different price. You
+    could see the two were not the same. You could not have said which was
+    which.
