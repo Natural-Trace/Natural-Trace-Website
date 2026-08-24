@@ -1346,16 +1346,45 @@ collections:
         label: "Jar reveal page (IP Week stand)"
         file: "src/_data/scan.yml"
         fields:
-          - label: "1. The reveal — the top of the page"
+          - label: "1. Opening — the top of the page"
             name: "opening"
             widget: "object"
             collapsed: true
-            hint: "The first thing someone sees after scanning. This is where the two jars are given away, so say which is on the left and which is on the right."
+            hint: "The first thing someone sees after scanning. It sets up the guess. IMPORTANT: do not say which powder is which here — that is what the two tap-to-reveal cards below are for, and giving it away here leaves them with nothing to reveal."
             fields:
               - {label: "Small label above the headline", name: "label", widget: "string"}
-              - {label: "Headline", name: "title", widget: "string"}
-              - {label: "The reveal", name: "reveal", widget: "text", hint: "What is in each jar. The reader is holding their phone in front of both, so left and right have to be the right way round."}
-          - label: "2. First card — why looking is not enough"
+              - {label: "Headline", name: "title", widget: "string", hint: "A question, not an answer. \"Which one is which?\""}
+              - {label: "Opening paragraph", name: "lead", widget: "text", hint: "Name both products, but not which is which, and invite the guess."}
+              - {label: "Photograph of both powders", name: "image", widget: "image", hint: "The two powders together. Square works best here."}
+              - {label: "Photograph description", name: "image_alt", widget: "string", hint: "What is in the picture, for anyone using a screen reader. Describe the powders without saying which is which."}
+
+          - label: "2. The two tap-to-reveal cards"
+            name: "reveal"
+            widget: "object"
+            collapsed: true
+            hint: "The guess. Each card shows a photograph of one powder; tapping it reveals what that powder is. Left card first, right card second, matching the order in the photograph above."
+            fields:
+              - {label: "Wording on the closed card", name: "prompt", widget: "string", hint: "Shown over both cards until they are tapped. \"Tap to reveal\"."}
+              - label: "Left card — the darker powder"
+                name: "left"
+                widget: "object"
+                collapsed: true
+                fields:
+                  - {label: "Photograph", name: "image", widget: "image"}
+                  - {label: "Photograph description", name: "image_alt", widget: "string", hint: "For screen readers. Describe the colour, not the identity — this shows before the answer does."}
+                  - {label: "What it is", name: "title", widget: "string", hint: "Revealed on tap."}
+                  - {label: "The line underneath", name: "body", widget: "text"}
+              - label: "Right card — the paler powder"
+                name: "right"
+                widget: "object"
+                collapsed: true
+                fields:
+                  - {label: "Photograph", name: "image", widget: "image"}
+                  - {label: "Photograph description", name: "image_alt", widget: "string", hint: "For screen readers. Describe the colour, not the identity — this shows before the answer does."}
+                  - {label: "What it is", name: "title", widget: "string", hint: "Revealed on tap."}
+                  - {label: "The line underneath", name: "body", widget: "text"}
+
+          - label: "3. First card — why looking is not enough"
             name: "question_title"
             widget: "string"
             hint: "Heading of the left-hand card."
@@ -1363,7 +1392,7 @@ collections:
             name: "question_body"
             widget: "text"
             hint: "Why looking at the two powders cannot settle it. Do not claim the powders look identical — they do not, and the reader can see that. See docs/qr-scan-tracking.md."
-          - label: "3. Second card — what we do about it"
+          - label: "4. Second card — what we do about it"
             name: "answer_title"
             widget: "string"
             hint: "Heading of the right-hand card."
@@ -1371,7 +1400,7 @@ collections:
             name: "answer_body"
             widget: "text"
             hint: "What NaturalTag and NaturalDetect do. Keep to identity and origin: NaturalDetect does not measure how much of something is present."
-          - label: "4. Closing call to action"
+          - label: "5. Closing call to action"
             name: "cta_heading"
             widget: "string"
             hint: "The question above the button."

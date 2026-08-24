@@ -21,12 +21,59 @@ eleventyExcludeFromCollections: true
 noindex: true
 ---
 
-<section class="challenge" style="padding-top:9rem">
+{#- Nothing in this hero may name which pile is which. The two cards below are
+    a guess, and a heading that gives the answer away first would leave them
+    revealing something the reader already knows. -#}
+<section class="challenge scan-hero" style="padding-top:9rem">
   <div class="container">
-    <div class="challenge-text" style="max-width:800px">
-      <span class="section-label">{{ scan.opening.label }}</span>
-      <h2 class="section-title">{{ scan.opening.title }}</h2>
-      <p class="challenge-lead" style="margin-top:1.5rem">{{ scan.opening.reveal }}</p>
+    <div class="challenge-grid">
+      <div class="challenge-text">
+        <span class="section-label">{{ scan.opening.label }}</span>
+        <h2 class="section-title">{{ scan.opening.title }}</h2>
+        <p class="challenge-lead" style="margin-top:1.5rem">{{ scan.opening.lead }}</p>
+      </div>
+      {% if scan.opening.image %}
+      <div class="solution-photo">
+        <img src="{{ scan.opening.image }}" alt="{{ scan.opening.image_alt }}" width="1000" height="1000">
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{#- The reveal.
+
+    <details>/<summary> rather than a scripted flip, for the reasons already
+    written above the disclosure in partials/how-it-works.njk: it opens on a
+    tap, it opens from a keyboard, a screen reader announces the open and
+    closed state, and the answer is in the page whether or not it is showing.
+
+    A CSS 3D flip was the obvious alternative and was rejected. Both faces of a
+    flip have to be absolutely positioned, which forces a fixed card height, and
+    every word here is CMS-editable — the first person to write a longer
+    sentence would silently clip their own text on a phone, with nothing to
+    tell them. A disclosure has no height to get wrong.
+
+    The image sits inside the <summary>, so the whole picture is the tap target
+    rather than a small label under it. Explicit width and height on every img
+    so the page does not jump while they load, which on a booth connection is
+    the difference between tapping the card and tapping whatever lands there
+    instead. -#}
+<section class="scan-reveal">
+  <div class="container">
+    <div class="scan-cards">
+      {% for side in [scan.reveal.left, scan.reveal.right] %}
+      <details class="scan-card">
+        <summary>
+          <img src="{{ side.image }}" alt="{{ side.image_alt }}" width="1000" height="1000" loading="lazy">
+          <span class="scan-prompt">{{ scan.reveal.prompt }}</span>
+        </summary>
+        <div class="scan-answer">
+          <h3>{{ side.title }}</h3>
+          <p>{{ side.body }}</p>
+        </div>
+      </details>
+      {% endfor %}
     </div>
   </div>
 </section>

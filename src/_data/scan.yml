@@ -2,15 +2,36 @@
 # this file on save. Why the copy says what it says: docs/qr-scan-tracking.md.
 #
 # One page, one QR code, from 24 Aug 2026. It was a page per jar until then.
+#
+# The two powders are behind a tap from 24 Aug. Nothing above the cards may
+# say which jar is which, or the guess is over before it is offered.
 
 opening:
   label: "You scanned the jars on our stand"
-  title: "One is malt powder. One is protein powder."
-  reveal: >-
-    The jar on the left holds a chocolate malt powder. The jar on the right
-    holds chocolate protein powder — a different product at a different price.
-    Seeing that they differ is easy. Knowing which is which is the part that
-    looking cannot do.
+  title: "Which one is which?"
+  lead: >-
+    One of these is a chocolate malt powder. The other is chocolate protein
+    powder — a different product at a different price. Have a guess, then tap
+    a pile to find out whether you were right.
+  image: /assets/images/scan-both.webp
+  image_alt: "Two cones of brown powder side by side, one darker and redder than the other"
+
+reveal:
+  prompt: "Tap to reveal"
+  left:
+    image: /assets/images/scan-malt.webp
+    image_alt: "A cone of dark reddish-brown powder"
+    title: "Chocolate malt powder"
+    body: >-
+      The darker of the two. If the colour gave it away, you guessed well — but
+      a guess is not evidence, and nobody can ship a guess to a customer.
+  right:
+    image: /assets/images/scan-protein.webp
+    image_alt: "A cone of pale golden-brown powder"
+    title: "Chocolate protein powder"
+    body: >-
+      The paler of the two, and typically the more expensive, which is what
+      makes it worth substituting in the first place.
 
 question_title: "Which one is authentic?"
 question_body: >-

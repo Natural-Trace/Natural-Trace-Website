@@ -2398,3 +2398,60 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
     .vp-grid-centred > .vp-card{grid-column:auto}
   }
 }
+
+/* ── Event QR reveal page (/scan/) ─────────────────────────────────────────
+   Two powders behind a tap. Built on native <details>, matching .how-more
+   above: opens on tap and on Enter, announces its own state, and the answer
+   is in the document whether or not it is showing.
+
+   Deliberately no fixed height anywhere in this block. A flip card needs one,
+   because both faces are absolutely positioned, and every string here is
+   CMS-editable — a fixed height turns "someone wrote a longer sentence" into
+   "the last line is missing on a phone", which nothing reports.
+
+   The <summary> holds the photograph, so the tap target is the whole picture
+   rather than a word underneath it. Sized well above the 44px minimum that
+   touch guidance asks for, because the audience is standing at a stand
+   holding a phone one-handed. */
+.scan-cards{display:grid;grid-template-columns:1fr;gap:1.5rem;max-width:900px;margin:0 auto}
+.scan-card{
+  background:#EDEEE9;border:1px solid transparent;border-radius:16px;overflow:hidden;
+  transition:transform .35s,box-shadow .35s,border-color .35s;
+}
+.scan-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(107,114,73,.35)}
+.scan-card summary{cursor:pointer;list-style:none;display:block;position:relative}
+.scan-card summary::-webkit-details-marker{display:none}
+.scan-card summary img{display:block;width:100%;height:auto}
+/* Focus ring on the summary itself. Without this the keyboard user gets the
+   browser default outline drawn around a block that is mostly image, which on
+   a light photograph is close to invisible. */
+.scan-card summary:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+
+.scan-prompt{
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.9rem 1rem;font-size:.95rem;font-weight:600;color:var(--teal);
+  background:rgba(59,102,107,.07);
+}
+.scan-prompt::after{
+  content:'';width:.5rem;height:.5rem;border:solid var(--teal);
+  border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-2px);transition:transform .25s;
+}
+/* The prompt is the affordance, so it goes once the card is open — leaving a
+   "Tap to reveal" above an answer that is already revealed reads as a second,
+   broken control. */
+.scan-card[open] .scan-prompt{display:none}
+
+.scan-answer{padding:1.5rem}
+.scan-answer h3{font-size:1.06rem;font-weight:700;color:var(--dark);line-height:1.3;letter-spacing:-.01em;margin:0 0 .6rem}
+.scan-answer p{font-size:.9rem;line-height:1.7;color:rgba(26,30,46,.75);margin:0}
+
+@media(min-width:768px){
+  .scan-cards{grid-template-columns:1fr 1fr;gap:2rem}
+}
+
+/* The hero photograph is square, unlike every other .solution-photo on the
+   site, which are landscape. Left in its own aspect ratio rather than cropped
+   to 4:3: the point of the picture is the two piles side by side, and a 4:3
+   crop of a square takes a bite out of one of them. */
+.scan-hero .solution-photo{aspect-ratio:1/1}
+.scan-hero .solution-photo img{width:100%;height:100%;object-fit:cover}
