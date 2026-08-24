@@ -184,6 +184,44 @@ for (const f of pages) {
 }
 console.log(`  ${stubs} redirect stubs`);
 
+// ── 4d. the site-wide search hold, cross-referenced against the sitemap
+//
+// base.njk stamps data-hold="site" on every page when search_indexable is
+// false in src/_data/site.yml. Section 3 deliberately looks past that marker
+// so the hold does not switch off the title, description and canonical checks
+// underneath it. The price of that exemption is that a completely held site
+// passes this script in silence.
+//
+// Which is what happened. The domain-cutover branch went live on
+// natural-trace.com on 18 August 2026 still holding; rollback-v1.md had
+// flagged the risk in writing and nothing in CI enforced it. The hold came
+// off seven hours later in 9449faa, but Google had already crawled, and on
+// 23 August Search Console reported "Excluded by 'noindex' tag" against the
+// sitemap. Five days to hear about a seven-hour window, and the only reason
+// anyone found the cause was that the git history still had it.
+//
+// Reported, not failed, on purpose. A hold is a legitimate state and the
+// entire point of it is to deploy while holding, so failing the build would
+// make the switch unusable and someone would delete the check instead.
+//
+// Cross-referenced against the sitemap rather than simply counting held
+// pages, because the pair is the actual defect: a URL listed in sitemap.xml
+// that also says noindex tells a crawler to index it and not to index it in
+// the same breath. That contradiction is what Google reports. A held page
+// that is not in the sitemap is quiet and harmless, which is why the redirect
+// stubs and 404.html are noindex every day of the week and this stays silent
+// about them.
+const held = [];
+for (const f of pages) {
+  const html = await readFile(f, 'utf8');
+  if (!/data-hold="site"/.test(html)) continue;
+  const path = '/' + relative(ROOT, f).replace(/index\.html$/, '').replace(/\\/g, '/');
+  /* Same prefix allowance as the stub check above: the sitemap carries
+     absolute URLs built with PATH_PREFIX, this walks the built directory. */
+  const prefixed = [path, (process.env.PATH_PREFIX || '/').replace(/\/$/, '') + path];
+  if (prefixed.some((x) => sitemapPaths.has(x))) held.push(path);
+}
+
 // ── 5. the contact form still exists and still has somewhere to send to
 const contact = await readFile(join(ROOT, 'contact/index.html'), 'utf8').catch(() => '');
 if (!/<form/i.test(contact)) note('contact page has no <form>');
@@ -317,6 +355,20 @@ if (hotlinked.length) {
   console.log(`\n${hotlinked.length} image(s) hosted on someone else's server:`);
   for (const h of hotlinked) console.log('  - ' + h);
   console.log('  Save these into the site instead, through the CMS, so they cannot disappear.');
+}
+
+if (held.length) {
+  /* Loud on purpose, and last, so it is the line still on screen when the
+     run finishes. The hotlinked notice above it is a standing annoyance;
+     this one means the next deploy withdraws the site from search. */
+  console.log(`\nSEARCH HOLD IS ON. ${held.length} page(s) are listed in sitemap.xml and also say noindex:`);
+  for (const h of held.slice(0, 8)) console.log('  - ' + h);
+  if (held.length > 8) console.log(`  ...and ${held.length - 8} more`);
+  console.log('  search_indexable is false in src/_data/site.yml.');
+  console.log('  Deploying this asks Google to index pages that tell it not to. It does not');
+  console.log('  fail here, but Search Console reports it against the sitemap days later, by');
+  console.log('  which time the crawl has already happened. Set search_indexable: true before');
+  console.log('  going live, or leave it and accept the site stays out of search until you do.');
 }
 
 console.log(`checked ${pages.length} pages, ${externals.size} external links${CHECK_EXTERNAL ? '' : ' (skipped)'}`);
