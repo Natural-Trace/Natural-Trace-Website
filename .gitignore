@@ -5,6 +5,11 @@ node_modules/
 _site/
 _site*/
 
+# Wrangler's local cache and state, created under qr/ the first time any kv or
+# deploy command runs. Machine-local scratch, not configuration: the worker's
+# real settings are qr/wrangler.toml and the KV namespace id in it.
+.wrangler/
+
 # The compatibility quiz answer key: every one of the 1,088 answer combinations
 # and the outcome it reaches, built by scripts/assess-matrix.mjs.
 #
