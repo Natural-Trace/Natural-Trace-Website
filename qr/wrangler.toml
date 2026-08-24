@@ -10,13 +10,15 @@ name = "natural-trace-qr"
 main = "worker.js"
 compatibility_date = "2026-01-01"
 
-# One-time setup, before the first deploy:
+# Created 24 Aug 2026 with `npx wrangler kv namespace create SCANS`, which
+# prints the id below. The id is an address, not a secret: it is safe to commit,
+# and only this Cloudflare account can read the namespace it points at.
 #
-#   npx wrangler kv namespace create SCANS
-#
-# prints an id. Paste it below in place of PASTE_NAMESPACE_ID_HERE. The id is
-# an address, not a secret — it is safe to commit, and only this Cloudflare
-# account can read the namespace it points at.
+# If that command ever returns "Authentication error [code: 10000]" on a 401,
+# it is usually a stale OAuth access token rather than a missing permission.
+# Check with `npx wrangler kv namespace list` — if the read succeeds, the token
+# has refreshed and the failing command will work on a second run. Only if the
+# read fails too is it worth re-running `npx wrangler login`.
 [[kv_namespaces]]
 binding = "SCANS"
-id = "PASTE_NAMESPACE_ID_HERE"
+id = "393dedf4655847b7b46c21e1ca5244f7"
