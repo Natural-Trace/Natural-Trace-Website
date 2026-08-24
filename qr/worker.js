@@ -1,11 +1,12 @@
 /**
  * QR scan counter for event collateral.
  *
- * The physical stand (first outing: IP Week 2026) carries one QR code per jar.
- * Each code points at this worker, not at the site, because the site cannot
- * count scans: its only analytics is the HubSpot script, which loads after the
- * visitor accepts the cookie banner, and nobody standing at a booth does that.
- * This worker records the scan server-side — no cookie, nothing personal — and
+ * The physical stand (first outing: IP Week 2026) carries a single QR code on
+ * its front card. It points at this worker rather than at the site, because
+ * the site cannot count scans: its only analytics is the HubSpot script, which
+ * loads after the visitor accepts the cookie banner, and nobody standing at a
+ * booth does that.
+ * This worker records the scan server-side (no cookie, nothing personal) and
  * redirects to the reveal page in one hop, so every scan is counted whatever
  * the visitor does afterwards.
  *
@@ -18,10 +19,10 @@
  *   GET /stats     the counts, as JSON: per code, per day, and in total
  *   anything else  redirect to the homepage, uncounted
  *
- * Each scan is stored as its own KV key, milo:<timestamp>:<random>, rather
+ * Each scan is stored as its own KV key, jars:<timestamp>:<random>, rather
  * than incrementing one counter. KV is eventually consistent, so two phones
  * scanning at the same moment doing get-add-put on a single key can lose one
- * of the two counts — separate keys cannot collide, and the timestamps mean
+ * of the two counts. Separate keys cannot collide, and the timestamps mean
  * /stats can show scans per day without any extra bookkeeping. The random
  * suffix covers two scans landing on the same millisecond.
  *
@@ -44,7 +45,7 @@ const SITE = "https://natural-trace.com";
 // counts, which is what makes a path survive being superseded.
 //
 // The stand carried a code per jar until 24 Aug, when Alrik asked for a single
-// code and a single page — which is also what the printed stand card already
+// code and a single page, which is also what the printed stand card already
 // shows. /jars is that code. The three older paths still resolve and still
 // count under their own names, so anything generated earlier keeps working and
 // stays attributable; they can go once this event is over.

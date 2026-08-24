@@ -15,13 +15,13 @@ Three parts, in the order a scan meets them:
    records the scan and redirects to the site in one hop.
 3. **One reveal page** on the site, `/scan/`, content in `src/_data/scan.yml`,
    editable in the CMS under "Event QR pages". It is unlinked, out of the
-   sitemap and noindex — its only audience is someone standing at the stand.
+   sitemap and noindex. Its only audience is someone standing at the stand.
 
 ## Why the worker exists at all
 
 The site cannot count scans. Its only analytics is the HubSpot script, and that
-loads **after** the visitor accepts the cookie banner — at a booth, almost
-nobody does, so linking the QR straight to the site would count a fraction of
+loads **after** the visitor accepts the cookie banner. At a booth almost nobody
+does, so linking the QR straight to the site would count a fraction of the
 scans and look like a quiet event. The worker counts server-side at the moment
 of scan: no cookie, no personal data stored, no consent needed, every scan
 counted.
@@ -53,7 +53,7 @@ npx wrangler deploy
 
 Order matters for going live: the reveal page must be on the site (pushed to
 `main`) before the code is printed, but the worker can be deployed and tested
-first — a scan before the page exists just lands on a 404 after being counted.
+first: a scan before the page exists just lands on a 404 after being counted.
 
 Redeploy the worker whenever a path or a redirect target changes. The site and
 the worker deploy separately, so a rename pushed to `main` without a
@@ -70,7 +70,7 @@ https://natural-trace-qr.natural-trace.workers.dev/stats
 ```
 
 returns JSON: per code path, a total and a per-day breakdown. The URL is public
-on purpose — it exposes nothing but how many times the stand was scanned, and a
+on purpose: it exposes nothing but how many times the stand was scanned, and a
 secret would mean one more thing to manage for a number that goes on a slide
 anyway.
 
@@ -85,7 +85,7 @@ uncounted, so a mangled reprint of the URL fails soft.
 
 One line per new code in `CODES` in `qr/worker.js` (plus a reveal page if the
 new stand needs one), redeploy, generate a new QR. Never reuse a path that has
-already been printed for something else — the paper keeps working as long as
+already been printed for something else. The paper keeps working as long as
 the path keeps meaning what it meant.
 
 Renaming one is survivable, as the `/milo` to `/malt` to `/jars` moves showed:
@@ -106,19 +106,19 @@ distinguish, so the per-jar split is gone rather than merely unreported.
 
 If it is ever wanted back, print two codes pointing at `/malt` and `/protein`.
 Both still work, both still count separately, and both now land on the same
-combined page — so it is a printing decision and needs no code change at all.
+combined page, so it is a printing decision and needs no code change at all.
 
 ## Never say the two powders look identical
 
 The first draft of `scan.yml` said the jars were "to the eye, close to
 identical" and that "colour, texture and smell are easy to imitate". They are
-not identical: the malt powder is a visibly darker, redder brown than the protein
-powder, and the reader is holding their phone next to both jars when they read
-the sentence. A claim the visitor can disprove by looking up is worse than no
-claim, and on this stand it discredits the demonstration at the exact moment
-we are asking them to trust a measurement.
+not identical: the malt powder is a visibly darker, redder brown than the
+protein powder, and the reader is holding their phone next to both jars when
+they read the sentence. A claim the visitor can disprove by looking up is worse
+than no claim, and on this stand it discredits the demonstration at the exact
+moment we are asking them to trust a measurement.
 
-The printed poster already gets this right — "**If** these were sold as the
+The printed poster already gets this right. "**If** these were sold as the
 same product, could you tell which one is authentic?" is conditional, and
 survives two different browns. The page follows the poster: it concedes the
 difference and makes that the argument. Appearance can show two things differ;
@@ -138,7 +138,7 @@ has not been through Kirsty. Two things to look at deliberately:
   named it. It was pulled on 24 Aug on Bryan's instruction: it is a third
   party's mark, and putting it in our own copy at an IP conference is the wrong
   place to be casual about someone else's trademark. It reads "a chocolate malt
-  powder" throughout. The demonstration does not need the brand — the point is
+  powder" throughout. The demonstration does not need the brand. The point is
   that two powders sold as the same thing cannot be told apart by looking, and
   a name does no work in that sentence.
 
@@ -147,7 +147,7 @@ has not been through Kirsty. Two things to look at deliberately:
   nowhere. `/milo` still resolves for safety; see the comment above `CODES` in
   `qr/worker.js` for when it can go.
 - **The opening line of the first card was cut on 24 Aug.** It read "The two
-  are not even the same shade of brown, and that tells you nothing" — Alrik
+  are not even the same shade of brown, and that tells you nothing". Alrik
   read it as a double negative, and it is: two negations stacked in one
   sentence, asking the reader to hold both before the point arrives. The card
   now opens on the positive claim, "Appearance can show you that two products
@@ -155,12 +155,12 @@ has not been through Kirsty. Two things to look at deliberately:
   the replacement must not drift back into asserting the powders look alike.
 - The second card originally ended "no matter how similar two products look",
   an absolute nobody has approved, on a page that publishes. It now says the
-  test "confirms the product's identity and origin at batch level" — the
+  test "confirms the product's identity and origin at batch level", the
   sanctioned formulation, and deliberately not a claim about dosage. The
   register flags this species of wording elsewhere (`tag-robust-stability`,
   `faq-binary-result`); do not reintroduce an absolute here.
 - The claim wording sticks to the approved vocabulary (food-grade,
   PCR-detectable, batch-level) and none of it touches a phrase in
   `docs/claim-review.yml`, but any rewrite should keep clear of "verify
-  dosage" territory — NaturalDetect verifies identity and origin, not
+  dosage" territory. NaturalDetect verifies identity and origin, not
   quantity.

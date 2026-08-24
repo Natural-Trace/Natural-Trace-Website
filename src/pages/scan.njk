@@ -5,7 +5,7 @@ summary: "What was in the two jars you scanned on the Natural Trace stand."
 permalink: /scan/
 # The page behind the QR code on the physical stand. It is deliberately
 # unlinked from the navigation, kept out of the sitemap (the exclusion below is
-# what does that — see src/sitemap.njk) and marked noindex, because a search
+# what does that; see src/sitemap.njk) and marked noindex, because a search
 # visitor landing on "you scanned the jars" with no jars in front of them would
 # only be confused.
 #
@@ -16,7 +16,7 @@ permalink: /scan/
 # now only one thing to scan. docs/qr-scan-tracking.md records the trade.
 #
 # Scan counting happens before this page loads, in the Cloudflare worker under
-# qr/ — nothing on this page tracks anything.
+# qr/. Nothing on this page tracks anything.
 eleventyExcludeFromCollections: true
 noindex: true
 ---
@@ -50,7 +50,7 @@ noindex: true
 
     A CSS 3D flip was the obvious alternative and was rejected. Both faces of a
     flip have to be absolutely positioned, which forces a fixed card height, and
-    every word here is CMS-editable — the first person to write a longer
+    every word here is CMS-editable. The first person to write a longer
     sentence would silently clip their own text on a phone, with nothing to
     tell them. A disclosure has no height to get wrong.
 

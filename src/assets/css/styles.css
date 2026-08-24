@@ -2406,7 +2406,7 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
 
    Deliberately no fixed height anywhere in this block. A flip card needs one,
    because both faces are absolutely positioned, and every string here is
-   CMS-editable — a fixed height turns "someone wrote a longer sentence" into
+   CMS-editable, and a fixed height turns "someone wrote a longer sentence" into
    "the last line is missing on a phone", which nothing reports.
 
    The <summary> holds the photograph, so the tap target is the whole picture
@@ -2436,7 +2436,7 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
   content:'';width:.5rem;height:.5rem;border:solid var(--teal);
   border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-2px);transition:transform .25s;
 }
-/* The prompt is the affordance, so it goes once the card is open — leaving a
+/* The prompt is the affordance, so it goes once the card is open. Leaving a
    "Tap to reveal" above an answer that is already revealed reads as a second,
    broken control. */
 .scan-card[open] .scan-prompt{display:none}
