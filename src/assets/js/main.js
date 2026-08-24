@@ -650,3 +650,50 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.key === 'Escape' && isOpen()) close();
   });
 });
+
+/* Loading a LinkedIn post, once someone has asked for it.
+ *
+ * The strip at the foot of the Insights page ships as cards with a button, not
+ * as frames. This swaps a card's contents for the frame when it is pressed.
+ *
+ * Do not "simplify" this by putting the iframe straight in the template. The
+ * frame is a LinkedIn page: the moment it loads, LinkedIn sets its cookies on
+ * everyone who opened /insights/, including the people who declined in the
+ * consent bar. That bar asks about how visitors use this site, meaning our own
+ * analytics, and it is gated properly in consent.njk. Nothing there covers
+ * handing a visitor to LinkedIn without asking, and reading it as though it
+ * did would make the wording on the bar false. Pressing the button is the ask.
+ *
+ * The address is on the card as data-embed-src, already turned into LinkedIn's
+ * embed form by the linkedinEmbed filter at build time, so a bad paste has
+ * already failed the build long before this runs.
+ *
+ * Height is fixed at 620px. LinkedIn's frames do not size themselves to their
+ * contents unless you also load LinkedIn's script, which is the tracking this
+ * whole arrangement exists to avoid. 620px holds an ordinary post; a longer
+ * one scrolls inside its own frame.
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  var cards = document.querySelectorAll('.linkedin-embed');
+  if (!cards.length) return;
+
+  for (var i = 0; i < cards.length; i++) {
+    (function (card) {
+      var button = card.querySelector('.linkedin-embed-load');
+      if (!button) return;
+
+      button.addEventListener('click', function () {
+        var frame = document.createElement('iframe');
+        frame.src = card.getAttribute('data-embed-src');
+        frame.title = card.getAttribute('data-embed-title') || 'LinkedIn post';
+        frame.setAttribute('loading', 'lazy');
+        frame.setAttribute('frameborder', '0');
+        frame.setAttribute('allowfullscreen', '');
+
+        card.innerHTML = '';
+        card.appendChild(frame);
+        card.classList.add('is-loaded');
+      });
+    })(cards[i]);
+  }
+});

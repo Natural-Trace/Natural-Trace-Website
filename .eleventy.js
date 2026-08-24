@@ -98,6 +98,50 @@ module.exports = function(eleventyConfig) {
     (pages || []).find(p => p.url === url) || {}
   );
 
+  /* A pasted LinkedIn post address, turned into the address LinkedIn's own
+     embed player answers on. "Copy link to post" hands out two shapes and we
+     have no say over which one an editor gets:
+
+       https://www.linkedin.com/posts/natural-trace_slug-activity-7123…-AbCd
+       https://www.linkedin.com/feed/update/urn:li:activity:7123…/
+
+     and both exist in share and ugcPost variants. The embed endpoint wants the
+     URN form, so the job is to find the type and the id wherever they are
+     hiding. The type is carried through rather than flattened to "activity":
+     a share URN answered on the activity endpoint returns an empty frame.
+
+     An address that fits neither shape throws, which fails the build and the
+     pull request check with the pasted string in the message. The alternative
+     is rendering a frame that quietly shows nothing, on a page nobody rebuilds
+     for weeks, with no way to tell which of three entries is the broken one.
+     A build that stops is a bad paste; it is not a broken site. */
+  eleventyConfig.addFilter("linkedinEmbed", url => {
+    const pasted = String(url ?? "").trim();
+
+    // URN form first: a /feed/update/ address carries no "-activity-" token,
+    // so the slug pattern below would never match it.
+    let found = pasted.match(/urn:li:(activity|share|ugcPost):(\d+)/);
+
+    /* The /posts/ form, where the id sits inside the slug. Bounded at ten
+       digits so a number an editor happened to write in the post's own title
+       ("-activity-2026-…") cannot be mistaken for one. Real ids are 19. */
+    if (!found) found = pasted.match(/-(activity|ugcPost)-(\d{10,25})\b/);
+
+    if (!found) {
+      throw new Error(
+        `linkedinEmbed: no LinkedIn post ID in "${pasted}".\n` +
+        `  This is the "Address of the post" field of an entry under ` +
+        `"From our LinkedIn" in the CMS, stored in src/_data/linkedin.yml.\n` +
+        `  It needs the address of a single post, not the company page. Open ` +
+        `the post, use the three dots in its corner, choose "Copy link to ` +
+        `post", and paste the whole thing. A working address contains either ` +
+        `"-activity-" followed by a long number, or "urn:li:activity:".`
+      );
+    }
+
+    return `https://www.linkedin.com/embed/feed/update/urn:li:${found[1]}:${found[2]}`;
+  });
+
   // Insights collection (blog posts from src/insights/)
   eleventyConfig.addCollection("insights", collection =>
     collection.getFilteredByGlob("src/insights/**/*.md").sort((a, b) => a.date - b.date)

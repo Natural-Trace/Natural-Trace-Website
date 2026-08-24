@@ -138,3 +138,54 @@ permalink: "{% if pagination.pageNumber == 0 %}/insights/{% else %}/insights/pag
     {% endif %}
   </div>
 </section>
+
+{#- Posts that were only ever going to be LinkedIn posts.
+    Content comes from src/_data/linkedin.yml, edited under "From our LinkedIn"
+    in the CMS. Nothing is fetched from LinkedIn at build time: an editor
+    chooses a post and pastes its address. LinkedIn publishes no feed of a
+    company page's posts, and the API that would answer for one needs an app
+    review and a key that expires every sixty days, which is not a thing to put
+    in a build that four people share.
+
+    Below the articles and the pager, not above them. The articles are the
+    version of record (docs/publishing-to-linkedin.md sets out why) and this is
+    an aside to them; the same argument the pinned-post comment above makes
+    about not pushing this month's news down the page applies here.
+
+    First page only. Page four is the archive for 2022 and has no business
+    ending with this month's LinkedIn posts.
+
+    A button rather than the post itself, which is the part most likely to look
+    like an oversight later. Loading the frame loads a LinkedIn page, and that
+    sets LinkedIn's cookies for every visitor who reaches this page, whatever
+    they answered in the consent bar. The bar covers our own analytics and says
+    so; stretching that answer to cover somebody else's tracking would make the
+    wording untrue. So the frame waits to be asked, and the asking is the
+    consent. With JavaScript off, or if main.js fails to load, the link below
+    the button still goes to the post. -#}
+{% if pagination.pageNumber == 0 and linkedin.posts and linkedin.posts.length > 0 %}
+<section class="linkedin-strip">
+  <div class="container">
+    <div class="insights-header">
+      <span class="section-label">LinkedIn</span>
+      <h2>{{ linkedin.heading }}</h2>
+      {% if linkedin.subheading %}<p class="insights-subtitle">{{ linkedin.subheading }}</p>{% endif %}
+    </div>
+
+    <div class="linkedin-grid">
+      {% for post in linkedin.posts %}
+      <div class="linkedin-embed"
+           data-embed-src="{{ post.url | linkedinEmbed }}"
+           data-embed-title="LinkedIn post: {{ post.title }}">
+        <p class="linkedin-embed-label">{{ post.title }}</p>
+        <button type="button" class="linkedin-embed-load">Show this post</button>
+        <p class="linkedin-embed-note">
+          Loads the post from LinkedIn, which sets its own cookies.
+          <a href="{{ post.url }}" target="_blank" rel="noopener">Open it on LinkedIn instead</a>
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}

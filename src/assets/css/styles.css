@@ -1116,6 +1116,56 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 }
 
 /* ---------------------------------------------------------------------------
+   From our LinkedIn, at the foot of the first Insights page.
+
+   Sits in the same 800px column as the article cards rather than spreading
+   across the container. The strip is an aside to the articles and a block that
+   is wider than the thing it is an aside to reads as the more important of the
+   two.
+
+   Each entry ships as a card with a button and becomes a frame when pressed,
+   which is a privacy decision rather than a visual one — the reasoning is in
+   main.js and in insights.njk. Both states are styled here, and they are
+   deliberately close in size so the page does not jump when one loads.
+--------------------------------------------------------------------------- */
+.linkedin-strip{padding:2rem 0 6rem;background:var(--offwhite)}
+/* The heading block is .insights-header, borrowed from the top of the page so
+   the type and the muted label come with it. It carries an h1 rule that does
+   not apply here; the h2 below is set to match at a step down. */
+.linkedin-strip .insights-header{margin-bottom:2.25rem}
+.linkedin-strip .insights-header h2{
+  font-family:'Montserrat',sans-serif;font-size:clamp(1.5rem,3vw,2.1rem);
+  color:var(--dark);margin-bottom:.6rem}
+.linkedin-grid{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:1.75rem;
+  max-width:800px;margin:0 auto}
+/* 504px is the width LinkedIn's own embed is built for. Below that the card
+   takes the column and the frame scales with it. */
+.linkedin-embed{
+  width:min(504px,100%);
+  background:#fff;border:1px solid var(--soft-sage);border-radius:12px;
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
+  padding:1.75rem 1.5rem;text-align:center}
+.linkedin-embed-label{
+  font-family:'Montserrat',sans-serif;font-size:.95rem;line-height:1.6;
+  color:var(--dark);margin:0 0 1.1rem}
+.linkedin-embed-load{
+  font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:600;
+  /* 42px, over the 40px anything tappable wants, same rule the pager follows. */
+  min-height:42px;padding:0 1.5rem;
+  background:var(--sage);color:#fff;border:0;border-radius:9px;cursor:pointer;
+  transition:background .2s}
+.linkedin-embed-load:hover{background:var(--dark)}
+.linkedin-embed-note{
+  font-size:.75rem;line-height:1.6;color:var(--muted);margin:.9rem 0 0}
+.linkedin-embed-note a{color:var(--sage);text-decoration:underline;text-underline-offset:2px}
+.linkedin-embed-note a:hover{color:var(--dark)}
+/* Once loaded the card is only a frame, so it gives up its padding and its
+   surface to the LinkedIn post, which brings its own. */
+.linkedin-embed.is-loaded{padding:0;overflow:hidden;background:transparent}
+.linkedin-embed iframe{display:block;width:100%;height:620px;border:0}
+
+/* ---------------------------------------------------------------------------
    Latest from Insights, on the home page.
 
    The brief was recent news visible without being the highlight of the page,

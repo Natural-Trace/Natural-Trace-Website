@@ -955,6 +955,48 @@ collections:
       - {label: "Google description (optional)", name: "seo_description", widget: "text", required: false, hint: "Only if the summary above is not right for search results. Aim for 150 to 160 characters. Leave empty to use the summary."}
 
 
+    # ── From our LinkedIn ─────
+    #
+    # A strip of embedded LinkedIn posts at the foot of the first Insights
+    # page. Its own panel rather than part of Insights articles above, because
+    # that one is a folder of files with a headline, a body and a web address
+    # of its own, and an entry here is a pasted address and a line of
+    # description. They are not the same kind of thing and Decap cannot mix the
+    # two in one collection anyway.
+    #
+    # This runs the opposite way to docs/publishing-to-linkedin.md, which
+    # pushes articles written here out to LinkedIn. Both directions are wanted:
+    # that one is for articles, this one is for the posts that are only ever
+    # going to be LinkedIn posts. The walkthrough for whoever is adding one is
+    # docs/embedding-linkedin-posts.md.
+    #
+    # Capped at three. Each entry is an entire LinkedIn page loaded in a frame,
+    # and the Insights column is 800px, so three is already past the point
+    # where the strip stops being a footnote to the articles above it.
+  - name: "linkedin"
+    label: "From our LinkedIn"
+    files:
+      - name: "linkedin"
+        label: "From our LinkedIn"
+        file: "src/_data/linkedin.yml"
+        fields:
+          - {label: "Section heading", name: "heading", widget: "string", hint: "The heading above the LinkedIn posts, at the foot of the Insights page."}
+          - {label: "Line under the heading", name: "subheading", widget: "string", required: false, hint: "One short sentence saying what these are. Leave it empty and the heading stands on its own."}
+          - label: "Posts"
+            name: "posts"
+            widget: "list"
+            max: 3
+            summary: "{{fields.title}}"
+            hint: "Shown in the order they are in here, so keep the newest at the top. Three is the most that will fit; delete the oldest rather than letting the list grow. With nothing in this list the whole section disappears from the page, which is the right thing to do if there is nothing worth showing. Only posts that anyone can see will work: if a post is set so that only people signed in to LinkedIn can read it, visitors get a sign-in box instead of the post."
+            fields:
+              - label: "Address of the post"
+                name: "url"
+                widget: "string"
+                pattern: ['^https://(www\.)?linkedin\.com/', 'This needs to be a LinkedIn address starting https://www.linkedin.com/. Open the post itself, click the three dots in its top corner, and choose "Copy link to post".']
+                hint: "Open the post on LinkedIn, click the three dots in its top corner, and choose Copy link to post. Paste the whole thing here exactly as it was copied. It has to be a single post, not our company page."
+              - {label: "What the post is about", name: "title", widget: "string", hint: "One line. It is read out to anyone using a screen reader, and it is what a visitor sees before deciding to load the post. For example: Our stand at Vitafoods 2026."}
+
+
   - name: "contact"
     label: "Contact & Quiz"
     files:
