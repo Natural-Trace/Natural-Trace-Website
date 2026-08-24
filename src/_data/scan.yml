@@ -11,7 +11,7 @@ opening:
   title: "Which one is which?"
   lead: >-
     One of these is a chocolate malt powder. The other is chocolate protein
-    powder — a different product at a different price. Have a guess, then tap
+    powder, a different product at a different price. Have a guess, then tap
     a pile to find out whether you were right.
   image: /assets/images/scan-both.webp
   image_alt: "Two cones of brown powder side by side, one darker and redder than the other"
@@ -23,7 +23,7 @@ reveal:
     image_alt: "A cone of dark reddish-brown powder"
     title: "Chocolate malt powder"
     body: >-
-      The darker of the two. If the colour gave it away, you guessed well — but
+      The darker of the two. If the colour gave it away, you guessed well. But
       a guess is not evidence, and nobody can ship a guess to a customer.
   right:
     image: /assets/images/scan-protein.webp
@@ -36,14 +36,14 @@ reveal:
 question_title: "Which one is authentic?"
 question_body: >-
   Appearance can show you that two products differ. It cannot tell you which
-  one is what it claims to be — shade and texture shift between batches,
+  one is what it claims to be. Shade and texture shift between batches,
   suppliers and seasons for entirely ordinary reasons.
 
 answer_title: "NaturalTag makes the answer testable"
 answer_body: >-
   NaturalTag is a food-grade, PCR-detectable tag incorporated into a product
   at its source. Downstream, a NaturalDetect test reads that tag and confirms
-  the product's identity and origin at batch level — evidence that does not
+  the product's identity and origin at batch level. That evidence does not
   depend on what the product looks like.
 
 cta_heading: "Want to know if your product can carry a tag?"
