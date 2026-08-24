@@ -11,9 +11,10 @@
  *
  * Routes:
  *
- *   GET /malt      count a scan of the left jar, redirect to its reveal page
- *   GET /protein   count a scan of the right jar, redirect to its reveal page
- *   GET /milo      legacy alias for /malt, counted as malt
+ *   GET /jars      count a scan, redirect to the reveal page
+ *   GET /malt      superseded path, still works, counted as malt
+ *   GET /protein   superseded path, still works, counted as protein
+ *   GET /milo      superseded path, still works, counted as malt
  *   GET /stats     the counts, as JSON: per code, per day, and in total
  *   anything else  redirect to the homepage, uncounted
  *
@@ -35,23 +36,32 @@
 const SITE = "https://natural-trace.com";
 
 // Adding a code for the next event is one line here plus a reveal page on the
-// site. The path is what gets printed, so keep it short and never rename one
-// that is already on paper somewhere.
+// site. The path is what gets printed, so keep it short and never reuse one
+// that is already on paper for something else.
 //
 // `code` is the counting bucket and `target` is where the scan lands. They are
-// separate so that two paths can share a bucket, which is what makes a rename
-// survivable: /milo was the original path for the left jar and was dropped on
-// 24 Aug because the brand name should not appear in a URL a visitor can read
-// in their address bar. It still resolves, and still counts as malt, so any
-// code generated before the rename keeps working. It can go once the printed
-// run for this event is retired.
+// separate so that several paths can share a page while keeping their own
+// counts, which is what makes a path survive being superseded.
+//
+// The stand carried a code per jar until 24 Aug, when Alrik asked for a single
+// code and a single page — which is also what the printed stand card already
+// shows. /jars is that code. The three older paths still resolve and still
+// count under their own names, so anything generated earlier keeps working and
+// stays attributable; they can go once this event is over.
+//
+// The cost of one code is that a scan can no longer say which jar prompted it.
+// There is only one thing to scan, so there is nothing to distinguish. If the
+// per-jar split is ever wanted back, print two codes pointing at /malt and
+// /protein: both already work, both already count separately, and they now
+// land on the same combined page, so nothing else has to change.
 const UTM = "utm_source=qr&utm_medium=offline&utm_campaign=ip-week-2026";
-const MALT = { code: "malt", target: `${SITE}/scan/malt/?${UTM}&utm_content=malt` };
+const PAGE = `${SITE}/scan/?${UTM}`;
 
 const CODES = {
-  "/malt": MALT,
-  "/protein": { code: "protein", target: `${SITE}/scan/protein/?${UTM}&utm_content=protein` },
-  "/milo": MALT,
+  "/jars": { code: "jars", target: `${PAGE}&utm_content=jars` },
+  "/malt": { code: "malt", target: `${PAGE}&utm_content=malt` },
+  "/protein": { code: "protein", target: `${PAGE}&utm_content=protein` },
+  "/milo": { code: "malt", target: `${PAGE}&utm_content=malt` },
 };
 
 export default {

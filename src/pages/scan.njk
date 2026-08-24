@@ -1,0 +1,58 @@
+---
+layout: base.njk
+title: "The Jars Revealed"
+summary: "What was in the two jars you scanned on the Natural Trace stand."
+permalink: /scan/
+# The page behind the QR code on the physical stand. It is deliberately
+# unlinked from the navigation, kept out of the sitemap (the exclusion below is
+# what does that — see src/sitemap.njk) and marked noindex, because a search
+# visitor landing on "you scanned the jars" with no jars in front of them would
+# only be confused.
+#
+# One page covering both jars, from 24 Aug 2026. It was a page per jar with a
+# code per jar until Alrik asked for a single code, which also matches the
+# printed stand card: that card already carries one QR, not two. The cost is
+# that the counter can no longer say which jar drew the scan, because there is
+# now only one thing to scan. docs/qr-scan-tracking.md records the trade.
+#
+# Scan counting happens before this page loads, in the Cloudflare worker under
+# qr/ — nothing on this page tracks anything.
+eleventyExcludeFromCollections: true
+noindex: true
+---
+
+<section class="challenge" style="padding-top:9rem">
+  <div class="container">
+    <div class="challenge-text" style="max-width:800px">
+      <span class="section-label">{{ scan.opening.label }}</span>
+      <h2 class="section-title">{{ scan.opening.title }}</h2>
+      <p class="challenge-lead" style="margin-top:1.5rem">{{ scan.opening.reveal }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="valueprop">
+  <div class="container">
+    <div class="vp-grid about-grid-2">
+      <article class="vp-card">
+        <h3>{{ scan.question_title }}</h3>
+        <p>{{ scan.question_body }}</p>
+      </article>
+      <article class="vp-card">
+        <h3>{{ scan.answer_title }}</h3>
+        <p>{{ scan.answer_body }}</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="finalcta">
+  <div class="container">
+    <div class="finalcta-inner">
+      <h2>{{ scan.cta_heading }}</h2>
+      <div class="finalcta-actions">
+        <a href="{{ scan.cta_url }}" class="btn btn-white" style="cursor:pointer">{{ scan.cta_text }}</a>
+      </div>
+    </div>
+  </div>
+</section>

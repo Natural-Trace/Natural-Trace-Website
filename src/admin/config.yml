@@ -1336,45 +1336,47 @@ collections:
   - name: "event"
     label: "Event QR pages"
     files:
-      # EVENT: JAR REVEAL PAGES
-      # The pages behind the QR codes on the physical stand. They are not in
-      # the site navigation and not in Google: their only visitors arrive by
-      # scanning a jar at an event, so every word can assume the reader is
-      # standing in front of the two jars right now.
+      # EVENT: JAR REVEAL PAGE
+      # The page behind the QR code on the physical stand. It is not in the
+      # site navigation and not in Google: its only visitors arrive by scanning
+      # the code at an event, so every word can assume the reader is standing
+      # in front of the two jars right now. One page and one code from 24 Aug;
+      # it was a page per jar before that.
       - name: "scan"
-        label: "Jar reveal pages (IP Week stand)"
+        label: "Jar reveal page (IP Week stand)"
         file: "src/_data/scan.yml"
         fields:
-          - label: "1. Shared between both pages"
-            name: "shared"
+          - label: "1. The reveal — the top of the page"
+            name: "opening"
             widget: "object"
             collapsed: true
-            hint: "Everything both reveal pages have in common: the label above the headline, the two explanation cards, and the closing call to action. Edit once, both pages change."
+            hint: "The first thing someone sees after scanning. This is where the two jars are given away, so say which is on the left and which is on the right."
             fields:
               - {label: "Small label above the headline", name: "label", widget: "string"}
-              - {label: "First card: heading", name: "question_title", widget: "string"}
-              - {label: "First card: text", name: "question_body", widget: "text", hint: "Why looking at the two powders is not enough."}
-              - {label: "Second card: heading", name: "answer_title", widget: "string"}
-              - {label: "Second card: text", name: "answer_body", widget: "text", hint: "What NaturalTag and NaturalDetect do about it."}
-              - {label: "Closing question", name: "cta_heading", widget: "string"}
-              - {label: "Button text", name: "cta_text", widget: "string"}
-              - {label: "Button link", name: "cta_url", widget: "string", hint: "Where the button goes. /contact/ unless there is a reason otherwise."}
-          - label: "2. Left jar (chocolate malt powder)"
-            name: "malt"
-            widget: "object"
-            collapsed: true
-            hint: "Shown to someone who scanned the LEFT jar's QR code."
-            fields:
               - {label: "Headline", name: "title", widget: "string"}
-              - {label: "The reveal", name: "reveal", widget: "text", hint: "Say what is in this jar and what is in the other one."}
-          - label: "3. Right jar (chocolate protein powder)"
-            name: "protein"
-            widget: "object"
-            collapsed: true
-            hint: "Shown to someone who scanned the RIGHT jar's QR code."
-            fields:
-              - {label: "Headline", name: "title", widget: "string"}
-              - {label: "The reveal", name: "reveal", widget: "text", hint: "Say what is in this jar and what is in the other one."}
+              - {label: "The reveal", name: "reveal", widget: "text", hint: "What is in each jar. The reader is holding their phone in front of both, so left and right have to be the right way round."}
+          - label: "2. First card — why looking is not enough"
+            name: "question_title"
+            widget: "string"
+            hint: "Heading of the left-hand card."
+          - label: "First card: text"
+            name: "question_body"
+            widget: "text"
+            hint: "Why looking at the two powders cannot settle it. Do not claim the powders look identical — they do not, and the reader can see that. See docs/qr-scan-tracking.md."
+          - label: "3. Second card — what we do about it"
+            name: "answer_title"
+            widget: "string"
+            hint: "Heading of the right-hand card."
+          - label: "Second card: text"
+            name: "answer_body"
+            widget: "text"
+            hint: "What NaturalTag and NaturalDetect do. Keep to identity and origin: NaturalDetect does not measure how much of something is present."
+          - label: "4. Closing call to action"
+            name: "cta_heading"
+            widget: "string"
+            hint: "The question above the button."
+          - {label: "Button text", name: "cta_text", widget: "string"}
+          - {label: "Button link", name: "cta_url", widget: "string", hint: "Where the button goes. /contact/ unless there is a reason otherwise."}
 
   - name: "settings"
     label: "Site & SEO Settings"
