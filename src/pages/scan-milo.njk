@@ -1,0 +1,51 @@
+---
+layout: base.njk
+title: "The Jar Revealed"
+summary: "What was in the jar you scanned on the Natural Trace stand."
+permalink: /scan/milo/
+# These pages exist for one audience: someone holding their phone at our event
+# stand two seconds after scanning a jar. They are deliberately unlinked from
+# the navigation, kept out of the sitemap (the exclusion below is what does
+# that — see src/sitemap.njk) and marked noindex, because a search visitor
+# landing on "you scanned the left jar" with no jar in front of them would
+# only be confused. Scan counting happens before this page loads, in the
+# Cloudflare worker under qr/ — nothing on this page tracks anything.
+eleventyExcludeFromCollections: true
+noindex: true
+---
+
+<section class="challenge" style="padding-top:9rem">
+  <div class="container">
+    <div class="challenge-text" style="max-width:800px">
+      <span class="section-label">{{ scan.shared.label }}</span>
+      <h2 class="section-title">{{ scan.milo.title }}</h2>
+      <p class="challenge-lead" style="margin-top:1.5rem">{{ scan.milo.reveal }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="valueprop">
+  <div class="container">
+    <div class="vp-grid about-grid-2">
+      <article class="vp-card">
+        <h3>{{ scan.shared.question_title }}</h3>
+        <p>{{ scan.shared.question_body }}</p>
+      </article>
+      <article class="vp-card">
+        <h3>{{ scan.shared.answer_title }}</h3>
+        <p>{{ scan.shared.answer_body }}</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="finalcta">
+  <div class="container">
+    <div class="finalcta-inner">
+      <h2>{{ scan.shared.cta_heading }}</h2>
+      <div class="finalcta-actions">
+        <a href="{{ scan.shared.cta_url }}" class="btn btn-white" style="cursor:pointer">{{ scan.shared.cta_text }}</a>
+      </div>
+    </div>
+  </div>
+</section>

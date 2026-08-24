@@ -1,0 +1,22 @@
+# QR scan counter. Deploy and setup: docs/qr-scan-tracking.md.
+#
+# The worker name is part of the printed QR codes:
+#   https://natural-trace-qr.natural-trace.workers.dev/milo
+#   https://natural-trace-qr.natural-trace.workers.dev/protein
+# Renaming the worker changes that hostname and turns every printed code into
+# a dead link. Do not rename it after anything has gone to print.
+
+name = "natural-trace-qr"
+main = "worker.js"
+compatibility_date = "2026-01-01"
+
+# One-time setup, before the first deploy:
+#
+#   npx wrangler kv namespace create SCANS
+#
+# prints an id. Paste it below in place of PASTE_NAMESPACE_ID_HERE. The id is
+# an address, not a secret — it is safe to commit, and only this Cloudflare
+# account can read the namespace it points at.
+[[kv_namespaces]]
+binding = "SCANS"
+id = "PASTE_NAMESPACE_ID_HERE"

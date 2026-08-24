@@ -1,0 +1,36 @@
+# Edited through the CMS ("Event QR pages"), which deletes every comment in
+# this file on save. Why the copy says what it says: docs/qr-scan-tracking.md.
+
+shared:
+  label: "You scanned a jar on our stand"
+  question_title: "Which one is authentic?"
+  question_body: >-
+    The two are not even the same shade of brown, and that tells you nothing.
+    Shade shifts between batches, suppliers and seasons for entirely ordinary
+    reasons. Appearance can show you that two things differ. It cannot tell you
+    which one is what it claims to be.
+  answer_title: "NaturalTag makes the answer testable"
+  answer_body: >-
+    NaturalTag is a food-grade, PCR-detectable tag incorporated into a product
+    at its source. Downstream, a NaturalDetect test reads that tag and confirms
+    the product's identity and origin at batch level — evidence that does not
+    depend on what the product looks like.
+  cta_heading: "Want to know if your product can carry a tag?"
+  cta_text: "Talk to us"
+  cta_url: "/contact/"
+
+milo:
+  title: "This jar is a chocolate malt drink"
+  reveal: >-
+    The left jar holds Milo, a chocolate malt drink powder. The jar beside it
+    is chocolate protein powder — a different product at a different price.
+    You could see the two were not the same. You could not have said which
+    was which.
+
+protein:
+  title: "This jar is chocolate protein powder"
+  reveal: >-
+    The right jar holds chocolate protein powder. The jar beside it is Milo, a
+    chocolate malt drink powder — a different product at a different price.
+    You could see the two were not the same. You could not have said which
+    was which.

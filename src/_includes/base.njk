@@ -59,7 +59,13 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
 {% if not site.search_indexable %}{# Holding switch in src/_data/site.yml. data-hold marks this as the
    site-wide hold rather than a genuinely noindex page, so the health check
    still validates titles, descriptions and canonicals underneath it. #}
-<meta name="robots" content="noindex, nofollow" data-hold="site">{% endif %}
+<meta name="robots" content="noindex, nofollow" data-hold="site">
+{%- elif noindex %}{# Per-page opt-out, set in front matter. First used by the
+   /scan/ pages behind the event QR codes, which only make sense to someone
+   standing at the stand. No data-hold: the health check should treat these as
+   genuinely noindex and skip its SEO checks. elif, not a second if, so the
+   site-wide hold and a page flag never emit two robots tags. #}
+<meta name="robots" content="noindex, nofollow">{% endif %}
 <meta property="og:title" content="{% if seoTitle %}{{ seoTitle }} | {% endif %}Natural Trace">
 <meta property="og:description" content="{{ seoDescription }}">
 <meta property="og:type" content="{% if layout == 'layouts/post.njk' %}article{% else %}website{% endif %}">
