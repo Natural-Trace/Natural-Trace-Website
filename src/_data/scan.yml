@@ -12,7 +12,7 @@ opening:
   lead: >-
     One of these is a chocolate malt powder. The other is chocolate protein
     powder, a different product at a different price. Have a guess, then tap
-    a pile to find out whether you were right.
+    a pile.
   image: /assets/images/scan-both.webp
   image_alt: "Two cones of brown powder side by side, one darker and redder than the other"
 
@@ -30,14 +30,14 @@ reveal:
     image_alt: "A cone of pale golden-brown powder"
     title: "Chocolate protein powder"
     body: >-
-      The paler of the two, and typically the more expensive, which is what
-      makes it worth substituting in the first place.
+      The paler of the two, and usually the more expensive. That price gap is
+      the whole motive for swapping one for the other.
 
 question_title: "Which one is authentic?"
 question_body: >-
   Appearance can show you that two products differ. It cannot tell you which
-  one is what it claims to be. Shade and texture shift between batches,
-  suppliers and seasons for entirely ordinary reasons.
+  is which. Shade and texture shift between batches, suppliers and seasons for
+  entirely ordinary reasons.
 
 answer_title: "NaturalTag makes the answer testable"
 answer_body: >-

@@ -1350,7 +1350,7 @@ collections:
             name: "opening"
             widget: "object"
             collapsed: true
-            hint: "The first thing someone sees after scanning. It sets up the guess. IMPORTANT: do not say which powder is which here — that is what the two tap-to-reveal cards below are for, and giving it away here leaves them with nothing to reveal."
+            hint: "The first thing someone sees after scanning. It sets up the guess. IMPORTANT: do not say which powder is which here. That is what the two tap-to-reveal cards below are for, and giving it away here leaves them with nothing to reveal."
             fields:
               - {label: "Small label above the headline", name: "label", widget: "string"}
               - {label: "Headline", name: "title", widget: "string", hint: "A question, not an answer. \"Which one is which?\""}
@@ -1371,7 +1371,7 @@ collections:
                 collapsed: true
                 fields:
                   - {label: "Photograph", name: "image", widget: "image"}
-                  - {label: "Photograph description", name: "image_alt", widget: "string", hint: "For screen readers. Describe the colour, not the identity — this shows before the answer does."}
+                  - {label: "Photograph description", name: "image_alt", widget: "string", hint: "For screen readers. Describe the colour, not the identity, because this shows before the answer does."}
                   - {label: "What it is", name: "title", widget: "string", hint: "Revealed on tap."}
                   - {label: "The line underneath", name: "body", widget: "text"}
               - label: "Right card — the paler powder"
@@ -1380,7 +1380,7 @@ collections:
                 collapsed: true
                 fields:
                   - {label: "Photograph", name: "image", widget: "image"}
-                  - {label: "Photograph description", name: "image_alt", widget: "string", hint: "For screen readers. Describe the colour, not the identity — this shows before the answer does."}
+                  - {label: "Photograph description", name: "image_alt", widget: "string", hint: "For screen readers. Describe the colour, not the identity, because this shows before the answer does."}
                   - {label: "What it is", name: "title", widget: "string", hint: "Revealed on tap."}
                   - {label: "The line underneath", name: "body", widget: "text"}
 
@@ -1391,7 +1391,7 @@ collections:
           - label: "First card: text"
             name: "question_body"
             widget: "text"
-            hint: "Why looking at the two powders cannot settle it. Do not claim the powders look identical — they do not, and the reader can see that. See docs/qr-scan-tracking.md."
+            hint: "Why looking at the two powders cannot settle it. Do not claim the powders look identical. They do not, and the reader can see that. See docs/qr-scan-tracking.md."
           - label: "4. Second card — what we do about it"
             name: "answer_title"
             widget: "string"
