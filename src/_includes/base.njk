@@ -48,7 +48,18 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
     in Google. -#}
 {%- set seoTitle = s.title or seo_title or title -%}
 {%- set seoDescription = (s.description or seo_description or summary or site.default_summary) | truncate(157, false, "…") -%}
-<title>{% if seoTitle %}{{ seoTitle }} | {% endif %}Natural Trace</title>
+{#- Every tab carries the brand, but the homepage carries it FIRST. A tab is
+    narrow and truncates from the right, so a trailing " | Natural Trace" is the
+    first thing to disappear: the home tab used to read "In-Product Authe..."
+    with the company name nowhere in sight. Its seo.yml title now leads with the
+    name, and this guard stops the suffix being added on top of it. The test is
+    the brand appearing anywhere in the title rather than a check on the home
+    URL, so any page whose title names the company is covered too. -#}
+{%- set pageTitle = seoTitle or "" -%}
+{%- if not pageTitle -%}{%- set pageTitle = site.name -%}
+{%- elif site.name not in pageTitle -%}{%- set pageTitle = pageTitle + " | " + site.name -%}
+{%- endif -%}
+<title>{{ pageTitle }}</title>
 <meta name="description" content="{{ seoDescription }}">
 {% if site.google_site_verification %}{# Proves to Google that whoever pastes this
    token controls the site, which is how a Search Console property is claimed.
@@ -66,7 +77,7 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
    genuinely noindex and skip its SEO checks. elif, not a second if, so the
    site-wide hold and a page flag never emit two robots tags. #}
 <meta name="robots" content="noindex, nofollow">{% endif %}
-<meta property="og:title" content="{% if seoTitle %}{{ seoTitle }} | {% endif %}Natural Trace">
+<meta property="og:title" content="{{ pageTitle }}">
 <meta property="og:description" content="{{ seoDescription }}">
 <meta property="og:type" content="{% if layout == 'layouts/post.njk' %}article{% else %}website{% endif %}">
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
