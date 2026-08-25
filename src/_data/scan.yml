@@ -11,22 +11,22 @@
 # a conference, not by a consumer. No NaturalDetect and no assay detail here on
 # purpose; the visitor needs the proposition, not the method.
 #
-# Nothing above the cards may say which jar is which, or the guess is over
-# before it is offered.
+# The page states which jar is which at the top, on purpose. The printed stand
+# card already shows a tick against one jar and a cross against the other, so a
+# guess staged here would be a guess the visitor had already been given the
+# answer to. See docs/qr-scan-tracking.md.
 
 opening:
   label: "The two jars on our stand"
-  title: "Which one is authentic?"
+  title: "One of these can prove where it came from"
   lead: >-
     Both are presented as the same branded protein powder. Identical in colour,
-    identical in texture, identical on the label. Only one can prove where it
-    was made.
-  action: "Tap a jar to reveal"
+    identical in texture, identical on the label. Only one of them carries
+    NaturalTag™, and that is the only reason the difference can be shown at all.
   image: /assets/images/scan-both.webp
   image_alt: "Two cones of brown powder side by side, alike in colour and texture"
 
 reveal:
-  prompt: "Reveal"
   left:
     label: "Left jar"
     image: /assets/images/scan-left.webp

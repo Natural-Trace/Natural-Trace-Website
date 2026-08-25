@@ -32,10 +32,6 @@ noindex: true
         <span class="section-label">{{ scan.opening.label }}</span>
         <h2 class="section-title">{{ scan.opening.title }}</h2>
         <p class="challenge-lead" style="margin-top:1.5rem">{{ scan.opening.lead }}</p>
-        {#- Its own line, not a sentence at the end of the paragraph. It is the
-            only instruction on the page and the page does nothing until it is
-            followed, so it should not have to be found inside prose. -#}
-        <p class="scan-action">{{ scan.opening.action }}</p>
       </div>
       {% if scan.opening.image %}
       <div class="solution-photo">
@@ -46,51 +42,35 @@ noindex: true
   </div>
 </section>
 
-{#- The reveal.
+{#- The two jars, stated rather than revealed.
 
-    Not <details>/<summary>, which is what this was until the cards were put
-    side by side and both opened. A closed <details> takes its content out of
-    the layout, so each card sized to its own paragraph: the two answers are
-    different lengths, the cards finished at different heights, and revealing
-    one made it grow while its neighbour sat still. Alignment and the growing
-    were the same fault.
+    This was a tap-to-reveal until 25 Aug, blurred photographs with the jar name
+    over them. It was dropped once the physical stand was photographed: the
+    printed card carries a tick beside one jar and a cross beside the other, so
+    the answer is on the table before anyone scans anything. A reveal whose
+    answer the visitor already holds is theatre, and it competes with our own
+    artwork rather than adding to it.
 
-    The answer is in the flow at all times now, which fixes both. Its height is
-    the height of the longest answer, both cards stretch to it because they
-    share a grid row, and revealing changes only what is painted. Nothing moves.
-
-    The cost is that the disclosure has to be scripted, so the keyboard and
-    screen reader behaviour <details> gave for free is spelled out instead: a
-    real <button>, aria-expanded on it, aria-controls pointing at the panel it
-    reveals. The panel is never hidden from assistive technology, because the
-    text is present either way and only its opacity changes.
-
-    The closed card shows the tap hint in the same panel the answer will use, so
-    the space is never empty and never has to be reserved by guessing. -#}
+    So the page does the part the card cannot. The card says which jar is
+    authentic; this says why that is knowable at all, and why nothing about the
+    powder itself could ever have told you. -#}
 <section class="scan-reveal">
   <div class="container">
     <div class="scan-cards">
       {% for side in [scan.reveal.left, scan.reveal.right] %}
-      <div class="scan-card">
-        <button type="button" class="scan-toggle" aria-expanded="false" aria-controls="scan-panel-{{ loop.index }}">
-          <span class="scan-shot">
-            <img src="{{ side.image }}" alt="{{ side.image_alt }}" width="1000" height="1000" loading="lazy">
-            <span class="scan-veil">
-              <span class="scan-jar">{{ side.label }}</span>
-            </span>
-          </span>
-        </button>
-        <div class="scan-answer" id="scan-panel-{{ loop.index }}">
-          {#- The hint is absolutely positioned over the answer rather than
-              sitting above it, so it costs no height and the panel is exactly
-              as tall as the answer it will show. -#}
-          <span class="scan-hint" aria-hidden="true">{{ scan.reveal.prompt }}</span>
-          <div class="scan-text">
-            <h3>{{ side.title }}</h3>
-            <p>{{ side.body }}</p>
-          </div>
+      <article class="scan-card">
+        <div class="scan-shot">
+          <img src="{{ side.image }}" alt="{{ side.image_alt }}" width="1000" height="1000" loading="lazy">
+          {#- The jar name stays on the photograph. It is what lets someone
+              standing at the stand match a picture to a jar in front of them,
+              and on a phone the cards stack so position carries nothing. -#}
+          <span class="scan-label">{{ side.label }}</span>
         </div>
-      </div>
+        <div class="scan-answer">
+          <h3>{{ side.title }}</h3>
+          <p>{{ side.body }}</p>
+        </div>
+      </article>
       {% endfor %}
     </div>
   </div>

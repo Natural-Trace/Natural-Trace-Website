@@ -1350,12 +1350,11 @@ collections:
             name: "opening"
             widget: "object"
             collapsed: true
-            hint: "The first thing someone sees after scanning. It sets up the guess. IMPORTANT: do not say which jar is the authentic one here. That is what the two tap-to-reveal cards below are for, and giving it away here leaves them with nothing to reveal."
+            hint: "The first thing someone sees after scanning. Say plainly that one jar carries the tag and the other does not: the printed stand card already shows a tick and a cross, so there is nothing left to keep back."
             fields:
               - {label: "Small label above the headline", name: "label", widget: "string"}
               - {label: "Headline", name: "title", widget: "string", hint: "A question, not an answer. \"Which one is which?\""}
-              - {label: "Opening paragraph", name: "lead", widget: "text", hint: "Set up the comparison. Do not say which jar is which."}
-              - {label: "Instruction line", name: "action", widget: "string", hint: "Shown on its own line under the paragraph, in bold, slowly pulsing. It is the only instruction on the page, so keep it short and plain."}
+              - {label: "Opening paragraph", name: "lead", widget: "text", hint: "Set up the comparison and state the difference. The visitor is holding the answer already; this is where they find out why it can be proved."}
               - {label: "Photograph of both powders", name: "image", widget: "image", hint: "The two powders together. Square works best here."}
               - {label: "Photograph description", name: "image_alt", widget: "string", hint: "What is in the picture, for anyone using a screen reader. Describe the powders without saying which is which."}
 
@@ -1365,13 +1364,12 @@ collections:
             collapsed: true
             hint: "The guess. Each card shows a photograph of one powder; tapping it reveals what that powder is. Left card first, right card second, matching the order in the photograph above."
             fields:
-              - {label: "Wording on the closed card", name: "prompt", widget: "string", hint: "Shown over both cards until they are tapped. \"Tap to reveal\"."}
               - label: "Left card — the jar on the left"
                 name: "left"
                 widget: "object"
                 collapsed: true
                 fields:
-                  - {label: "Which jar this is", name: "label", widget: "string", hint: "Shown on the card before it is tapped, and kept as a caption after. Left jar or Right jar. The cards sit side by side on a computer but stack on a phone, so this is the only thing telling a reader which pile they are looking at."}
+                  - {label: "Which jar this is", name: "label", widget: "string", hint: "Printed on the photograph. Left jar or Right jar. The cards sit side by side on a computer but stack on a phone, so this is what lets a reader match a picture to a jar on the table."}
                   - {label: "Photograph", name: "image", widget: "image"}
                   - {label: "Photograph description", name: "image_alt", widget: "string", hint: "For screen readers. Describe what the powder looks like, not which jar is authentic, because this shows before the answer does."}
                   - {label: "What it is", name: "title", widget: "string", hint: "Revealed on tap."}

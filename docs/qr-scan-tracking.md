@@ -140,6 +140,33 @@ says "Say both of these were sold to you as the same branded protein powder"
 rather than asserting it, because the jars really hold malt powder and a
 visitor who tastes one would know. Keep that conditional.
 
+## The page states the answer, because the stand already has
+
+The stand was photographed on 25 August. The printed card carries a tick and
+"NaturalTag verified" beside one jar and a cross and "Not verified" beside the
+other, directly above the jars themselves. Whatever the artwork intended, a
+visitor maps those to the jars in front of them before they scan anything.
+
+So the tap-to-reveal that used to be on this page is gone. It asked a question
+the visitor had already been given the answer to, which is theatre, and it put
+the page in competition with our own artwork rather than adding to it. The blur,
+the veil, the pulsing instruction and the small script that drove them all went
+with it.
+
+The division of labour now is that the card says which jar is authentic and the
+page says why that is knowable at all: the tag is in the product, so origin
+travels with the product, and nothing about the powder itself was ever going to
+tell anyone anything.
+
+This reverses the rule that used to sit at the top of scan.yml, which said
+nothing above the cards may say which jar is which. That rule was right while
+the page owned the reveal. It stopped being right the moment the reveal moved
+to the table.
+
+If the stand is ever reprinted without the tick and cross, the reveal becomes
+worth having again, and it is in the history rather than gone: it is the state
+at commit 8b38b2f.
+
 ## Register, and what is deliberately not said
 
 The page is read at a conference stand by buyers and by people whose job is
