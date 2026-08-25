@@ -2580,8 +2580,9 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
    which the compositor handles without touching layout. */
 @keyframes scan-pulse{0%,100%{opacity:1}50%{opacity:.45}}
 .page-scan .scan-action{
-  margin-top:1.4rem;font-size:1rem;font-weight:700;color:var(--teal);
-  letter-spacing:.01em;animation:scan-pulse 2.6s ease-in-out infinite;
+  margin-top:1.6rem;font-size:clamp(1.15rem,3.2vw,1.35rem);font-weight:700;
+  color:var(--teal);letter-spacing:.01em;
+  animation:scan-pulse 2.6s ease-in-out infinite;
 }
 @media(prefers-reduced-motion:reduce){
   .page-scan .scan-action{animation:none}
