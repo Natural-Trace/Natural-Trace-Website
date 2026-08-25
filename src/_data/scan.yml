@@ -18,15 +18,15 @@
 
 opening:
   label: "The two jars on our stand"
-  title: "One of these can prove where it came from"
+  title: "Proof is the only difference"
   lead: "Both are presented as the same branded protein powder."
   identical:
     - "Identical in colour"
     - "Identical in texture"
     - "Identical on the label"
   closing: >-
-    Only one of them carries NaturalTag™, and that is the only reason the
-    difference can be shown at all.
+    The difference is not something you can see. NaturalTag™ is what allows
+    origin to be shown at all.
   image: /assets/images/scan-both.webp
   image_alt: "Two cones of brown powder side by side, alike in colour and texture"
 
