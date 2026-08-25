@@ -2564,13 +2564,28 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
    through. A bare max-width would let the strip run edge to edge on anything
    narrower than 900px and cover the leaf completely. */
 .page-scan main{
-  position:relative;z-index:1;max-width:900px;width:calc(100% - 2rem);margin:0 auto;
+  position:relative;z-index:1;max-width:900px;width:calc(100% - 2rem);
+  margin:7.5rem auto 0;
   box-shadow:0 0 50px rgba(26,30,46,.09);
 }
 /* The hero carries 9rem of inline top padding to clear the fixed navigation.
    Inside the strip that reads as a large empty panel, so it comes back to
    something the strip can hold. */
-.page-scan main > section:first-child{padding-top:3.5rem !important}
+.page-scan main > section:first-child{padding-top:2.5rem !important}
+
+/* The one instruction on the page, on its own line and pulsing, because the
+   page does nothing at all until it is followed and it used to be the last
+   sentence of a paragraph. Slow: 2.6s, and between full and 45% rather than
+   to nothing, so it reads as breathing rather than blinking. Opacity only,
+   which the compositor handles without touching layout. */
+@keyframes scan-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.page-scan .scan-action{
+  margin-top:1.4rem;font-size:1rem;font-weight:700;color:var(--teal);
+  letter-spacing:.01em;animation:scan-pulse 2.6s ease-in-out infinite;
+}
+@media(prefers-reduced-motion:reduce){
+  .page-scan .scan-action{animation:none}
+}
 
 @media(max-width:700px){
   /* A phone has no room for a mark beside the content, so the margin narrows to

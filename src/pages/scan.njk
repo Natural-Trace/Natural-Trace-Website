@@ -32,6 +32,10 @@ noindex: true
         <span class="section-label">{{ scan.opening.label }}</span>
         <h2 class="section-title">{{ scan.opening.title }}</h2>
         <p class="challenge-lead" style="margin-top:1.5rem">{{ scan.opening.lead }}</p>
+        {#- Its own line, not a sentence at the end of the paragraph. It is the
+            only instruction on the page and the page does nothing until it is
+            followed, so it should not have to be found inside prose. -#}
+        <p class="scan-action">{{ scan.opening.action }}</p>
       </div>
       {% if scan.opening.image %}
       <div class="solution-photo">

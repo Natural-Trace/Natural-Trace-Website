@@ -1354,7 +1354,8 @@ collections:
             fields:
               - {label: "Small label above the headline", name: "label", widget: "string"}
               - {label: "Headline", name: "title", widget: "string", hint: "A question, not an answer. \"Which one is which?\""}
-              - {label: "Opening paragraph", name: "lead", widget: "text", hint: "Name both products, but not which is which, and invite the guess."}
+              - {label: "Opening paragraph", name: "lead", widget: "text", hint: "Set up the comparison. Do not say which jar is which."}
+              - {label: "Instruction line", name: "action", widget: "string", hint: "Shown on its own line under the paragraph, in bold, slowly pulsing. It is the only instruction on the page, so keep it short and plain."}
               - {label: "Photograph of both powders", name: "image", widget: "image", hint: "The two powders together. Square works best here."}
               - {label: "Photograph description", name: "image_alt", widget: "string", hint: "What is in the picture, for anyone using a screen reader. Describe the powders without saying which is which."}
 
@@ -1401,7 +1402,7 @@ collections:
           - label: "Second card: text"
             name: "answer_body"
             widget: "text"
-            hint: "What NaturalTag and NaturalDetect do. Keep to identity and origin: NaturalDetect does not measure how much of something is present."
+            hint: "What NaturalTag does. Keep to identity and origin, and keep the assay out of it: this page is read at a stand by someone who wants the proposition, not the method."
           - label: "5. Closing call to action"
             name: "cta_heading"
             widget: "string"

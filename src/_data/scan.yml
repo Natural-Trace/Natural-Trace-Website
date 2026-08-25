@@ -7,54 +7,56 @@
 # alike. The copy may say so now. It could not before, and the reason that rule
 # existed is still in the docs, because the props can change back.
 #
+# Register: measured and professional. This is read by buyers and IP counsel at
+# a conference, not by a consumer. No NaturalDetect and no assay detail here on
+# purpose; the visitor needs the proposition, not the method.
+#
 # Nothing above the cards may say which jar is which, or the guess is over
 # before it is offered.
 
 opening:
-  label: "You scanned the jars on our stand"
-  title: "Which one is the real thing?"
+  label: "The two jars on our stand"
+  title: "Which one is authentic?"
   lead: >-
-    Say both of these were sold to you as the same branded protein powder.
-    Same colour, same texture, same claim on the label. Only one of them could
-    prove where it came from. Tap a pile.
+    Both are presented as the same branded protein powder. Identical in colour,
+    identical in texture, identical on the label. Only one can prove where it
+    was made.
+  action: "Tap a jar to reveal"
   image: /assets/images/scan-both.webp
   image_alt: "Two cones of brown powder side by side, alike in colour and texture"
 
 reveal:
-  prompt: "Tap to reveal"
+  prompt: "Reveal"
   left:
     label: "Left jar"
     image: /assets/images/scan-left.webp
     image_alt: "A cone of brown powder, from the jar on the left"
-    title: "The left jar is tagged"
+    title: "Left jar: authenticated"
     body: >-
-      It is the branded product, carrying a NaturalTag™ signature added where
-      the powder was made. A NaturalDetect™ test reads that signature and
-      confirms the batch came from the source on the label.
+      It carries NaturalTag™, applied at the point of manufacture. Its origin
+      can be confirmed at any point in the supply chain, from the product
+      itself.
   right:
     label: "Right jar"
     image: /assets/images/scan-right.webp
     image_alt: "A cone of brown powder, from the jar on the right"
-    title: "The right jar is not"
+    title: "Right jar: unverified"
     body: >-
-      No tag, so there is nothing to test. It might be the branded product and
-      it might be something substituted for it. Neither the powder nor the
-      label will tell you which.
+      It carries no tag. It may be the branded product, or it may not. Neither
+      its appearance nor its label can settle the question.
 
-question_title: "Why looking never settles it"
+question_title: "Appearance is not evidence"
 question_body: >-
-  These two are the same colour and the same texture, so there is nothing to
-  compare. Even when two powders do look different, the difference on its own
-  proves nothing: shade shifts between batches, suppliers and seasons for
-  entirely ordinary reasons.
+  These two are identical in colour and texture. Even where powders do differ,
+  the difference proves nothing on its own: shade varies between batches,
+  suppliers and seasons for entirely legitimate reasons.
 
-answer_title: "NaturalTag™ makes the answer testable"
+answer_title: "NaturalTag™ provides the evidence"
 answer_body: >-
-  NaturalTag™ is a food-grade, PCR-detectable tag incorporated into a product
-  at its source. Downstream, a NaturalDetect™ test reads that tag and confirms
-  the product's identity and origin at batch level. That evidence does not
-  depend on what the product looks like.
+  NaturalTag™ is a food-grade tag incorporated into a product at its source. It
+  allows the identity and origin of a batch to be confirmed downstream,
+  independently of how the product looks.
 
-cta_heading: "Want to know if your product can carry a tag?"
-cta_text: "Talk to us"
+cta_heading: "Considering NaturalTag™ for your own product?"
+cta_text: "Speak with our team"
 cta_url: "/contact/"

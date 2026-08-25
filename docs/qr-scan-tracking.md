@@ -140,6 +140,23 @@ says "Say both of these were sold to you as the same branded protein powder"
 rather than asserting it, because the jars really hold malt powder and a
 visitor who tastes one would know. Keep that conditional.
 
+## Register, and what is deliberately not said
+
+The page is read at a conference stand by buyers and by people whose job is
+intellectual property. It is written to sound measured rather than chatty: the
+draft that said "Say both of these were sold to you", "the real thing" and "Tap
+a pile" was rewritten on 25 Aug for that reason.
+
+NaturalDetect is not named anywhere on this page and neither is the assay. That
+is a decision, not an omission. Someone standing at a stand with a phone wants
+to know what the product does for them, and naming the test invites a
+conversation about method before the proposition has landed. NaturalTag is
+named, because it is the thing in the jar. "Food-grade" stays; "PCR-detectable"
+went with the same reasoning.
+
+If a later edit wants the method back, the place for it is the NaturalDetect
+page, which exists and is linked from the navigation.
+
 ## Copy approval
 
 The wording in `src/_data/scan.yml` was drafted 24 Aug 2026 and rewritten on 25
