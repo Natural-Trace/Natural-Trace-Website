@@ -71,7 +71,10 @@ noindex: true
     powder itself could ever have told you. -#}
 <section class="scan-reveal">
   <div class="container">
-    <div class="scan-cards">
+    {#- tabindex and a label because on a phone this is a scrollable region, the
+        same reason the value cards on the home page carry them. Anything a
+        pointer can scroll has to be reachable from a keyboard. -#}
+    <div class="scan-cards" tabindex="0" role="group" aria-label="{{ scan.opening.label }}">
       {% for side in [scan.reveal.left, scan.reveal.right] %}
       <article class="scan-card">
         <div class="scan-shot">
@@ -88,12 +91,13 @@ noindex: true
       </article>
       {% endfor %}
     </div>
+    <p class="vp-swipe-hint">{{ scan.swipe_hint }}</p>
   </div>
 </section>
 
 <section class="valueprop">
   <div class="container">
-    <div class="vp-grid about-grid-2">
+    <div class="vp-grid about-grid-2" tabindex="0" role="group" aria-label="{{ scan.question_title }}">
       <article class="vp-card">
         <h3>{{ scan.question_title }}</h3>
         <p>{{ scan.question_body }}</p>
@@ -103,6 +107,7 @@ noindex: true
         <p>{{ scan.answer_body }}</p>
       </article>
     </div>
+    <p class="vp-swipe-hint">{{ scan.swipe_hint }}</p>
   </div>
 </section>
 

@@ -1360,11 +1360,11 @@ collections:
               - {label: "Photograph of both powders", name: "image", widget: "image", hint: "The two powders together. Square works best here."}
               - {label: "Photograph description", name: "image_alt", widget: "string", hint: "What is in the picture, for anyone using a screen reader. Describe the powders without saying which is which."}
 
-          - label: "2. The two tap-to-reveal cards"
+          - label: "2. The two jar cards"
             name: "reveal"
             widget: "object"
             collapsed: true
-            hint: "The guess. Each card shows a photograph of one powder; tapping it reveals what that powder is. Left card first, right card second, matching the order in the photograph above."
+            hint: "One card per jar, left first then right, matching the order on the stand. Both are shown in full: there is nothing to tap, because the printed card already says which jar is which."
             fields:
               - label: "Left card — the jar on the left"
                 name: "left"
@@ -1403,6 +1403,7 @@ collections:
             name: "answer_body"
             widget: "text"
             hint: "What NaturalTag does. Keep to identity and origin, and keep the assay out of it: this page is read at a stand by someone who wants the proposition, not the method."
+          - {label: "Swipe hint", name: "swipe_hint", widget: "string", hint: "Shown under the jar cards and under the evidence cards on a phone only, where those two rows become a side-to-side swipe. Not shown on a computer."}
           - label: "5. Closing call to action"
             name: "cta_heading"
             widget: "string"

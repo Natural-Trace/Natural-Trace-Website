@@ -2567,3 +2567,59 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
 @media(max-width:600px){
   .scan-identical li{font-size:.98rem}
 }
+
+/* ── /scan/: the two card rows swipe on a phone ────────────────────────────
+   Stacked, this page ran to four full screens of scrolling on a handset, which
+   is three too many for someone standing at a stand holding a phone. The jars
+   and the evidence pair both become a side-to-side swipe instead.
+
+   Same mechanics as .vp-grid-centred on the home page, including
+   justify-content:flex-start, which is not tidiness: a centred flex row splits
+   its overflow across both ends, and overflow past the left edge cannot be
+   reached because scrollLeft does not go below zero. That is written up in full
+   above the home page rule.
+
+   The bleed is the one real difference. The home carousel runs to the screen
+   edges with calc(50% - 50vw); this page's content sits inside a visible strip
+   with a shadow, so cards escaping it would read as broken layout rather than
+   as a carousel. -2rem against the container's own 2rem padding takes the
+   scroll region to the edge of the strip and no further, and padding puts the
+   ends back so the first and last cards line up with the text above them.
+
+   82% so the next card is always showing. That sliver is the only thing telling
+   anyone the row moves, and there is no arrow and no script to help. */
+@media(max-width:767px){
+  .page-scan .scan-cards,
+  .page-scan .vp-grid{
+    display:flex;
+    flex-wrap:nowrap;
+    justify-content:flex-start;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+    gap:.9rem;
+    margin-inline:-2rem;
+    padding:.25rem 1.25rem 1.25rem;
+    scrollbar-width:none;
+  }
+  .page-scan .scan-cards::-webkit-scrollbar,
+  .page-scan .vp-grid::-webkit-scrollbar{display:none}
+  .page-scan .scan-cards > .scan-card,
+  .page-scan .vp-grid > .vp-card{
+    /* vw, not a percentage. A flex-basis percentage resolves against the
+       container's content box, and this container carries side padding to keep
+       the first and last cards aligned with the text: 82% of the content box
+       came out as 67% of the width anyone actually sees, which left a 242px
+       card and a 117px sliver of the next one on a 375px handset. vw is the
+       width being aimed at, so the padding cannot quietly eat it. */
+    flex:0 0 76vw;
+    scroll-snap-align:center;
+    grid-column:auto;
+  }
+  .page-scan .scan-cards:focus-visible,
+  .page-scan .vp-grid:focus-visible{outline:2px solid var(--sage);outline-offset:4px;border-radius:18px}
+  /* The global rule hides this at 720px, which is where the home page's swipe
+     starts. This one starts at 767px, so it is shown again over that gap. */
+  .page-scan .vp-swipe-hint{display:block;text-align:center;font-size:.82rem;color:var(--muted);margin-top:-.35rem}
+}
