@@ -2469,6 +2469,12 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
    site, which are landscape. Left in its own aspect ratio rather than cropped
    to 4:3: the point of the picture is the two piles side by side, and a 4:3
    crop of a square takes a bite out of one of them. */
+/* The heading spans the strip so it can hold one line. align-items:start on the
+   row underneath, because the default centring would float a short text column
+   against a tall square photograph and leave the first paragraph starting
+   halfway down the picture. */
+.scan-hero-head{max-width:820px}
+.scan-hero .challenge-grid{align-items:start;margin-top:1.6rem}
 .scan-hero .solution-photo{aspect-ratio:1/1}
 .scan-hero .solution-photo img{width:100%;height:100%;object-fit:cover}
 

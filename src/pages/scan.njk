@@ -27,11 +27,18 @@ noindex: true
     revealing something the reader already knows. -#}
 <section class="challenge scan-hero" style="padding-top:9rem">
   <div class="container">
+    {#- The label and heading sit above the grid rather than inside its left
+        column, so the heading has the whole strip to run across and holds one
+        line. Boxed into a 490px column it broke after "the", which put the two
+        words carrying the argument on a line of their own below it. The
+        photograph starts lower down as a result, level with the body copy. -#}
+    <div class="scan-hero-head">
+      <span class="section-label">{{ scan.opening.label }}</span>
+      <h2 class="section-title">{{ scan.opening.title }}</h2>
+    </div>
     <div class="challenge-grid">
       <div class="challenge-text">
-        <span class="section-label">{{ scan.opening.label }}</span>
-        <h2 class="section-title">{{ scan.opening.title }}</h2>
-        <p class="challenge-lead" style="margin-top:1.5rem">{{ scan.opening.lead }}</p>
+        <p class="challenge-lead">{{ scan.opening.lead }}</p>
         {#- Three lines rather than one sentence, because they are three separate
             observations and reading them as a list is the point. -#}
         <ul class="scan-identical">
