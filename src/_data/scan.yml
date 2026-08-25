@@ -21,15 +21,9 @@ opening:
   title: "One of these can prove where it came from"
   lead: "Both are presented as the same branded protein powder."
   identical:
-    - lead_in: "Identical in"
-      word: "colour"
-      treatment: "colour"
-    - lead_in: "Identical in"
-      word: "texture"
-      treatment: "texture"
-    - lead_in: "Identical on the"
-      word: "label"
-      treatment: "label"
+    - "Identical in colour"
+    - "Identical in texture"
+    - "Identical on the label"
   closing: >-
     Only one of them carries NaturalTag™, and that is the only reason the
     difference can be shown at all.
