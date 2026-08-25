@@ -3,7 +3,7 @@
 First used for the IP Week 2026 stand: two jars of the same brown powder, one
 QR code on the stand card, and the question "could you tell which one is
 authentic?". The page asks the visitor to imagine both jars sold as the same
-premium protein powder, one carrying a tag and one not, and counts the scan.
+branded protein powder, one carrying a tag and one not, and counts the scan.
 
 The jars held two different powders until 25 August, a malt powder and a
 protein powder, and the page asked which was which. Both now hold the same
@@ -136,7 +136,7 @@ class of error.
 The printed poster is written to survive either state. "**If** these were sold
 as the same product, could you tell which one is authentic?" is conditional and
 holds whichever powders are in the jars. The page follows it: the opening line
-says "Say both of these were sold to you as the same premium protein powder"
+says "Say both of these were sold to you as the same branded protein powder"
 rather than asserting it, because the jars really hold malt powder and a
 visitor who tastes one would know. Keep that conditional.
 
@@ -150,10 +150,10 @@ at deliberately:
   named it. It was pulled on 24 Aug on Bryan's instruction: it is a third
   party's mark, and putting it in our own copy at an IP conference is the wrong
   place to be casual about someone else's trademark. The copy now names
-  no brand at all: since 25 August both jars are presented as the same premium
-  protein powder. The demonstration does not need the brand. The point is that
-  two powders sold as the same thing cannot be told apart by looking, and a
-  name does no work in that sentence.
+  no brand at all: since 25 August both jars are presented as the same branded
+  protein powder, the left one tagged and the right one not. The demonstration
+  does not need the brand. The point is that two powders sold as the same thing
+  cannot be told apart by looking, and a name does no work in that sentence.
 
   The URL went with it, because the address bar is copy the visitor reads too.
   The page is now `/scan/` and the worker path `/jars`, so the name appears
