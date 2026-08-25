@@ -2432,25 +2432,66 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
    a light photograph is close to invisible. */
 .scan-card summary:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
 
-/* The bar under each photograph carries two things: which jar it is, and the
-   invitation to tap. They behave differently when the card opens. The jar
-   label stays, because it is the caption telling a reader at the stand which
-   pile they are looking at, and on a phone the cards are stacked so left and
-   right cannot be read off the layout. "Tap to reveal" goes, because an
-   affordance sitting above an answer that is already revealed reads as a
-   second control that does nothing. */
-.scan-prompt{
-  display:flex;align-items:center;justify-content:space-between;gap:.75rem;
-  padding:.9rem 1.1rem;font-size:.95rem;font-weight:600;color:var(--teal);
-  background:rgba(59,102,107,.07);
+/* The closed card is a blurred photograph with the jar name over it. Both the
+   blur and the name are the same promise: there is something here you are not
+   being shown yet. Tapping lifts them together.
+
+   transform:scale on the image is not decoration. filter:blur samples pixels
+   from outside the element as transparent, so an unscaled image blurs to a pale
+   feathered edge on all four sides and the card looks broken rather than
+   blurred. Scaling past the frame pushes that feathering outside the .scan-shot
+   box, which clips it. The scale unwinds with the blur on the same timing, so
+   the photograph settles into place as it sharpens.
+
+   1.12 rather than a smaller nudge, because the overhang has to beat the blur
+   radius and the card is at its narrowest on a phone. At 1.08 a 310px card
+   overhangs by 12.4px against a 12px blur, which is close enough to the line
+   that a slightly wider phone would show the feather. 1.12 gives 18.5px there
+   and 24px on a 400px desktop card.
+
+   The veil carries its own dark wash. White on a blurred photograph is legible
+   here by luck rather than by design, and these two images could be swapped for
+   paler ones through the CMS at any point. The wash makes the contrast a
+   property of the stylesheet instead of a property of the picture. */
+.scan-shot{position:relative;display:block;overflow:hidden}
+.scan-shot img{
+  display:block;width:100%;height:auto;
+  transform:scale(1.12);filter:blur(12px);
+  transition:filter .55s ease,transform .55s ease;
 }
-.scan-jar{letter-spacing:.01em}
-.scan-tap{display:inline-flex;align-items:center;gap:.5rem;font-weight:500;opacity:.85}
+.scan-card[open] .scan-shot img{transform:scale(1);filter:blur(0)}
+
+.scan-veil{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:.65rem;text-align:center;padding:1rem;
+  background:linear-gradient(rgba(26,30,46,.38),rgba(26,30,46,.5));
+  transition:opacity .45s ease,transform .45s ease;
+}
+/* Fades and drifts back as the picture comes forward. pointer-events goes too,
+   so the revealed photograph is not sitting under an invisible sheet. */
+.scan-card[open] .scan-veil{opacity:0;transform:scale(1.06);pointer-events:none}
+
+/* clamp against vw, so the name is large on a phone without running off a
+   434px card on a desktop. Large text needs 3:1 rather than 4.5:1, and white on
+   the wash above clears that on both photographs. */
+.scan-jar{
+  font-size:clamp(1.5rem,6.5vw,2.15rem);font-weight:800;line-height:1.1;
+  color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.4);
+}
+.scan-tap{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.9rem;font-weight:600;color:rgba(255,255,255,.92);
+}
 .scan-tap::after{
-  content:'';width:.5rem;height:.5rem;border:solid var(--teal);
-  border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-2px);transition:transform .25s;
+  content:'';width:.45rem;height:.45rem;border:solid rgba(255,255,255,.92);
+  border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-1px);
 }
-.scan-card[open] .scan-tap{display:none}
+
+/* Someone who has asked for less movement still needs the reveal to work, so
+   the states remain and only the travel between them goes. */
+@media(prefers-reduced-motion:reduce){
+  .scan-shot img,.scan-veil{transition:none}
+}
 
 .scan-answer{padding:1.5rem}
 .scan-answer h3{font-size:1.06rem;font-weight:700;color:var(--dark);line-height:1.3;letter-spacing:-.01em;margin:0 0 .6rem}

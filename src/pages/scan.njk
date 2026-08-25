@@ -66,10 +66,15 @@ noindex: true
       {% for side in [scan.reveal.left, scan.reveal.right] %}
       <details class="scan-card">
         <summary>
-          <img src="{{ side.image }}" alt="{{ side.image_alt }}" width="1000" height="1000" loading="lazy">
-          <span class="scan-prompt">
-            <span class="scan-jar">{{ side.label }}</span>
-            <span class="scan-tap">{{ scan.reveal.prompt }}</span>
+          <span class="scan-shot">
+            <img src="{{ side.image }}" alt="{{ side.image_alt }}" width="1000" height="1000" loading="lazy">
+            {#- The veil sits over the photograph rather than beside it, so the
+                jar name is the first thing read and the blur is obviously
+                something to be lifted. Both go on the reveal. -#}
+            <span class="scan-veil">
+              <span class="scan-jar">{{ side.label }}</span>
+              <span class="scan-tap">{{ scan.reveal.prompt }}</span>
+            </span>
           </span>
         </summary>
         <div class="scan-answer">
