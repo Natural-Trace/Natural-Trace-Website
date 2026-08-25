@@ -2432,19 +2432,25 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
    a light photograph is close to invisible. */
 .scan-card summary:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
 
+/* The bar under each photograph carries two things: which jar it is, and the
+   invitation to tap. They behave differently when the card opens. The jar
+   label stays, because it is the caption telling a reader at the stand which
+   pile they are looking at, and on a phone the cards are stacked so left and
+   right cannot be read off the layout. "Tap to reveal" goes, because an
+   affordance sitting above an answer that is already revealed reads as a
+   second control that does nothing. */
 .scan-prompt{
-  display:flex;align-items:center;justify-content:center;gap:.5rem;
-  padding:.9rem 1rem;font-size:.95rem;font-weight:600;color:var(--teal);
+  display:flex;align-items:center;justify-content:space-between;gap:.75rem;
+  padding:.9rem 1.1rem;font-size:.95rem;font-weight:600;color:var(--teal);
   background:rgba(59,102,107,.07);
 }
-.scan-prompt::after{
+.scan-jar{letter-spacing:.01em}
+.scan-tap{display:inline-flex;align-items:center;gap:.5rem;font-weight:500;opacity:.85}
+.scan-tap::after{
   content:'';width:.5rem;height:.5rem;border:solid var(--teal);
   border-width:0 2px 2px 0;transform:rotate(45deg) translateY(-2px);transition:transform .25s;
 }
-/* The prompt is the affordance, so it goes once the card is open. Leaving a
-   "Tap to reveal" above an answer that is already revealed reads as a second,
-   broken control. */
-.scan-card[open] .scan-prompt{display:none}
+.scan-card[open] .scan-tap{display:none}
 
 .scan-answer{padding:1.5rem}
 .scan-answer h3{font-size:1.06rem;font-weight:700;color:var(--dark);line-height:1.3;letter-spacing:-.01em;margin:0 0 .6rem}
@@ -2460,3 +2466,50 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
    crop of a square takes a bite out of one of them. */
 .scan-hero .solution-photo{aspect-ratio:1/1}
 .scan-hero .solution-photo img{width:100%;height:100%;object-fit:cover}
+
+/* ── /scan/ background mark ────────────────────────────────────────────────
+   One large Natural Trace leaf, fixed to the viewport, with the page content
+   running down a centre strip so the mark shows in the margins either side and
+   sits behind everything.
+
+   position:fixed on an element, not background-attachment:fixed on the body.
+   background-attachment:fixed is the obvious way to make a background hold
+   still under a scroll and it is the one that judders or silently falls back to
+   scroll on iOS Safari, which is most of the traffic here: this page is reached
+   by scanning a QR code with a phone.
+
+   The leaf is a mask rather than an img, matching the call-to-action watermark
+   above: the shape comes from the file, the colour from this stylesheet, so it
+   can be tuned to a weight that reads as a watermark rather than a picture. The
+   URL is relative to this stylesheet rather than root-absolute, which is what
+   keeps it correct under a path prefix without the url filter that a stylesheet
+   cannot call.
+
+   z-index 0 against z-index 1 on main, and main needs position:relative for
+   that to mean anything. */
+.page-scan{background:#F4F5F1}
+.page-scan::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:rgba(107,114,73,.16);
+  -webkit-mask:url("../logos/NT icon without logo.png") no-repeat center/min(88vh,72vw);
+  mask:url("../logos/NT icon without logo.png") no-repeat center/min(88vh,72vw);
+}
+/* width alongside max-width so there is always a margin for the mark to show
+   through. A bare max-width would let the strip run edge to edge on anything
+   narrower than 900px and cover the leaf completely. */
+.page-scan main{
+  position:relative;z-index:1;max-width:900px;width:calc(100% - 2rem);margin:0 auto;
+  box-shadow:0 0 50px rgba(26,30,46,.09);
+}
+/* The hero carries 9rem of inline top padding to clear the fixed navigation.
+   Inside the strip that reads as a large empty panel, so it comes back to
+   something the strip can hold. */
+.page-scan main > section:first-child{padding-top:3.5rem !important}
+
+@media(max-width:700px){
+  /* A phone has no room for a mark beside the content, so the margin narrows to
+     a frame and the leaf is mostly covered. It still moves with the scroll,
+     which is what makes the page read as sitting on top of something. */
+  .page-scan main{width:calc(100% - 1rem)}
+  .page-scan::before{background:rgba(107,114,73,.2);-webkit-mask-size:min(60vh,150vw);mask-size:min(60vh,150vw)}
+}

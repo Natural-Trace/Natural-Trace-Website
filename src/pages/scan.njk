@@ -17,6 +17,7 @@ permalink: /scan/
 #
 # Scan counting happens before this page loads, in the Cloudflare worker under
 # qr/. Nothing on this page tracks anything.
+bodyClass: page-scan
 eleventyExcludeFromCollections: true
 noindex: true
 ---
@@ -66,7 +67,10 @@ noindex: true
       <details class="scan-card">
         <summary>
           <img src="{{ side.image }}" alt="{{ side.image_alt }}" width="1000" height="1000" loading="lazy">
-          <span class="scan-prompt">{{ scan.reveal.prompt }}</span>
+          <span class="scan-prompt">
+            <span class="scan-jar">{{ side.label }}</span>
+            <span class="scan-tap">{{ scan.reveal.prompt }}</span>
+          </span>
         </summary>
         <div class="scan-answer">
           <h3>{{ side.title }}</h3>

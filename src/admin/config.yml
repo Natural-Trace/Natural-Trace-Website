@@ -1370,6 +1370,7 @@ collections:
                 widget: "object"
                 collapsed: true
                 fields:
+                  - {label: "Which jar this is", name: "label", widget: "string", hint: "Shown on the card before it is tapped, and kept as a caption after. Left jar or Right jar. The cards sit side by side on a computer but stack on a phone, so this is the only thing telling a reader which pile they are looking at."}
                   - {label: "Photograph", name: "image", widget: "image"}
                   - {label: "Photograph description", name: "image_alt", widget: "string", hint: "For screen readers. Describe what the powder looks like, not which jar is authentic, because this shows before the answer does."}
                   - {label: "What it is", name: "title", widget: "string", hint: "Revealed on tap."}
@@ -1379,6 +1380,7 @@ collections:
                 widget: "object"
                 collapsed: true
                 fields:
+                  - {label: "Which jar this is", name: "label", widget: "string", hint: "Shown on the card before it is tapped, and kept as a caption after. Left jar or Right jar. The cards sit side by side on a computer but stack on a phone, so this is the only thing telling a reader which pile they are looking at."}
                   - {label: "Photograph", name: "image", widget: "image"}
                   - {label: "Photograph description", name: "image_alt", widget: "string", hint: "For screen readers. Describe the colour, not the identity, because this shows before the answer does."}
                   - {label: "What it is", name: "title", widget: "string", hint: "Revealed on tap."}

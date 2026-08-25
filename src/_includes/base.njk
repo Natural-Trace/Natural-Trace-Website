@@ -113,7 +113,11 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
 <style>:root{--cta-mark:url('{{ site.cta_mark | url }}')}</style>
 {%- endif %}
 </head>
-<body class="{% if page.url == sitePathPrefix or page.url == '/' %}page-home{% endif %}">
+{#- bodyClass lets a page ask for its own styling hook from front matter.
+    /scan/ uses it: that page carries a full-page background mark the rest of
+    the site does not, and scoping it to a class keeps it out of every other
+    page's stylesheet path. -#}
+<body class="{% if page.url == sitePathPrefix or page.url == '/' %}page-home{% endif %}{% if bodyClass %} {{ bodyClass }}{% endif %}">
 
 {% include "partials/nav.njk" %}
 
