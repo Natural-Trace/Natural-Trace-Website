@@ -44,44 +44,49 @@ noindex: true
 
 {#- The reveal.
 
-    <details>/<summary> rather than a scripted flip, for the reasons already
-    written above the disclosure in partials/how-it-works.njk: it opens on a
-    tap, it opens from a keyboard, a screen reader announces the open and
-    closed state, and the answer is in the page whether or not it is showing.
+    Not <details>/<summary>, which is what this was until the cards were put
+    side by side and both opened. A closed <details> takes its content out of
+    the layout, so each card sized to its own paragraph: the two answers are
+    different lengths, the cards finished at different heights, and revealing
+    one made it grow while its neighbour sat still. Alignment and the growing
+    were the same fault.
 
-    A CSS 3D flip was the obvious alternative and was rejected. Both faces of a
-    flip have to be absolutely positioned, which forces a fixed card height, and
-    every word here is CMS-editable. The first person to write a longer
-    sentence would silently clip their own text on a phone, with nothing to
-    tell them. A disclosure has no height to get wrong.
+    The answer is in the flow at all times now, which fixes both. Its height is
+    the height of the longest answer, both cards stretch to it because they
+    share a grid row, and revealing changes only what is painted. Nothing moves.
 
-    The image sits inside the <summary>, so the whole picture is the tap target
-    rather than a small label under it. Explicit width and height on every img
-    so the page does not jump while they load, which on a booth connection is
-    the difference between tapping the card and tapping whatever lands there
-    instead. -#}
+    The cost is that the disclosure has to be scripted, so the keyboard and
+    screen reader behaviour <details> gave for free is spelled out instead: a
+    real <button>, aria-expanded on it, aria-controls pointing at the panel it
+    reveals. The panel is never hidden from assistive technology, because the
+    text is present either way and only its opacity changes.
+
+    The closed card shows the tap hint in the same panel the answer will use, so
+    the space is never empty and never has to be reserved by guessing. -#}
 <section class="scan-reveal">
   <div class="container">
     <div class="scan-cards">
       {% for side in [scan.reveal.left, scan.reveal.right] %}
-      <details class="scan-card">
-        <summary>
+      <div class="scan-card">
+        <button type="button" class="scan-toggle" aria-expanded="false" aria-controls="scan-panel-{{ loop.index }}">
           <span class="scan-shot">
             <img src="{{ side.image }}" alt="{{ side.image_alt }}" width="1000" height="1000" loading="lazy">
-            {#- The veil sits over the photograph rather than beside it, so the
-                jar name is the first thing read and the blur is obviously
-                something to be lifted. Both go on the reveal. -#}
             <span class="scan-veil">
               <span class="scan-jar">{{ side.label }}</span>
-              <span class="scan-tap">{{ scan.reveal.prompt }}</span>
             </span>
           </span>
-        </summary>
-        <div class="scan-answer">
-          <h3>{{ side.title }}</h3>
-          <p>{{ side.body }}</p>
+        </button>
+        <div class="scan-answer" id="scan-panel-{{ loop.index }}">
+          {#- The hint is absolutely positioned over the answer rather than
+              sitting above it, so it costs no height and the panel is exactly
+              as tall as the answer it will show. -#}
+          <span class="scan-hint" aria-hidden="true">{{ scan.reveal.prompt }}</span>
+          <div class="scan-text">
+            <h3>{{ side.title }}</h3>
+            <p>{{ side.body }}</p>
+          </div>
         </div>
-      </details>
+      </div>
       {% endfor %}
     </div>
   </div>

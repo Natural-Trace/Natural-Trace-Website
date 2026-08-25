@@ -697,3 +697,27 @@ document.addEventListener('DOMContentLoaded', function () {
     })(cards[i]);
   }
 });
+
+/* ===== Event jar cards (/scan/) =====
+   The reveal used to be a <details>, which needed no script. It stopped being
+   one when the two cards were put side by side: a closed <details> takes its
+   content out of the layout, so each card sized to its own paragraph, the two
+   finished at different heights, and opening one made it grow past the other.
+
+   The answer is in the flow at all times now and only its opacity changes, so
+   nothing moves and both cards match. That means the disclosure has to be
+   spelled out rather than inherited: a real button, aria-expanded kept in step
+   with the class, and the panel named by aria-controls. The text is readable to
+   assistive technology in both states, which is correct here, because it is on
+   the page either way and hiding it would be a lie about what is rendered. */
+document.addEventListener('DOMContentLoaded', function () {
+  var toggles = document.querySelectorAll('.scan-toggle');
+  for (var i = 0; i < toggles.length; i++) {
+    toggles[i].addEventListener('click', function () {
+      var card = this.closest('.scan-card');
+      if (!card) return;
+      var open = card.classList.toggle('is-open');
+      this.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+});
