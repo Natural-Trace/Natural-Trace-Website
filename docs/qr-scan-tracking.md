@@ -1,9 +1,13 @@
 # QR scan tracking for event stands
 
-First used for the IP Week 2026 stand: two jars of brown powder (left: a
-chocolate malt powder, right: chocolate protein powder), one QR code on the
-stand card, and the question "could you tell which one is authentic?".
-Scanning it reveals what both jars hold and counts the scan.
+First used for the IP Week 2026 stand: two jars of the same brown powder, one
+QR code on the stand card, and the question "could you tell which one is
+authentic?". The page asks the visitor to imagine both jars sold as the same
+premium protein powder, one carrying a tag and one not, and counts the scan.
+
+The jars held two different powders until 25 August, a malt powder and a
+protein powder, and the page asked which was which. Both now hold the same
+powder so that the piles genuinely match.
 
 ## The pieces
 
@@ -108,39 +112,48 @@ If it is ever wanted back, print two codes pointing at `/malt` and `/protein`.
 Both still work, both still count separately, and both now land on the same
 combined page, so it is a printing decision and needs no code change at all.
 
-## Never say the two powders look identical
+## Look at the jars before writing about how they look
 
-The first draft of `scan.yml` said the jars were "to the eye, close to
-identical" and that "colour, texture and smell are easy to imitate". They are
-not identical: the malt powder is a visibly darker, redder brown than the
-protein powder, and the reader is holding their phone next to both jars when
-they read the sentence. A claim the visitor can disprove by looking up is worse
+This rule has been true in both directions inside two days, which is why it is
+written down rather than remembered.
+
+Until 25 August the jars held two different powders and the copy could not say
+they looked alike, because they did not. One was a visibly darker, redder brown
+than the other, and the reader is holding their phone next to both jars while
+reading the sentence. A claim the visitor disproves by glancing up is worse
 than no claim, and on this stand it discredits the demonstration at the exact
-moment we are asking them to trust a measurement.
+moment we are asking someone to trust a measurement.
 
-The printed poster already gets this right. "**If** these were sold as the
-same product, could you tell which one is authentic?" is conditional, and
-survives two different browns. The page follows the poster: it concedes the
-difference and makes that the argument. Appearance can show two things differ;
-it cannot say which one is what it claims to be, because shade moves between
-batches and suppliers for ordinary reasons. The wording of that argument
-changed on 24 Aug (see Copy approval below) but the argument did not.
+On 25 August both jars were refilled with the same powder on purpose, so the
+piles now match. The copy says so, and the demonstration is stronger for it:
+there is nothing left to compare, which was always the point.
 
-If the jars are ever refilled with better-matched powders, this copy still
-works. Do not "tighten" it back to identical.
+So the rule is not "say they are identical", and it is not "never say it". It
+is: look at the jars, then write. Nothing in this repository knows what is in a
+physical jar in Singapore, and no build, test or review will ever catch this
+class of error.
+
+The printed poster is written to survive either state. "**If** these were sold
+as the same product, could you tell which one is authentic?" is conditional and
+holds whichever powders are in the jars. The page follows it: the opening line
+says "Say both of these were sold to you as the same premium protein powder"
+rather than asserting it, because the jars really hold malt powder and a
+visitor who tastes one would know. Keep that conditional.
 
 ## Copy approval
 
-The wording in `src/_data/scan.yml` is a first draft written 24 Aug 2026 and
-has not been through Kirsty. Two things to look at deliberately:
+The wording in `src/_data/scan.yml` was drafted 24 Aug 2026 and rewritten on 25
+Aug when the jars were refilled. It has not been through Kirsty. Things to look
+at deliberately:
 
-- **The brand in the left jar is not named, and must not be.** The first draft
+- **The brand in the jars is not named, and must not be.** The first draft
   named it. It was pulled on 24 Aug on Bryan's instruction: it is a third
   party's mark, and putting it in our own copy at an IP conference is the wrong
-  place to be casual about someone else's trademark. It reads "a chocolate malt
-  powder" throughout. The demonstration does not need the brand. The point is
-  that two powders sold as the same thing cannot be told apart by looking, and
-  a name does no work in that sentence.
+  place to be casual about someone else's trademark. The copy now names
+  no brand at all: since 25 August both jars are presented as the same premium
+  protein powder. The demonstration does not need the brand. The point is that
+  two powders sold as the same thing cannot be told apart by looking, and a
+  name does no work in that sentence.
 
   The URL went with it, because the address bar is copy the visitor reads too.
   The page is now `/scan/` and the worker path `/jars`, so the name appears

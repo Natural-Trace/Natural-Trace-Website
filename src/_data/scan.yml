@@ -3,40 +3,47 @@
 #
 # One page, one QR code, from 24 Aug 2026. It was a page per jar until then.
 #
-# The two powders are behind a tap from 24 Aug. Nothing above the cards may
-# say which jar is which, or the guess is over before it is offered.
+# Both jars hold the same powder from 25 Aug 2026, so the two piles really are
+# alike. The copy may say so now. It could not before, and the reason that rule
+# existed is still in the docs, because the props can change back.
+#
+# Nothing above the cards may say which jar is which, or the guess is over
+# before it is offered.
 
 opening:
   label: "You scanned the jars on our stand"
-  title: "Which one is which?"
+  title: "Which one is the real thing?"
   lead: >-
-    One of these is a chocolate malt powder. The other is chocolate protein
-    powder, a different product at a different price. Have a guess, then tap
-    a pile.
+    Say both of these were sold to you as the same premium protein powder.
+    Same colour, same texture, same claim on the label. Only one of them could
+    prove where it came from. Tap a pile.
   image: /assets/images/scan-both.webp
-  image_alt: "Two cones of brown powder side by side, one darker and redder than the other"
+  image_alt: "Two cones of brown powder side by side, alike in colour and texture"
 
 reveal:
   prompt: "Tap to reveal"
   left:
-    image: /assets/images/scan-malt.webp
-    image_alt: "A cone of dark reddish-brown powder"
-    title: "Chocolate malt powder"
+    image: /assets/images/scan-left.webp
+    image_alt: "A cone of brown powder"
+    title: "This one can prove it"
     body: >-
-      The darker of the two. If the colour gave it away, you guessed well. But
-      a guess is not evidence, and nobody can ship a guess to a customer.
+      It carries a NaturalTag™ signature, added where the powder was made. A
+      NaturalDetect™ test reads that signature and confirms the batch came from
+      the source on the label.
   right:
-    image: /assets/images/scan-protein.webp
-    image_alt: "A cone of pale golden-brown powder"
-    title: "Chocolate protein powder"
+    image: /assets/images/scan-right.webp
+    image_alt: "A cone of brown powder"
+    title: "This one cannot"
     body: >-
-      The paler of the two, and usually the more expensive. That price gap is
-      the whole motive for swapping one for the other.
+      No tag, so there is nothing to test. It might be a lower grade sold at
+      the premium price, or it might be exactly what it claims. Looking at it
+      will never tell you which.
 
-question_title: "Which one is authentic?"
+question_title: "Why looking never settles it"
 question_body: >-
-  Appearance can show you that two products differ. It cannot tell you which
-  is which. Shade and texture shift between batches, suppliers and seasons for
+  These two are the same colour and the same texture, so there is nothing to
+  compare. Even when two powders do look different, the difference on its own
+  proves nothing: shade shifts between batches, suppliers and seasons for
   entirely ordinary reasons.
 
 answer_title: "NaturalTag™ makes the answer testable"

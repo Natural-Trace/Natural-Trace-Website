@@ -1350,7 +1350,7 @@ collections:
             name: "opening"
             widget: "object"
             collapsed: true
-            hint: "The first thing someone sees after scanning. It sets up the guess. IMPORTANT: do not say which powder is which here. That is what the two tap-to-reveal cards below are for, and giving it away here leaves them with nothing to reveal."
+            hint: "The first thing someone sees after scanning. It sets up the guess. IMPORTANT: do not say which jar is the authentic one here. That is what the two tap-to-reveal cards below are for, and giving it away here leaves them with nothing to reveal."
             fields:
               - {label: "Small label above the headline", name: "label", widget: "string"}
               - {label: "Headline", name: "title", widget: "string", hint: "A question, not an answer. \"Which one is which?\""}
@@ -1365,16 +1365,16 @@ collections:
             hint: "The guess. Each card shows a photograph of one powder; tapping it reveals what that powder is. Left card first, right card second, matching the order in the photograph above."
             fields:
               - {label: "Wording on the closed card", name: "prompt", widget: "string", hint: "Shown over both cards until they are tapped. \"Tap to reveal\"."}
-              - label: "Left card — the darker powder"
+              - label: "Left card — the jar on the left"
                 name: "left"
                 widget: "object"
                 collapsed: true
                 fields:
                   - {label: "Photograph", name: "image", widget: "image"}
-                  - {label: "Photograph description", name: "image_alt", widget: "string", hint: "For screen readers. Describe the colour, not the identity, because this shows before the answer does."}
+                  - {label: "Photograph description", name: "image_alt", widget: "string", hint: "For screen readers. Describe what the powder looks like, not which jar is authentic, because this shows before the answer does."}
                   - {label: "What it is", name: "title", widget: "string", hint: "Revealed on tap."}
                   - {label: "The line underneath", name: "body", widget: "text"}
-              - label: "Right card — the paler powder"
+              - label: "Right card — the jar on the right"
                 name: "right"
                 widget: "object"
                 collapsed: true
@@ -1391,7 +1391,7 @@ collections:
           - label: "First card: text"
             name: "question_body"
             widget: "text"
-            hint: "Why looking at the two powders cannot settle it. Do not claim the powders look identical. They do not, and the reader can see that. See docs/qr-scan-tracking.md."
+            hint: "Why looking at the two powders cannot settle it. Both jars hold the same powder as of 25 Aug, so they genuinely do look alike and the copy may say so. Check the jars before writing anything about how they compare. See docs/qr-scan-tracking.md."
           - label: "4. Second card — what we do about it"
             name: "answer_title"
             widget: "string"
