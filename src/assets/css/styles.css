@@ -2413,7 +2413,12 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
    rather than a word underneath it. Sized well above the 44px minimum that
    touch guidance asks for, because the audience is standing at a stand
    holding a phone one-handed. */
-.scan-cards{display:grid;grid-template-columns:1fr;gap:1.5rem;max-width:900px;margin:0 auto}
+/* align-items:start, because grid items stretch to their row by default and
+   these two are in one row. Opening either card grew the other one to match,
+   which put 178px of empty background under a closed card's photograph and read
+   as the panel inflating for no reason. Each card sizes to its own content now.
+   Not a gap or a border problem, though that is what it looks like on screen. */
+.scan-cards{display:grid;grid-template-columns:1fr;gap:1.5rem;max-width:900px;margin:0 auto;align-items:start}
 .scan-card{
   background:#EDEEE9;border:1px solid transparent;border-radius:16px;overflow:hidden;
   transition:transform .35s,box-shadow .35s,border-color .35s;

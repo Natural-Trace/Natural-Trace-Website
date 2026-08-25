@@ -24,16 +24,16 @@ reveal:
   prompt: "Tap to reveal"
   left:
     image: /assets/images/scan-left.webp
-    image_alt: "A cone of brown powder"
-    title: "This one can prove it"
+    image_alt: "A cone of brown powder, from the jar on the left"
+    title: "The left jar can prove it"
     body: >-
       It carries a NaturalTag™ signature, added where the powder was made. A
       NaturalDetect™ test reads that signature and confirms the batch came from
       the source on the label.
   right:
     image: /assets/images/scan-right.webp
-    image_alt: "A cone of brown powder"
-    title: "This one cannot"
+    image_alt: "A cone of brown powder, from the jar on the right"
+    title: "The right jar cannot"
     body: >-
       No tag, so there is nothing to test. It might be a lower grade sold at
       the premium price, or it might be exactly what it claims. Looking at it
