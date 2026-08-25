@@ -2519,10 +2519,28 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
    that to mean anything. */
 .page-scan{background:#F4F5F1}
 .page-scan::before{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  content:'';position:fixed;top:0;left:0;right:0;z-index:0;pointer-events:none;
+  /* Not inset:0, and no vh anywhere in the size. A phone hides its address bar
+     once you have scrolled past the first screen, which changes the viewport
+     height: every vh on the page recomputes at that moment, so the mark resized
+     and its centre moved in one step, about where the jar cards begin. It reads
+     as the leaf jumping for no reason, because nothing on the page moved.
+
+     svh is the viewport with the browser chrome showing and does not change when
+     the chrome goes, so the box stays put. vh first for anything that does not
+     know svh: those browsers keep the old behaviour rather than losing the mark.
+     The mask is capped in px instead of vh so its size cannot move either. */
+  height:100vh;
+  height:100svh;
   background:rgba(107,114,73,.16);
-  -webkit-mask:url("../logos/NT icon without logo.png") no-repeat center/min(88vh,72vw);
-  mask:url("../logos/NT icon without logo.png") no-repeat center/min(88vh,72vw);
+  /* Sized against the strip, not the screen. The strip is 900px wide and the
+     leaf fills 87% of its square file, so a mask-size of 800px painted a leaf
+     about 699px across: entirely behind the panel, on every desktop, since the
+     day it went in. It was only ever visible on a phone, where the strip is
+     narrow enough. 1440px paints about 1250px, which clears the strip by 175px
+     on each side and lands inside the 182px margin at 1280. */
+  -webkit-mask:url("../logos/NT icon without logo.png") no-repeat center/min(112vw,1440px);
+  mask:url("../logos/NT icon without logo.png") no-repeat center/min(112vw,1440px);
 }
 /* width alongside max-width so there is always a margin for the mark to show
    through. A bare max-width would let the strip run edge to edge on anything
@@ -2543,7 +2561,7 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
      a frame and the leaf is mostly covered. It still moves with the scroll,
      which is what makes the page read as sitting on top of something. */
   .page-scan main{width:calc(100% - 1rem)}
-  .page-scan::before{background:rgba(107,114,73,.2);-webkit-mask-size:min(60vh,150vw);mask-size:min(60vh,150vw)}
+  .page-scan::before{background:rgba(107,114,73,.2);-webkit-mask-size:min(150vw,520px);mask-size:min(150vw,520px)}
 }
 
 /* ── /scan/: the three ways the jars match ───────────────────────────────── */
