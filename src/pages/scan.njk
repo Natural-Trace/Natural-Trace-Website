@@ -32,6 +32,17 @@ noindex: true
         <span class="section-label">{{ scan.opening.label }}</span>
         <h2 class="section-title">{{ scan.opening.title }}</h2>
         <p class="challenge-lead" style="margin-top:1.5rem">{{ scan.opening.lead }}</p>
+        {#- Three lines rather than one sentence, because they are three separate
+            observations and reading them as a list is the point. The styled word
+            is its own span so the treatment is a class rather than markup typed
+            into a CMS field, which would be escaped and would also let an editor
+            break the page with an unclosed tag. -#}
+        <ul class="scan-identical">
+          {% for item in scan.opening.identical %}
+          <li>{{ item.lead_in }} <span class="scan-word is-{{ item.treatment }}">{{ item.word }}</span></li>
+          {% endfor %}
+        </ul>
+        <p class="challenge-lead">{{ scan.opening.closing }}</p>
       </div>
       {% if scan.opening.image %}
       <div class="solution-photo">

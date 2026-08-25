@@ -1354,7 +1354,23 @@ collections:
             fields:
               - {label: "Small label above the headline", name: "label", widget: "string"}
               - {label: "Headline", name: "title", widget: "string", hint: "A question, not an answer. \"Which one is which?\""}
-              - {label: "Opening paragraph", name: "lead", widget: "text", hint: "Set up the comparison and state the difference. The visitor is holding the answer already; this is where they find out why it can be proved."}
+              - {label: "Opening paragraph", name: "lead", widget: "text", hint: "One line, setting up the comparison. The three ways the jars match go in the list below."}
+              - label: "The three ways they match"
+                name: "identical"
+                widget: "list"
+                hint: "One line each. The last word of each line is styled to look like the thing it names, so keep it as a single word."
+                fields:
+                  - {label: "Line", name: "lead_in", widget: "string", hint: "Everything before the styled word. \"Identical in\"."}
+                  - {label: "The styled word", name: "word", widget: "string", hint: "One word. Shown in the styling picked below."}
+                  - label: "How to style it"
+                    name: "treatment"
+                    widget: "select"
+                    hint: "Colour prints the word in the brown of the powder. Texture gives it a grainy finish. Label draws it as a small stuck-on tag."
+                    options:
+                      - {label: "The brown of the powder", value: "colour"}
+                      - {label: "Grainy", value: "texture"}
+                      - {label: "Like a stuck-on label", value: "label"}
+              - {label: "Closing paragraph", name: "closing", widget: "text", hint: "The point of the comparison: one jar can prove where it came from."}
               - {label: "Photograph of both powders", name: "image", widget: "image", hint: "The two powders together. Square works best here."}
               - {label: "Photograph description", name: "image_alt", widget: "string", hint: "What is in the picture, for anyone using a screen reader. Describe the powders without saying which is which."}
 

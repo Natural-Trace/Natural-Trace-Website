@@ -19,10 +19,20 @@
 opening:
   label: "The two jars on our stand"
   title: "One of these can prove where it came from"
-  lead: >-
-    Both are presented as the same branded protein powder. Identical in colour,
-    identical in texture, identical on the label. Only one of them carries
-    NaturalTag™, and that is the only reason the difference can be shown at all.
+  lead: "Both are presented as the same branded protein powder."
+  identical:
+    - lead_in: "Identical in"
+      word: "colour"
+      treatment: "colour"
+    - lead_in: "Identical in"
+      word: "texture"
+      treatment: "texture"
+    - lead_in: "Identical on the"
+      word: "label"
+      treatment: "label"
+  closing: >-
+    Only one of them carries NaturalTag™, and that is the only reason the
+    difference can be shown at all.
   image: /assets/images/scan-both.webp
   image_alt: "Two cones of brown powder side by side, alike in colour and texture"
 

@@ -2520,3 +2520,60 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
   .page-scan main{width:calc(100% - 1rem)}
   .page-scan::before{background:rgba(107,114,73,.2);-webkit-mask-size:min(60vh,150vw);mask-size:min(60vh,150vw)}
 }
+
+/* ── /scan/: the three ways the jars match ─────────────────────────────────
+   Each line ends on a word set to look like the thing it names. Decorative,
+   but the sentence stops making sense if the word cannot be read, so each
+   treatment is bounded by contrast rather than by taste. */
+.scan-identical{list-style:none;margin:1.2rem 0 0;padding:0;display:grid;gap:.65rem}
+.scan-identical li{
+  position:relative;padding-left:1.4rem;
+  font-size:1.02rem;line-height:1.6;color:rgba(26,30,46,.8);
+}
+.scan-identical li::before{
+  content:'';position:absolute;left:0;top:.62em;
+  width:.42rem;height:.42rem;border-radius:50%;background:var(--sage);
+}
+.scan-word{font-weight:700}
+
+/* Sampled from src/assets/images/scan-left.webp rather than picked by eye: the
+   mean of a 100px square in the body of the pile is #733717, which is 8.45:1 on
+   this band and so can carry text without being darkened. --gold-ink and
+   --sage-ink exist because the equivalent surface colours could not, and this
+   one was measured the same way rather than assumed. */
+.scan-word.is-colour{color:#733717}
+
+/* Grain, cut out of the glyphs. The base colour is set first and the cut-out
+   only happens inside @supports, because background-clip:text needs the fill to
+   be transparent: on a browser without it the word would be invisible rather
+   than merely unstyled, which is the whole page's argument lost to a decoration.
+   Speckles stay low-alpha so the effective contrast never strays far from the
+   base, which is 9.3:1 here. */
+.scan-word.is-texture{color:#4F3D2C}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .scan-word.is-texture{
+    background-color:#4F3D2C;
+    background-image:
+      radial-gradient(rgba(255,255,255,.4) .6px,transparent .7px),
+      radial-gradient(rgba(0,0,0,.35) .5px,transparent .6px);
+    background-size:3px 3px,4px 4px;
+    background-position:0 0,2px 1px;
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+}
+
+/* Drawn as something stuck on, which is the point being made: a label is
+   applied to a product and can be moved to another one. Sits on its own
+   baseline with a small tilt, and the tilt is small enough that a descender
+   never collides with the line beneath. */
+.scan-word.is-label{
+  display:inline-block;transform:rotate(-1.6deg);
+  padding:.06em .5em;border:1px solid rgba(107,114,73,.55);border-radius:3px;
+  background:#fff;color:var(--sage-ink);
+  box-shadow:0 1px 2px rgba(26,30,46,.09);
+}
+
+@media(max-width:600px){
+  .scan-identical li{font-size:.98rem}
+}
