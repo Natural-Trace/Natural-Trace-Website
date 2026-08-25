@@ -2522,7 +2522,15 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
 }
 
 /* ── /scan/: the three ways the jars match ───────────────────────────────── */
-.scan-identical{list-style:none;margin:1.2rem 0 0;padding:0;display:grid;gap:.65rem}
+/* The list belongs to the paragraph above it, so it sits close to it and keeps
+   its distance from the one below. It was the other way round: .challenge-lead
+   carries a 2rem bottom margin site-wide, which won the collapse against this
+   list's top margin and opened 32px above it, while the closing paragraph has
+   no top margin at all and sat flush against it at 0. The three lines read as
+   the opening of the next thought rather than the elaboration of the last one.
+   The lead's bottom margin is cut to match only where a list follows it. */
+.scan-identical{list-style:none;margin:.7rem 0 1.6rem;padding:0;display:grid;gap:.65rem}
+.page-scan .challenge-text > .challenge-lead:first-of-type{margin-bottom:.7rem}
 .scan-identical li{
   position:relative;padding-left:1.4rem;
   font-size:1.02rem;line-height:1.6;color:rgba(26,30,46,.8);
