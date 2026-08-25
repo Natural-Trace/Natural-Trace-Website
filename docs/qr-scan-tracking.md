@@ -167,6 +167,28 @@ If the stand is ever reprinted without the tick and cross, the reveal becomes
 worth having again, and it is in the history rather than gone: it is the state
 at commit 8b38b2f.
 
+## The untagged jar is a finding, not an open question
+
+The right card said "It may be the branded product, or it may not" until 25
+August. That was written to stay on the right side of the science, because a
+missing tag is not proof of a counterfeit. It was too tentative to be useful:
+it left the visitor with a shrug at the exact point the page has something to
+sell.
+
+It now reads that the jar should carry the tag and does not, and that a batch
+coming back untagged cannot be placed at the authorised source. That is both
+sharper and still true. In a supply chain where tagging is in place, every
+legitimate batch carries one, so an absence is a real finding about process
+rather than a guess about intent. The consequence is named rather than left
+abstract, and it is named on both sides: the brand whose name is on the product,
+and the consumer who takes it. Those are the two parties who carry the cost of a
+batch nobody can place, and they are who the room at an event like this is
+actually thinking about.
+
+What must not come back is a claim that the untagged jar is counterfeit. The
+absence of a tag does not establish what the powder is, only that its origin
+cannot be shown, and the page should keep saying the second thing.
+
 ## Register, and what is deliberately not said
 
 The page is read at a conference stand by buyers and by people whose job is
