@@ -114,4 +114,4 @@ consent:
 # nothing loads at all.
 cloudflare_analytics:
   enabled: true
-  token: ""
+  token: "52b365746a03473d90b434df96d01af0"

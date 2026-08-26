@@ -141,9 +141,13 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
    cookies and stores nothing on the device, which is why it was chosen over
    GA4. Anything that does set a cookie belongs in partials/consent.njk with
    the HubSpot loader instead, and putting it here would make the privacy
-   policy untrue. defer so it never delays a page that is opened on venue wifi
-   seconds after a scan. #}
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+   policy untrue.
+
+   type="module" because that is the form Cloudflare's own snippet now uses, and
+   a module loaded as a classic script throws on its first export. Modules defer
+   by default, so this still never blocks a page opened on venue wifi seconds
+   after a scan. #}
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js"
         data-cf-beacon='{"token": "{{ integrations.cloudflare_analytics.token }}"}'></script>
 {%- endif %}
 <script src="/assets/js/main.js?v={{ assetVersions.js }}"></script>
