@@ -2617,7 +2617,7 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
     -webkit-overflow-scrolling:touch;
     overscroll-behavior-x:contain;
     gap:.9rem;
-    margin-inline:-2rem;
+    margin-inline:0;
     padding:.25rem 1.25rem 1.25rem;
     scrollbar-width:none;
   }
@@ -2640,4 +2640,64 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
   /* The global rule hides this at 720px, which is where the home page's swipe
      starts. This one starts at 767px, so it is shown again over that gap. */
   .page-scan .vp-swipe-hint{display:block;text-align:center;font-size:.82rem;color:var(--muted);margin-top:-.35rem}
+}
+
+
+/* ── /scan/: which way the row still moves ─────────────────────────────────
+   The hint underneath says a row swipes. It does not say whether there is
+   anything left in either direction, which is the part that matters once you
+   have started moving. These two sit over the ends of the row and appear only
+   while there is more to reach that way.
+
+   Outside the wrapper's scroll box, not inside it, or they would scroll away
+   with the cards they are describing. The wrapper carries the bleed to the
+   strip edge for the same reason: the row can no longer do it, because the
+   indicators have to sit at the edge of the visible area rather than at the
+   edge of the scrolled content.
+
+   pointer-events:none and aria-hidden. They are indicators, not controls. A
+   tappable arrow over a card would swallow any swipe that began on it, which on
+   a 375px screen is a third of the width, and the row is already reachable from
+   a keyboard through its own tabindex. Nothing here is the only way to get
+   anywhere. */
+.scan-swipe{position:relative}
+.scan-swipe-edge{display:none}
+
+@media(max-width:767px){
+  .scan-swipe{margin-inline:-2rem}
+  .scan-swipe-edge{
+    display:flex;align-items:center;justify-content:center;
+    position:absolute;top:0;bottom:1.25rem;width:3.4rem;z-index:2;
+    pointer-events:none;opacity:0;transition:opacity .22s ease;
+  }
+  .scan-swipe-edge.is-left{left:0}
+  .scan-swipe-edge.is-right{right:0}
+  /* The frosting is its own layer so it can be masked to fade inward while the
+     chevron on top stays at full strength. */
+  .scan-swipe-edge::before{
+    content:'';position:absolute;inset:0;
+    -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+    background:linear-gradient(to right,rgba(255,255,255,.72),rgba(255,255,255,0));
+    -webkit-mask:linear-gradient(to right,#000,transparent);
+    mask:linear-gradient(to right,#000,transparent);
+  }
+  .scan-swipe-edge.is-right::before{
+    background:linear-gradient(to left,rgba(255,255,255,.72),rgba(255,255,255,0));
+    -webkit-mask:linear-gradient(to left,#000,transparent);
+    mask:linear-gradient(to left,#000,transparent);
+  }
+  /* Same chevron construction as the disclosures elsewhere in this file. */
+  .scan-swipe-edge::after{
+    content:'';position:relative;width:.6rem;height:.6rem;
+    border:solid var(--teal);border-width:0 2px 2px 0;
+  }
+  .scan-swipe-edge.is-left::after{transform:rotate(135deg);margin-left:.35rem}
+  .scan-swipe-edge.is-right::after{transform:rotate(-45deg);margin-right:.35rem}
+
+  .scan-swipe.can-left .is-left,
+  .scan-swipe.can-right .is-right{opacity:1}
+
+  @media(prefers-reduced-motion:reduce){
+    .scan-swipe-edge{transition:none}
+  }
 }

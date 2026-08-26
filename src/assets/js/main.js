@@ -697,3 +697,43 @@ document.addEventListener('DOMContentLoaded', function () {
     })(cards[i]);
   }
 });
+
+/* ===== Event jar cards (/scan/): which way the row still moves =====
+   The two card rows swipe on a phone. The hint underneath says so; it cannot
+   say whether there is anything left to reach in a given direction, which is
+   the part that matters once someone has started moving. Two indicators sit
+   over the ends of each row and are shown only while there is more that way.
+
+   Scroll position is not available to CSS, so this is script, and it is written
+   to fail safe: if it never runs, both indicators stay hidden and the row still
+   swipes exactly as it did. Nothing here is the only route to anything.
+
+   The 4px tolerance is not decoration either. scrollLeft is fractional on a
+   zoomed or high-density display, so a row scrolled fully right can report a
+   maximum a fraction of a pixel short of scrollWidth - clientWidth, and a strict
+   comparison leaves the right-hand arrow lit at the end of the row, pointing at
+   nothing. */
+document.addEventListener('DOMContentLoaded', function () {
+  var rows = document.querySelectorAll('.scan-swipe > .scan-cards, .scan-swipe > .vp-grid');
+
+  function watch(row) {
+    var wrap = row.parentElement;
+    function update() {
+      var max = row.scrollWidth - row.clientWidth;
+      // Under 4px of travel means the row is not a carousel at this width, so
+      // neither indicator belongs on screen.
+      var scrolls = max > 4;
+      wrap.classList.toggle('can-left', scrolls && row.scrollLeft > 4);
+      wrap.classList.toggle('can-right', scrolls && row.scrollLeft < max - 4);
+    }
+    row.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    /* Run again once the photographs are in. They are lazy, so the row's
+       scrollWidth is smaller before they arrive than after, and a state worked
+       out from the first number would be wrong by the time anyone looked. */
+    window.addEventListener('load', update);
+    update();
+  }
+
+  for (var i = 0; i < rows.length; i++) watch(rows[i]);
+});

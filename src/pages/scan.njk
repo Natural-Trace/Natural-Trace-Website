@@ -74,7 +74,8 @@ noindex: true
     {#- tabindex and a label because on a phone this is a scrollable region, the
         same reason the value cards on the home page carry them. Anything a
         pointer can scroll has to be reachable from a keyboard. -#}
-    <div class="scan-cards" tabindex="0" role="group" aria-label="{{ scan.opening.label }}">
+    <div class="scan-swipe">
+      <div class="scan-cards" tabindex="0" role="group" aria-label="{{ scan.opening.label }}">
       {% for side in [scan.reveal.left, scan.reveal.right] %}
       <article class="scan-card">
         <div class="scan-shot">
@@ -90,14 +91,21 @@ noindex: true
         </div>
       </article>
       {% endfor %}
+      </div>
+      {#- Decorative, and pointer-events:none. They are indicators rather than
+          controls: a tap target sitting over the card would swallow a swipe that
+          began on it, which on a 375px screen is a third of the width. -#}
+      <span class="scan-swipe-edge is-left" aria-hidden="true"></span>
+      <span class="scan-swipe-edge is-right" aria-hidden="true"></span>
     </div>
-    <p class="vp-swipe-hint">{{ scan.swipe_hint }}</p>
+    {% if scan.swipe_hint %}<p class="vp-swipe-hint">{{ scan.swipe_hint }}</p>{% endif %}
   </div>
 </section>
 
 <section class="valueprop">
   <div class="container">
-    <div class="vp-grid about-grid-2" tabindex="0" role="group" aria-label="{{ scan.question_title }}">
+    <div class="scan-swipe">
+      <div class="vp-grid about-grid-2" tabindex="0" role="group" aria-label="{{ scan.question_title }}">
       <article class="vp-card">
         <h3>{{ scan.question_title }}</h3>
         <p>{{ scan.question_body }}</p>
@@ -106,8 +114,14 @@ noindex: true
         <h3>{{ scan.answer_title }}</h3>
         <p>{{ scan.answer_body }}</p>
       </article>
+      </div>
+      {#- Decorative, and pointer-events:none. They are indicators rather than
+          controls: a tap target sitting over the card would swallow a swipe that
+          began on it, which on a 375px screen is a third of the width. -#}
+      <span class="scan-swipe-edge is-left" aria-hidden="true"></span>
+      <span class="scan-swipe-edge is-right" aria-hidden="true"></span>
     </div>
-    <p class="vp-swipe-hint">{{ scan.swipe_hint }}</p>
+    {% if scan.swipe_hint %}<p class="vp-swipe-hint">{{ scan.swipe_hint }}</p>{% endif %}
   </div>
 </section>
 
