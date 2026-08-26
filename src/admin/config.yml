@@ -1594,6 +1594,13 @@ collections:
             widget: "object"
             fields:
               - {label: "Enabled", name: "enabled", widget: "boolean", hint: "Also needs a HubSpot Portal ID above, and visitor consent"}
+          - label: "Cloudflare Web Analytics"
+            name: "cloudflare_analytics"
+            widget: "object"
+            hint: "Counts page views across the whole site. Unlike the HubSpot tracking above it sets no cookies, so it runs without the consent banner and therefore sees everyone rather than only the people who tap Accept. That is the point of it."
+            fields:
+              - {label: "Enabled", name: "enabled", widget: "boolean", hint: "Also needs the site token below. With no token nothing loads at all."}
+              - {label: "Site token", name: "token", widget: "string", required: false, hint: "From dash.cloudflare.com, Web Analytics, Add a site. It is published in the page and is not a secret; it is not an API key and grants nothing."}
           - label: "Cookie Consent Banner"
             name: "consent"
             widget: "object"

@@ -136,6 +136,16 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
 
 {% include "partials/consent.njk" %}
 
+{%- if integrations.cloudflare_analytics.enabled and integrations.cloudflare_analytics.token %}
+{# Cloudflare Web Analytics. Outside the consent gate on purpose: it sets no
+   cookies and stores nothing on the device, which is why it was chosen over
+   GA4. Anything that does set a cookie belongs in partials/consent.njk with
+   the HubSpot loader instead, and putting it here would make the privacy
+   policy untrue. defer so it never delays a page that is opened on venue wifi
+   seconds after a scan. #}
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "{{ integrations.cloudflare_analytics.token }}"}'></script>
+{%- endif %}
 <script src="/assets/js/main.js?v={{ assetVersions.js }}"></script>
 {# The Netlify Identity widget used to load here, on every page of the site, to
    catch an invite link and bounce the visitor to /admin. It went with

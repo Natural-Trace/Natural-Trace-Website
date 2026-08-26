@@ -92,3 +92,26 @@ consent:
   decline_label: "Decline"
   policy_label: "Privacy Policy"
   policy_url: "/privacy/"
+
+# Cloudflare Web Analytics
+#
+# Added 26 Aug 2026, during IP Week, because the stand exposed a hole: the QR
+# worker counts every scan, but once a visitor reaches the site nothing records
+# what they do next. HubSpot would, and does not, because it only loads after
+# someone accepts the cookie banner and nobody standing at a booth does that.
+#
+# This one is not gated behind consent, deliberately. It sets no cookies, writes
+# nothing to the device and does not fingerprint or follow anyone between sites,
+# which is the entire reason it was chosen over GA4: GA4 sets cookies, so it
+# would have to sit behind the same banner and would measure the same tiny
+# minority. The privacy policy says what is collected.
+#
+# The token is public. It ships in the page HTML on every request, so it is not
+# a secret and belongs here rather than in a Cloudflare secret. It is NOT an API
+# token and grants nothing.
+#
+# Get it from dash.cloudflare.com, Web Analytics, Add a site. Until it is set
+# nothing loads at all.
+cloudflare_analytics:
+  enabled: true
+  token: ""
