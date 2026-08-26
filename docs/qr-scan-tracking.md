@@ -73,17 +73,26 @@ reveal page, then open `/stats` and confirm the scan is there.
 https://natural-trace-qr.natural-trace.workers.dev/stats
 ```
 
-returns JSON: per code path, a total and a per-day breakdown. The URL is public
-on purpose: it exposes nothing but how many times the stand was scanned, and a
-secret would mean one more thing to manage for a number that goes on a slide
-anyway.
+returns JSON: a total, the time of the most recent scan, and a breakdown by
+date, oldest first. The URL is public on purpose: it exposes nothing but how
+many times the stand was scanned, and a secret would mean one more thing to
+manage for a number that goes on a slide anyway.
 
-`jars` is the live bucket. `malt`, `protein` and `milo` are older paths kept
-alive and still counted separately; anything in them is either a pre-24-Aug
-test or someone scanning a superseded code.
+Dates are Singapore, not UTC. The keys are written in UTC because that is what
+toISOString gives and because it sorts correctly, but nobody reading the number
+is in UTC: an evening scan at a stand used to land on the next day's line, which
+is a reconciliation problem at exactly the moment someone is reading it out.
+Singapore is UTC+8 with no daylight saving, so the worker applies a fixed offset
+rather than carrying a timezone database.
 
-Anything that is not a code path or `/stats` redirects to the homepage
-uncounted, so a mangled reprint of the URL fails soft.
+One bucket. `/malt`, `/protein` and `/milo` were kept alive through the renames
+so anything generated in the meantime would still resolve, and were removed on
+26 Aug: none of them was ever printed, the stand went out with a single code,
+and three permanently empty rows in a number someone reads at a stand are three
+chances to misread it.
+
+Anything that is not `/jars` or `/stats` redirects to the homepage uncounted, so
+a mangled or half-read URL fails soft rather than 404ing.
 
 ## The next event
 
@@ -108,9 +117,11 @@ The cost is that a scan can no longer say which jar prompted it, which was the
 original reason for two. With one thing to scan there is nothing to
 distinguish, so the per-jar split is gone rather than merely unreported.
 
-If it is ever wanted back, print two codes pointing at `/malt` and `/protein`.
-Both still work, both still count separately, and both now land on the same
-combined page, so it is a printing decision and needs no code change at all.
+If it is ever wanted back it now costs a deploy as well as a print run. It did
+not until 26 Aug, when `/malt` and `/protein` were removed: while they existed
+it was purely a printing decision. Add two entries to `CODES` pointing at the
+same page with their own `code` values, deploy, and print two QR codes against
+them.
 
 ## Look at the jars before writing about how they look
 
@@ -223,8 +234,8 @@ at deliberately:
 
   The URL went with it, because the address bar is copy the visitor reads too.
   The page is now `/scan/` and the worker path `/jars`, so the name appears
-  nowhere. `/milo` still resolves for safety; see the comment above `CODES` in
-  `qr/worker.js` for when it can go.
+  nowhere. `/milo` resolved for a while as a safety net and was removed on
+  26 Aug along with the other superseded paths, none of which was ever printed.
 - **The opening line of the first card was cut on 24 Aug.** It read "The two
   are not even the same shade of brown, and that tells you nothing". Alrik
   read it as a double negative, and it is: two negations stacked in one

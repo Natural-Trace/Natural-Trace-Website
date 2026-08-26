@@ -13,10 +13,7 @@
  * Routes:
  *
  *   GET /jars      count a scan, redirect to the reveal page
- *   GET /malt      superseded path, still works, counted as malt
- *   GET /protein   superseded path, still works, counted as protein
- *   GET /milo      superseded path, still works, counted as malt
- *   GET /stats     the counts, as JSON: per code, per day, and in total
+ *   GET /stats     the counts, as JSON: total and per Singapore date
  *   anything else  redirect to the homepage, uncounted
  *
  * Each scan is stored as its own KV key, jars:<timestamp>:<random>, rather
@@ -40,29 +37,20 @@ const SITE = "https://natural-trace.com";
 // site. The path is what gets printed, so keep it short and never reuse one
 // that is already on paper for something else.
 //
-// `code` is the counting bucket and `target` is where the scan lands. They are
-// separate so that several paths can share a page while keeping their own
-// counts, which is what makes a path survive being superseded.
+// `code` is the counting bucket and `target` is where the scan lands. They stay
+// separate fields so that a second path could share this page while keeping its
+// own count, which is what made the earlier renames survivable.
 //
-// The stand carried a code per jar until 24 Aug, when Alrik asked for a single
-// code and a single page, which is also what the printed stand card already
-// shows. /jars is that code. The three older paths still resolve and still
-// count under their own names, so anything generated earlier keeps working and
-// stays attributable; they can go once this event is over.
-//
-// The cost of one code is that a scan can no longer say which jar prompted it.
-// There is only one thing to scan, so there is nothing to distinguish. If the
-// per-jar split is ever wanted back, print two codes pointing at /malt and
-// /protein: both already work, both already count separately, and they now
-// land on the same combined page, so nothing else has to change.
+// One path now. There were four: /jars plus /malt, /protein and /milo, kept
+// alive so that anything generated during the renames would still resolve. None
+// of them was ever printed. The stand went out with a single code on its card
+// and today is its first day, so the aliases were protecting nothing and are
+// gone. Anything else still redirects to the homepage uncounted, so a mistyped
+// or half-read URL fails soft rather than 404ing.
 const UTM = "utm_source=qr&utm_medium=offline&utm_campaign=ip-week-2026";
-const PAGE = `${SITE}/scan/?${UTM}`;
 
 const CODES = {
-  "/jars": { code: "jars", target: `${PAGE}&utm_content=jars` },
-  "/malt": { code: "malt", target: `${PAGE}&utm_content=malt` },
-  "/protein": { code: "protein", target: `${PAGE}&utm_content=protein` },
-  "/milo": { code: "malt", target: `${PAGE}&utm_content=malt` },
+  "/jars": { code: "jars", target: `${SITE}/scan/?${UTM}&utm_content=jars` },
 };
 
 export default {
@@ -94,14 +82,29 @@ function recordScan(code, target, request, env, ctx) {
   return Response.redirect(target, 302);
 }
 
-async function stats(env) {
-  const out = {};
-  // Unique buckets, not paths: /milo and /malt share one, and listing paths
-  // would report the same scans twice under two names.
-  for (const code of [...new Set(Object.values(CODES).map((c) => c.code))]) {
-    const days = {};
-    let total = 0;
+/* Singapore, not UTC. The keys are written in UTC because that is what
+   toISOString gives and it sorts correctly, but nobody reading this is in UTC:
+   an evening scan at the stand landed on the next day's line, which is a
+   reconciliation problem at exactly the moment someone is reading the number
+   out. Singapore is UTC+8 with no daylight saving, so a fixed offset is right
+   all year and there is no need to carry a timezone database into a worker.
 
+   An array rather than an object, because the order is the point. Object key
+   order is an implementation detail; a sorted array says oldest first and keeps
+   saying it. */
+const SGT_OFFSET_MS = 8 * 60 * 60 * 1000;
+const ISO_LENGTH = 24; // 2026-08-26T05:47:46.123Z
+
+function toSgt(iso) {
+  return new Date(new Date(iso).getTime() + SGT_OFFSET_MS).toISOString();
+}
+
+async function stats(env) {
+  const byDate = {};
+  let total = 0;
+  let latest = null;
+
+  for (const { code } of Object.values(CODES)) {
     // list() pages at 1000 keys. The loop matters even though one event will
     // not get near that: without it the day this breaks is the day the count
     // is most interesting.
@@ -109,17 +112,29 @@ async function stats(env) {
     do {
       const page = await env.SCANS.list({ prefix: `${code}:`, cursor });
       for (const k of page.keys) {
+        // Slice by length rather than splitting on ":", because the timestamp
+        // contains two of its own.
+        const iso = k.name.slice(code.length + 1, code.length + 1 + ISO_LENGTH);
+        const sgt = toSgt(iso);
+        const date = sgt.slice(0, 10);
+        byDate[date] = (byDate[date] || 0) + 1;
+        if (!latest || sgt > latest) latest = sgt;
         total += 1;
-        const day = k.name.slice(code.length + 1, code.length + 11); // YYYY-MM-DD
-        days[day] = (days[day] || 0) + 1;
       }
       cursor = page.list_complete ? undefined : page.cursor;
     } while (cursor);
-
-    out[code] = { total, by_day: days };
   }
 
-  return new Response(JSON.stringify(out, null, 2), {
+  const body = {
+    total,
+    timezone: "Singapore (UTC+8)",
+    last_scan: latest ? latest.slice(0, 16).replace("T", " ") : null,
+    by_date: Object.keys(byDate)
+      .sort()
+      .map((date) => ({ date, scans: byDate[date] })),
+  };
+
+  return new Response(JSON.stringify(body, null, 2), {
     headers: { "Content-Type": "application/json" },
   });
 }
