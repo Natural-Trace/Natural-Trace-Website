@@ -1209,7 +1209,36 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 }
 .insight-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);transition:box-shadow .3s}
 .insight-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1)}
-.insight-card-image img{width:100%;height:280px;object-fit:cover;display:block}
+/* A ratio, not a fixed height. The 280px it replaces was the whole bug, and it
+   was worse than it looked because a fixed height means the crop changes with
+   the viewport: in the 744px column it made a 2.66:1 letterbox, and on a 375px
+   phone the same rule made a 311x280 box, near enough square, so every
+   landscape picture on the index lost its sides on a phone and its top and
+   bottom on a desktop. A ratio crops the same everywhere.
+
+   1.91:1 measured against the fifteen images actually used as card headers.
+   Mean area lost falls from 37% to 19%; it was 62% on the worst of them. The
+   candidates were close and the reasons for this one over the others:
+
+     2.66:1 (was)  mean 37%  worst 62%  280px
+     2.0:1         mean 21%  worst 53%  372px
+     1.91:1        mean 19%  worst 55%  390px
+     1.78:1        mean 17%  worst 58%  418px
+
+   1.78 is marginally better on the mean and 28px taller on every card down the
+   page, which is the wrong trade for two points. 1.91 is also the ratio an
+   uploaded share image already is: three of the fifteen are exactly 1200x627
+   and are now not cropped at all.
+
+   What this costs, and it is a real cost: the two legacy banners crop harder,
+   not softer. Wide art loses its sides as the box narrows, so
+   taking-a-byte-of-transparency (1080x300, 3.6:1) and the Tasmania banner
+   (1900x450, 4.22:1) go from losing 26% and 37% of their width to 44% and 55%.
+   They are article headers rather than photographs and neither is on the first
+   page. Cropping for both a 1:1 photograph and a 4.22:1 banner in one box is
+   not a thing CSS can do; making those two into images of the shape the folder
+   README asks for is the fix, and it is a content job. */
+.insight-card-image img{width:100%;aspect-ratio:1.91;object-fit:cover;display:block}
 .insight-card-content{padding:1.5rem 1.75rem 1.75rem}
 .insight-card-content time{font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
 /* .6rem measured as a 3px ink gap to the summary below on a phone, which is
