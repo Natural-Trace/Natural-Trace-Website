@@ -1,3 +1,5 @@
 heading: "From our LinkedIn"
 subheading: "Short updates that do not need a full article."
-posts: []
+posts:
+  - url: "https://www.linkedin.com/feed/update/urn:li:activity:7498689537460609024/"
+    title: "Named an Emerging Champion at the IP for Growth Awards during Singapore IP Week 2026"
