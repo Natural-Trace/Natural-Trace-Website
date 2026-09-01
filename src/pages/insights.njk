@@ -11,15 +11,31 @@ permalink: "{% if pagination.pageNumber == 0 %}/insights/{% else %}/insights/pag
 {#-
   Nine per page.
 
-  Nine because the grid is three across on a desktop, so a page is three full
-  rows with nothing left hanging. The archive is nineteen articles after the
-  WordPress migration, which is more than anyone scrolls through to reach 2022.
+  Not for the reason that used to be written here. This said "nine because the
+  grid is three across on a desktop, so a page is three full rows with nothing
+  left hanging", and that was never true rather than having drifted:
+  .insights-grid has been flex-direction:column inside an 800px cap since it
+  was written on 9 July 2026, and this pagination was added on 12 August, a
+  month later. A page has always been nine cards in one column. There were
+  never any rows, so there was never a number of them to fill.
+
+  What nine actually decides is how long one page is and how many pages the
+  archive splits into, and nothing in the layout argues for that number over
+  eight or twelve. It is a scroll-length judgement and it is open to being
+  changed on that basis. What it is not is a constraint coming from the grid.
 
   Only the chronological articles are paginated. The pinned one, "Welcome to
   Natural Trace Insights", is evergreen rather than news and is appended to the
-  last page, where an introduction to an archive belongs. That is also what
-  makes the pages come out even: eighteen dated articles is exactly two pages,
-  where paginating all nineteen gave a third page holding one article.
+  last page, where an introduction to an archive belongs.
+
+  The second half of that argument has expired and is recorded here so it is
+  not reinstated. It ran that holding the pinned article out of the pagination
+  also made the pages come out even, because eighteen dated articles were
+  exactly two pages where nineteen gave a third page holding one item. The
+  nineteenth dated article was published on 1 September 2026, so there are
+  three pages now whichever way the pinned one is counted. The evenness is
+  gone and is not recoverable by moving it; only the editorial reason above
+  still holds.
 
   Page one keeps /insights/, so nothing linking to it has to change, and the
   rest are /insights/page/2/ onwards.
