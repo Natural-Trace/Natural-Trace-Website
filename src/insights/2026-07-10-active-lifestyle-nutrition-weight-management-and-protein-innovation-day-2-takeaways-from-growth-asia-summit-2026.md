@@ -3,7 +3,7 @@ title: "Active Lifestyle Nutrition, Weight Management and Protein Innovation:
   Day 2 Takeaways from Growth Asia Summit 2026"
 date: 2026-07-10T17:27:00.000+08:00
 author: Alrik Tan
-image: https://pbs.twimg.com/media/HMxmTy3XoAASMor.jpg
+image: /assets/images/insights/active-lifestyle-nutrition-weight-management-and-protein-innovation-day-2-takeaways-from-growth-asia-summit-2026.jpg
 summary: Day 2 takeaways from the Growth Asia Summit 2026 in Singapore on active
   lifestyle nutrition, bioactive berry ingredients, GLP-1 companion product
   verification, weight management supplements, protein innovation, and why
