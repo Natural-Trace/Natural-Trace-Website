@@ -1,7 +1,7 @@
 ---
 layout: layouts/post.njk
 title: "Natural Trace Named an Emerging Champion at the IP for Growth Awards"
-date: 2026-09-01T09:00:00+08:00
+date: 2026-08-27T18:35:04+08:00
 author: "Natural Trace"
 summary: "Natural Trace has been named a 2026 Emerging Champion at the IP for Growth Awards, presented during Singapore IP Week by the Intellectual Property Office of Singapore. The recognition reflects the intellectual property behind our in-product authentication technology, which gives food and nutraceutical ingredients a verifiable identity carried inside the product itself."
 image: /assets/images/insights/natural-trace-named-emerging-champion-at-the-ip-for-growth-awards.jpg

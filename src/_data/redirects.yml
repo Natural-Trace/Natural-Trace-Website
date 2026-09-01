@@ -275,3 +275,13 @@ rules:
     to: "/insights/"
   - from: "/tag/vitafoods-europe-2026/"
     to: "/insights/"
+
+  # Insights
+  # The IP for Growth Awards article was published on 1 September 2026 dated
+  # that day, and redated on the same day to 27 August, the day the LinkedIn
+  # post it reports actually went up. The filename is the URL, so redating it
+  # moved it. The old address was live for about an hour and is very unlikely
+  # to be linked from anywhere, but a rule costs one build artefact and a 404
+  # on our own newest article costs more than that.
+  - from: "/insights/2026-09-01-natural-trace-named-emerging-champion-at-the-ip-for-growth-awards/"
+    to: "/insights/2026-08-27-natural-trace-named-emerging-champion-at-the-ip-for-growth-awards/"
