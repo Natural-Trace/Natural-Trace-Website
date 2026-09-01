@@ -1,6 +1,6 @@
 ---
 layout: layouts/post.njk
-title: 'Nutraceutical Focus Brochure 2025'
+title: "Our 2025 guide to authenticating nutraceutical ingredients"
 date: 2025-05-22T09:40:22+08:00
 author: 'Natural Trace'
 summary: 'Natural Trace is proud to unveil its 2025 Nutraceutical Focus Brochure, showcasing our science-backed solution suite, tailored to meet the growing demand for traceability, authenticity, and integrity in the nutraceutical industry. Our comprehensive approach empowers industry leaders and innovators with technology that delivers tangible value across the supply chain, including: Safeguarding Brand Reputation Product Authentication'

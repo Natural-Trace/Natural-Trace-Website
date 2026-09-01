@@ -1,6 +1,6 @@
 ---
 layout: layouts/post.njk
-title: 'Recent Regulations Driving Traceability in Food and Agriculture Sectors'
+title: "The regulations now pushing traceability onto food brands"
 date: 2024-04-07T22:57:36+08:00
 author: 'Natural Trace'
 summary: 'In today’s food supply chain, ensuring transparency, accountability, and sustainability throughout supply chains is paramount, particularly in the food and agriculture industries. Governments and regulatory bodies worldwide have recognized the necessity for stringent measures to tackle issues ranging from forced labour and deforestation to food safety and corporate sustainability. This article explores six pivotal regulations'

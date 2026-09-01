@@ -1,6 +1,5 @@
 ---
-title: "Active Lifestyle Nutrition, Weight Management and Protein Innovation:
-  Day 2 Takeaways from Growth Asia Summit 2026"
+title: "What Day 2 of Growth Asia 2026 said about protein and GLP-1"
 date: 2026-07-10T17:27:00.000+08:00
 author: Alrik Tan
 image: /assets/images/insights/active-lifestyle-nutrition-weight-management-and-protein-innovation-day-2-takeaways-from-growth-asia-summit-2026.jpg

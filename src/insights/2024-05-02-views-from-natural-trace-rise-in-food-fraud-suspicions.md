@@ -1,6 +1,6 @@
 ---
 layout: layouts/post.njk
-title: 'Views from Natural Trace: Rise in food fraud suspicions'
+title: "Food fraud suspicions are rising. What buyers can do"
 date: 2024-05-02T14:45:47+08:00
 author: 'Natural Trace'
 summary: 'The European Commission’s recent report highlights a concerning trend on the rise of food and product fraud suspicions across European countries, reaching 345 cases in March alone. While not all cases are confirmed, these suspicions underscore the importance of traceability and safeguarding products against fraud to maintain brand reputation. The report, sourced from various networks including'

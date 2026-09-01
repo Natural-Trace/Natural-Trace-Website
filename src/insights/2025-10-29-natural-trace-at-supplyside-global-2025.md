@@ -1,6 +1,6 @@
 ---
 layout: layouts/post.njk
-title: 'Natural Trace showcases next-generation traceability innovation at SupplySide Global 2025'
+title: "Taking ingredient authentication to SupplySide Global 2025"
 date: 2025-10-29T02:29:23+08:00
 author: 'Natural Trace'
 summary: 'Natural Trace, an award-winning biotech ingredient company pioneering food-safe traceability, will showcase its latest in-product tagging technology at SupplySide Global 2025, Booth #921. The company’s breakthrough platform is redefining how nutraceutical and ingredient brands verify authenticity, protect intellectual property, and strengthen consumer trust across complex global supply chains. Bringing authenticity to life As brands face'
