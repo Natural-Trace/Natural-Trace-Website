@@ -4,7 +4,7 @@ title: 'Successful Traceability Trial in Tasmanian Strawberries with Natural Tra
 date: 2025-06-12T11:12:10+08:00
 author: 'Natural Trace'
 summary: 'Natural Trace’s Technology Featured in Australian Berry Journal – Winter 2025 We’re thrilled to share that Natural Trace has been featured in the Winter 2025 edition of the Australian Berry Journal, showcasing the results of our recent successful field trials with Hillwood Berries in Tasmania, Australia. In the article, “Traceability Innovation: Tagging Trust Into Every'
-image: /assets/images/insights/successful-traceability-trial-in-tasmanian-strawberries-with-natural-trace.png
+image: /assets/images/insights/successful-traceability-trial-in-tasmanian-strawberries-with-natural-trace.jpg
 tags:
   - 'News'
 
