@@ -118,6 +118,13 @@ h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02
    of the window over the site header, at every scroll position, on both
    Insights pages.
 
+   That pager was removed on 1 September 2026 when Insights became one page, so
+   there is again only one <nav> on the site. Do not read that as licence to
+   put the bare element selector back. The rule was wrong before the pager
+   existed and happened not to show it; the next <nav> anyone adds, for a
+   breadcrumb or a pager that comes back at fifty articles, would land in the
+   same trap.
+
    Neither the layout audit nor the contrast audit saw it. Both measure text
    against text and background, and a control sitting on top of the header is
    neither overflowing nor overlapping any text they check.
@@ -1057,64 +1064,6 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
    can be linked, bookmarked and indexed, and 2022 is one click away instead of
    eight presses.
 --------------------------------------------------------------------------- */
-.insights-page-of{font-size:.42em;font-weight:400;color:var(--muted);vertical-align:middle;letter-spacing:0}
-/* Contained, and off to one side.
-
-   It was a centred row on a hairline rule with no background of its own, which
-   made it read as the end of the article list rather than as a control: it
-   disappeared into the page while scrolling past. A rule is a separator, not a
-   surface, and nothing on this site says "you can press me" without one.
-
-   So it gets a surface, and in exchange it stops taking the full width and
-   sitting in the middle. Right-aligned and only as wide as its contents, which
-   is where a reader's hand and eye already are after a column of cards, and
-   quieter than the centred bar even though it is now more visible.
-
-   Deliberately not a floating rail pinned to the side of the window. That is a
-   pattern for lists that never end, it covers content at every scroll position
-   rather than at one, and it would be more intrusive than what it replaced,
-   not less. Two pages do not need a control that follows you. */
-.insights-pager{
-  display:flex;align-items:center;gap:.5rem;
-  width:fit-content;max-width:100%;
-  /* Right edge lined up with the cards, not with the container.
-     .insights-grid is capped at 800px and centred, so margin-right:0 put the
-     pager 192px past the right edge of the column it belongs to, floating in
-     the gutter and looking like it had come loose. The calc is that gutter;
-     max() collapses it to nothing once the viewport is narrower than the
-     grid's cap, where there is no gutter to sit in. */
-  margin:2.75rem max(0px, calc(50% - 400px)) 0 auto;
-  padding:.4rem .6rem;
-  background:#fff;border:1px solid var(--soft-sage);border-radius:14px;
-  box-shadow:0 1px 3px rgba(0,0,0,.05);
-  font-family:'Montserrat',sans-serif;font-size:.82rem}
-.insights-pager-numbers{display:flex;align-items:center;gap:.35rem;list-style:none;margin:0;padding:0}
-.insights-pager-num{
-  display:flex;align-items:center;justify-content:center;
-  /* 36px inside a padded container, so the outer target is still comfortably
-     over the 40px anything-tappable wants. */
-  min-width:36px;height:36px;padding:0 .5rem;border-radius:9px;
-  color:var(--text);text-decoration:none;transition:background .2s,color .2s}
-a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
-.insights-pager-num.is-current{background:var(--sage);color:#fff;font-weight:700}
-.insights-pager-step{
-  display:inline-flex;align-items:center;gap:.4rem;min-height:36px;padding:0 .35rem;
-  color:var(--sage);text-decoration:none;font-weight:600;white-space:nowrap}
-.insights-pager-step:hover{color:var(--dark)}
-/* Kept in the layout rather than removed, so the numbers stay centred on the
-   first and last pages instead of sliding sideways as you page through. */
-.insights-pager-step.is-off{color:var(--disabled-ink);pointer-events:none}
-@media(max-width:560px){
-  /* Centred on a phone, because right-aligned in a single column reads as an
-     accident rather than as a decision, and there is no column of cards beside
-     it to align to. */
-  .insights-pager{margin-inline:auto;gap:.3rem;font-size:.8rem}
-  /* The words go and the arrows stay. Newer and Older cost more width than
-     they are worth next to numbered buttons on a 360px screen. */
-  .insights-pager-step{font-size:0;gap:0;padding:0 .25rem}
-  .insights-pager-step [aria-hidden]{font-size:1.15rem}
-}
-
 /* ---------------------------------------------------------------------------
    From our LinkedIn, at the foot of the first Insights page.
 
@@ -1207,115 +1156,66 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
   .home-insights-list li{flex-direction:column;align-items:flex-start;gap:.2rem}
   .home-insights-list time{min-width:0}
 }
-.insight-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);transition:box-shadow .3s}
-.insight-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1)}
-/* A ratio, not a fixed height. The 280px it replaces was the whole bug, and it
-   was worse than it looked because a fixed height means the crop changes with
-   the viewport: in the 744px column it made a 2.66:1 letterbox, and on a 375px
-   phone the same rule made a 311x280 box, near enough square, so every
-   landscape picture on the index lost its sides on a phone and its top and
-   bottom on a desktop. A ratio crops the same everywhere.
-
-   1.91:1 measured against the fifteen images actually used as card headers.
-   Mean area lost falls from 37% to 19%; it was 62% on the worst of them. The
-   candidates were close and the reasons for this one over the others:
-
-     2.66:1 (was)  mean 37%  worst 62%  280px
-     2.0:1         mean 21%  worst 53%  372px
-     1.91:1        mean 19%  worst 55%  390px
-     1.78:1        mean 17%  worst 58%  418px
-
-   1.78 is marginally better on the mean and 28px taller on every card down the
-   page, which is the wrong trade for two points. 1.91 is also the ratio an
-   uploaded share image already is: three of the fifteen are exactly 1200x627
-   and are now not cropped at all.
-
-   What this costs, and it is a real cost: the two legacy banners crop harder,
-   not softer. Wide art loses its sides as the box narrows, so
-   taking-a-byte-of-transparency (1080x300, 3.6:1) and the Tasmania banner
-   (1900x450, 4.22:1) go from losing 26% and 37% of their width to 44% and 55%.
-   They are article headers rather than photographs and neither is on the first
-   page. Cropping for both a 1:1 photograph and a 4.22:1 banner in one box is
-   not a thing CSS can do; making those two into images of the shape the folder
-   README asks for is the fix, and it is a content job. */
-.insight-card-image img{width:100%;aspect-ratio:1.91;object-fit:cover;display:block}
-.insight-card-content{padding:1.5rem 1.75rem 1.75rem}
-.insight-card-content time{font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
-/* .6rem measured as a 3px ink gap to the summary below on a phone, which is
-   not a gap, it is a collision. The margin was set when the Insights index
-   held three cards; it holds nineteen now and the fault repeats down the whole
-   page. Measured from ink rather than from the box, which is why the number
-   looks larger than the gap it produces. */
-/* pretty, not the balance inherited from the h1,h2,h3 rule near the top.
-   This is the same fault .section-subtitle was fixed for, and the reasoning
-   there applies here word for word: balance evens the line lengths, which is
-   what a centred heading wants and is wrong for a left-aligned one in a text
-   column. Measured at 1440, where the card column is 744px: "Natural Trace
-   Announces New Co-CEO Structure..." set as 549 and 480, leaving a 195px hole
-   down the right of the first line while the summary directly beneath it ran
-   the full 744. Three of the four headings on the first screen did it, worst
-   at 209px.
-
-   pretty keeps the orphan control that was the reason for balancing headings
-   in the first place, so a heading still cannot end on a single stranded word;
-   it just fills each line before it wraps. Headings that already fit on one
-   line, "Vitafoods Europe 2026 Recap" at 332px of 744, are unaffected: there
-   is no wrap to make a decision about, and nothing here stretches a short
-   title to fill a column it does not need. */
-.insight-card-content h2{font-family:'Montserrat',sans-serif;font-size:1.4rem;color:var(--dark);margin:.5rem 0 .95rem;line-height:1.3;text-wrap:pretty}
-.insight-card-content h2 a{color:inherit;text-decoration:none}
-.insight-card-content h2 a:hover{color:var(--sage)}
-.insight-card-content p{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:.75rem}
-.insight-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.75rem}
-.insight-tag{font-size:.72rem;font-weight:600;padding:.25rem .65rem;border-radius:20px;background:rgba(107,114,73,.08);color:var(--sage-ink);letter-spacing:.02em}
-.read-more{font-size:.85rem;font-weight:600;color:var(--sage);text-decoration:none;transition:color .3s}
-.read-more:hover{color:var(--dark)}
-
 /* ---------------------------------------------------------------------------
-   The lead story, page one only. Set on the card by src/pages/insights.njk,
-   which carries the measurements and the reason.
+   An article, as a row. Shared by /insights/ and the tag archives via
+   src/_includes/partials/insight-row.njk.
 
-   Sideways rather than taller. The stacked card puts a 280px picture between
-   the top of the column and the headline, so the one thing a visitor came to
-   read is the last thing to arrive. Turning the first card on its side lifts
-   its headline roughly 300px up the page without making the card any bigger,
-   and every card below it is untouched.
+   This replaced a stacked card of about 700px on 1 September 2026. The card
+   had a full-width 1.91 picture above a date, a 1.4rem headline, a five-line
+   summary, a tag pill and a Read more link, and it showed a visitor roughly
+   one and a half articles per screen. The row is the shape CNA uses on
+   channelnewsasia.com/topic/insight, measured at a 136px pitch, and it puts
+   the whole twenty-article archive on one page with no pager.
 
-   It also happens to fix the crop on this card. .insight-card-image img is a
-   fixed 280px with object-fit:cover, so a 1280x853 photograph loses about
-   two thirds of its height out of the middle — which is why the award banner
-   reads "CHAMPION AWARD" and "GROWTH AWARDS" on the index with the tops of
-   both lines sliced off. In this column the box is close to square, so the
-   crop comes off the sides instead and the full height of the picture
-   survives. The other eighteen cards still crop the same way they always did;
-   that is a separate decision about image heights and is not this change.
+   The picture is fixed at 160px rather than a share of the row, so every
+   headline on the page starts at the same x however narrow the column gets.
+   A percentage column reflows the text edge as the viewport moves and the
+   left rag of a list is the thing that makes it scan.
 
-   860px because that is where the 800px column plus its gutters stops having
-   room for two of anything. Below it nothing here applies and the lead is an
-   ordinary stacked card.
+   1.91 on the thumbnail, matching the ratio the header images were cropped to
+   earlier the same day, so a picture is cropped one way on this site and not
+   two.
 --------------------------------------------------------------------------- */
-@media (min-width:860px){
-  .insight-card--lead{display:grid;grid-template-columns:minmax(0,46%) minmax(0,54%)}
-  /* An article published without a header image has no image element at all,
-     and a one-child grid would sit in the 46% column with the rest of the card
-     empty beside it. */
-  .insight-card--lead .insight-card-content:only-child{grid-column:1/-1}
-  .insight-card--lead .insight-card-image{height:100%}
-  .insight-card--lead .insight-card-image img{height:100%;min-height:300px}
-  .insight-card--lead .insight-card-content{
-    display:flex;flex-direction:column;justify-content:center;padding:2rem}
-  .insight-card--lead .insight-card-content h2{font-size:1.65rem;margin:.45rem 0 .85rem}
-  /* The lead card is as tall as its summary, and the summaries are not a
-     consistent length: the ones carried over from WordPress are the opening of
-     the article rather than a written summary, and run to 380 characters of
-     unbroken sentence. Whichever article leads should not be able to set the
-     height of the top of the page, so the lead shows five lines and the rest
-     is behind the headline link. The card it is clamping today is 340
-     characters, so this is not hiding anything on the current lead — it is
-     there for the day something longer reaches the top. */
-  .insight-card--lead .insight-card-content p{
-    display:-webkit-box;-webkit-box-orient:vertical;
-    -webkit-line-clamp:5;line-clamp:5;overflow:hidden}
+.insights-rows{max-width:800px;margin:0 auto;border-top:1px solid var(--soft-sage)}
+.insight-row{
+  display:grid;grid-template-columns:160px minmax(0,1fr);gap:1.25rem;
+  align-items:start;padding:1.2rem 0;border-bottom:1px solid var(--soft-sage)}
+/* An article published without a header image keeps its text on the same left
+   edge as every other row rather than sliding into the empty picture column. */
+.insight-row--noimage{grid-template-columns:160px minmax(0,1fr)}
+.insight-row--noimage .insight-row-text{grid-column:2}
+.insight-row-image{display:block;border-radius:8px;overflow:hidden}
+.insight-row-image img{width:100%;aspect-ratio:1.91;object-fit:cover;display:block;
+  transition:transform .35s ease}
+.insight-row:hover .insight-row-image img{transform:scale(1.04)}
+/* The kicker is the article's first tag, in CNA's position above the headline.
+   Harvest Gold is the brand's accent and this is the one accented thing in a
+   row, which is what an accent is for. */
+.insight-row-kicker{
+  display:inline-block;font-family:'Montserrat',sans-serif;
+  font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--gold-ink);text-decoration:none}
+a.insight-row-kicker:hover{color:var(--dark);text-decoration:underline}
+/* 1.05rem against the card's 1.4rem. The headline is now the largest thing in
+   the row rather than competing with a picture the width of the column, so it
+   does not need the size it had to carry there. */
+.insight-row h2{
+  font-family:'Montserrat',sans-serif;font-size:1.05rem;line-height:1.35;
+  color:var(--dark);margin:.3rem 0 .4rem;text-wrap:pretty}
+.insight-row h2 a{color:inherit;text-decoration:none}
+.insight-row h2 a:hover{color:var(--sage)}
+.insight-row time{font-size:.76rem;color:var(--muted);letter-spacing:.02em}
+/* The count above the list, standing in for CNA's "Showing 15 of 166". */
+.insights-count{
+  max-width:800px;margin:0 auto .35rem;font-size:.78rem;color:var(--muted);
+  letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+@media(max-width:600px){
+  /* 104px still reads as a picture at arm's length and leaves a 200px text
+     column on a 360px screen, which is where a two-line headline stops
+     needing three lines. */
+  .insight-row{grid-template-columns:104px minmax(0,1fr);gap:.9rem;padding:1rem 0}
+  .insight-row--noimage{grid-template-columns:104px minmax(0,1fr)}
+  .insight-row h2{font-size:.97rem}
 }
 
 .insights-empty{text-align:center;padding:4rem 0}

@@ -26,25 +26,9 @@ eleventyComputed:
 
 <section class="insights-list">
   <div class="container">
-    <div class="insights-grid">
+    <div class="insights-rows">
       {% for post in t.posts %}
-      <article class="insight-card">
-        {% if post.data.image %}
-        <a href="{{ post.url }}" class="insight-card-image"><img src="{{ post.data.image }}" alt="{{ post.data.title }}" loading="lazy"></a>
-        {% endif %}
-        {#- insight-card-content, matching the Insights index. This was
-            insight-card-body, a class with no rule anywhere in the stylesheet,
-            so every card on a tag page rendered with browser default margins:
-            the date, headline and summary ran together at a 3px gap while the
-            same three cards on /insights/ were spaced properly. One card, one
-            class. -#}
-        <div class="insight-card-content">
-          <time datetime="{{ post.date | date("%Y-%m-%d") }}">{{ post.date | date("%B %d, %Y") }}</time>
-          <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-          <p>{{ post.data.summary }}</p>
-          <a href="{{ post.url }}" class="read-more">Read more</a>
-        </div>
-      </article>
+        {% include "partials/insight-row.njk" %}
       {% endfor %}
     </div>
   </div>

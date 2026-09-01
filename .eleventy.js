@@ -51,7 +51,25 @@ module.exports = function(eleventyConfig) {
     if (format === "%B %d, %Y") {
       return `${months[d.getMonth()]} ${String(d.getDate()).padStart(2,"0")}, ${d.getFullYear()}`;
     }
-    return d.toLocaleDateString();
+    // "27 Aug 2026", for the Insights rows. Short enough to sit under a
+    // headline in a 640px text column without wrapping, where the full
+    // "August 27, 2026" was competing with the headline for width.
+    if (format === "%d %b %Y") {
+      return `${String(d.getDate()).padStart(2,"0")} ${months[d.getMonth()].slice(0,3)} ${d.getFullYear()}`;
+    }
+    /* Every format used anywhere in src/ is handled above; this is only
+       reachable by a typo in a new one. It used to fall through to
+       toLocaleDateString(), which is the worst possible behaviour here: it
+       returns whatever the machine running the build is set to, so a mistyped
+       format renders "27/08/2026" on a laptop, something else in CI, and never
+       errors on either. A date is not a place to be quietly locale-dependent
+       on a site read from Singapore, the US and Europe. */
+    throw new Error(
+      `date filter: unsupported format "${format}".\n` +
+      `  Supported: "%Y-%m-%d", "%B %d, %Y", "%d %b %Y".\n` +
+      `  Add the format to the filter in .eleventy.js rather than relying on ` +
+      `the locale of whichever machine happens to run the build.`
+    );
   });
 
   // RFC 822 dates, which is what RSS 2.0 requires and nothing else on this

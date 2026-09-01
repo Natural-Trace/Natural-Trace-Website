@@ -285,3 +285,13 @@ rules:
   # on our own newest article costs more than that.
   - from: "/insights/2026-09-01-natural-trace-named-emerging-champion-at-the-ip-for-growth-awards/"
     to: "/insights/2026-08-27-natural-trace-named-emerging-champion-at-the-ip-for-growth-awards/"
+
+  # The paginated Insights pages, retired on 1 September 2026 when the index
+  # became one page of rows. /insights/page/2/ and /3/ were real, indexable
+  # URLs for three weeks and Google may still hold them, so they land on the
+  # index rather than 404ing. There is no deeper page to send anyone to now:
+  # everything those two pages listed is on /insights/.
+  - from: "/insights/page/2/"
+    to: "/insights/"
+  - from: "/insights/page/3/"
+    to: "/insights/"
