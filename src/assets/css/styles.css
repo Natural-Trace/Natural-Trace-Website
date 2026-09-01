@@ -1217,7 +1217,23 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
    held three cards; it holds nineteen now and the fault repeats down the whole
    page. Measured from ink rather than from the box, which is why the number
    looks larger than the gap it produces. */
-.insight-card-content h2{font-family:'Montserrat',sans-serif;font-size:1.4rem;color:var(--dark);margin:.5rem 0 .95rem;line-height:1.3}
+/* pretty, not the balance inherited from the h1,h2,h3 rule near the top.
+   This is the same fault .section-subtitle was fixed for, and the reasoning
+   there applies here word for word: balance evens the line lengths, which is
+   what a centred heading wants and is wrong for a left-aligned one in a text
+   column. Measured at 1440, where the card column is 744px: "Natural Trace
+   Announces New Co-CEO Structure..." set as 549 and 480, leaving a 195px hole
+   down the right of the first line while the summary directly beneath it ran
+   the full 744. Three of the four headings on the first screen did it, worst
+   at 209px.
+
+   pretty keeps the orphan control that was the reason for balancing headings
+   in the first place, so a heading still cannot end on a single stranded word;
+   it just fills each line before it wraps. Headings that already fit on one
+   line, "Vitafoods Europe 2026 Recap" at 332px of 744, are unaffected: there
+   is no wrap to make a decision about, and nothing here stretches a short
+   title to fill a column it does not need. */
+.insight-card-content h2{font-family:'Montserrat',sans-serif;font-size:1.4rem;color:var(--dark);margin:.5rem 0 .95rem;line-height:1.3;text-wrap:pretty}
 .insight-card-content h2 a{color:inherit;text-decoration:none}
 .insight-card-content h2 a:hover{color:var(--sage)}
 .insight-card-content p{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:.75rem}
@@ -1280,7 +1296,11 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 .insight-post .container{max-width:760px;margin:0 auto;padding:0 2rem}
 .insight-post-header{margin-bottom:2rem}
 .insight-post-header .section-label{display:block;font-size:.82rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);margin-bottom:.55rem}
-.insight-post-header h1{font-family:'Montserrat',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--dark);line-height:1.2;margin-bottom:.75rem}
+/* pretty for the same reason as the card headings above: left-aligned in a
+   760px text column, with the summary and the body running the full width
+   underneath it. An article title is the longest heading on the site and the
+   one most likely to wrap, so it is the worst place to leave the hole. */
+.insight-post-header h1{font-family:'Montserrat',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--dark);line-height:1.2;margin-bottom:.75rem;text-wrap:pretty}
 .insight-meta{font-size:.82rem;color:var(--muted);margin-bottom:.75rem}
 .insight-meta time{font-weight:600;letter-spacing:.03em}
 .insight-author{margin-left:.5rem;color:var(--sage)}
