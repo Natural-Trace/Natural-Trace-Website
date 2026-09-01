@@ -40,8 +40,26 @@ permalink: "{% if pagination.pageNumber == 0 %}/insights/{% else %}/insights/pag
 
     {% if posts.length > 0 %}
     <div class="insights-grid">
+      {#- The newest article on page one is the lead, and reads sideways on a
+          desktop: picture on the left, headline and summary on the right.
+
+          Measured before it was changed, at 1440x860. The first headline on the
+          page sat at 665px, so 77% of what a visitor saw on opening Insights
+          was a label, the words "News & Updates", one line of subtitle and a
+          cropped photograph. Nothing on the first screen said what the news
+          was. On a shorter laptop the headline fell off the bottom entirely,
+          which is where this started.
+
+          Not the top padding, which is the obvious suspect and is innocent. The
+          128px above the label is clearance for an 81px fixed nav, so there are
+          only 47px of real gap up there and taking it would crowd the nav for
+          about two lines of gain.
+
+          Page one only. Page two opens on 2025 and page three on 2022; giving
+          the oldest thing in the archive the largest card on the page would be
+          promoting it for no reason other than where the pager put it. -#}
       {% for post in posts %}
-      <article class="insight-card">
+      <article class="insight-card{% if pagination.pageNumber == 0 and loop.first %} insight-card--lead{% endif %}">
         {% if post.data.image %}
         <div class="insight-card-image">
           <a href="{{ post.url }}">

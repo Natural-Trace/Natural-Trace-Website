@@ -1225,6 +1225,54 @@ a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
 .insight-tag{font-size:.72rem;font-weight:600;padding:.25rem .65rem;border-radius:20px;background:rgba(107,114,73,.08);color:var(--sage-ink);letter-spacing:.02em}
 .read-more{font-size:.85rem;font-weight:600;color:var(--sage);text-decoration:none;transition:color .3s}
 .read-more:hover{color:var(--dark)}
+
+/* ---------------------------------------------------------------------------
+   The lead story, page one only. Set on the card by src/pages/insights.njk,
+   which carries the measurements and the reason.
+
+   Sideways rather than taller. The stacked card puts a 280px picture between
+   the top of the column and the headline, so the one thing a visitor came to
+   read is the last thing to arrive. Turning the first card on its side lifts
+   its headline roughly 300px up the page without making the card any bigger,
+   and every card below it is untouched.
+
+   It also happens to fix the crop on this card. .insight-card-image img is a
+   fixed 280px with object-fit:cover, so a 1280x853 photograph loses about
+   two thirds of its height out of the middle — which is why the award banner
+   reads "CHAMPION AWARD" and "GROWTH AWARDS" on the index with the tops of
+   both lines sliced off. In this column the box is close to square, so the
+   crop comes off the sides instead and the full height of the picture
+   survives. The other eighteen cards still crop the same way they always did;
+   that is a separate decision about image heights and is not this change.
+
+   860px because that is where the 800px column plus its gutters stops having
+   room for two of anything. Below it nothing here applies and the lead is an
+   ordinary stacked card.
+--------------------------------------------------------------------------- */
+@media (min-width:860px){
+  .insight-card--lead{display:grid;grid-template-columns:minmax(0,46%) minmax(0,54%)}
+  /* An article published without a header image has no image element at all,
+     and a one-child grid would sit in the 46% column with the rest of the card
+     empty beside it. */
+  .insight-card--lead .insight-card-content:only-child{grid-column:1/-1}
+  .insight-card--lead .insight-card-image{height:100%}
+  .insight-card--lead .insight-card-image img{height:100%;min-height:300px}
+  .insight-card--lead .insight-card-content{
+    display:flex;flex-direction:column;justify-content:center;padding:2rem}
+  .insight-card--lead .insight-card-content h2{font-size:1.65rem;margin:.45rem 0 .85rem}
+  /* The lead card is as tall as its summary, and the summaries are not a
+     consistent length: the ones carried over from WordPress are the opening of
+     the article rather than a written summary, and run to 380 characters of
+     unbroken sentence. Whichever article leads should not be able to set the
+     height of the top of the page, so the lead shows five lines and the rest
+     is behind the headline link. The card it is clamping today is 340
+     characters, so this is not hiding anything on the current lead — it is
+     there for the day something longer reaches the top. */
+  .insight-card--lead .insight-card-content p{
+    display:-webkit-box;-webkit-box-orient:vertical;
+    -webkit-line-clamp:5;line-clamp:5;overflow:hidden}
+}
+
 .insights-empty{text-align:center;padding:4rem 0}
 
 /* Insight Post */
