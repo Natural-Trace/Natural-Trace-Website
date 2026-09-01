@@ -1181,8 +1181,31 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
   display:grid;grid-template-columns:160px minmax(0,1fr);gap:1.25rem;
   align-items:start;padding:1.2rem 0;border-bottom:1px solid var(--soft-sage)}
 /* An article published without a header image keeps its text on the same left
-   edge as every other row rather than sliding into the empty picture column. */
+   edge as every other row rather than sliding into the empty picture column.
+   Three of the twenty have no image: the 2022 launch story, the Growth Asia
+   day-one piece and the pinned welcome.
+
+   Holding the column open was right and leaving it blank was not. Reported on
+   sight as "this one has no image, it's empty", which is exactly how an empty
+   160px box beside a headline reads: not as a deliberate gap but as a picture
+   that failed to load. So the slot is filled with a tinted panel carrying the
+   leaf mark, quiet enough to be obviously not a photograph and present enough
+   to be obviously not a fault.
+
+   Drawn on ::before rather than added to the partial, because it is decoration
+   and belongs in the stylesheet: there is no sense in shipping an empty div to
+   a screen reader to solve a visual problem. The mark is the same file the CTA
+   badges use, so it is already in the browser's cache by the time anyone
+   reaches this page.
+
+   This is a floor, not a substitute. A real header image is better on all
+   three, and it is the kind of thing Decap can do in a minute. */
 .insight-row--noimage{grid-template-columns:160px minmax(0,1fr)}
+.insight-row--noimage::before{
+  content:'';grid-column:1;align-self:start;
+  aspect-ratio:1.91;border-radius:8px;
+  background:rgba(107,114,73,.07) url("../logos/NT icon without logo.png") no-repeat center/32px;
+  opacity:.65}
 .insight-row--noimage .insight-row-text{grid-column:2}
 .insight-row-image{display:block;border-radius:8px;overflow:hidden}
 .insight-row-image img{width:100%;aspect-ratio:1.91;object-fit:cover;display:block;
