@@ -229,6 +229,30 @@ module.exports = function(eleventyConfig) {
       .sort((a, b) => a.tag.localeCompare(b.tag));
   });
 
+  /* Every tag with how many articles carry it, commonest first, for the filter
+     above the Insights list. Separate from tagsWithPages on purpose: that one
+     answers "is there an archive to link to" and is gated at three, this one
+     answers "what can this page be narrowed to" and is not gated at all. A tag
+     with one article is a thin archive page and a perfectly good filter.
+
+     Ties break alphabetically rather than by whatever order the files were
+     read in, so the chips do not reorder themselves when an article is added.
+
+     Worth knowing when reading the row of chips this produces: seventeen tags
+     across twenty articles, and fifteen of them are on exactly one article. The
+     tagging is closer to per-article keywords than to categories, so this is
+     doing the job of a topic index more than of a filter. Consolidating the
+     singletons would make it a real filter and is a content job. */
+  eleventyConfig.addCollection("insightsTagCounts", collection => {
+    const counts = new Map();
+    for (const post of collection.getFilteredByGlob("src/insights/**/*.md")) {
+      for (const tag of post.data.tags || []) counts.set(tag, (counts.get(tag) || 0) + 1);
+    }
+    return [...counts.entries()]
+      .map(([tag, count]) => ({ tag, count }))
+      .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
+  });
+
   /* Which tags currently have a page, so an article can link only those. */
   eleventyConfig.addCollection("tagsWithPages", collection => {
     const counts = new Map();

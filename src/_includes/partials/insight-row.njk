@@ -13,7 +13,12 @@
   user would tab twice to move one row. The headline is the real link, and the
   alt text still describes the picture to anyone who has images turned off.
 -#}
-<article class="insight-row{% if not post.data.image %} insight-row--noimage{% endif %}">
+{#- data-tags carries every tag, not just the one shown as the kicker, so the
+    filter matches an article on any of its topics rather than only on whichever
+    happened to be listed first in the front matter. Delimited with pipes and
+    padded at both ends so a match on "|News|" cannot also hit "Company News". -#}
+<article class="insight-row{% if not post.data.image %} insight-row--noimage{% endif %}"
+         data-tags="|{% for tag in post.data.tags %}{{ tag }}|{% endfor %}">
   {% if post.data.image %}
   <a class="insight-row-image" href="{{ post.url }}" aria-hidden="true" tabindex="-1">
     <img src="{{ post.data.image }}" alt="{{ post.data.image_alt or post.data.title }}" loading="lazy">

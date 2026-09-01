@@ -50,7 +50,31 @@ permalink: "/insights/"
         nothing is being withheld: everything is on this page, so a "showing"
         would be answering a question nobody is left asking. It is here to say
         how big the archive is before a reader starts scrolling it. -#}
-    <p class="insights-count">{{ total }} article{% if total != 1 %}s{% endif %}</p>
+    {#- The filter, after CNA's category facet. Two differences worth stating.
+
+        Theirs is a checkbox list in a sidebar; this is a row of chips above the
+        list, because a sidebar for one control on a 800px column is a layout
+        built for furniture it does not have.
+
+        It ships hidden and main.js unhides it. Without JavaScript the chips
+        would be twenty dead buttons above a list that already shows everything,
+        which is worse than no control: the page is complete without it, so the
+        control is the enhancement, not the content. -#}
+    <div class="insights-filter" id="insights-filter" role="group" aria-label="Filter articles by topic" hidden>
+      <button type="button" class="insights-chip is-on" data-tag="" aria-pressed="true">
+        All <span class="insights-chip-n">{{ total }}</span>
+      </button>
+      {% for t in collections.insightsTagCounts %}
+      <button type="button" class="insights-chip" data-tag="{{ t.tag }}" aria-pressed="false">
+        {{ t.tag }} <span class="insights-chip-n">{{ t.count }}</span>
+      </button>
+      {% endfor %}
+    </div>
+
+    {#- aria-live so the count is announced when a chip changes it. A sighted
+        user sees the list redraw; without this a screen reader user gets no
+        signal that pressing the button did anything at all. -#}
+    <p class="insights-count" id="insights-count" aria-live="polite">{{ total }} article{% if total != 1 %}s{% endif %}</p>
 
     <div class="insights-rows">
       {% for post in collections.insightsRegular %}

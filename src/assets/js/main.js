@@ -737,3 +737,83 @@ document.addEventListener('DOMContentLoaded', function () {
 
   for (var i = 0; i < rows.length; i++) watch(rows[i]);
 });
+
+
+/* ---------------------------------------------------------------------------
+   The topic filter above the Insights list.
+
+   The control ships hidden in the markup and is unhidden here, so a visitor
+   with no JavaScript never sees twenty buttons that do nothing. The page is
+   complete without this: every article is already on it, in date order. This
+   only narrows.
+
+   Filtering is show/hide on rows that are already in the document rather than
+   fetching or rebuilding anything. Twenty rows is nothing to a browser, and it
+   keeps the filtered and unfiltered pages the same page: no flash, no second
+   request, and the browser's own find-in-page still works across whatever is
+   visible.
+
+   The chosen topic goes into the query string with replaceState, so a filtered
+   view can be linked and survives a reload. replaceState rather than pushState
+   deliberately: pressing back after four chips should leave Insights, not walk
+   back through four filter states nobody thinks of as navigation.
+
+   Matching is on data-tags, which carries every tag an article has, pipe
+   delimited and pipe padded at both ends. The padding is what stops a match on
+   "News" also matching "Company News".
+--------------------------------------------------------------------------- */
+document.addEventListener('DOMContentLoaded', function () {
+  var filter = document.getElementById('insights-filter');
+  var count = document.getElementById('insights-count');
+  if (!filter || !count) return;
+
+  var chips = filter.querySelectorAll('.insights-chip');
+  var rows = document.querySelectorAll('.insights-rows .insight-row');
+  if (!chips.length || !rows.length) return;
+
+  filter.hidden = false;
+
+  function apply(tag, push) {
+    var shown = 0;
+    for (var i = 0; i < rows.length; i++) {
+      var tags = rows[i].getAttribute('data-tags') || '';
+      var on = !tag || tags.indexOf('|' + tag + '|') !== -1;
+      rows[i].hidden = !on;
+      if (on) shown++;
+    }
+
+    for (var j = 0; j < chips.length; j++) {
+      var isOn = (chips[j].getAttribute('data-tag') || '') === (tag || '');
+      chips[j].classList.toggle('is-on', isOn);
+      chips[j].setAttribute('aria-pressed', isOn ? 'true' : 'false');
+    }
+
+    count.textContent = shown + (shown === 1 ? ' article' : ' articles') +
+      (tag ? ' in ' + tag : '');
+
+    if (push && window.history && window.history.replaceState) {
+      var url = window.location.pathname + (tag ? '?topic=' + encodeURIComponent(tag) : '');
+      window.history.replaceState(null, '', url);
+    }
+  }
+
+  for (var k = 0; k < chips.length; k++) {
+    chips[k].addEventListener('click', function () {
+      apply(this.getAttribute('data-tag') || '', true);
+    });
+  }
+
+  /* An unknown or stale ?topic= is ignored rather than obeyed. A tag that has
+     been renamed or removed would otherwise hide every row and leave the page
+     looking empty and broken, which is a worse answer than showing everything. */
+  var wanted = '';
+  try { wanted = new URLSearchParams(window.location.search).get('topic') || ''; } catch (e) {}
+  if (wanted) {
+    var known = false;
+    for (var m = 0; m < chips.length; m++) {
+      if (chips[m].getAttribute('data-tag') === wanted) known = true;
+    }
+    if (!known) wanted = '';
+  }
+  apply(wanted, false);
+});
