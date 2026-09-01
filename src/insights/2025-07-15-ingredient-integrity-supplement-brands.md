@@ -1,6 +1,6 @@
 ---
 layout: layouts/post.njk
-title: "Verifying a branded ingredient is the one you paid for"
+title: "Verifying a Branded Ingredient Is the One You Paid For"
 date: 2025-07-15T09:19:35+08:00
 author: 'Natural Trace'
 summary: 'Vitafoods 2025 Adulteration Panel Discussion, Left to right: Dr. Julia Lee Xiaoyun, Chief Commercial Officer, Natural Trace; Nicolas Carbonnelle, Partner, Bird & Bird LLP; David Pineda Ereno, Managing Director, DPE International Consulting; Kenn Israel, Co-Founding Partner, BeyondBrands; Radhika Sikharia (Moderator), Content Producer, Informa Markets, photo credit Vitafoods Europe. Why high-integrity Supplement Brands are looking deeper'

@@ -1,5 +1,5 @@
 ---
-title: "Growth Asia 2026: buyers want claims they can verify"
+title: "Growth Asia 2026: Buyers Want Claims They Can Verify"
 date: 2026-07-09T20:13:00.000+08:00
 author: Alrik Tan
 summary: Key takeaways from the Growth Asia Summit 2026 in Singapore on consumer

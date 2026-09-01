@@ -1,6 +1,6 @@
 ---
 layout: layouts/post.njk
-title: "How agri-food supply chains prove where produce came from"
+title: "How Agri-Food Supply Chains Prove Where Produce Came From"
 date: 2024-09-18T11:09:03+08:00
 author: 'Natural Trace'
 summary: 'Transparency is no longer optional in the agri-food sector, it’s essential🌾 The recent article by Cleantech Group highlights how technology is transforming agri-food traceability, bringing greater visibility and trust to the supply chain. Tech innovation is empowering brands to meet the growing demand for transparency and authenticity. At Natural Trace, we’re contributing to this movement'

@@ -1,6 +1,6 @@
 ---
 layout: layouts/post.njk
-title: "Why authenticity dominated Vitafoods Europe 2026"
+title: "Why Authenticity Dominated Vitafoods Europe 2026"
 date: 2026-05-12T11:59:44+08:00
 author: 'Natural Trace'
 summary: 'Why Authenticity and Traceability Dominated the Conversation This year at Vitafoods Europe, one topic consistently stood out across the nutraceutical and food industries: how to build greater trust and verification within increasingly complex global supply chains. Dr. Julia Lee was on the ground alongside the Natural Trace team, meeting with ingredient suppliers, manufacturers, contract manufacturers,'

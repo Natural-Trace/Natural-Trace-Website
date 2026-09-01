@@ -1,6 +1,6 @@
 ---
 layout: layouts/post.njk
-title: "A finalist at the Fi Europe 2024 Startup Challenge"
+title: "A Finalist at the Fi Europe 2024 Startup Challenge"
 date: 2024-10-17T11:42:04+08:00
 author: 'Natural Trace'
 summary: 'We are thrilled to announce that Natural Trace has been selected as a Finalist for the Fi Europe 2024 Startup Challenge in the category of Most Innovative Service or Digital Solution Supporting the Food and Beverage Industry! Our commitment to enhancing traceability through our cloud-based biotechnology solutions has earned us a spot among the top innovators in'
