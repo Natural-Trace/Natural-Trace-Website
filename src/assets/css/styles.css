@@ -1231,66 +1231,52 @@ a.insight-row-kicker:hover{color:var(--dark);text-decoration:underline}
 /* ---------------------------------------------------------------------------
    The topic filter, after CNA's category facet.
 
-   Chips rather than their sidebar checkbox list: one control does not justify
-   a sidebar beside an 800px column, and a chip shows its count without being
-   opened first.
+   A select rather than the row of chips this started as. Chips grew with the
+   archive: eighteen of them wrapped to four lines on a desktop and to 531px on
+   a 375px phone, taller than three of the articles they filter, which needed a
+   horizontal scroller to contain. A filter should be a fixed cost, and a select
+   is one line at any number of topics.
 
-   Seventeen tags across twenty articles, fifteen of them on a single article,
-   so this wraps to about three lines and is closer to a topic index than to a
-   filter. That is the tagging rather than the control, and it is visible here
-   on purpose: the counts are printed on the chips, so the shape of the problem
-   is in front of whoever would fix it.
+   The browser's own list does the rest for free: scrolling, keyboard search by
+   first letter, and the native picker on a phone. None of that is worth
+   rebuilding out of buttons.
 
-   [hidden] is honoured explicitly. The chips are display:inline-flex and a
-   display declaration beats the browser's own [hidden]{display:none}, so
-   without this the control would be visible before main.js ever runs, which is
-   the exact failure the hidden attribute is there to prevent.
+   [hidden] is honoured explicitly. This is display:flex and a display
+   declaration beats the browser's own [hidden]{display:none}, so without it
+   the control would be visible before main.js ever runs, which is the exact
+   failure the hidden attribute exists to prevent.
 --------------------------------------------------------------------------- */
 .insights-filter{
-  display:flex;flex-wrap:wrap;gap:.4rem;
-  max-width:800px;margin:0 auto 1.1rem}
+  display:flex;align-items:center;gap:.6rem;
+  max-width:800px;margin:0 auto .9rem}
 .insights-filter[hidden]{display:none}
-.insights-chip{
-  display:inline-flex;align-items:center;gap:.4rem;
-  /* 32px inside a list of chips rather than the 40px a standalone tap target
-     wants: they sit in a block with 6.4px between them, so a miss lands on
-     another filter rather than on nothing. */
-  min-height:32px;padding:0 .7rem;
-  border:1px solid var(--soft-sage);border-radius:16px;background:#fff;
+.insights-filter-label{
   font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:600;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+/* appearance:none to drop the platform chrome, then the arrow is drawn back on
+   as a background so the control still reads as a menu rather than as a text
+   box. padding-right clears it. */
+.insights-select{
+  appearance:none;-webkit-appearance:none;
+  min-height:36px;padding:0 2.1rem 0 .8rem;
+  max-width:min(100%,22rem);
+  border:1px solid var(--soft-sage);border-radius:9px;background-color:#fff;
+  background-image:linear-gradient(45deg,transparent 50%,var(--sage-ink) 50%),
+                   linear-gradient(135deg,var(--sage-ink) 50%,transparent 50%);
+  background-position:calc(100% - 1.05rem) 50%,calc(100% - .75rem) 50%;
+  background-size:6px 6px,6px 6px;background-repeat:no-repeat;
+  font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:600;
   color:var(--text);cursor:pointer;
-  transition:background .2s,border-color .2s,color .2s}
-.insights-chip:hover{background:var(--offwhite);border-color:var(--sage)}
-.insights-chip.is-on{background:var(--sage);border-color:var(--sage);color:#fff}
-.insights-chip-n{font-weight:400;opacity:.65;font-variant-numeric:tabular-nums}
-.insights-chip.is-on .insights-chip-n{opacity:.8}
+  transition:border-color .2s,box-shadow .2s}
+.insights-select:hover{border-color:var(--sage)}
+/* A visible focus ring, because appearance:none removes the platform one and
+   this is the only keyboard control on the page. */
+.insights-select:focus-visible{
+  outline:none;border-color:var(--sage);box-shadow:0 0 0 3px rgba(107,114,73,.18)}
 /* The row is hidden by the attribute rather than a class, so the filter cannot
    disagree with anything else that hides a row. display:grid on .insight-row
-   would otherwise beat [hidden] the same way the chips do. */
+   would otherwise beat [hidden] the same way the control does. */
 .insight-row[hidden]{display:none}
-
-/* On a phone the chips wrap instead of fitting, and eighteen of them came to
-   531px: twelve rows of filter above the first article, so the control was
-   taller than three of the things it filters and pushed every one of them off
-   the screen. Measured at 375x812.
-
-   One scrolling row instead, which is 40px and the pattern a phone already
-   expects from a chip bar. Not a "more topics" disclosure, which would be a
-   second control to explain and would hide the counts that are the useful part
-   of this.
-
-   The scrollbar is hidden because it sits under the chips and reads as a rule
-   between the filter and the list rather than as something to drag. The row
-   still scrolls by touch, and on a desktop the chips wrap as before so nothing
-   is ever hidden behind a scroll a mouse cannot see. */
-@media(max-width:600px){
-  .insights-filter{
-    flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
-    margin-bottom:.9rem;padding-bottom:.3rem;
-    scrollbar-width:none}
-  .insights-filter::-webkit-scrollbar{display:none}
-  .insights-chip{flex:0 0 auto}
-}
 
 /* The count above the list, standing in for CNA's "Showing 15 of 166". */
 .insights-count{

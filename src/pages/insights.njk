@@ -50,25 +50,36 @@ permalink: "/insights/"
         nothing is being withheld: everything is on this page, so a "showing"
         would be answering a question nobody is left asking. It is here to say
         how big the archive is before a reader starts scrolling it. -#}
-    {#- The filter, after CNA's category facet. Two differences worth stating.
+    {#- The filter, after CNA's category facet.
 
-        Theirs is a checkbox list in a sidebar; this is a row of chips above the
-        list, because a sidebar for one control on a 800px column is a layout
-        built for furniture it does not have.
+        A select, not the row of chips this started as. Eighteen chips wrapped
+        to four lines on a desktop and needed a horizontal scroller on a phone
+        to stop them being 531px tall, and that was at twenty articles. The
+        control was growing with the archive, which is the wrong way round: a
+        filter should be a fixed cost.
 
-        It ships hidden and main.js unhides it. Without JavaScript the chips
-        would be twenty dead buttons above a list that already shows everything,
-        which is worse than no control: the page is complete without it, so the
-        control is the enhancement, not the content. -#}
-    <div class="insights-filter" id="insights-filter" role="group" aria-label="Filter articles by topic" hidden>
-      <button type="button" class="insights-chip is-on" data-tag="" aria-pressed="true">
-        All <span class="insights-chip-n">{{ total }}</span>
-      </button>
-      {% for t in collections.insightsTagCounts %}
-      <button type="button" class="insights-chip" data-tag="{{ t.tag }}" aria-pressed="false">
-        {{ t.tag }} <span class="insights-chip-n">{{ t.count }}</span>
-      </button>
-      {% endfor %}
+        A select is that fixed cost. One line at any number of topics, it opens
+        into the browser's own list which is scrollable and keyboard-searchable
+        for free, and on a phone it becomes the native picker rather than
+        something built to imitate one.
+
+        The counts stay, in the option text. They are the useful part: they say
+        whether a topic is worth choosing before it is chosen, and they are
+        also what makes the state of the tagging visible to whoever maintains
+        it.
+
+        It ships hidden and main.js unhides it. Without JavaScript this would
+        be a control that does nothing above a list that already shows
+        everything, which is worse than no control: the page is complete
+        without it, so the filter is the enhancement, not the content. -#}
+    <div class="insights-filter" id="insights-filter" hidden>
+      <label class="insights-filter-label" for="insights-topic">Topic</label>
+      <select class="insights-select" id="insights-topic">
+        <option value="">All topics ({{ total }})</option>
+        {% for t in collections.insightsTagCounts %}
+        <option value="{{ t.tag }}">{{ t.tag }} ({{ t.count }})</option>
+        {% endfor %}
+      </select>
     </div>
 
     {#- aria-live so the count is announced when a chip changes it. A sighted

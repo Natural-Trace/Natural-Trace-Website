@@ -743,20 +743,19 @@ document.addEventListener('DOMContentLoaded', function () {
    The topic filter above the Insights list.
 
    The control ships hidden in the markup and is unhidden here, so a visitor
-   with no JavaScript never sees twenty buttons that do nothing. The page is
+   with no JavaScript never sees a select that does nothing. The page is
    complete without this: every article is already on it, in date order. This
    only narrows.
 
-   Filtering is show/hide on rows that are already in the document rather than
-   fetching or rebuilding anything. Twenty rows is nothing to a browser, and it
-   keeps the filtered and unfiltered pages the same page: no flash, no second
-   request, and the browser's own find-in-page still works across whatever is
-   visible.
+   Filtering is show/hide on rows already in the document rather than fetching
+   or rebuilding anything. Twenty rows is nothing to a browser, it keeps the
+   filtered and unfiltered states the same page with no flash and no second
+   request, and find-in-page still works across whatever is visible.
 
    The chosen topic goes into the query string with replaceState, so a filtered
-   view can be linked and survives a reload. replaceState rather than pushState
-   deliberately: pressing back after four chips should leave Insights, not walk
-   back through four filter states nobody thinks of as navigation.
+   view can be linked and survives a reload. replaceState rather than
+   pushState: pressing back after trying four topics should leave Insights, not
+   walk back through four states nobody thinks of as navigation.
 
    Matching is on data-tags, which carries every tag an article has, pipe
    delimited and pipe padded at both ends. The padding is what stops a match on
@@ -764,12 +763,12 @@ document.addEventListener('DOMContentLoaded', function () {
 --------------------------------------------------------------------------- */
 document.addEventListener('DOMContentLoaded', function () {
   var filter = document.getElementById('insights-filter');
+  var select = document.getElementById('insights-topic');
   var count = document.getElementById('insights-count');
-  if (!filter || !count) return;
+  if (!filter || !select || !count) return;
 
-  var chips = filter.querySelectorAll('.insights-chip');
   var rows = document.querySelectorAll('.insights-rows .insight-row');
-  if (!chips.length || !rows.length) return;
+  if (!rows.length) return;
 
   filter.hidden = false;
 
@@ -782,12 +781,6 @@ document.addEventListener('DOMContentLoaded', function () {
       if (on) shown++;
     }
 
-    for (var j = 0; j < chips.length; j++) {
-      var isOn = (chips[j].getAttribute('data-tag') || '') === (tag || '');
-      chips[j].classList.toggle('is-on', isOn);
-      chips[j].setAttribute('aria-pressed', isOn ? 'true' : 'false');
-    }
-
     count.textContent = shown + (shown === 1 ? ' article' : ' articles') +
       (tag ? ' in ' + tag : '');
 
@@ -797,23 +790,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  for (var k = 0; k < chips.length; k++) {
-    chips[k].addEventListener('click', function () {
-      apply(this.getAttribute('data-tag') || '', true);
-    });
-  }
+  select.addEventListener('change', function () { apply(select.value, true); });
 
   /* An unknown or stale ?topic= is ignored rather than obeyed. A tag that has
      been renamed or removed would otherwise hide every row and leave the page
-     looking empty and broken, which is a worse answer than showing everything. */
+     looking empty and broken, which is a worse answer than showing everything.
+
+     Checked against the select's own options rather than against a list kept
+     here, so the two cannot disagree: the options are generated from the same
+     collection that generates the rows. */
   var wanted = '';
   try { wanted = new URLSearchParams(window.location.search).get('topic') || ''; } catch (e) {}
   if (wanted) {
     var known = false;
-    for (var m = 0; m < chips.length; m++) {
-      if (chips[m].getAttribute('data-tag') === wanted) known = true;
+    for (var m = 0; m < select.options.length; m++) {
+      if (select.options[m].value === wanted) known = true;
     }
     if (!known) wanted = '';
   }
+  select.value = wanted;
   apply(wanted, false);
 });
