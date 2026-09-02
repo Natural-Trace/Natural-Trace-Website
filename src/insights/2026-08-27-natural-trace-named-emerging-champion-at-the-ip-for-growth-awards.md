@@ -7,7 +7,7 @@ summary: "Natural Trace has been named a 2026 Emerging Champion at the IP for Gr
 image: /assets/images/insights/natural-trace-named-emerging-champion-at-the-ip-for-growth-awards.jpg
 image_alt: "Natural Trace receiving the Emerging Champion Award on stage at the IP for Growth Awards, with the Natural Trace logo on the screen behind."
 tags:
-  - News
+  - Company News
 ---
 
 Natural Trace has been named a 2026 Emerging Champion at the IP for Growth Awards, presented during Singapore IP Week.

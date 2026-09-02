@@ -6,7 +6,7 @@ author: 'Natural Trace'
 summary: 'Transparency is no longer optional in the agri-food sector, it’s essential🌾 The recent article by Cleantech Group highlights how technology is transforming agri-food traceability, bringing greater visibility and trust to the supply chain. Tech innovation is empowering brands to meet the growing demand for transparency and authenticity. At Natural Trace, we’re contributing to this movement'
 image: /assets/images/insights/taking-a-byte-of-transparency-the-tech-behind-agri-food-traceability.jpg
 tags:
-  - 'News'
+  - Science & Evidence
 
 # Migrated from natural-trace.com on 2026-08-12 by
 # scripts/migrate-wordpress-news.mjs. The body below is the HTML WordPress

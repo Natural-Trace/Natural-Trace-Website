@@ -8,7 +8,7 @@ image_caption: 'Zoey Wong – Natural Trace Intern now Laboratory Technician sha
 image_alt: 'Natural Trace Intern now Laboratory Technician, Zoey Wong sitting in Laboratory'
 summary: 'As we approach the end of the year, we took the opportunity to sit down with our outstanding intern-turned-Laboratory Technician, Zoey Wong, to reflect on her journey with Natural Trace. Zoey shared her insights and experiences from her internship, providing a firsthand look at what it’s like to be part of a company that not'
 tags:
-  - 'News'
+  - Company News
 
 # Migrated from natural-trace.com on 2026-08-12 by
 # scripts/migrate-wordpress-news.mjs. The body below is the HTML WordPress

@@ -6,7 +6,7 @@ author: 'Natural Trace'
 summary: 'Natural Trace Wins at Fi Europe Start-up Challenge A standout moment from last year: Natural Trace was honoured as the ‘Most Innovative Service or Digital Solution Supporting the F&B Industry’ at the 2024 Food Ingredients Europe Start-up Challenge! Redefining Traceability with NaturalTag We’re redefining traceability with NaturalTag: a food-safe, GMO-free, invisible tag that seamlessly integrates'
 image: /assets/images/insights/dna-based-bio-code-offers-a-natural-tracer-for-detecting-food-fraud.png
 tags:
-  - 'News'
+  - Science & Evidence
 
 # Migrated from natural-trace.com on 2026-08-12 by
 # scripts/migrate-wordpress-news.mjs. The body below is the HTML WordPress

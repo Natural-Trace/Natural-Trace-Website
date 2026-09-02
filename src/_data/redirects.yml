@@ -295,3 +295,13 @@ rules:
     to: "/insights/"
   - from: "/insights/page/3/"
     to: "/insights/"
+
+  # The old Insights tag archives, retired on 2 September 2026 when the tags
+  # became a fixed list of six topics. Both were real, indexable pages.
+  # "News" was a catch-all on twelve of twenty articles and has no successor,
+  # so it lands on the index. "Press Release" does have one, so it lands on
+  # that filter already applied. docs/insights-topics.md has the full mapping.
+  - from: "/insights/tag/news/"
+    to: "/insights/"
+  - from: "/insights/tag/press-release/"
+    to: "/insights/?topic=Company%20News"

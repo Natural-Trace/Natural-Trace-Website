@@ -6,7 +6,7 @@ author: 'Natural Trace'
 summary: 'Natural Trace, a leading biotech start-up developing in-product traceability solutions for the food and nutraceuticals industry, is ready for its next phase of expansion. Following her successful leadership of our company over the past 18 months, Dr. Julia Lee is stepping down from her role as CEO for personal reasons. We are pleased to share'
 image: /assets/images/insights/natural-trace-announces-new-co-ceo-structure-to-accelerate-next-phase-of-global-growth.png
 tags:
-  - 'Press Release'
+  - Company News
 
 # Migrated from natural-trace.com on 2026-08-12 by
 # scripts/migrate-wordpress-news.mjs. The body below is the HTML WordPress

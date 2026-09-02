@@ -950,7 +950,36 @@ collections:
       - {label: "Header image description", name: "image_alt", widget: "string", required: false, hint: "For screen readers and for when the image fails to load. Describe what is in the picture. Leave empty and the headline is used."}
       - {label: "Summary", name: "summary", widget: "text", hint: "The paragraph on the article's card. Also used as the Google description unless you set one below."}
       - {label: "Article", name: "body", widget: "markdown"}
-      - {label: "Tags", name: "tags", widget: "list", required: false, field: {label: "Tag", name: "tag", widget: "string"}}
+      # A fixed list, not a box to type in. It was a free-text list until
+      # 2 September 2026, and seventeen tags had accumulated across twenty
+      # articles with fifteen of them on exactly one article. "News" was on
+      # twelve and narrowed nothing; thirteen of the seventeen existed only to
+      # describe two conference write-ups. Tidying the list without closing the
+      # field would have bought one clean afternoon: "Nutraceuticals" and
+      # "Nutraceutical Authentication" were already both live.
+      #
+      # Adding an article can no longer add a topic. Adding a topic is editing
+      # the options below, which is deliberate and is the point.
+      #
+      # NEVER REMOVE AN OPTION THAT ARTICLES STILL CARRY. Decap does not show a
+      # stored value that is missing from options, so the next person to save
+      # that article silently drops its topic. Re-tag first, then remove.
+      #
+      # The reasoning, the six definitions and what every old tag became are in
+      # docs/insights-topics.md.
+      - label: "Tags"
+        name: "tags"
+        widget: "select"
+        multiple: true
+        required: false
+        hint: "Pick the one topic this article is mainly about. It shows above the headline on the Insights page and drives the Topic filter there. If none of these fit, the list itself needs changing — ask whoever looks after the website rather than forcing an article into the wrong one."
+        options:
+          - "Company News"
+          - "Industry Events"
+          - "Science & Evidence"
+          - "Food Fraud"
+          - "Ingredient Authenticity"
+          - "Regulation"
       - {label: "Google headline (optional)", name: "seo_title", widget: "string", required: false, hint: "Only if the headline above is not what you want appearing in search results. Leave empty to use the headline."}
       - {label: "Google description (optional)", name: "seo_description", widget: "text", required: false, hint: "Only if the summary above is not right for search results. Aim for 150 to 160 characters. Leave empty to use the summary."}
 

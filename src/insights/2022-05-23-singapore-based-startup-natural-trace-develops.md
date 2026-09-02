@@ -5,7 +5,7 @@ date: 2022-05-23T11:25:24+08:00
 author: 'Natural Trace'
 summary: 'Inspired by the concept of PCR testing, company develops a supply chain traceability solution to track the origin of every single ingredient in a food product.'
 tags:
-  - 'News'
+  - Science & Evidence
 
 # Migrated from natural-trace.com on 2026-08-12 by
 # scripts/migrate-wordpress-news.mjs. The body below is the HTML WordPress

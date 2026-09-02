@@ -6,7 +6,7 @@ author: 'Natural Trace'
 summary: 'Vitafoods 2025 Adulteration Panel Discussion, Left to right: Dr. Julia Lee Xiaoyun, Chief Commercial Officer, Natural Trace; Nicolas Carbonnelle, Partner, Bird & Bird LLP; David Pineda Ereno, Managing Director, DPE International Consulting; Kenn Israel, Co-Founding Partner, BeyondBrands; Radhika Sikharia (Moderator), Content Producer, Informa Markets, photo credit Vitafoods Europe. Why high-integrity Supplement Brands are looking deeper'
 image: /assets/images/insights/ingredient-integrity-supplement-brands.jpg
 tags:
-  - 'Research Blog'
+  - Ingredient Authenticity
 
 # Migrated from natural-trace.com on 2026-08-12 by
 # scripts/migrate-wordpress-news.mjs. The body below is the HTML WordPress

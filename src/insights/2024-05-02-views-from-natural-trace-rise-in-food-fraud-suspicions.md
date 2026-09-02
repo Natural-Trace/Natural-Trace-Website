@@ -6,7 +6,7 @@ author: 'Natural Trace'
 summary: 'The European Commission’s recent report highlights a concerning trend on the rise of food and product fraud suspicions across European countries, reaching 345 cases in March alone. While not all cases are confirmed, these suspicions underscore the importance of traceability and safeguarding products against fraud to maintain brand reputation. The report, sourced from various networks including'
 image: /assets/images/insights/views-from-natural-trace-rise-in-food-fraud-suspicions.png
 tags:
-  - 'News'
+  - Food Fraud
 
 # Migrated from natural-trace.com on 2026-08-12 by
 # scripts/migrate-wordpress-news.mjs. The body below is the HTML WordPress

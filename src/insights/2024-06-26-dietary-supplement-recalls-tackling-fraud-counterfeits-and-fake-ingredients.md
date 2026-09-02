@@ -6,7 +6,7 @@ author: 'Natural Trace'
 summary: 'The dietary supplement industry has seen several recalls in 2024, driven by widespread fraud, counterfeiting, and the presence of undeclared or fake ingredients. Prominent brands like NOW Foods and Fungi Perfecti have battled counterfeit products on e-commerce platforms such as Amazon, highlighting the urgent need for stringent measures to protect consumers. Counterfeit Supplements In April'
 image: /assets/images/insights/dietary-supplement-recalls-tackling-fraud-counterfeits-and-fake-ingredients.jpeg
 tags:
-  - 'News'
+  - Food Fraud
 
 # Migrated from natural-trace.com on 2026-08-12 by
 # scripts/migrate-wordpress-news.mjs. The body below is the HTML WordPress

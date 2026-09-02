@@ -9,14 +9,7 @@ summary: Day 2 takeaways from the Growth Asia Summit 2026 in Singapore on active
   heritage beverage brands entering functional wellness need molecular-level
   ingredient authentication.
 tags:
-  - Active Lifestyle Nutrition
-  - Weight Management
-  - Protein Innovation
-  - Nutraceutical Authentication
-  - Functional Foods
-  - GLP-1 Companion Products
-  - Berry Bioactives
-  - Ingredient Verification
+  - Industry Events
 ---
 ## From Wellness Trends to Verification Demands
 

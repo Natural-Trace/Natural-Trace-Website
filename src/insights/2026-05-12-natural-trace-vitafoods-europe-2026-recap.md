@@ -6,7 +6,7 @@ author: 'Natural Trace'
 summary: 'Why Authenticity and Traceability Dominated the Conversation This year at Vitafoods Europe, one topic consistently stood out across the nutraceutical and food industries: how to build greater trust and verification within increasingly complex global supply chains. Dr. Julia Lee was on the ground alongside the Natural Trace team, meeting with ingredient suppliers, manufacturers, contract manufacturers,'
 image: /assets/images/insights/natural-trace-vitafoods-europe-2026-recap.png
 tags:
-  - 'News'
+  - Industry Events
 
 # Migrated from natural-trace.com on 2026-08-12 by
 # scripts/migrate-wordpress-news.mjs. The body below is the HTML WordPress

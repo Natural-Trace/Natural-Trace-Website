@@ -6,7 +6,7 @@ author: 'Natural Trace'
 summary: 'We are thrilled to announce that Natural Trace has been named the winner of the Food Ingredients Europe Startup Challenge 2024 in the category “Most Innovative Service or Digital Solution Supporting the F&B Industry!” A special shoutout to our CCO, Julia Lee, who represented our team brilliantly, pitching our innovations on stage. Check out the'
 image: /assets/images/insights/winners-fi-europe-startup-challenge-2024-most-innovative-service-or-digital-solution-supporting-the-fb-industry.jpeg
 tags:
-  - 'News'
+  - Company News
 
 # Migrated from natural-trace.com on 2026-08-12 by
 # scripts/migrate-wordpress-news.mjs. The body below is the HTML WordPress

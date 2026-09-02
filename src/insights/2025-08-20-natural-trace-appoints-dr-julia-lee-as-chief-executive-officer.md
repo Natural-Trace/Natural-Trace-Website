@@ -6,7 +6,7 @@ author: 'Natural Trace'
 summary: 'Leadership Announcement Natural Trace, an innovative biotech company revolutionising food traceability and authenticity, is pleased to announce the appointment of Dr. Julia Lee Xiaoyun as Chief Executive Officer, effective 1 July 2025. Dr. Lee, who previously served as the company’s Chief Commercial Officer, brings a wealth of leadership experience and strategic vision to guide Natural'
 image: /assets/images/insights/natural-trace-appoints-dr-julia-lee-as-chief-executive-officer.png
 tags:
-  - 'Press Release'
+  - Company News
 
 # Migrated from natural-trace.com on 2026-08-12 by
 # scripts/migrate-wordpress-news.mjs. The body below is the HTML WordPress

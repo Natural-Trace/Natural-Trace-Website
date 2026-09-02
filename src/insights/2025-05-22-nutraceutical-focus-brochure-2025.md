@@ -6,7 +6,7 @@ author: 'Natural Trace'
 summary: 'Natural Trace is proud to unveil its 2025 Nutraceutical Focus Brochure, showcasing our science-backed solution suite, tailored to meet the growing demand for traceability, authenticity, and integrity in the nutraceutical industry. Our comprehensive approach empowers industry leaders and innovators with technology that delivers tangible value across the supply chain, including: Safeguarding Brand Reputation Product Authentication'
 image: /assets/images/insights/nutraceutical-focus-brochure-2025.jpg
 tags:
-  - 'News'
+  - Ingredient Authenticity
 
 # Migrated from natural-trace.com on 2026-08-12 by
 # scripts/migrate-wordpress-news.mjs. The body below is the HTML WordPress

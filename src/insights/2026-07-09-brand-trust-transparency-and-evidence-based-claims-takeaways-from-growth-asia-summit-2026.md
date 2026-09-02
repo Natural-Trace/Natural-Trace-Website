@@ -9,11 +9,7 @@ summary: Key takeaways from the Growth Asia Summit 2026 in Singapore on consumer
 image: /assets/images/insights/brand-trust-transparency-and-evidence-based-claims-takeaways-from-growth-asia-summit-2026.jpg
 image_alt: "A speaker on stage at Growth Asia Summit 2026, with a slide on consumer trust in consumer healthcare behind them."
 tags:
-  - Supply Chain Transparency
-  - Food Authentication
   - Industry Events
-  - Nutraceuticals
-  - Clean Label
 ---
 ## Consumer Trust Has Never Mattered More
 

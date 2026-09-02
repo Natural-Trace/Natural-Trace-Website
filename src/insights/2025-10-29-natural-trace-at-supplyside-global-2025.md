@@ -4,6 +4,8 @@ title: "Taking Ingredient Authentication to SupplySide Global 2025"
 date: 2025-10-29T02:29:23+08:00
 author: 'Natural Trace'
 summary: 'Natural Trace, an award-winning biotech ingredient company pioneering food-safe traceability, will showcase its latest in-product tagging technology at SupplySide Global 2025, Booth #921. The company’s breakthrough platform is redefining how nutraceutical and ingredient brands verify authenticity, protect intellectual property, and strengthen consumer trust across complex global supply chains. Bringing authenticity to life As brands face'
+tags:
+  - Industry Events
 image: /assets/images/insights/natural-trace-at-supplyside-global-2025.png
 
 # Migrated from natural-trace.com on 2026-08-12 by
