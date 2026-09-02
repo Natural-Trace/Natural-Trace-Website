@@ -965,11 +965,11 @@ collections:
               pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
               hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
-          - label: "5. Validated product formats"
+          - label: "5. Validated products"
             name: "formats"
             widget: "object"
             collapsed: true
-            hint: "The dark band: the product formats from the NaturalTag validated list that apply to this industry, in groups."
+            hint: "The dark band: the validated products that apply to this industry, in groups, with one sentence under the heading."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
             - {label: "Heading", name: "title", widget: "string"}
@@ -1089,11 +1089,11 @@ collections:
               pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
               hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
-          - label: "5. Validated product formats"
+          - label: "5. Validated products"
             name: "formats"
             widget: "object"
             collapsed: true
-            hint: "The dark band: the product formats from the NaturalTag validated list that apply to this industry, in groups."
+            hint: "The dark band: the validated products that apply to this industry, in groups, with one sentence under the heading."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
             - {label: "Heading", name: "title", widget: "string"}
@@ -1213,11 +1213,11 @@ collections:
               pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
               hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
-          - label: "5. Validated product formats"
+          - label: "5. Validated products"
             name: "formats"
             widget: "object"
             collapsed: true
-            hint: "The dark band: the product formats from the NaturalTag validated list that apply to this industry, in groups."
+            hint: "The dark band: the validated products that apply to this industry, in groups, with one sentence under the heading."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
             - {label: "Heading", name: "title", widget: "string"}
@@ -1337,11 +1337,11 @@ collections:
               pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
               hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
-          - label: "5. Validated product formats"
+          - label: "5. Validated products"
             name: "formats"
             widget: "object"
             collapsed: true
-            hint: "The dark band: the product formats from the NaturalTag validated list that apply to this industry, in groups."
+            hint: "The dark band: the validated products that apply to this industry, in groups, with one sentence under the heading."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
             - {label: "Heading", name: "title", widget: "string"}

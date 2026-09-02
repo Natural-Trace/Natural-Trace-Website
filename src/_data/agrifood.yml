@@ -38,9 +38,9 @@ use_cases:
   all_url: "/industries/use-cases/"
 
 formats:
-  label: "Product Formats"
-  title: "Validated Product Formats"
-  description: "Formats from the NaturalTag™ validated matrices list that apply to this sector. Every new product starts with a compatibility assessment."
+  label: "Products"
+  title: "Validated Products"
+  description: "Every new product starts with a compatibility assessment."
   items:
     - group: "Fresh Produce"
       items: "Fruits"
