@@ -151,6 +151,32 @@ text.
 
 ---
 
+## src/_data/faq.yml
+
+### The complex-matrices answer names the matrices
+
+Bryan asked on 2 Sep 2026 for the answer to "Can it be used in complex
+matrices, such as oils, powders, and liquids?" to give examples that have
+worked and to send the reader to a compatibility assessment. It had been one
+line: "NaturalTag™ has been validated across multiple matrices."
+
+The examples are taken from the "Food Matrices Validated" list on the
+NaturalTag page and nowhere else, so the FAQ names nothing the site does not
+already publish. That list has never been through claim review, so the new
+answer is registered in `docs/claim-review.yml` as `faq-matrices-examples`,
+owner Alrik. **Do not add a matrix here that is not on the NaturalTag list.**
+Gummies stay off both, for the reason recorded under the industry pages below.
+
+The call to action is the `link_text` / `link_url` pair on the question, an
+optional field any answer can now use. The answer text is written to be
+complete without it, because the same text is emitted as FAQPage structured
+data for search engines, and that carries no link. Alex Wild's note on the
+Copy Guide FAQ was that the answer to this kind of question is almost always
+yes and should link to the compatibility assessment button, which is what this
+does.
+
+---
+
 ## The four industry pages: src/_data/nutraceuticals.yml, brandedingredients.yml, functionalfoods.yml, agrifood.yml
 
 Added 2 Sep 2026. One data file per page, one shared template

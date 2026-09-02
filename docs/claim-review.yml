@@ -155,6 +155,21 @@ claims:
       life. This is an extrapolation stated as a fact.
     owner: Alrik
 
+  - id: faq-matrices-examples
+    status: open
+    source: src/_data/faq.yml
+    field: content.questions
+    phrase: 'validated across multiple matrices, including powders, capsules, tablets, liquids, edible oils, botanicals, honey, coffee and fruit'
+    published_on: ["/faq/"]
+    why: >
+      Added 2 Sep 2026 at Bryan's request, replacing "validated across multiple
+      matrices" with named examples. Every matrix named is on the "Food
+      Matrices Validated" list on /naturaltag/, which has itself never been
+      reviewed, so this inherits that list's status. Needs what "validated"
+      means for each named matrix, and which client or internal study it rests
+      on, before the FAQ can state it as fact.
+    owner: Alrik
+
   # ---- NaturalDetect -------------------------------------------------------
   - id: detect-coa-wording
     status: open
