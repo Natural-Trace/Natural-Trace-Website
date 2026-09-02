@@ -239,6 +239,20 @@ The Copy Guide mixes "authorized" (Alex Wild's table) with "authorised"
 (everything else). The site is British throughout, so the table's lines were
 normalised on the way in.
 
+### The hyphen in "agri‑food" is a non-breaking hyphen
+
+In `agrifood.yml` `hero.tagline`, the Agri-food card description in
+`industries.yml`, and the Agri-food tile in `home.yml`, the hyphen in
+"agri‑food" is U+2011, the non-breaking hyphen, not the ordinary one. Bryan
+asked on 2 Sep 2026 for the word to stay on one line after the tagline broke
+as "agri-" / "food" at desktop width. Browsers treat an ordinary hyphen as a
+place they may break; U+2011 looks identical and is not.
+
+If the word is retyped in the CMS it comes back as an ordinary hyphen and the
+split returns, with nothing in the build to say so. Copy the word from one of
+the three fields rather than typing it. Page titles and menu labels are left
+with the ordinary hyphen: they are short enough never to break there.
+
 ### No comments in these files
 
 They are named in `src/admin/config.yml`, so Decap will delete any comment the
