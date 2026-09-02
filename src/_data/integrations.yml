@@ -115,3 +115,18 @@ consent:
 cloudflare_analytics:
   enabled: true
   token: "52b365746a03473d90b434df96d01af0"
+
+# PostHog product analytics
+#
+# Cookieless until the visitor taps Accept on the banner, cookied after. That is
+# why it loads on every page like Cloudflare rather than behind the banner like
+# HubSpot. The reasoning is written above the loader in src/_includes/base.njk
+# and setup is in docs/posthog-setup.md, deliberately not here: this file is
+# editable in the CMS and a save deletes every comment in it.
+#
+# The token is the public project key and ships in every page. Not an API key.
+# Do not switch on until the privacy policy names PostHog.
+posthog:
+  enabled: false
+  token: ""
+  region: "eu"

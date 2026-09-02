@@ -1,10 +1,16 @@
 {#- Cookie consent + gated analytics.
     Nothing that sets a cookie loads until the visitor accepts. The choice is
     kept in localStorage, which is strictly necessary and sets no cookie itself.
-    Closes the "no cookie consent banner" defect from the 30 July review. -#}
+    Closes the "no cookie consent banner" defect from the 30 July review.
+
+    Two things answer to this banner and they behave differently. HubSpot does
+    not load at all until Accept. PostHog is already running cookieless from
+    base.njk; Accept switches it to a cookie, Decline leaves it as it is. So
+    the bar is wanted when either is configured, not only HubSpot. -#}
 {% set hsPortal = integrations.hubspot.portal_id %}
-{% set wantTracking = integrations.tracking.enabled and hsPortal %}
-{% if integrations.consent.enabled and wantTracking %}
+{% set wantHubSpot = integrations.tracking.enabled and hsPortal %}
+{% set wantPostHog = integrations.posthog.enabled and integrations.posthog.token %}
+{% if integrations.consent.enabled and (wantHubSpot or wantPostHog) %}
 <div class="consent" id="consentBar" hidden>
   <p>{{ integrations.consent.message }} <a href="{{ integrations.consent.policy_url }}">{{ integrations.consent.policy_label }}</a></p>
   <div class="consent-actions">
@@ -15,10 +21,12 @@
 <script>
 (function () {
   var KEY = 'nt-consent';
+  var HUBSPOT = {% if wantHubSpot %}true{% else %}false{% endif %};
   var PORTAL = {{ hsPortal | dump | safe }};
   var REGION = {{ integrations.hubspot.region | dump | safe }};
 
   function loadAnalytics() {
+    if (!HUBSPOT) return;
     if (document.getElementById('hs-script-loader')) return;
     var s = document.createElement('script');
     s.id = 'hs-script-loader';
@@ -43,6 +51,13 @@
     try { localStorage.setItem(KEY, value); } catch (e) {}
     if (bar) bar.hidden = true;
     if (value === 'accepted') loadAnalytics();
+    /* PostHog is already running cookieless (see base.njk). Accept switches it
+       to a cookie; Decline tells it to stay as it is. Both queue safely if
+       array.js has not arrived yet, because the stub records the call. */
+    if (window.posthog) {
+      if (value === 'accepted') posthog.opt_in_capturing();
+      else posthog.opt_out_capturing();
+    }
   }
   var a = document.getElementById('consentAccept');
   var d = document.getElementById('consentDecline');

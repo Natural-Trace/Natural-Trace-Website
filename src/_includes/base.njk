@@ -150,6 +150,75 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js"
         data-cf-beacon='{"token": "{{ integrations.cloudflare_analytics.token }}"}'></script>
 {%- endif %}
+{%- if integrations.posthog.enabled and integrations.posthog.token %}
+{# PostHog product analytics. Added 3 Sep 2026.
+
+   It sits here beside Cloudflare rather than behind the banner in
+   partials/consent.njk, which reads as a breach of the rule written above the
+   Cloudflare block. It is not, because of cookieless_mode: "on_reject". PostHog
+   starts in a mode that sets no cookie: visitors are counted by a hash
+   computed on PostHog's servers from IP and browser, under a salt that
+   rotates daily, so one person reads as a new person tomorrow. The one thing
+   it keeps on the device is an opt-out flag in localStorage, the same class
+   of record as the banner's own nt-consent key. Only after Accept on the
+   banner does it switch to a cookie, and only then can session replay run.
+   Decline keeps it cookieless. The promise on the privacy page therefore
+   holds for everyone who has not consented, which is nearly everyone.
+
+   Verified in the browser on 3 Sep 2026 with a dummy token: no cookie before
+   a choice, none after Decline, a ph_ cookie only after Accept, each of which
+   survives navigating to the next page; HubSpot loads only after Accept. What
+   a dummy token cannot prove is that a cookieless event leaves the browser.
+   Cookied ones did. Cookieless ones did not, and PostHog's docs say the
+   project needs "Cookieless server hash mode" switched on under Project
+   Settings, Web analytics, which the SDK evidently confirms from remote
+   config before it will send. So on the first real deploy, open the site in
+   a private window, ignore the banner, and check that a pageview arrives in
+   PostHog. Until that is seen, the un-consented majority is not being counted
+   here, only by Cloudflare.
+
+   The trap: in on_reject mode PostHog captures NOTHING until it is told the
+   visitor's choice. A visitor who never touches the banner, which is what a
+   visitor at a stand does, would be invisible again, the exact hole Cloudflare
+   was added to close. So "no choice yet" is treated below as opt-out, meaning
+   "count them cookielessly", and decide() in partials/consent.njk upgrades it
+   to opt-in when Accept is tapped. opt_out_capturing() in this mode does not
+   stop capture; it keeps it cookieless.
+
+   The stub is PostHog's own, copied verbatim from
+   posthog.com/docs/integrate/snippet.mdx on 3 Sep 2026. Its job is to queue
+   calls made before array.js arrives, which is why decide() can call
+   opt_in_capturing() on slow venue wifi and not lose the choice. Do not trim
+   the method list: a method missing from it is dropped, not queued.
+
+   Session replay is deliberately not configured here. Whether it records at
+   all is a switch in the PostHog project settings, and on_reject already
+   refuses to record anyone who has not accepted. Inputs are masked by default,
+   which covers the contact form. Click capture, rage clicks and heatmaps need
+   no cookie and work for everyone.
+
+   The token is the public project key, published in every page like the
+   Cloudflare one. It is not an API key and grants nothing. #}
+<script>
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+(function () {
+  posthog.init({{ integrations.posthog.token | dump | safe }}, {
+    api_host: 'https://{{ integrations.posthog.region }}.i.posthog.com',
+    defaults: '2025-05-24',
+    cookieless_mode: 'on_reject',
+    person_profiles: 'identified_only',
+    enable_heatmaps: true,
+    capture_pageleave: true
+  });
+  /* Same key the banner writes. Read here as well as there so the choice is
+     honoured on every page, including ones where the banner is not shown. */
+  var choice = null;
+  try { choice = localStorage.getItem('nt-consent'); } catch (e) {}
+  if (choice === 'accepted') posthog.opt_in_capturing();
+  else posthog.opt_out_capturing();
+})();
+</script>
+{%- endif %}
 <script src="/assets/js/main.js?v={{ assetVersions.js }}"></script>
 {# The Netlify Identity widget used to load here, on every page of the site, to
    catch an invite link and bounce the visitor to /admin. It went with

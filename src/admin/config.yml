@@ -2135,6 +2135,14 @@ collections:
             fields:
               - {label: "Enabled", name: "enabled", widget: "boolean", hint: "Also needs the site token below. With no token nothing loads at all."}
               - {label: "Site token", name: "token", widget: "string", required: false, hint: "From dash.cloudflare.com, Web Analytics, Add a site. It is published in the page and is not a secret; it is not an API key and grants nothing."}
+          - label: "PostHog Analytics"
+            name: "posthog"
+            widget: "object"
+            hint: "Records which pages are read and what gets clicked, including on the compatibility quiz. Until a visitor taps Accept on the cookie banner it sets no cookie and counts them anonymously; after Accept it can also record their session. Setup, and the privacy policy wording that has to go with it, is in docs/posthog-setup.md."
+            fields:
+              - {label: "Enabled", name: "enabled", widget: "boolean", default: false, hint: "Also needs the project token below. With no token nothing loads at all. Do not switch on before the privacy policy names PostHog."}
+              - {label: "Project token", name: "token", widget: "string", required: false, hint: "PostHog: Settings, Project, Project API key. Starts with phc_. It is published in the page and is not a secret; it is not a personal API key and grants nothing."}
+              - {label: "Data region", name: "region", widget: "select", options: ["eu", "us"], default: "eu", hint: "Where PostHog keeps the data. Must match where the project was created: eu for eu.posthog.com, us for us.posthog.com. Getting it wrong sends events to a region that has never heard of the project."}
           - label: "Cookie Consent Banner"
             name: "consent"
             widget: "object"
