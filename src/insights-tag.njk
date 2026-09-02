@@ -6,8 +6,15 @@ pagination:
   alias: t
 permalink: "/insights/tag/{{ t.slug }}/"
 eleventyComputed:
-  title: "{{ t.tag }}"
-  summary: "Natural Trace articles tagged {{ t.tag }}. {{ t.posts.length }} pieces on {{ t.tag | lower }}, covering in-product authentication for food and nutraceutical ingredients."
+  # | safe on all three, and it is not optional once a topic contains an
+  # ampersand. These interpolations produce a data value rather than markup:
+  # base.njk escapes whatever lands in title and summary when it prints them.
+  # Without safe the escaping happens twice, so "Science & Evidence" was
+  # reaching the browser tab as "Science &amp;amp; Evidence" while the h1 in
+  # the body below, which is printed once, was correct. Only the title and the
+  # meta description were wrong, which is the pair nobody looks at.
+  title: "{{ t.tag | safe }}"
+  summary: "Natural Trace articles tagged {{ t.tag | safe }}. {{ t.posts.length }} pieces on {{ t.tag | lower | safe }}, covering in-product authentication for food and nutraceutical ingredients."
 ---
 {#
   One page per tag, generated only for tags that clear the threshold in
