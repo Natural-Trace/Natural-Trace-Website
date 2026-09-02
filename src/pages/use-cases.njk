@@ -13,28 +13,10 @@ permalink: /industries/use-cases/
       <p class="section-subtitle">{{ usecases.intro.subtitle }}</p>
     </div>
 
+    {# The card is partials/usecase.njk, shared with the industry pages, which
+       show the cases for their own sector. Change the card there, once. #}
     {% for case in usecases.cases.items %}
-    <article class="usecase">
-      <div class="usecase-media">
-        <img src="{{ case.image }}" alt="{{ case.image_alt }}" loading="lazy">
-      </div>
-      <div class="usecase-body">
-        <span class="usecase-sector">{{ case.sector }}</span>
-        <h3>{{ case.title }}</h3>
-        <div class="usecase-block">
-          <h4>{{ usecases.cases.challenge_label }}</h4>
-          <p>{{ case.challenge }}</p>
-        </div>
-        <div class="usecase-block">
-          <h4>{{ usecases.cases.solution_label }}</h4>
-          <p>{{ case.solution }}</p>
-        </div>
-        <div class="usecase-block is-outcome">
-          <h4>{{ usecases.cases.outcome_label }}</h4>
-          <p>{{ case.outcome }}</p>
-        </div>
-      </div>
-    </article>
+    {% include "partials/usecase.njk" %}
     {% endfor %}
   </div>
 </section>

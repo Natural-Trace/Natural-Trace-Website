@@ -1,0 +1,12 @@
+---
+layout: base.njk
+title: "Agri-food"
+summary: "In-product authentication for agri-food supply chains: tag produce and commodities at source and authenticate samples wherever they are collected."
+permalink: /industries/agri-food/
+---
+
+{#- A thin page: the markup is pages/industry.njk, shared by the four industry
+    pages, and the words are in _data/agrifood.yml, edited through the CMS under
+    Industries. See the comment at the top of the shared template. -#}
+{% set sector = agrifood %}
+{% include "pages/industry.njk" %}

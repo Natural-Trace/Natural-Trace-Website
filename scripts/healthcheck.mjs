@@ -41,7 +41,9 @@ const pages = files.filter((f) =>
 
 // ── 1. every page must exist and carry the basics
 const REQUIRED = ['/', '/about/', '/naturaltag/', '/naturaldetect/', '/naturalcloud/',
-                  '/industries/', '/industries/use-cases/', '/faq/', '/team/',
+                  '/industries/', '/industries/use-cases/', '/industries/nutraceuticals/',
+                  '/industries/branded-ingredients/', '/industries/functional-foods/',
+                  '/industries/agri-food/', '/faq/', '/team/',
                   '/careers/', '/insights/', '/contact/', '/privacy/'];
 for (const url of REQUIRED) {
   const f = join(ROOT, url === '/' ? 'index.html' : `${url}index.html`);

@@ -846,11 +846,16 @@ collections:
               widget: "list"
               summary: "{{fields.name}}"
               fields:
-                - {label: "Internal name", name: "id", widget: "string", hint: "Used in links that jump straight to this industry, e.g. /industries/#agri-food. Changing it breaks those links."}
+                - {label: "Internal name", name: "id", widget: "string", hint: "An anchor on the card, so an old link like /industries/#agri-food still lands on it. Changing it breaks those links."}
                 - {label: "Name", name: "name", widget: "string"}
                 - {label: "Description", name: "description", widget: "text"}
                 - {label: "Image", name: "image", widget: "image"}
                 - {label: "Image Alt", name: "image_alt", widget: "string"}
+                - label: "Page this card opens"
+                  name: "url"
+                  widget: "string"
+                  hint: "The industry's own page, for example /industries/agri-food/. Each industry has a page of its own under Industries in the menu on the left."
+                  pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /industries/agri-food/.']
 
           - label: "3. Closing call to action"
             name: "final_cta"
@@ -874,6 +879,502 @@ collections:
               pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
               hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
+
+      # INDUSTRIES: NUTRACEUTICALS & DIETARY SUPPLEMENTS
+      - name: "nutraceuticals"
+        label: "Nutraceuticals & Dietary Supplements"
+        file: "src/_data/nutraceuticals.yml"
+        fields:
+          - label: "1. Hero — the top of the page"
+            name: "hero"
+            widget: "object"
+            collapsed: true
+            hint: "The opening band of the Nutraceuticals & Dietary Supplements page: the industry name, its one-line description, the intro paragraph, two buttons and the photograph beside them."
+            fields:
+            - {label: "Small label above the title", name: "label", widget: "string"}
+            - {label: "Title", name: "title", widget: "string", hint: "The industry name as it appears in the menu."}
+            - {label: "One-line description", name: "tagline", widget: "string", hint: "The bold line under the title. This is the approved line from the Copy Guide; change it there first."}
+            - {label: "Intro paragraph", name: "intro", widget: "text"}
+            - {label: "Photograph", name: "image", widget: "image", hint: "Landscape. Shown in the 4:3 panel beside the text."}
+            - {label: "Photograph description", name: "image_alt", widget: "string", hint: "What is in the picture, for anyone using a screen reader."}
+            - label: "Photograph: which part to keep"
+              name: "image_position"
+              widget: "select"
+              required: false
+              hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame. Leave empty for the middle."
+              options:
+                - {label: "Middle", value: "50% 50%"}
+                - {label: "Left", value: "0% 50%"}
+                - {label: "Right", value: "100% 50%"}
+                - {label: "Top", value: "50% 0%"}
+                - {label: "Bottom", value: "50% 100%"}
+            - label: "Photograph: zoom"
+              name: "image_zoom"
+              widget: "select"
+              required: false
+              hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file. Leave empty for no extra crop."
+              options:
+                - {label: "No extra crop", value: "1"}
+                - {label: "A little closer", value: "1.1"}
+                - {label: "Closer", value: "1.18"}
+                - {label: "Much closer", value: "1.3"}
+            - {label: "First button text", name: "primary_text", widget: "string"}
+            - label: "First button link"
+              name: "primary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Second button text", name: "secondary_text", widget: "string"}
+            - label: "Second button link"
+              name: "secondary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+
+          - label: "2. The challenge"
+            name: "challenge"
+            widget: "object"
+            collapsed: true
+            hint: "The left-hand card under the hero: the problems this industry faces. Leads with the customer's problem, before the technology."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+
+          - label: "3. How Natural Trace helps"
+            name: "value"
+            widget: "object"
+            collapsed: true
+            hint: "The right-hand card under the hero: what Natural Trace does about each of those problems."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+
+          - label: "4. In practice"
+            name: "use_cases"
+            widget: "object"
+            collapsed: true
+            hint: "Which of the Industry Use-Cases to show on this page. The cases themselves are edited under Industry Use-Cases; this only picks them. The band is left out of the page when the list is empty."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Cases to show", name: "sectors", widget: "list", required: false, field: {label: "Sector", name: "sector", widget: "string"}, hint: "Type the Sector of each case exactly as it appears in Industry Use-Cases, for example Agri-food: Green Coffee. A case whose sector does not match is silently not shown."}
+            - {label: "Link text to all use cases", name: "all_text", widget: "string"}
+            - label: "Link to all use cases"
+              name: "all_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+
+          - label: "5. Validated product formats"
+            name: "formats"
+            widget: "object"
+            collapsed: true
+            hint: "The dark band: the product formats from the NaturalTag validated list that apply to this industry, in groups."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Text under the heading", name: "description", widget: "text"}
+            - label: "Groups"
+              name: "items"
+              widget: "list"
+              summary: "{{fields.group}}"
+              hint: "Two or three groups. Two are shown side by side, three across."
+              fields:
+                - {label: "Group", name: "group", widget: "string"}
+                - {label: "Items", name: "items", widget: "text", hint: "A comma-separated list."}
+
+          - label: "6. Closing call to action"
+            name: "final_cta"
+            widget: "object"
+            collapsed: true
+            hint: "The last band on the page, above the footer."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Text", name: "description", widget: "text"}
+            - {label: "Primary button text", name: "primary_text", widget: "string"}
+            - label: "Primary button link"
+              name: "primary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Secondary button text", name: "secondary_text", widget: "string"}
+            - label: "Secondary button link"
+              name: "secondary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+
+      # INDUSTRIES: BRANDED INGREDIENTS
+      - name: "brandedingredients"
+        label: "Branded Ingredients"
+        file: "src/_data/brandedingredients.yml"
+        fields:
+          - label: "1. Hero — the top of the page"
+            name: "hero"
+            widget: "object"
+            collapsed: true
+            hint: "The opening band of the Branded Ingredients page: the industry name, its one-line description, the intro paragraph, two buttons and the photograph beside them."
+            fields:
+            - {label: "Small label above the title", name: "label", widget: "string"}
+            - {label: "Title", name: "title", widget: "string", hint: "The industry name as it appears in the menu."}
+            - {label: "One-line description", name: "tagline", widget: "string", hint: "The bold line under the title. This is the approved line from the Copy Guide; change it there first."}
+            - {label: "Intro paragraph", name: "intro", widget: "text"}
+            - {label: "Photograph", name: "image", widget: "image", hint: "Landscape. Shown in the 4:3 panel beside the text."}
+            - {label: "Photograph description", name: "image_alt", widget: "string", hint: "What is in the picture, for anyone using a screen reader."}
+            - label: "Photograph: which part to keep"
+              name: "image_position"
+              widget: "select"
+              required: false
+              hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame. Leave empty for the middle."
+              options:
+                - {label: "Middle", value: "50% 50%"}
+                - {label: "Left", value: "0% 50%"}
+                - {label: "Right", value: "100% 50%"}
+                - {label: "Top", value: "50% 0%"}
+                - {label: "Bottom", value: "50% 100%"}
+            - label: "Photograph: zoom"
+              name: "image_zoom"
+              widget: "select"
+              required: false
+              hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file. Leave empty for no extra crop."
+              options:
+                - {label: "No extra crop", value: "1"}
+                - {label: "A little closer", value: "1.1"}
+                - {label: "Closer", value: "1.18"}
+                - {label: "Much closer", value: "1.3"}
+            - {label: "First button text", name: "primary_text", widget: "string"}
+            - label: "First button link"
+              name: "primary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Second button text", name: "secondary_text", widget: "string"}
+            - label: "Second button link"
+              name: "secondary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+
+          - label: "2. The challenge"
+            name: "challenge"
+            widget: "object"
+            collapsed: true
+            hint: "The left-hand card under the hero: the problems this industry faces. Leads with the customer's problem, before the technology."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+
+          - label: "3. How Natural Trace helps"
+            name: "value"
+            widget: "object"
+            collapsed: true
+            hint: "The right-hand card under the hero: what Natural Trace does about each of those problems."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+
+          - label: "4. In practice"
+            name: "use_cases"
+            widget: "object"
+            collapsed: true
+            hint: "Which of the Industry Use-Cases to show on this page. The cases themselves are edited under Industry Use-Cases; this only picks them. The band is left out of the page when the list is empty."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Cases to show", name: "sectors", widget: "list", required: false, field: {label: "Sector", name: "sector", widget: "string"}, hint: "Type the Sector of each case exactly as it appears in Industry Use-Cases, for example Agri-food: Green Coffee. A case whose sector does not match is silently not shown."}
+            - {label: "Link text to all use cases", name: "all_text", widget: "string"}
+            - label: "Link to all use cases"
+              name: "all_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+
+          - label: "5. Validated product formats"
+            name: "formats"
+            widget: "object"
+            collapsed: true
+            hint: "The dark band: the product formats from the NaturalTag validated list that apply to this industry, in groups."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Text under the heading", name: "description", widget: "text"}
+            - label: "Groups"
+              name: "items"
+              widget: "list"
+              summary: "{{fields.group}}"
+              hint: "Two or three groups. Two are shown side by side, three across."
+              fields:
+                - {label: "Group", name: "group", widget: "string"}
+                - {label: "Items", name: "items", widget: "text", hint: "A comma-separated list."}
+
+          - label: "6. Closing call to action"
+            name: "final_cta"
+            widget: "object"
+            collapsed: true
+            hint: "The last band on the page, above the footer."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Text", name: "description", widget: "text"}
+            - {label: "Primary button text", name: "primary_text", widget: "string"}
+            - label: "Primary button link"
+              name: "primary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Secondary button text", name: "secondary_text", widget: "string"}
+            - label: "Secondary button link"
+              name: "secondary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+
+      # INDUSTRIES: FUNCTIONAL FOODS
+      - name: "functionalfoods"
+        label: "Functional Foods"
+        file: "src/_data/functionalfoods.yml"
+        fields:
+          - label: "1. Hero — the top of the page"
+            name: "hero"
+            widget: "object"
+            collapsed: true
+            hint: "The opening band of the Functional Foods page: the industry name, its one-line description, the intro paragraph, two buttons and the photograph beside them."
+            fields:
+            - {label: "Small label above the title", name: "label", widget: "string"}
+            - {label: "Title", name: "title", widget: "string", hint: "The industry name as it appears in the menu."}
+            - {label: "One-line description", name: "tagline", widget: "string", hint: "The bold line under the title. This is the approved line from the Copy Guide; change it there first."}
+            - {label: "Intro paragraph", name: "intro", widget: "text"}
+            - {label: "Photograph", name: "image", widget: "image", hint: "Landscape. Shown in the 4:3 panel beside the text."}
+            - {label: "Photograph description", name: "image_alt", widget: "string", hint: "What is in the picture, for anyone using a screen reader."}
+            - label: "Photograph: which part to keep"
+              name: "image_position"
+              widget: "select"
+              required: false
+              hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame. Leave empty for the middle."
+              options:
+                - {label: "Middle", value: "50% 50%"}
+                - {label: "Left", value: "0% 50%"}
+                - {label: "Right", value: "100% 50%"}
+                - {label: "Top", value: "50% 0%"}
+                - {label: "Bottom", value: "50% 100%"}
+            - label: "Photograph: zoom"
+              name: "image_zoom"
+              widget: "select"
+              required: false
+              hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file. Leave empty for no extra crop."
+              options:
+                - {label: "No extra crop", value: "1"}
+                - {label: "A little closer", value: "1.1"}
+                - {label: "Closer", value: "1.18"}
+                - {label: "Much closer", value: "1.3"}
+            - {label: "First button text", name: "primary_text", widget: "string"}
+            - label: "First button link"
+              name: "primary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Second button text", name: "secondary_text", widget: "string"}
+            - label: "Second button link"
+              name: "secondary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+
+          - label: "2. The challenge"
+            name: "challenge"
+            widget: "object"
+            collapsed: true
+            hint: "The left-hand card under the hero: the problems this industry faces. Leads with the customer's problem, before the technology."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+
+          - label: "3. How Natural Trace helps"
+            name: "value"
+            widget: "object"
+            collapsed: true
+            hint: "The right-hand card under the hero: what Natural Trace does about each of those problems."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+
+          - label: "4. In practice"
+            name: "use_cases"
+            widget: "object"
+            collapsed: true
+            hint: "Which of the Industry Use-Cases to show on this page. The cases themselves are edited under Industry Use-Cases; this only picks them. The band is left out of the page when the list is empty."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Cases to show", name: "sectors", widget: "list", required: false, field: {label: "Sector", name: "sector", widget: "string"}, hint: "Type the Sector of each case exactly as it appears in Industry Use-Cases, for example Agri-food: Green Coffee. A case whose sector does not match is silently not shown."}
+            - {label: "Link text to all use cases", name: "all_text", widget: "string"}
+            - label: "Link to all use cases"
+              name: "all_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+
+          - label: "5. Validated product formats"
+            name: "formats"
+            widget: "object"
+            collapsed: true
+            hint: "The dark band: the product formats from the NaturalTag validated list that apply to this industry, in groups."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Text under the heading", name: "description", widget: "text"}
+            - label: "Groups"
+              name: "items"
+              widget: "list"
+              summary: "{{fields.group}}"
+              hint: "Two or three groups. Two are shown side by side, three across."
+              fields:
+                - {label: "Group", name: "group", widget: "string"}
+                - {label: "Items", name: "items", widget: "text", hint: "A comma-separated list."}
+
+          - label: "6. Closing call to action"
+            name: "final_cta"
+            widget: "object"
+            collapsed: true
+            hint: "The last band on the page, above the footer."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Text", name: "description", widget: "text"}
+            - {label: "Primary button text", name: "primary_text", widget: "string"}
+            - label: "Primary button link"
+              name: "primary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Secondary button text", name: "secondary_text", widget: "string"}
+            - label: "Secondary button link"
+              name: "secondary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+
+      # INDUSTRIES: AGRI-FOOD
+      - name: "agrifood"
+        label: "Agri-food"
+        file: "src/_data/agrifood.yml"
+        fields:
+          - label: "1. Hero — the top of the page"
+            name: "hero"
+            widget: "object"
+            collapsed: true
+            hint: "The opening band of the Agri-food page: the industry name, its one-line description, the intro paragraph, two buttons and the photograph beside them."
+            fields:
+            - {label: "Small label above the title", name: "label", widget: "string"}
+            - {label: "Title", name: "title", widget: "string", hint: "The industry name as it appears in the menu."}
+            - {label: "One-line description", name: "tagline", widget: "string", hint: "The bold line under the title. This is the approved line from the Copy Guide; change it there first."}
+            - {label: "Intro paragraph", name: "intro", widget: "text"}
+            - {label: "Photograph", name: "image", widget: "image", hint: "Landscape. Shown in the 4:3 panel beside the text."}
+            - {label: "Photograph description", name: "image_alt", widget: "string", hint: "What is in the picture, for anyone using a screen reader."}
+            - label: "Photograph: which part to keep"
+              name: "image_position"
+              widget: "select"
+              required: false
+              hint: "The panel is a 4:3 box, so a wider photograph gets trimmed at the sides and a taller one at the top and bottom. Pick the part that must stay in frame. Leave empty for the middle."
+              options:
+                - {label: "Middle", value: "50% 50%"}
+                - {label: "Left", value: "0% 50%"}
+                - {label: "Right", value: "100% 50%"}
+                - {label: "Top", value: "50% 0%"}
+                - {label: "Bottom", value: "50% 100%"}
+            - label: "Photograph: zoom"
+              name: "image_zoom"
+              widget: "select"
+              required: false
+              hint: "1 shows as much of the picture as the panel allows. Higher crops closer, which is how to make a small subject fill more of the frame without a new file. Leave empty for no extra crop."
+              options:
+                - {label: "No extra crop", value: "1"}
+                - {label: "A little closer", value: "1.1"}
+                - {label: "Closer", value: "1.18"}
+                - {label: "Much closer", value: "1.3"}
+            - {label: "First button text", name: "primary_text", widget: "string"}
+            - label: "First button link"
+              name: "primary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Second button text", name: "secondary_text", widget: "string"}
+            - label: "Second button link"
+              name: "secondary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+
+          - label: "2. The challenge"
+            name: "challenge"
+            widget: "object"
+            collapsed: true
+            hint: "The left-hand card under the hero: the problems this industry faces. Leads with the customer's problem, before the technology."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+
+          - label: "3. How Natural Trace helps"
+            name: "value"
+            widget: "object"
+            collapsed: true
+            hint: "The right-hand card under the hero: what Natural Trace does about each of those problems."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+
+          - label: "4. In practice"
+            name: "use_cases"
+            widget: "object"
+            collapsed: true
+            hint: "Which of the Industry Use-Cases to show on this page. The cases themselves are edited under Industry Use-Cases; this only picks them. The band is left out of the page when the list is empty."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Cases to show", name: "sectors", widget: "list", required: false, field: {label: "Sector", name: "sector", widget: "string"}, hint: "Type the Sector of each case exactly as it appears in Industry Use-Cases, for example Agri-food: Green Coffee. A case whose sector does not match is silently not shown."}
+            - {label: "Link text to all use cases", name: "all_text", widget: "string"}
+            - label: "Link to all use cases"
+              name: "all_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+
+          - label: "5. Validated product formats"
+            name: "formats"
+            widget: "object"
+            collapsed: true
+            hint: "The dark band: the product formats from the NaturalTag validated list that apply to this industry, in groups."
+            fields:
+            - {label: "Small label above the heading", name: "label", widget: "string"}
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Text under the heading", name: "description", widget: "text"}
+            - label: "Groups"
+              name: "items"
+              widget: "list"
+              summary: "{{fields.group}}"
+              hint: "Two or three groups. Two are shown side by side, three across."
+              fields:
+                - {label: "Group", name: "group", widget: "string"}
+                - {label: "Items", name: "items", widget: "text", hint: "A comma-separated list."}
+
+          - label: "6. Closing call to action"
+            name: "final_cta"
+            widget: "object"
+            collapsed: true
+            hint: "The last band on the page, above the footer."
+            fields:
+            - {label: "Heading", name: "title", widget: "string"}
+            - {label: "Text", name: "description", widget: "text"}
+            - {label: "Primary button text", name: "primary_text", widget: "string"}
+            - label: "Primary button link"
+              name: "primary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
+            - {label: "Secondary button text", name: "secondary_text", widget: "string"}
+            - label: "Secondary button link"
+              name: "secondary_url"
+              widget: "string"
+              pattern: ['^(/|https?://|mailto:|tel:|#)', 'Start with / for a page on this site, for example /contact/. Use https:// for another site, # for a spot on the same page, or mailto: for an email address.']
+              hint: "A page on this site starts with a slash and ends with one, like /contact/. Anything else needs its full address starting https://."
 
     # ── Industry Use-Cases ─────
         # INDUSTRY USE-CASES
@@ -1506,6 +2007,10 @@ collections:
                   - {label: "NaturalDetect", value: "/naturaldetect/"}
                   - {label: "NaturalCloud", value: "/naturalcloud/"}
                   - {label: "Industries", value: "/industries/"}
+                  - {label: "Industries: Nutraceuticals & Dietary Supplements", value: "/industries/nutraceuticals/"}
+                  - {label: "Industries: Branded Ingredients", value: "/industries/branded-ingredients/"}
+                  - {label: "Industries: Functional Foods", value: "/industries/functional-foods/"}
+                  - {label: "Industries: Agri-food", value: "/industries/agri-food/"}
                   - {label: "Industry Use-Cases", value: "/industries/use-cases/"}
                   - {label: "FAQ", value: "/faq/"}
                   - {label: "Team", value: "/team/"}

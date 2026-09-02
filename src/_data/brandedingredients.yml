@@ -1,0 +1,55 @@
+hero:
+  label: "Industries"
+  title: "Branded Ingredients"
+  tagline: "Protect the value behind your ingredient brand through invisible product authentication and authorised manufacturing verification."
+  intro: "Many premium ingredients become difficult to distinguish once incorporated into finished products. Natural Trace gives ingredients a unique, detectable identity that allows companies to objectively verify the presence of their branded ingredient downstream."
+  image: "/assets/images/industry-food-ingredients.webp"
+  image_alt: "Pallets of sealed ingredient sacks and fibre drums in a warehouse"
+  image_position: ""
+  image_zoom: ""
+  primary_text: "Request a Compatibility Assessment"
+  primary_url: "/contact/"
+  secondary_text: "Assess My Product"
+  secondary_url: "/assess/"
+
+challenge:
+  title: "The Challenge"
+  items:
+    - "Behind every differentiated ingredient is significant investment in research, formulation, manufacturing, intellectual property, and customer trust."
+    - "Once that ingredient enters a wider production network, proving that it is still present, and distinguishing it from generic alternatives, can become increasingly difficult."
+    - "Documents can be lost, altered, or disconnected from the physical product as it moves through the supply chain."
+    - "Contract manufacturers may overproduce, substitute materials, use undeclared facilities, or divert products into unauthorised channels."
+
+value:
+  title: "How Natural Trace Helps"
+  items:
+    - "Objectively verify the presence of your branded ingredient in finished products downstream."
+    - "Verify what the CMO or CDMO actually produced, using which materials, and whether production remained within the authorised process."
+    - "Distinguish authorised manufacturing from unauthorised production by assigning unique authentication identities to approved manufacturing sources."
+    - "Confirm the origin, custody, movement, and destination of the physical product, not only its paperwork."
+
+use_cases:
+  label: "Industry Use-Cases"
+  title: "In Practice"
+  sectors:
+    - "Branded Ingredients"
+  all_text: "View all Industry Use-Cases"
+  all_url: "/industries/use-cases/"
+
+formats:
+  label: "Product Formats"
+  title: "Validated Product Formats"
+  description: "Formats from the NaturalTag™ validated matrices list that apply to this sector. Every new product starts with a compatibility assessment."
+  items:
+    - group: "Ingredient Forms"
+      items: "Powders, Liquids, Edible Oils"
+    - group: "Premium Matrices"
+      items: "Botanicals, Honey, Coffee, Alcohol, Vinegar"
+
+final_cta:
+  title: "Ready to protect your products with confidence?"
+  description: "Whether you're protecting a premium ingredient, verifying manufacturing partners or investigating suspicious products, Natural Trace can help."
+  primary_text: "Request a Compatibility Assessment"
+  primary_url: "/contact/"
+  secondary_text: "View Industry Use-Cases"
+  secondary_url: "/industries/use-cases/"

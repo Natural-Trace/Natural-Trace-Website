@@ -1,0 +1,12 @@
+---
+layout: base.njk
+title: "Functional Foods"
+summary: "In-product authentication for functional foods and beverages: verify that the branded ingredient behind a functional claim is present in the finished product."
+permalink: /industries/functional-foods/
+---
+
+{#- A thin page: the markup is pages/industry.njk, shared by the four industry
+    pages, and the words are in _data/functionalfoods.yml, edited through the CMS under
+    Industries. See the comment at the top of the shared template. -#}
+{% set sector = functionalfoods %}
+{% include "pages/industry.njk" %}

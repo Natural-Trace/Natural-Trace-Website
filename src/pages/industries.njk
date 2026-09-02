@@ -12,12 +12,17 @@ permalink: /industries/
       <h2 class="section-title">{{ industries.intro.title }}</h2>
       <p class="section-subtitle" style="margin:0 auto">{{ industries.intro.subtitle }}</p>
     </div>
+    {# Each card links through to its own page since 2 Sep 2026; before that
+       the four industries were these cards and nothing more, and the menu
+       jumped to them by fragment. The id stays so an old /industries/#agri-food
+       link from outside the site still lands on the right card. The homepage
+       tile is already an <a class="industry-card">, so the styling holds. #}
     <div class="industries-grid">
       {% for industry in industries.sectors.items %}
-      <div class="industry-card delay-{{ loop.index }}" id="{{ industry.id }}">
+      <a class="industry-card delay-{{ loop.index }}" id="{{ industry.id }}" href="{{ industry.url }}">
         <img src="{{ industry.image }}" alt="{{ industry.image_alt }}" loading="lazy">
         <div class="industry-card-overlay"><h3>{{ industry.name }}</h3><p>{{ industry.description }}</p></div>
-      </div>
+      </a>
       {% endfor %}
     </div>
   </div>

@@ -1,0 +1,12 @@
+---
+layout: base.njk
+title: "Branded Ingredients"
+summary: "In-product authentication for branded ingredients: verify your ingredient is present downstream and that production stays with authorised manufacturers."
+permalink: /industries/branded-ingredients/
+---
+
+{#- A thin page: the markup is pages/industry.njk, shared by the four industry
+    pages, and the words are in _data/brandedingredients.yml, edited through the CMS under
+    Industries. See the comment at the top of the shared template. -#}
+{% set sector = brandedingredients %}
+{% include "pages/industry.njk" %}

@@ -148,3 +148,98 @@ developer if the list ever gets that short.
 The three most recent dated articles are pulled in automatically. Publishing an
 article updates the strip. The only editable copy is the heading and the link
 text.
+
+---
+
+## The four industry pages: src/_data/nutraceuticals.yml, brandedingredients.yml, functionalfoods.yml, agrifood.yml
+
+Added 2 Sep 2026. One data file per page, one shared template
+(`src/_includes/pages/industry.njk`), four thin pages under `src/pages/`. The
+four files carry the same field paths, so everything below applies to all of
+them unless a file is named.
+
+### Status: drafted, not signed off
+
+**Nothing in these four files has been approved by Kirsty.** The Copy Guide
+("Natural Trace Website Copy Guide 2026", Kirsty and Alex Wild, the source of
+truth for site copy) gives each industry one line. The pages needed more, and
+the decision on 2 Sep was to assemble them from wording that is already in the
+Copy Guide rather than write anything new, then put the result in front of
+Kirsty on a pull request. The pull request is the review; the branch does not
+merge until she has read it. Alrik is asked to confirm the `formats` lists.
+
+If you are editing these files before that sign-off has happened, you are
+editing a draft, and the draft is deliberately conservative. Do not strengthen
+anything.
+
+### `hero.tagline` — the one approved line
+
+Verbatim from the Copy Guide's Industries section. Alex Wild's standing
+condition (29 Jul 2026) is that once a tagline or value proposition is settled
+it is frozen, with no freedom to vary it. The same four lines are the card
+descriptions in `industries.yml`. Change them in the Copy Guide first, then in
+both places together.
+
+### Where every other line came from
+
+- `hero.intro`: Section 2 "The Challenge" (nutraceuticals); the About page's
+  "Branded Ingredient Differentiation" (branded ingredients); the About page's
+  "Downstream Verification" (functional foods, first sentence) and "Why We
+  Exist" (agri-food, first three sentences).
+- `challenge.items`: "Why authentication matters today" (Section 2), the
+  "Customer problem" column of Alex Wild's five-use-case table, and the About
+  page's "Our Story".
+- `value.items`: the "Natural Trace value" column of the same table, the
+  Section 3 value pillars, NaturalTag's "Why NaturalTag" list, the How It Works
+  bullets, and the About page's "What Makes Us Different".
+- `formats.items`: the "Food Matrices Validated" list on the NaturalTag page,
+  split by sector.
+- `final_cta`: the homepage's final call to action, verbatim.
+
+**Three lines are not in the Copy Guide** and are the first things for Kirsty
+to look at:
+
+- `functionalfoods.yml` `hero.intro`, second sentence ("Natural Trace gives
+  every ingredient a unique, detectable identity, so the branded ingredient
+  behind a functional claim can be verified in the finished product"). Built
+  from the hero supporting copy and the Functional Foods one-liner.
+- `agrifood.yml` `hero.intro`, last sentence ("Tagged at pre-harvest treatment
+  or before export…"). A summary of the two agri-food use cases.
+- `agrifood.yml` `value.items`, third point ("Authenticate samples collected
+  overseas…"). The green coffee use case, rephrased as a capability.
+
+### What is deliberately absent
+
+- **Gummies.** Removed from the Copy Guide on 29 Jul 2026 pending confirmation
+  that the tag survives gummy processing. Alrik's position in that thread:
+  anything beyond boiling point is not a good fit. So `nutraceuticals.yml`
+  lists Powders, Capsules, Tablets, Sachets, Liquids, Drops and stops there.
+- **Anything baked, cooked or retorted** in `functionalfoods.yml` `formats`,
+  for the same reason. The list is functional foods, beverages and the powder,
+  sachet, liquid and drop formats. Do not add bakery, snack bars or
+  ready meals without Alrik.
+- **Claims that are registered on other pages.** "Validated across 20+
+  matrices", the facility certifications, GRAS status and "survives supply
+  chain handling" all live in `docs/claim-review.yml` against the pages they
+  are on. They are not repeated here, so the industry pages add nothing to any
+  open claim's footprint. `npm run check:claims -- --published` is the check.
+
+### `use_cases.sectors`
+
+A list of `sector` strings from `usecases.yml`, matched exactly. The cases
+render from that one file through `partials/usecase.njk`; nothing about a case
+is copied into an industry file. `functionalfoods.yml` has an empty list
+because no functional-foods case exists yet, and the template leaves the band
+out rather than print a heading over nothing. When a case is written, add its
+sector string here and it appears.
+
+### Spelling
+
+The Copy Guide mixes "authorized" (Alex Wild's table) with "authorised"
+(everything else). The site is British throughout, so the table's lines were
+normalised on the way in.
+
+### No comments in these files
+
+They are named in `src/admin/config.yml`, so Decap will delete any comment the
+first time an editor saves one. This section is where the reasons live.
