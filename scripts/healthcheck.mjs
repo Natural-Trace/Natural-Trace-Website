@@ -172,7 +172,15 @@ for (const f of pages) {
   if (!m) continue;
   stubs++;
   const from = '/' + relative(ROOT, f).replace(/index\.html$/, '').replace(/\\/g, '/');
-  const target = m[1].split('#')[0];
+  /* Fragment and query both come off before this is treated as a path. The
+     fragment always did; the query string did not, so a redirect at a real
+     page with a parameter on it was reported as pointing at nothing. That
+     turned up on /insights/tag/press-release/, which sends its old readers to
+     /insights/?topic=Company%20News: the page is there, the parameter is read
+     by main.js in the browser, and no file was ever going to exist at that
+     name. A redirect that lands on a filtered view is a normal thing to want
+     and the check was wrong to refuse it. */
+  const target = m[1].split('#')[0].split('?')[0];
   const abs = join(ROOT, target);
   if (!existsSync(abs) && !existsSync(join(abs, 'index.html'))) note(`redirect ${from} points at missing ${m[1]}`);
   /* A stub is a page that only exists to bounce; listing it in the sitemap
