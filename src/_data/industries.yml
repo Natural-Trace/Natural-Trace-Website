@@ -26,7 +26,7 @@ sectors:
       url: "/industries/functional-foods/"
     - id: "agri-food"
       name: "Agri-food"
-      description: "Strengthen confidence across agri-food supply chains through objective product authentication."
+      description: "Strengthen confidence across agri‑food supply chains through objective product authentication."
       image: "/assets/images/industry-agri-food.webp"
       image_alt: "A punnet of picked strawberries in front of rows of strawberry plants"
       url: "/industries/agri-food/"
