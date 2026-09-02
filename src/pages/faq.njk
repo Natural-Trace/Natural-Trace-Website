@@ -33,12 +33,11 @@ permalink: /faq/
           <span>{{ q.question }}</span>
           <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
-        {# An answer can end with a link (link_text / link_url, optional). It is
-           rendered here and not in faq-schema.njk: the structured data carries
-           the answer text alone, so the answer has to read complete without
-           the link. That is also why it is a separate field rather than HTML
-           inside the answer. #}
-        <div class="faq-answer"><div class="faq-answer-inner">{{ q.answer }}{% if q.link_text %} <a class="faq-answer-link" href="{{ q.link_url }}">{{ q.link_text }}</a>{% endif %}</div></div>
+        {# Plain text only. An optional link after the answer was tried on 2 Sep
+           2026 and removed the same day: it ran on from the last sentence and
+           read as a stray fragment. The call to action for every answer is
+           the band at the foot of the page. See docs/content-decisions.md. #}
+        <div class="faq-answer"><div class="faq-answer-inner">{{ q.answer }}</div></div>
       </div>
       {% endfor %}
 

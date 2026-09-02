@@ -70,8 +70,6 @@ content:
     - category: "integration"
       question: "Can it be used in complex matrices, such as oils, powders, and liquids?"
       answer: "Yes. NaturalTag™ has been validated across multiple matrices, including powders, capsules, tablets, liquids, edible oils, botanicals, honey, coffee and fruit. Every formulation is different, so the first step for any new product is a compatibility assessment."
-      link_text: "Request a Compatibility Assessment"
-      link_url: "/contact/"
 
     # Detection
     - category: "detection"

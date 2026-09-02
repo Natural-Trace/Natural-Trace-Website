@@ -1047,13 +1047,6 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
 .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease}
 .faq-item.open .faq-answer{max-height:500px}
 .faq-answer-inner{padding:0 1.5rem 1.5rem;font-family:'Montserrat',sans-serif;font-size:.9rem;line-height:1.8;color:var(--muted)}
-/* The optional link an answer can end with (link_text / link_url on the
-   question in faq.yml, 2 Sep 2026). Set like the "read more" line under a
-   section so it reads as an action rather than as more answer. --sage-dark,
-   not --sage: --sage is a surface colour and fails 4.5:1 as text on white. */
-.faq-answer-inner a{color:var(--sage-dark);font-weight:600;border-bottom:1px solid rgba(107,114,73,.35);padding-bottom:1px;transition:border-color .25s ease}
-.faq-answer-inner a:hover{border-bottom-color:var(--sage)}
-.faq-answer-link{display:inline-block;margin-top:.6rem}
 .faq-cta-bar{padding:4rem 0;background:#fff;text-align:center}
 
 /* Insights */

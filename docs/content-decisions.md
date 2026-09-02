@@ -167,13 +167,15 @@ answer is registered in `docs/claim-review.yml` as `faq-matrices-examples`,
 owner Alrik. **Do not add a matrix here that is not on the NaturalTag list.**
 Gummies stay off both, for the reason recorded under the industry pages below.
 
-The call to action is the `link_text` / `link_url` pair on the question, an
-optional field any answer can now use. The answer text is written to be
-complete without it, because the same text is emitted as FAQPage structured
-data for search engines, and that carries no link. Alex Wild's note on the
-Copy Guide FAQ was that the answer to this kind of question is almost always
-yes and should link to the compatibility assessment button, which is what this
-does.
+The answer ends by saying the first step is a compatibility assessment, and
+stops there. A link, "Request a Compatibility Assessment", was added after the
+answer the same day and removed within the hour: rendered inline it ran on
+from the closing sentence and read as a stray fragment, which Bryan rejected
+on sight. The optional link field that carried it was removed with it rather
+than left in the panel unused. The call to action for every FAQ answer is the
+band at the foot of the page, which already goes to the contact form. Alex
+Wild's note on the Copy Guide FAQ, that this kind of question is almost always
+a yes that should lead to the assessment button, is met by that band.
 
 ---
 
