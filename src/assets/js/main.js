@@ -26,10 +26,19 @@ window.addEventListener('DOMContentLoaded', function() {
   var isHome = document.body.classList.contains('page-home');
   var navbar = document.getElementById('navbar');
 
+  /* A tab is active on its own page and on any page beneath it. The last
+     segment alone was enough while every page was top-level; once Industries
+     had /industries/nutraceuticals/ and friends (2 Sep 2026) the last segment
+     named the sub-page and no tab lit, which was already true of
+     /industries/use-cases/ and had gone unnoticed. The parent segments are
+     checked as well, so /industries/agri-food/ and /insights/<article>/ light
+     their tab. A site path prefix adds a segment that matches no tab. */
   var path = window.location.pathname.replace(/\/$/, '');
-  var pageName = isHome ? 'home' : (path.split('/').pop() || 'home');
+  var segments = path.split('/');
+  var pageName = isHome ? 'home' : (segments.pop() || 'home');
   document.querySelectorAll('.nav-links a[data-page]').forEach(function(a) {
-    if (a.getAttribute('data-page') === pageName) a.classList.add('active');
+    var name = a.getAttribute('data-page');
+    if (name === pageName || segments.indexOf(name) !== -1) a.classList.add('active');
   });
 
   /* Every page but the home page opens on a pale section, so the navigation

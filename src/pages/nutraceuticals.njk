@@ -1,0 +1,12 @@
+---
+layout: base.njk
+title: "Nutraceuticals & Dietary Supplements"
+summary: "In-product authentication for nutraceuticals and dietary supplements: protect premium ingredients from counterfeiting and substitution throughout the supply chain."
+permalink: /industries/nutraceuticals/
+---
+
+{#- A thin page: the markup is pages/industry.njk, shared by the four industry
+    pages, and the words are in _data/nutraceuticals.yml, edited through the CMS under
+    Industries. See the comment at the top of the shared template. -#}
+{% set sector = nutraceuticals %}
+{% include "pages/industry.njk" %}

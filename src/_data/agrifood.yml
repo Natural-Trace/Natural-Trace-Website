@@ -1,0 +1,58 @@
+hero:
+  label: "Industries"
+  title: "Agri-food"
+  tagline: "Strengthen confidence across agri-food supply chains through objective product authentication."
+  intro: "Global supply chains have become increasingly complex. Documentation records what should have happened. Natural Trace adds evidence that proves it. Tagged at pre-harvest treatment or before export, produce and commodities can be authenticated wherever a sample is collected."
+  image: "/assets/images/industry-agri-food.webp"
+  image_alt: "A punnet of picked strawberries in front of rows of strawberry plants"
+  image_position: ""
+  image_zoom: ""
+  primary_text: "Request a Compatibility Assessment"
+  primary_url: "/contact/"
+  secondary_text: "Assess My Product"
+  secondary_url: "/assess/"
+
+challenge:
+  title: "The Challenge"
+  items:
+    - "Global supply chains are becoming more complex."
+    - "Documents can be lost, altered, or disconnected from the physical product as it moves through the supply chain."
+    - "Companies often cannot quickly identify which batches, suppliers, or locations are affected by a quality incident."
+    - "Counterfeit, copied, diverted, or grey-market products can damage revenue, reputation, and consumer trust."
+
+value:
+  title: "How Natural Trace Helps"
+  items:
+    - "Confirm the origin, custody, movement, and destination of the physical product, not only its paperwork."
+    - "Trace affected material, identify its source, and reduce the scope, cost, and disruption of recalls."
+    - "Authenticate samples collected overseas after produce or commodities pass through multiple trading partners."
+    - "Generate physical evidence for enforcement."
+
+use_cases:
+  label: "Industry Use-Cases"
+  title: "In Practice"
+  sectors:
+    - "Agri-food: Fresh Produce"
+    - "Agri-food: Green Coffee"
+  all_text: "View all Industry Use-Cases"
+  all_url: "/industries/use-cases/"
+
+formats:
+  label: "Product Formats"
+  title: "Validated Product Formats"
+  description: "Formats from the NaturalTag™ validated matrices list that apply to this sector. Every new product starts with a compatibility assessment."
+  items:
+    - group: "Fresh Produce"
+      items: "Fruits"
+    - group: "Bulk Commodities"
+      items: "Coffee, Nuts, Seafood, Honey, Edible Oils"
+    - group: "Pre-harvest Treatments"
+      items: "Agri-chemicals"
+
+final_cta:
+  title: "Ready to protect your products with confidence?"
+  description: "Whether you're protecting a premium ingredient, verifying manufacturing partners or investigating suspicious products, Natural Trace can help."
+  primary_text: "Request a Compatibility Assessment"
+  primary_url: "/contact/"
+  secondary_text: "View Industry Use-Cases"
+  secondary_url: "/industries/use-cases/"

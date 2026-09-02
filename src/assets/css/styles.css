@@ -2014,8 +2014,14 @@ a.insight-row-kicker:hover{color:var(--dark);text-decoration:underline}
     .hero-cloud.solution-hero-mark::after{background:rgba(162,147,73,.11)}
   }
 }
-.hero-tag{background:linear-gradient(180deg,rgba(107,114,73,.13),var(--offwhite) 78%)}
-.hero-tag .section-label{color:var(--sage-dark)}
+/* .hero-industry is an alias for the sage tint, not a fourth colour. The four
+   industry pages (2 Sep 2026) are commercial pages and sit on the brand's
+   dominant surface; teal is for the analytical product and gold for the data
+   platform, and neither reading fits an industry. A separate class rather
+   than reusing .hero-tag so the industry pages can be restyled on their own
+   without touching NaturalTag. */
+.hero-tag,.hero-industry{background:linear-gradient(180deg,rgba(107,114,73,.13),var(--offwhite) 78%)}
+.hero-tag .section-label,.hero-industry .section-label{color:var(--sage-dark)}
 .hero-detect{background:linear-gradient(180deg,rgba(59,102,107,.13),var(--offwhite) 78%)}
 .hero-detect .section-label{color:var(--teal)}
 .hero-cloud{background:linear-gradient(180deg,rgba(162,147,73,.15),var(--offwhite) 78%)}
@@ -2030,9 +2036,10 @@ a.insight-row-kicker:hover{color:var(--dark);text-decoration:underline}
 /* A28 A32 A33  The one line that says what each product does was set at the
         same size and grey as ordinary supporting text. */
 .hero-tag .section-subtitle,
+.hero-industry .section-subtitle,
 .hero-detect .section-subtitle,
 .hero-cloud .section-subtitle{font-size:1.45rem;line-height:1.45;font-weight:700;max-width:720px}
-.hero-tag .section-subtitle{color:var(--sage-dark)}
+.hero-tag .section-subtitle,.hero-industry .section-subtitle{color:var(--sage-dark)}
 .hero-detect .section-subtitle{color:var(--teal)}
 .hero-cloud .section-subtitle{color:var(--gold-ink)}
 
@@ -2247,6 +2254,8 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
    three 100px columns and the headings inside them were cut off by the
    section's overflow. */
 .how-grid-3{grid-template-columns:repeat(3,1fr)}
+/* Two groups on the industry pages: a three-column grid would leave a hole. */
+.how-grid-2{grid-template-columns:repeat(2,1fr)}
 @media(max-width:900px){.how-grid-3{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.how-grid-3{grid-template-columns:1fr}}
 

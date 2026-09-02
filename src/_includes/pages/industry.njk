@@ -1,0 +1,131 @@
+{#- The one template behind the four industry pages.
+
+    Each page under src/pages/ is a few lines of front matter, a `set` that
+    points `sector` at its own data file, and an include of this. Nunjucks
+    includes see the caller's variables, so `sector` resolves here; index.njk
+    and pages/home.njk work the same way. Four copies of this markup would
+    have drifted the first time one was edited, which is the reason the
+    How It Works partial exists, and it applies here just as well.
+
+    The sections, top to bottom, are the shapes the technology pages already
+    use, so nothing here needed new CSS beyond the selector additions noted
+    in styles.css:
+
+      1. Hero: the NaturalDetect hero, eyebrow / name / one-liner / intro /
+         two buttons, photograph in the 4:3 panel with the same crop controls.
+      2. Two cards: the customer's problem first, then how Natural Trace
+         helps. The Copy Guide's brief for the Industries pages is "lead with
+         customer problems before technology", so the challenge card is on
+         the left.
+      3. In practice: the use cases from usecases.yml whose sector the data
+         file names. Rendered from the one source rather than copied, and
+         omitted entirely when nothing matches, which is Functional Foods
+         today. An empty band with a heading and no cards would read as a
+         mistake.
+      4. Validated product formats, in the dark band, the per-sector subset
+         of the NaturalTag matrices list.
+      5. The closing call to action.
+
+    How It Works is deliberately not included. It would sit directly against
+    the dark formats band, and the assessment call to action is already in
+    the hero and at the foot of the page, which is where Alex Wild asked for
+    it. -#}
+<section class="challenge hero-industry" style="padding-top:9rem">
+  <div class="container">
+    <div class="challenge-grid">
+      <div class="challenge-text">
+        <span class="section-label">{{ sector.hero.label }}</span>
+        <h2 class="section-title">{{ sector.hero.title }}</h2>
+        <p class="section-subtitle">{{ sector.hero.tagline }}</p>
+        <p class="challenge-lead" style="margin-top:1.5rem">{{ sector.hero.intro }}</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem">
+          <a href="{{ sector.hero.primary_url }}" class="btn btn-primary" style="cursor:pointer">{{ sector.hero.primary_text }}</a>
+          <a href="{{ sector.hero.secondary_url }}" class="btn btn-line" style="cursor:pointer">{{ sector.hero.secondary_text }}</a>
+        </div>
+      </div>
+      {# The same crop controls as the technology pages, so an editor can move
+         or tighten the picture from the panel without a new file. #}
+      <div class="solution-photo">
+        <img src="{{ sector.hero.image }}" alt="{{ sector.hero.image_alt }}" loading="lazy"
+          style="{% if sector.hero.image_position %}object-position:{{ sector.hero.image_position }};{% endif %}{% if sector.hero.image_zoom %}--photo-zoom:{{ sector.hero.image_zoom }};--photo-zoom-origin:{{ sector.hero.image_position or "center" }}{% endif %}">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="valueprop">
+  <div class="container">
+    <div class="vp-grid about-grid-2">
+      <article class="vp-card">
+        <h3>{{ sector.challenge.title }}</h3>
+        <ul class="sol-list" style="grid-template-columns:1fr;margin-top:0">
+          {% for item in sector.challenge.items %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+      </article>
+      <article class="vp-card">
+        <h3>{{ sector.value.title }}</h3>
+        <ul class="sol-list" style="grid-template-columns:1fr;margin-top:0">
+          {% for item in sector.value.items %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+{#- Collect the matching cases first so the band can be skipped when there are
+    none. `set` inside a for loop does not reach the outer scope in Nunjucks,
+    but pushing onto an array declared outside it does, which is what the
+    odd-looking assignment is for. -#}
+{%- set matched = [] -%}
+{%- for case in usecases.cases.items -%}
+  {%- if sector.use_cases.sectors and (case.sector in sector.use_cases.sectors) -%}
+    {%- set matched = (matched.push(case), matched) -%}
+  {%- endif -%}
+{%- endfor -%}
+{% if matched.length %}
+<section class="usecases">
+  <div class="container">
+    <div class="vp-head">
+      <span class="section-label">{{ sector.use_cases.label }}</span>
+      <h2 class="section-title">{{ sector.use_cases.title }}</h2>
+    </div>
+    {% for case in matched %}
+    {% include "partials/usecase.njk" %}
+    {% endfor %}
+    <p class="section-more"><a href="{{ sector.use_cases.all_url }}">{{ sector.use_cases.all_text }}</a></p>
+  </div>
+</section>
+{% endif %}
+
+<section class="howitworks">
+  <div class="container">
+    <div class="how-head">
+      <span class="section-label">{{ sector.formats.label }}</span>
+      <h2 class="section-title">{{ sector.formats.title }}</h2>
+      <p style="color:rgba(255,255,255,.65);font-size:.98rem;line-height:1.8">{{ sector.formats.description }}</p>
+    </div>
+    {# Column count follows the number of groups: three groups fill the
+       three-column grid, two would leave a hole in it. #}
+    <div class="how-grid {% if sector.formats.items.length == 2 %}how-grid-2{% else %}how-grid-3{% endif %}">
+      {% for m in sector.formats.items %}
+      <div class="how-step">
+        <h3>{{ m.group }}</h3>
+        <p>{{ m.items }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="finalcta">
+  <div class="container">
+    <div class="finalcta-inner">
+      <h2>{{ sector.final_cta.title }}</h2>
+      <p>{{ sector.final_cta.description }}</p>
+      <div class="finalcta-actions">
+        <a href="{{ sector.final_cta.primary_url }}" class="btn btn-white" style="cursor:pointer">{{ sector.final_cta.primary_text }}</a>
+        <a href="{{ sector.final_cta.secondary_url }}" class="btn btn-ghost" style="cursor:pointer">{{ sector.final_cta.secondary_text }}</a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,57 @@
+hero:
+  label: "Industries"
+  title: "Nutraceuticals & Dietary Supplements"
+  tagline: "Protect premium ingredients from counterfeiting and substitution while verifying authenticity throughout complex global supply chains."
+  intro: "Ingredient and botanical testing can be inconclusive. Packaging can be replaced. Documentation can be copied. Natural Trace incorporates a detectable authentication tag directly into the product, allowing proof of authenticity to travel wherever your product goes."
+  image: "/assets/images/industry-nutraceuticals.webp"
+  image_alt: "An unlabelled supplement bottle surrounded by bowls of capsules, tablets and softgels"
+  image_position: ""
+  image_zoom: ""
+  primary_text: "Request a Compatibility Assessment"
+  primary_url: "/contact/"
+  secondary_text: "Assess My Product"
+  secondary_url: "/assess/"
+
+challenge:
+  title: "The Challenge"
+  items:
+    - "Ingredients can be difficult to verify after production."
+    - "Premium ingredients are increasingly targeted for substitution and misuse."
+    - "Ingredients may be substituted, diluted, adulterated, or falsely labelled."
+    - "Counterfeit, copied, diverted, or grey-market products can damage revenue, reputation, and consumer trust."
+    - "Customers and regulators expect stronger proof of authenticity."
+
+value:
+  title: "How Natural Trace Helps"
+  items:
+    - "Verify that an ingredient or finished product is genuine by detecting its embedded identity."
+    - "Confirm products are manufactured only by authorised partners."
+    - "Support investigations using objective scientific evidence."
+    - "Distinguish genuine products from unauthorised products and generate physical evidence for enforcement."
+    - "Ideal for complex botanicals."
+
+use_cases:
+  label: "Industry Use-Cases"
+  title: "In Practice"
+  sectors:
+    - "Dietary Supplements"
+  all_text: "View all Industry Use-Cases"
+  all_url: "/industries/use-cases/"
+
+formats:
+  label: "Product Formats"
+  title: "Validated Product Formats"
+  description: "Formats from the NaturalTag™ validated matrices list that apply to this sector. Every new product starts with a compatibility assessment."
+  items:
+    - group: "Dosage Formats"
+      items: "Powders, Capsules, Tablets, Sachets, Liquids, Drops"
+    - group: "Botanicals"
+      items: "Complex botanicals and proprietary botanical blends"
+
+final_cta:
+  title: "Ready to protect your products with confidence?"
+  description: "Whether you're protecting a premium ingredient, verifying manufacturing partners or investigating suspicious products, Natural Trace can help."
+  primary_text: "Request a Compatibility Assessment"
+  primary_url: "/contact/"
+  secondary_text: "View Industry Use-Cases"
+  secondary_url: "/industries/use-cases/"

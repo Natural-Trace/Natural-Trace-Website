@@ -1,0 +1,31 @@
+{#- One use case, rendered from an entry in usecases.yml. Included inside a loop
+    that has set `case`, by the Use-Cases page and by each industry page for the
+    cases that belong to its sector. Nunjucks includes see the caller's variables,
+    which is why this can be a partial rather than a macro.
+
+    Pulled out of use-cases.njk on 2 Sep 2026 when the industry pages needed the
+    same card. The alternative was a second copy of the markup, which would have
+    given the two places a chance to drift; the same reasoning that put How It
+    Works into a partial. The Use-Cases page renders byte-for-byte as it did
+    before the extraction. -#}
+    <article class="usecase">
+      <div class="usecase-media">
+        <img src="{{ case.image }}" alt="{{ case.image_alt }}" loading="lazy">
+      </div>
+      <div class="usecase-body">
+        <span class="usecase-sector">{{ case.sector }}</span>
+        <h3>{{ case.title }}</h3>
+        <div class="usecase-block">
+          <h4>{{ usecases.cases.challenge_label }}</h4>
+          <p>{{ case.challenge }}</p>
+        </div>
+        <div class="usecase-block">
+          <h4>{{ usecases.cases.solution_label }}</h4>
+          <p>{{ case.solution }}</p>
+        </div>
+        <div class="usecase-block is-outcome">
+          <h4>{{ usecases.cases.outcome_label }}</h4>
+          <p>{{ case.outcome }}</p>
+        </div>
+      </div>
+    </article>
