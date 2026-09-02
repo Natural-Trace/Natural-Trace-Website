@@ -24,11 +24,12 @@ the four open quiz decisions.
    events, and the site's own code sends none until PostHog confirms the
    setting is on. Everyone who has not tapped Accept would then go uncounted,
    silently.
-3. Copy the **Project API key** from Settings, Project. It starts with `phc_`.
-   It is a public key, published in every page. It is not the personal API
-   key, which must never go anywhere near this repository.
-4. In the CMS, Integrations, **PostHog Analytics**: paste the token, set the
-   region to `eu`, tick Enabled.
+3. The **Project API key** (starts with `phc_`) is already in
+   `src/_data/integrations.yml`, region `eu`, for the project created on
+   3 Sep 2026. It is a public key, published in every page. It is not the
+   personal API key, which must never go anywhere near this repository.
+4. In the CMS, Integrations, **PostHog Analytics**: tick Enabled. That is
+   the only switch left.
 5. **Before publishing**, add the privacy policy paragraph in section 3 below.
    The policy currently names Cloudflare as the one tool that runs without
    asking; once PostHog is on that sentence is incomplete.
@@ -65,8 +66,15 @@ Three consequences to know before reading the numbers:
   This is enforced by PostHog, not by us, and cannot be switched off.
 
 Session replay is a switch in the PostHog project settings, not in this
-repository. Leave it off unless there is a reason on record; when on, form
-inputs are masked by default, which covers the contact form.
+repository. It is **on**, with no trigger conditions, at the request of the
+Research and Operations Officer on 3 Sep 2026: mouse movement and click
+recordings were the feature wanted. It records only people who tapped
+Accept, which PostHog enforces. Form inputs are masked by default, which
+covers the contact form; request headers and bodies are not captured.
+
+Project settings as left on 3 Sep 2026: cookieless tracking on, heatmaps
+on, session replay on, web vitals on, authorised domain
+https://natural-trace.com.
 
 ## 3. Privacy policy wording
 

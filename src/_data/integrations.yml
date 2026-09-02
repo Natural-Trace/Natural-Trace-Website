@@ -128,5 +128,5 @@ cloudflare_analytics:
 # Do not switch on until the privacy policy names PostHog.
 posthog:
   enabled: false
-  token: ""
+  token: "phc_xkVrChQStQzqRyeqQBJA9KQDH4GfmagxcJo9sLAgLDpW"
   region: "eu"

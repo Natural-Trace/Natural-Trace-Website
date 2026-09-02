@@ -252,7 +252,12 @@ function filterFaq(cat) {
 
 /* ===== Compatibility Quiz ===== */
 (function() {
-  var state = { step: 0, category: null, formulations: [], temp: null, ph: null };
+  /* furthest is the highest step reached this pass, 1 to 3 and then 4 for
+     the result. It exists for the analytics below: a step counts as
+     completed the first time it is left going forwards, so Back and a
+     second Next do not show one visitor finishing step 1 twice. */
+  var state = { step: 0, furthest: 0, category: null, formulations: [], temp: null, ph: null };
+  var lastOutcome = null;
 
   var categories = [
     { id: 'vitamins', name: 'Vitamins & Minerals', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><rect x="14" y="6" width="12" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/><line x1="14" y1="20" x2="26" y2="20" stroke="currentColor" stroke-width="2"/></svg>' },
@@ -333,6 +338,48 @@ function filterFaq(cat) {
   var evidence = (model && model.evidence) || [];
 
   function el(id) { return document.getElementById(id); }
+
+  /* Analytics. Added 3 Sep 2026.
+
+     PostHog, when it is switched on in the CMS, is on the page before this
+     file runs (base.njk) and captures clicks by itself. What it cannot see is
+     what a click meant: which category, how many formats, which bands, what
+     verdict came out. These named events carry that, so the open questions
+     about the quiz can be answered from what visitors actually enter rather
+     than from the 1,088-row answer key.
+
+     Sent: the category id, the format ids, the band labels tapped, the
+     outcome key, and whether a lab evidence row decided it. Not sent: the
+     risk counts. Those are the scoring, and the reason to collect inputs and
+     outcomes is to be able to re-score them under a different band later.
+     Nothing typed is sent because nothing is typed; every answer is a tap on
+     a fixed option.
+
+     When PostHog is off, window.posthog is undefined and every call here is
+     a no-op. When it is on but array.js has not arrived yet, the stub queues
+     the call. The CTA click is followed by a page change; posthog-js flushes
+     on pagehide with sendBeacon, which is what makes that event survive. */
+  function track(name, props) {
+    try {
+      if (window.posthog && typeof window.posthog.capture === 'function') window.posthog.capture(name, props);
+    } catch (e) {}
+  }
+  function answers() {
+    return {
+      category: state.category,
+      formats: state.formulations.slice(),
+      format_count: state.formulations.length,
+      temp_band: state.temp === null ? null : tempOptions[state.temp].label,
+      ph_band: state.ph === null ? null : phOptions[state.ph].label
+    };
+  }
+  function completed(step) {
+    if (step <= state.furthest) return;
+    state.furthest = step;
+    var props = answers();
+    props.step = step;
+    track('quiz_step_completed', props);
+  }
 
   function renderCategories() {
     var grid = el('compatCategories');
@@ -421,9 +468,15 @@ function filterFaq(cat) {
     renderCategories();
     showScreen('compatStep1');
     updateProgress(1);
+    state.step = 1;
+    track('quiz_started');
   };
 
   window.compatGoStep = function(step) {
+    /* Going forward leaves the previous step complete; going back leaves
+       nothing complete. completed() ignores a step already counted. */
+    if (step > state.step) completed(step - 1);
+    state.step = step;
     if (step === 1) {
       showScreen('compatStep1');
       updateProgress(1);
@@ -540,6 +593,14 @@ function filterFaq(cat) {
     var o = outcomes[out.key];
     el('compatProgress').style.display = 'none';
 
+    completed(3);
+    state.step = 4;
+    lastOutcome = out.key;
+    var props = answers();
+    props.outcome = out.key;
+    props.evidence = out.proven || 'none';
+    track('quiz_result_shown', props);
+
     if (!o) {
       /* No model, so no verdict. Falls back to the screen that was here
          before rather than showing an empty result. */
@@ -572,6 +633,18 @@ function filterFaq(cat) {
 
   // Initialize
   renderCategories();
+
+  /* The result screen's call to action is a plain link to the contact page.
+     Which outcome it was clicked from is the number that matters: it says
+     whether "Testing required" sends people to us or sends them away. */
+  var resultCta = document.querySelector('#compatResult .compat-cta');
+  if (resultCta) {
+    resultCta.addEventListener('click', function() {
+      var props = answers();
+      props.outcome = lastOutcome;
+      track('quiz_cta_clicked', props);
+    });
+  }
 })();
 
 
