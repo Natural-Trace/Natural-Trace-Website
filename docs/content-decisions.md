@@ -12,9 +12,11 @@ comment is not data. Every comment in a file named in a collection in
 `src/admin/config.yml` is deleted the first time anyone saves that file through
 the CMS.
 
-That has already happened twice: `src/_data/site.yml` on 18 Aug 2026, 76 comment
-lines, and `src/_data/assess.yml` on 19 Aug, 114 lines including every
-`CLAIM REVIEW` marker.
+That has already happened three times: `src/_data/site.yml` on 18 Aug 2026, 76
+comment lines; `src/_data/assess.yml` on 19 Aug, 114 lines including every
+`CLAIM REVIEW` marker; and `src/_data/integrations.yml` on 3 Sep, 86 lines,
+when PostHog was switched on through the panel. That third one is recorded
+below under its own heading, rebuilt from the last commit that still had them.
 
 `src/_data/home.yml` was next and was the largest of the three, at 80 lines. It
 survived only because nobody had happened to save the Home entry yet. On
@@ -285,3 +287,105 @@ with the ordinary hyphen: they are short enough never to break there.
 
 They are named in `src/admin/config.yml`, so Decap will delete any comment the
 first time an editor saves one. This section is where the reasons live.
+
+---
+
+## src/_data/integrations.yml
+
+Rebuilt on 3 Sep 2026 from commit `5577ec4`, the last one that still carried
+the comments, after PostHog was switched on through the CMS and Decap wrote
+the file back without them. The panel is **HubSpot & Contact Form**, under
+Site & SEO Settings, and it is the only panel that touches this file.
+
+Everything in the file is compiled into the public site and readable by
+anyone. A HubSpot portal ID, a form GUID, a Cloudflare site token and a
+PostHog project key are all designed to be used from a browser and are safe
+there. A HubSpot private-app token, an API key or any access token is not,
+and must never go in this file or anywhere else in the repository. Setup
+walkthroughs: `docs/hubspot-setup.md` and `docs/posthog-setup.md`.
+
+### `hubspot` — the contact form
+
+- `enabled` is the master switch. Submissions go to HubSpot only when it is
+  true **and** `portal_id` **and** `form_guid` are both filled in; otherwise
+  the form falls back to opening the visitor's email client (see `fallback`).
+- Switched on 7 Aug 2026, after the contact page was changed to match what
+  the form on HubSpot's side actually demands: company, firstname, lastname,
+  message, email and jobtitle, all required. Job Title was added to the page
+  and Company made required, because a blank value is never sent and HubSpot
+  rejects a submission with a required field absent. `jobtitle` and
+  `inquiry_type` were confirmed accepted by posting a deliberately incomplete
+  payload: the only complaint that came back was the one field held out on
+  purpose.
+- `portal_id` is the Hub ID: HubSpot, Settings, Account Management, Account
+  Defaults, or the number after `/contacts/` in the URL when logged in.
+- `form_guid` comes from Marketing, Forms, the form, Share, Embed code, or
+  from the form's own URL.
+- `region` is the data centre the portal lives in. Natural Trace is on `na2`.
+  `na1` is the original US region and uses unsuffixed hostnames; `eu1` is the
+  other. It is visible in HubSpot's own embed code and app URLs. Getting it
+  wrong sends submissions to a region that has never heard of the form, so it
+  fails rather than misfiles anything.
+- `field_map` maps this site's field names (left, do not change) to HubSpot
+  internal property names (right). firstname, lastname, email, company and
+  message are HubSpot defaults. `inquiry_type` is not: either create a custom
+  contact property with that internal name, or leave the value empty and the
+  field is simply not sent. A wrong name raises no error, the field just
+  stops arriving.
+
+### `fallback`
+
+Used when HubSpot is off, not yet configured, or unreachable. The form opens
+the visitor's email client with the message pre-filled, so an inquiry is never
+silently lost.
+
+### `careers`
+
+The internship form on the Careers page has no CRM behind it; it opens the
+applicant's email client. The address used to be written into
+`assets/js/main.js`, which meant changing it needed a developer and nobody
+would notice it was wrong until applications stopped arriving. It lives here
+so it can be changed from the panel.
+
+### `tracking` — the HubSpot sitewide script
+
+Runs on every page once `hubspot.portal_id` is set **and** the visitor has
+accepted cookies. It sets cookies, so it must not load before consent: the
+privacy policy promises consent, and the 30 July 2026 review recorded the
+missing banner as an open defect. The `consent` banner closes that.
+
+### `consent`
+
+Setting `enabled` false removes the banner and also stops HubSpot tracking
+loading at all, because there would be no consent to rely on. Since 3 Sep
+2026 the banner also answers for PostHog: Accept switches PostHog from
+cookieless to cookied, Decline leaves it cookieless. The bar is shown when
+either HubSpot tracking or PostHog is configured.
+
+### `cloudflare_analytics`
+
+Added 26 Aug 2026, during IP Week, because the stand exposed a hole: the QR
+worker counts every scan, but once a visitor reached the site nothing recorded
+what they did next. HubSpot would, and did not, because it only loads after
+someone accepts the cookie banner and nobody standing at a booth does that.
+
+Not gated behind consent, deliberately. It sets no cookies, writes nothing to
+the device and does not fingerprint or follow anyone between sites, which is
+the entire reason it was chosen over GA4: GA4 sets cookies, so it would have
+to sit behind the same banner and would measure the same tiny minority. The
+privacy policy names it and says what is collected.
+
+The token is public: it ships in the page HTML on every request, so it is not
+a secret and belongs here rather than in a Cloudflare secret. It is not an API
+token and grants nothing. From dash.cloudflare.com, Web Analytics, Add a
+site. Until it is set nothing loads at all.
+
+### `posthog`
+
+Cookieless until the visitor taps Accept on the banner, cookied after, which
+is why it loads on every page like Cloudflare rather than behind the banner
+like HubSpot. The full reasoning, including the trap in PostHog's `on_reject`
+mode and how it is handled, is the comment above the loader in
+`src/_includes/base.njk`; setup and the privacy-policy wording are in
+`docs/posthog-setup.md`. The token is the public project key of the EU
+project. Switched on through the panel by Bryan on 3 Sep 2026.

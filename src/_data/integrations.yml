@@ -1,3 +1,7 @@
+# No comment survives in this file: it is edited through the CMS, which
+# rewrites it whole on every save. Why each value is what it is lives in
+# docs/content-decisions.md under "src/_data/integrations.yml". Setup:
+# docs/hubspot-setup.md and docs/posthog-setup.md. Everything here is public.
 hubspot:
   enabled: true
   portal_id: "23458507"

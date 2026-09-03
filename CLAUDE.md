@@ -63,9 +63,14 @@ This has happened twice:
 had survived only because nobody had happened to save the Home entry yet, and
 regrouping that panel on 20 Aug made a save far more likely rather than less.
 Those 80 lines are now in `docs/content-decisions.md` and the file carries a
-signpost instead. **The remaining data files have not been swept** — `about.yml`
-and the three solution files are the next ones worth reading before someone
-opens them in the CMS.
+signpost instead.
+
+It happened a third time on 3 Sep 2026: `src/_data/integrations.yml` lost 86
+comment lines the moment PostHog was switched on through the panel. They were
+rebuilt from the previous commit into `docs/content-decisions.md` the same day
+and the file now carries a signpost. **The remaining data files have not been
+swept** — `about.yml` and the three solution files are the next ones worth
+reading before someone opens them in the CMS.
 
 **Do not record anything durable as a YAML comment in a file listed in
 `src/admin/config.yml`.** It will be deleted, silently, by someone who was only
