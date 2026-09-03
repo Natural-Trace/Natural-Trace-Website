@@ -385,3 +385,63 @@ claims:
       A superlative and an intellectual property claim in one phrase. Needs the
       patent number and a defensible reading of first.
     owner: Alrik
+
+  # ---- Privacy policy -----------------------------------------------------
+  # Not marketing claims: factual commitments about what the site does with a
+  # visitor, each enforced by code. They are registered so that rewording one
+  # fails the build until the code and the sentence are checked against each
+  # other. Added 3 September 2026 when PostHog was named; the Cloudflare and
+  # LinkedIn sentences had been on the page since August without an entry.
+  - id: privacy-hubspot-after-accept
+    status: open
+    source: src/pages/privacy.njk
+    phrase: 'HubSpot, which we use to handle enquiries, sets its cookies only after you accept.'
+    published_on: ["/privacy/"]
+    why: >
+      Enforced in partials/consent.njk, where the HubSpot script is only
+      added to the page once Accept is tapped. Untrue the moment anyone loads
+      it unconditionally.
+    owner: Kirsty
+
+  - id: privacy-cloudflare-no-cookies
+    status: open
+    source: src/pages/privacy.njk
+    phrase: 'It does not set cookies, does not store anything on your device, and does not follow you to other websites, which is why it runs without asking for consent.'
+    published_on: ["/privacy/"]
+    why: >
+      True of Cloudflare Web Analytics specifically. It is the justification
+      for running one measuring tool outside the consent banner, so swapping
+      that tool for anything that sets a cookie makes this sentence false.
+    owner: Kirsty
+
+  - id: privacy-posthog-cookieless
+    status: open
+    source: src/pages/privacy.njk
+    phrase: 'Until you accept cookies it sets no cookie, and the only thing kept on your device is a note that you have not accepted'
+    published_on: ["/privacy/"]
+    why: >
+      Enforced by cookieless_mode on_reject in the PostHog loader in
+      base.njk and the opt-in and opt-out calls in partials/consent.njk.
+      Verified in the browser on 3 September 2026. Changing the mode or
+      removing the opt-out call makes this false.
+    owner: Kirsty
+
+  - id: privacy-posthog-eu
+    status: open
+    source: src/pages/privacy.njk
+    phrase: 'PostHog stores this data in the European Union.'
+    published_on: ["/privacy/"]
+    why: >
+      True while the region in src/_data/integrations.yml is eu. Changing it
+      to us in the CMS panel makes this false without any other sign.
+    owner: Kirsty
+
+  - id: privacy-linkedin-click-to-load
+    status: open
+    source: src/pages/privacy.njk
+    phrase: 'until you do, nothing is requested from LinkedIn and no LinkedIn cookies are set'
+    published_on: ["/privacy/"]
+    why: >
+      Enforced by the click-to-load block in main.js. Replacing the button
+      with a plain iframe makes this false.
+    owner: Kirsty

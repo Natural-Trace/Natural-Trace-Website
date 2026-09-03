@@ -39,7 +39,15 @@ permalink: /privacy/
     </ul>
 
     <h3>Cookies and Tracking Technologies</h3>
-    <p>The Site uses cookies and similar technologies to collect usage data and to enhance your browsing experience. Cookies are small data files stored on your device that help us recognise returning visitors, remember preferences, and understand how the Site is used.</p>
+    {#- The HubSpot sentence was added 3 Sep 2026. HubSpot had been the one
+        third party the policy did not name, and it is the one that sets
+        cookies and can tie a visit to a person. "Only after you accept" is
+        enforced in partials/consent.njk: the script is not on the page until
+        Accept is tapped. The decision to name vendors rather than describe
+        them as categories was taken the same day: every page names them in
+        its source and its cookies anyway, so a policy that did not would read
+        as evasive rather than discreet. -#}
+    <p>The Site uses cookies and similar technologies to collect usage data and to enhance your browsing experience. Cookies are small data files stored on your device that help us recognise returning visitors, remember preferences, and understand how the Site is used. Cookies used for analytics are set only after you accept them in the banner shown on your first visit, and everything on the Site works if you decline. HubSpot, which we use to handle enquiries, sets its cookies only after you accept.</p>
     {#- Added 26 Aug 2026 with Cloudflare Web Analytics. It is named here rather
         than left under "similar technologies" because it is the one thing on the
         site that measures visitors without asking first, and the reason it is
@@ -47,6 +55,20 @@ permalink: /privacy/
         something that sets a cookie, that tool belongs behind the consent
         banner and this paragraph stops being true. -#}
     <p>We also use Cloudflare Web Analytics to count page views and understand which pages are read. It does not set cookies, does not store anything on your device, and does not follow you to other websites, which is why it runs without asking for consent. It records the page visited, the referring site, and general information such as country and device type. It does not identify you.</p>
+    {#- Added 3 Sep 2026 with PostHog. Named for the same reason Cloudflare is.
+        Each sentence is enforced in code, which is why the wording is
+        registered in docs/claim-review.yml and rewording it fails the build:
+        "sets no cookie" until Accept is cookieless_mode on_reject in the
+        loader in base.njk; "a note that you have not accepted" is the opt-out
+        flag PostHog keeps in localStorage, the same kind of record as the
+        banner's own; "changes every day" is the daily salt on the server-side
+        hash; "may record how a page was used" is session replay, which
+        PostHog refuses to run for anyone who has not accepted, and can be
+        dropped if replay is ever switched off in the project; "anything you
+        type into a form hidden" is replay's default input masking; the EU is
+        the region the project was created in. If any of those change in the
+        code, this paragraph changes in the same commit. -#}
+    <p>We also use PostHog to understand which pages are read and what visitors click on, so we can improve the Site. Until you accept cookies it sets no cookie, and the only thing kept on your device is a note that you have not accepted; visitors are counted using an anonymised identifier that changes every day and cannot be traced back to you. If you accept cookies, PostHog sets a cookie so that return visits can be recognised and may record how a page was used, with anything you type into a form hidden. PostHog stores this data in the European Union.</p>
     <p>You may manage or disable cookies through your browser settings. Please note that disabling cookies may affect certain features or functionality of the Site. For detailed information on cookie management, consult your browser's documentation.</p>
     {#- Added 24 Aug 2026 with the LinkedIn strip on the Insights page. The
         commitment in the second sentence is enforced in code, not by habit:

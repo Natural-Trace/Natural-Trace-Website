@@ -30,9 +30,9 @@ the four open quiz decisions.
    personal API key, which must never go anywhere near this repository.
 4. In the CMS, Integrations, **PostHog Analytics**: tick Enabled. That is
    the only switch left.
-5. **Before publishing**, add the privacy policy paragraph in section 3 below.
-   The policy currently names Cloudflare as the one tool that runs without
-   asking; once PostHog is on that sentence is incomplete.
+5. The privacy policy paragraph in section 3 below is on `/privacy/` since
+   3 Sep 2026, and its sentences are in `docs/claim-review.yml`, so rewording
+   it fails the build until the code is checked against the new wording.
 6. **After publishing**, open the live site in a private window, do not touch
    the banner, click around, and confirm a pageview arrives in PostHog. This
    is the one part that could not be checked before going live: with no real
