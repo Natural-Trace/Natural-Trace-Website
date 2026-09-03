@@ -5,6 +5,8 @@ date: 2026-07-09T23:59:00.000+08:00
 pinned: true
 author: "Natural Trace Team"
 summary: "Introducing our Insights page, your source for the latest news, product updates, and industry perspectives from Natural Trace."
+image: /assets/images/home-hero-product.webp
+image_alt: A Natural Trace tagged product
 tags:
   - Company News
 ---

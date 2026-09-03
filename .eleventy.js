@@ -189,20 +189,29 @@ module.exports = function(eleventyConfig) {
   );
 
   /*
-   * Tag archives, but only for tags that have earned one.
+   * Tag archives: one page per topic.
    *
-   * A page per tag sounds free and is not. Three articles currently carry 14
-   * distinct tags, every one of them used exactly once, so a page per tag would
-   * mean 14 pages each listing a single article. Search engines treat that as
-   * thin content and it competes with the articles it is supposed to help. The
-   * old WordPress site had 90 tag URLs across 16 articles for exactly this
-   * reason, and all 90 now redirect to the Insights index.
+   * This was gated at three articles per tag, and for good reason at the time.
+   * The migrated articles carried 14 distinct per-article keywords, every one
+   * used exactly once, and a page per keyword is 14 pages of one article each,
+   * which search engines treat as thin content that competes with the article
+   * it lists. The old WordPress site had 90 tag URLs across 16 articles for
+   * exactly this reason, and all 90 redirect to the Insights index.
    *
-   * So a tag gets a page once TAG_PAGE_MIN articles share it. Below that the tag
-   * still shows on the article, it just is not a link. Raise the threshold if
-   * the archive grows and the pages still feel thin.
+   * Two things changed. The tags became a fixed list of six topics on
+   * 2 September 2026 (docs/insights-topics.md), and on 3 September the
+   * Insights index was paginated, which turned the topic select from a filter
+   * into navigation: it has to have somewhere to go for every topic, including
+   * Regulation, which has one article. So the threshold is one. Six curated
+   * topics are a different thing from fourteen keywords, and a one-article
+   * archive for a topic that will grow is not the problem a one-article
+   * keyword page was.
+   *
+   * Kept as a constant so it can be raised again if the topics ever loosen
+   * back into keywords. Below the threshold a tag still shows on the article,
+   * it just is not a link, and the select would need to leave it out.
    */
-  const TAG_PAGE_MIN = 3;
+  const TAG_PAGE_MIN = 1;
 
   eleventyConfig.addFilter("tagSlug", tag =>
     String(tag).toLowerCase().trim()

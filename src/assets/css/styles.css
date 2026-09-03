@@ -118,12 +118,12 @@ h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02
    of the window over the site header, at every scroll position, on both
    Insights pages.
 
-   That pager was removed on 1 September 2026 when Insights became one page, so
-   there is again only one <nav> on the site. Do not read that as licence to
-   put the bare element selector back. The rule was wrong before the pager
-   existed and happened not to show it; the next <nav> anyone adds, for a
-   breadcrumb or a pager that comes back at fifty articles, would land in the
-   same trap.
+   That pager was removed on 1 September 2026 when Insights became one page,
+   and came back on 3 September when it was paginated again, so there are two
+   <nav> elements on the Insights pages once more. The id scoping below is what
+   makes that safe. Do not put the bare element selector back: the rule was
+   wrong before the pager existed and happened not to show it, and any further
+   <nav>, for a breadcrumb say, would land in the same trap.
 
    Neither the layout audit nor the contrast audit saw it. Both measure text
    against text and background, and a control sitting on top of the header is
@@ -1063,7 +1063,69 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
    Numbered rather than a Load More button, so every page is a real URL that
    can be linked, bookmarked and indexed, and 2022 is one click away instead of
    eight presses.
+
+   These rules were removed on 1 September 2026 with the pager and put back
+   on 3 September when it returned; the reasoning below is from the first
+   time round and still holds. The column they align to was .insights-grid
+   then and is .insights-rows now, both capped at 800px.
 --------------------------------------------------------------------------- */
+.insights-page-of{font-size:.42em;font-weight:400;color:var(--muted);vertical-align:middle;letter-spacing:0}
+/* Contained, and off to one side.
+
+   It was a centred row on a hairline rule with no background of its own, which
+   made it read as the end of the article list rather than as a control: it
+   disappeared into the page while scrolling past. A rule is a separator, not a
+   surface, and nothing on this site says "you can press me" without one.
+
+   So it gets a surface, and in exchange it stops taking the full width and
+   sitting in the middle. Right-aligned and only as wide as its contents, which
+   is where a reader's hand and eye already are after a column of rows, and
+   quieter than the centred bar even though it is now more visible.
+
+   Deliberately not a floating rail pinned to the side of the window. That is a
+   pattern for lists that never end, it covers content at every scroll position
+   rather than at one, and it would be more intrusive than what it replaced,
+   not less. Two pages do not need a control that follows you. */
+.insights-pager{
+  display:flex;align-items:center;gap:.5rem;
+  width:fit-content;max-width:100%;
+  /* Right edge lined up with the rows, not with the container.
+     .insights-rows is capped at 800px and centred, so margin-right:0 put the
+     pager 192px past the right edge of the column it belongs to, floating in
+     the gutter and looking like it had come loose. The calc is that gutter;
+     max() collapses it to nothing once the viewport is narrower than the
+     column's cap, where there is no gutter to sit in. */
+  margin:2.75rem max(0px, calc(50% - 400px)) 0 auto;
+  padding:.4rem .6rem;
+  background:#fff;border:1px solid var(--soft-sage);border-radius:14px;
+  box-shadow:0 1px 3px rgba(0,0,0,.05);
+  font-family:'Montserrat',sans-serif;font-size:.82rem}
+.insights-pager-numbers{display:flex;align-items:center;gap:.35rem;list-style:none;margin:0;padding:0}
+.insights-pager-num{
+  display:flex;align-items:center;justify-content:center;
+  /* 36px inside a padded container, so the outer target is still comfortably
+     over the 40px anything-tappable wants. */
+  min-width:36px;height:36px;padding:0 .5rem;border-radius:9px;
+  color:var(--text);text-decoration:none;transition:background .2s,color .2s}
+a.insights-pager-num:hover{background:var(--offwhite);color:var(--dark)}
+.insights-pager-num.is-current{background:var(--sage);color:#fff;font-weight:700}
+.insights-pager-step{
+  display:inline-flex;align-items:center;gap:.4rem;min-height:36px;padding:0 .35rem;
+  color:var(--sage);text-decoration:none;font-weight:600;white-space:nowrap}
+.insights-pager-step:hover{color:var(--dark)}
+/* Kept in the layout rather than removed, so the numbers stay centred on the
+   first and last pages instead of sliding sideways as you page through. */
+.insights-pager-step.is-off{color:var(--disabled-ink);pointer-events:none}
+@media(max-width:560px){
+  /* Centred on a phone, because right-aligned in a single column reads as an
+     accident rather than as a decision, and there is no column of rows beside
+     it to align to. */
+  .insights-pager{margin-inline:auto;gap:.3rem;font-size:.8rem}
+  /* The words go and the arrows stay. Newer and Older cost more width than
+     they are worth next to numbered buttons on a 360px screen. */
+  .insights-pager-step{font-size:0;gap:0;padding:0 .25rem}
+  .insights-pager-step [aria-hidden]{font-size:1.15rem}
+}
 /* ---------------------------------------------------------------------------
    From our LinkedIn, at the foot of the first Insights page.
 

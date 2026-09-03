@@ -1,5 +1,15 @@
 # Savepoint v3 — 1 September 2026
 
+> **Superseded in part, 3 September 2026.** The pager came back two days
+> later at Bryan's request, ten rows a page with a numbered page selector,
+> and the two `/insights/page/` redirect rules named in section 2 were
+> deleted in that same commit, as this document said to do. The topic select
+> now navigates to tag archives instead of filtering, and every topic has an
+> archive (`TAG_PAGE_MIN` is 1). Section 3's "The pager, if the archive
+> grows" is therefore done; the rest of this document, the rows, the
+> summaries and the checks, still applies. Reverting `f031aca` now would
+> conflict with the pager commit rather than restore the cards cleanly.
+
 Everything needed to put the Insights section back to the state it was in
 immediately before the CNA-style rebuild.
 

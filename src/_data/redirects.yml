@@ -286,22 +286,19 @@ rules:
   - from: "/insights/2026-09-01-natural-trace-named-emerging-champion-at-the-ip-for-growth-awards/"
     to: "/insights/2026-08-27-natural-trace-named-emerging-champion-at-the-ip-for-growth-awards/"
 
-  # The paginated Insights pages, retired on 1 September 2026 when the index
-  # became one page of rows. /insights/page/2/ and /3/ were real, indexable
-  # URLs for three weeks and Google may still hold them, so they land on the
-  # index rather than 404ing. There is no deeper page to send anyone to now:
-  # everything those two pages listed is on /insights/.
-  - from: "/insights/page/2/"
-    to: "/insights/"
-  - from: "/insights/page/3/"
-    to: "/insights/"
+  # /insights/page/2/ and /3/ had redirects to the index from 1 to 3 September
+  # 2026, while the Insights list was a single page. The pager is back, so
+  # they are real pages again and the rules are gone: a redirect stub and a
+  # real page both want to write the same index.html. docs/rollback-v3.md.
 
   # The old Insights tag archives, retired on 2 September 2026 when the tags
   # became a fixed list of six topics. Both were real, indexable pages.
   # "News" was a catch-all on twelve of twenty articles and has no successor,
-  # so it lands on the index. "Press Release" does have one, so it lands on
-  # that filter already applied. docs/insights-topics.md has the full mapping.
+  # so it lands on the index. "Press Release" does have one, Company News,
+  # and since 3 September every topic has an archive page, so it lands there
+  # directly rather than on a filtered view of the index, which no longer
+  # exists. docs/insights-topics.md has the full mapping.
   - from: "/insights/tag/news/"
     to: "/insights/"
   - from: "/insights/tag/press-release/"
-    to: "/insights/?topic=Company%20News"
+    to: "/insights/tag/company-news/"

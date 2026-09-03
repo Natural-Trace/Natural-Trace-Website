@@ -4,6 +4,8 @@ title: 'Singapore-based startup Natural Trace develops the world’s first paten
 date: 2022-05-23T11:25:24+08:00
 author: 'Natural Trace'
 summary: 'Inspired by the concept of PCR testing, company develops a supply chain traceability solution to track the origin of every single ingredient in a food product.'
+image: /assets/images/naturaltag-product.webp
+image_alt: NaturalTag, the food-grade DNA tag announced in this release
 tags:
   - Science & Evidence
 

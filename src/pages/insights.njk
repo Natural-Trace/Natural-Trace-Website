@@ -2,105 +2,125 @@
 layout: base.njk
 title: "Insights"
 summary: "Articles and updates from Natural Trace on molecular traceability, supply chain authenticity, and the natural products industry."
-permalink: "/insights/"
+pagination:
+  data: collections.insightsRegular
+  size: 10
+  alias: posts
+permalink: "{% if pagination.pageNumber == 0 %}/insights/{% else %}/insights/page/{{ pagination.pageNumber + 1 }}/{% endif %}"
 ---
 {#-
-  One page, one row per article.
+  Rows, ten to a page, with a numbered pager.
 
-  Modelled on channelnewsasia.com/topic/insight, which Bryan asked for on
-  1 September 2026 after the card layout was measured at roughly 700px per
-  article. CNA's row pitch is 136px: a small picture, a category kicker, the
-  headline, a date, and no summary. That is about five times denser than the
-  cards this replaces.
+  The row is CNA's (channelnewsasia.com/topic/insight), which Bryan asked for
+  on 1 September 2026 after the card layout was measured at roughly 700px per
+  article: a small picture, a category kicker, the headline, a date, and no
+  summary. That rebuild also dropped the pager and put the whole archive on
+  one page, reasoning that twenty rows was only 2,700px of scroll.
 
-  The whole archive fits on one page at that density. Twenty articles come to
-  about 2,700px of scroll, against the 6,300px one of the three paginated
-  pages used to cost, so the pager is gone rather than resized. Every article
-  the company has published is now reachable without a click.
+  The pager is back on 3 September 2026, at Bryan's request, with a page
+  selector. One page of everything read as the articles being squeezed
+  together, and he wanted them broken into pages a reader can pick from. Ten
+  a page is about 1,500px at the row pitch, a screen and a half rather than a
+  scroll, and the archive is currently two pages. Numbered links rather than
+  "load more", so every page is a real URL that can be linked, bookmarked and
+  indexed, and 2022 is one click away.
 
-  Revisit the pager at roughly fifty articles. Nothing here is load-bearing for
-  it: restoring pagination is putting the front matter back, and the wording
-  and the numbers are in docs/rollback-v3.md.
+  What that changed around it:
 
-  What was deliberately not taken from CNA. The sort control, the content-type
-  filters, the category facet and the follow button are all answers to having
-  166 items and a daily audience. At twenty items and a reader who visits when
-  something prompts them, every one of those is furniture for a problem this
-  page does not have, and an empty filter is worse than no filter.
+  - The topic control no longer filters this page; it goes to the tag archive.
+    A show/hide filter only ever sees the rows on the page it is on, so on a
+    paginated list it would say "2 articles in Food Fraud" while the third sat
+    on page two. Every topic now has an archive (TAG_PAGE_MIN in .eleventy.js
+    is 1, and the note there says why) and the control is one partial on the
+    index and the archives both: partials/insights-topic-select.njk.
+  - The pinned introduction sits after the last regular row on the last page,
+    which is where an introduction to an archive belongs.
+  - The LinkedIn strip is on the first page only.
+  - The redirects that sent /insights/page/2/ and /3/ to the index while the
+    pager was gone are deleted: a redirect stub and a real page cannot both
+    write the same file, and docs/rollback-v3.md said to remove them in the
+    same commit as the pager.
 
-  The summary is the real cost and it is a content decision rather than a
-  layout one. A news headline sells itself; "Beyond Botanical Identity" tells a
-  supplement buyer very little on its own. The summary field is still written,
-  still required, and still doing three other jobs: the meta description, the
-  Article schema description, and the body of the LinkedIn post the Zapier flow
-  builds. It is only absent from this index.
+  The summary is still absent from the index. That is unchanged and is a
+  content decision rather than a layout one; docs/rollback-v3.md has the two
+  lines that put it back.
 -#}
 
 <section class="insights-listing">
   <div class="container">
     <div class="insights-header">
       <span class="section-label">Insights</span>
-      <h1>News &amp; Updates</h1>
+      <h1>News &amp; Updates{% if pagination.pageNumber > 0 %} <span class="insights-page-of">page {{ pagination.pageNumber + 1 }}</span>{% endif %}</h1>
       <p class="insights-subtitle">The latest from Natural Trace: product developments, industry perspectives and company news.</p>
     </div>
 
     {% set total = collections.insightsRegular.length + collections.insightsPinned.length %}
     {% if total > 0 %}
-    {#- The count is CNA's "Showing 15 of 166" without the first half, because
-        nothing is being withheld: everything is on this page, so a "showing"
-        would be answering a question nobody is left asking. It is here to say
-        how big the archive is before a reader starts scrolling it. -#}
-    {#- The filter, after CNA's category facet.
+    {%- set lastPage = not pagination.href.next %}
+    {%- set shownHere = posts.length + (collections.insightsPinned.length if lastPage else 0) %}
+    {%- set firstIndex = pagination.pageNumber * pagination.size + 1 %}
+    {%- set lastIndex = firstIndex + shownHere - 1 %}
 
-        A select, not the row of chips this started as. Eighteen chips wrapped
-        to four lines on a desktop and needed a horizontal scroller on a phone
-        to stop them being 531px tall, and that was at twenty articles. The
-        control was growing with the archive, which is the wrong way round: a
-        filter should be a fixed cost.
+    {% set currentTopic = "" %}
+    {% include "partials/insights-topic-select.njk" %}
 
-        A select is that fixed cost. One line at any number of topics, it opens
-        into the browser's own list which is scrollable and keyboard-searchable
-        for free, and on a phone it becomes the native picker rather than
-        something built to imitate one.
-
-        The counts stay, in the option text. They are the useful part: they say
-        whether a topic is worth choosing before it is chosen, and they are
-        also what makes the state of the tagging visible to whoever maintains
-        it.
-
-        It ships hidden and main.js unhides it. Without JavaScript this would
-        be a control that does nothing above a list that already shows
-        everything, which is worse than no control: the page is complete
-        without it, so the filter is the enhancement, not the content. -#}
-    <div class="insights-filter" id="insights-filter" hidden>
-      <label class="insights-filter-label" for="insights-topic">Topic</label>
-      <select class="insights-select" id="insights-topic">
-        <option value="">All topics ({{ total }})</option>
-        {% for t in collections.insightsTagCounts %}
-        <option value="{{ t.tag }}">{{ t.tag }} ({{ t.count }})</option>
-        {% endfor %}
-      </select>
-    </div>
-
-    {#- aria-live so the count is announced when a chip changes it. A sighted
-        user sees the list redraw; without this a screen reader user gets no
-        signal that pressing the button did anything at all. -#}
-    <p class="insights-count" id="insights-count" aria-live="polite">{{ total }} article{% if total != 1 %}s{% endif %}</p>
+    {#- CNA's "Showing 15 of 166", in full this time. With the archive across
+        pages the first half is a real answer: it says where this page sits in
+        the whole, which is what a reader deciding whether to press Older
+        wants to know. -#}
+    <p class="insights-count">Showing {{ firstIndex }}&ndash;{{ lastIndex }} of {{ total }} article{% if total != 1 %}s{% endif %}</p>
 
     <div class="insights-rows">
-      {% for post in collections.insightsRegular %}
+      {% for post in posts %}
         {% include "partials/insight-row.njk" %}
       {% endfor %}
 
-      {#- The evergreen introduction, last. It was appended to the final
-          paginated page for the same reason: an introduction to an archive
-          belongs at the end of it, not above this month's news. With one page
-          that placement stops being a pagination trick and becomes simply
-          where it sits. -#}
+      {#- The evergreen introduction, last on the last page. An introduction
+          to an archive belongs at the end of it, not above this month's news,
+          and on a paginated list the end is the foot of the final page. -#}
+      {% if lastPage %}
       {% for post in collections.insightsPinned %}
         {% include "partials/insight-row.njk" %}
       {% endfor %}
+      {% endif %}
     </div>
+
+    {% if pagination.pages.length > 1 %}
+    {#- Newer / Older rather than Previous / Next, because the list is in date
+        order and that is the direction a reader is actually moving in. The
+        step at either end stays in the layout as an inert span so the numbers
+        do not shift sideways between the first page and the second. -#}
+    <nav class="insights-pager" aria-label="Insights pages">
+      {% if pagination.href.previous %}
+      <a class="insights-pager-step" href="{{ pagination.href.previous }}" rel="prev">
+        <span aria-hidden="true">&larr;</span> Newer
+      </a>
+      {% else %}
+      <span class="insights-pager-step is-off"><span aria-hidden="true">&larr;</span> Newer</span>
+      {% endif %}
+
+      <ol class="insights-pager-numbers">
+        {% for entry in pagination.pages %}
+        <li>
+          {% if loop.index0 == pagination.pageNumber %}
+          <span class="insights-pager-num is-current" aria-current="page">{{ loop.index }}</span>
+          {% else %}
+          <a class="insights-pager-num" href="{{ pagination.hrefs[loop.index0] }}"
+             aria-label="Page {{ loop.index }}">{{ loop.index }}</a>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+
+      {% if pagination.href.next %}
+      <a class="insights-pager-step" href="{{ pagination.href.next }}" rel="next">
+        Older <span aria-hidden="true">&rarr;</span>
+      </a>
+      {% else %}
+      <span class="insights-pager-step is-off">Older <span aria-hidden="true">&rarr;</span></span>
+      {% endif %}
+    </nav>
+    {% endif %}
 
     {% else %}
     <div class="insights-empty">
@@ -119,12 +139,10 @@ permalink: "/insights/"
     review and a key that expires every sixty days, which is not a thing to put
     in a build that four people share.
 
-    Below the articles, not above them. The articles are the version of record
-    (docs/publishing-to-linkedin.md sets out why) and this is an aside to them.
-
-    The first-page condition this used to carry is gone with the pager. There
-    is only one page now, so there is no last page for it to land on by
-    accident.
+    Below the articles and the pager, not above them. The articles are the
+    version of record (docs/publishing-to-linkedin.md sets out why) and this is
+    an aside to them. First page only: an aside that repeated on every page
+    would stop reading as an aside.
 
     A button rather than the post itself, which is the part most likely to look
     like an oversight later. Loading the frame loads a LinkedIn page, and that
@@ -134,7 +152,7 @@ permalink: "/insights/"
     wording untrue. So the frame waits to be asked, and the asking is the
     consent. With JavaScript off, or if main.js fails to load, the link below
     the button still goes to the post. -#}
-{% if linkedin.posts and linkedin.posts.length > 0 %}
+{% if pagination.pageNumber == 0 and linkedin.posts and linkedin.posts.length > 0 %}
 <section class="linkedin-strip">
   <div class="container">
     <div class="insights-header">

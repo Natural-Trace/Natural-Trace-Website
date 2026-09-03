@@ -1,0 +1,36 @@
+{#-
+  The topic control, shared by /insights/ and the tag archives so the two
+  cannot drift. Expects `currentTopic` in scope: the tag of the archive being
+  viewed, or "" on the index.
+
+  A select, for the reasons recorded on 1 September 2026 when it replaced a
+  row of chips: one line at any number of topics, the browser's own scrollable
+  and keyboard-searchable list, the native picker on a phone, and the counts
+  in the option text so a topic says whether it is worth choosing before it is
+  chosen.
+
+  Since 3 September it navigates rather than filters. The Insights index is
+  paginated, and a show/hide filter only ever sees the rows on the page it is
+  on: it would report two Food Fraud articles while the third sat on page two.
+  Each option carries the archive it goes to in data-href, written here from
+  the same collection that generates the archives, so the two cannot disagree;
+  "All topics" goes back to the index. main.js reads data-href on change.
+
+  data-href rather than a value the script turns into a path, because the slug
+  rule lives in .eleventy.js (tagSlug) and should not be copied into
+  JavaScript. The url filter is applied so a path prefix, if the site ever
+  gets one, is honoured the same way it is on real href attributes.
+
+  It ships hidden and main.js unhides it. Without JavaScript a select that
+  goes nowhere is worse than no select, and every archive is still one click
+  away through the kicker on each row.
+-#}
+<div class="insights-filter" id="insights-filter" hidden>
+  <label class="insights-filter-label" for="insights-topic">Topic</label>
+  <select class="insights-select" id="insights-topic">
+    <option value="" data-href="{{ '/insights/' | url }}"{% if not currentTopic %} selected{% endif %}>All topics ({{ collections.insightsRegular.length + collections.insightsPinned.length }})</option>
+    {% for t in collections.insightsTagCounts %}
+    <option value="{{ t.tag }}" data-href="{{ ('/insights/tag/' + (t.tag | tagSlug) + '/') | url }}"{% if t.tag == currentTopic %} selected{% endif %}>{{ t.tag }} ({{ t.count }})</option>
+    {% endfor %}
+  </select>
+</div>

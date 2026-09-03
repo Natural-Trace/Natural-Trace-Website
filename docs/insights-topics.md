@@ -65,10 +65,12 @@ article silently drops its topic. Re-tag the articles first, then remove it.
 Changing an article's topic changes four things at once:
 
 - The kicker above its headline on `/insights/`, in gold.
-- Which option of the Topic filter shows it, and that option's count.
-- Whether it appears on a tag archive. A topic gets its own page at three
-  articles or more (`TAG_PAGE_MIN` in `.eleventy.js`), so today Company News,
-  Industry Events and Science & Evidence have one and the other three do not.
+- Which option of the Topic control lists it, and that option's count. Since
+  3 September 2026 the control navigates to the topic's archive rather than
+  filtering the index, because the index is paginated.
+- Which tag archive it appears on. Every topic has one (`TAG_PAGE_MIN` in
+  `.eleventy.js` is 1 since 3 September, the note there says why), so a
+  topic with a single article has a one-article archive rather than none.
 - The `/insights/tag/…/` address of that archive, if it is the first or last
   article to carry the topic.
 

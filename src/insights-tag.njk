@@ -33,6 +33,11 @@ eleventyComputed:
 
 <section class="insights-list">
   <div class="container">
+    {#- The same topic control as the index, with this archive selected, so a
+        reader can move between topics without going back to the index first.
+        Added 3 Sep 2026 when the control became navigation. -#}
+    {% set currentTopic = t.tag %}
+    {% include "partials/insights-topic-select.njk" %}
     <div class="insights-rows">
       {% for post in t.posts %}
         {% include "partials/insight-row.njk" %}

@@ -822,74 +822,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 /* ---------------------------------------------------------------------------
-   The topic filter above the Insights list.
+   The topic control above the Insights list and on each tag archive.
 
    The control ships hidden in the markup and is unhidden here, so a visitor
-   with no JavaScript never sees a select that does nothing. The page is
-   complete without this: every article is already on it, in date order. This
-   only narrows.
+   with no JavaScript never sees a select that does nothing. Every archive is
+   still reachable without it, through the kicker on each row.
 
-   Filtering is show/hide on rows already in the document rather than fetching
-   or rebuilding anything. Twenty rows is nothing to a browser, it keeps the
-   filtered and unfiltered states the same page with no flash and no second
-   request, and find-in-page still works across whatever is visible.
+   It navigates rather than filters, since 3 September 2026. Until then it
+   showed and hid rows on the single Insights page. The page is paginated
+   now, and a filter that can only see the rows in front of it would report
+   two Food Fraud articles while the third sat on page two. Each option
+   carries its archive in data-href, written by the template from the same
+   collection that builds the archives, so the two cannot disagree. The
+   ?topic= query string went with the filter; the redirect that used it now
+   points at the archive directly.
 
-   The chosen topic goes into the query string with replaceState, so a filtered
-   view can be linked and survives a reload. replaceState rather than
-   pushState: pressing back after trying four topics should leave Insights, not
-   walk back through four states nobody thinks of as navigation.
-
-   Matching is on data-tags, which carries every tag an article has, pipe
-   delimited and pipe padded at both ends. The padding is what stops a match on
-   "News" also matching "Company News".
+   A same-page choice is a no-op rather than a reload: picking the topic you
+   are already reading should do nothing, not flash the page.
 --------------------------------------------------------------------------- */
 document.addEventListener('DOMContentLoaded', function () {
   var filter = document.getElementById('insights-filter');
   var select = document.getElementById('insights-topic');
-  var count = document.getElementById('insights-count');
-  if (!filter || !select || !count) return;
-
-  var rows = document.querySelectorAll('.insights-rows .insight-row');
-  if (!rows.length) return;
+  if (!filter || !select) return;
 
   filter.hidden = false;
 
-  function apply(tag, push) {
-    var shown = 0;
-    for (var i = 0; i < rows.length; i++) {
-      var tags = rows[i].getAttribute('data-tags') || '';
-      var on = !tag || tags.indexOf('|' + tag + '|') !== -1;
-      rows[i].hidden = !on;
-      if (on) shown++;
-    }
-
-    count.textContent = shown + (shown === 1 ? ' article' : ' articles') +
-      (tag ? ' in ' + tag : '');
-
-    if (push && window.history && window.history.replaceState) {
-      var url = window.location.pathname + (tag ? '?topic=' + encodeURIComponent(tag) : '');
-      window.history.replaceState(null, '', url);
-    }
-  }
-
-  select.addEventListener('change', function () { apply(select.value, true); });
-
-  /* An unknown or stale ?topic= is ignored rather than obeyed. A tag that has
-     been renamed or removed would otherwise hide every row and leave the page
-     looking empty and broken, which is a worse answer than showing everything.
-
-     Checked against the select's own options rather than against a list kept
-     here, so the two cannot disagree: the options are generated from the same
-     collection that generates the rows. */
-  var wanted = '';
-  try { wanted = new URLSearchParams(window.location.search).get('topic') || ''; } catch (e) {}
-  if (wanted) {
-    var known = false;
-    for (var m = 0; m < select.options.length; m++) {
-      if (select.options[m].value === wanted) known = true;
-    }
-    if (!known) wanted = '';
-  }
-  select.value = wanted;
-  apply(wanted, false);
+  select.addEventListener('change', function () {
+    var opt = select.options[select.selectedIndex];
+    var href = opt && opt.getAttribute('data-href');
+    if (href && href !== window.location.pathname) window.location.href = href;
+  });
 });
