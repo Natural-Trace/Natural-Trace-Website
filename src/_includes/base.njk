@@ -208,6 +208,12 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
     cookieless_mode: 'on_reject',
     person_profiles: 'identified_only',
     enable_heatmaps: true,
+    /* The automatic pageview fires inside init(), while on_reject still has
+       consent as "pending", and a pending event is discarded rather than
+       held. Seen on the live site on 3 Sep 2026: a cookieless visit
+       delivered its clicks and quiz events and no pageview at all. So the
+       pageview is sent by hand below, after the consent state is set. */
+    capture_pageview: false,
     capture_pageleave: true
   });
   /* Same key the banner writes. Read here as well as there so the choice is
@@ -216,6 +222,7 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
   try { choice = localStorage.getItem('nt-consent'); } catch (e) {}
   if (choice === 'accepted') posthog.opt_in_capturing();
   else posthog.opt_out_capturing();
+  posthog.capture('$pageview');
 })();
 </script>
 {%- endif %}
