@@ -1,0 +1,47 @@
+{#-
+  The Insights pager. Rendered twice on each page since 3 Sep 2026, at
+  Bryan's request: once in the toolbar above the rows, once below them, so a
+  reader who can see from the first row that this is not the page they want
+  does not have to scroll ten rows to say so. Same markup both times, from
+  this one file, so the two cannot drift.
+
+  Expects `pagerSlot` in scope, "top" or "bottom". It picks the modifier class
+  that positions each copy and makes the aria-label tell the two apart, so a
+  screen reader's landmark list does not offer two identical "Insights
+  pages" entries with no way to know which is which.
+
+  Newer / Older rather than Previous / Next, because the list is in date
+  order and that is the direction a reader is actually moving in. The step at
+  either end stays in the layout as an inert span so the numbers do not
+  shift sideways between the first page and the second.
+-#}
+<nav class="insights-pager insights-pager--{{ pagerSlot }}" aria-label="Insights pages{% if pagerSlot == 'bottom' %}, repeated below the list{% endif %}">
+  {% if pagination.href.previous %}
+  <a class="insights-pager-step" href="{{ pagination.href.previous }}" rel="prev">
+    <span aria-hidden="true">&larr;</span> Newer
+  </a>
+  {% else %}
+  <span class="insights-pager-step is-off"><span aria-hidden="true">&larr;</span> Newer</span>
+  {% endif %}
+
+  <ol class="insights-pager-numbers">
+    {% for entry in pagination.pages %}
+    <li>
+      {% if loop.index0 == pagination.pageNumber %}
+      <span class="insights-pager-num is-current" aria-current="page">{{ loop.index }}</span>
+      {% else %}
+      <a class="insights-pager-num" href="{{ pagination.hrefs[loop.index0] }}"
+         aria-label="Page {{ loop.index }}">{{ loop.index }}</a>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+
+  {% if pagination.href.next %}
+  <a class="insights-pager-step" href="{{ pagination.href.next }}" rel="next">
+    Older <span aria-hidden="true">&rarr;</span>
+  </a>
+  {% else %}
+  <span class="insights-pager-step is-off">Older <span aria-hidden="true">&rarr;</span></span>
+  {% endif %}
+</nav>

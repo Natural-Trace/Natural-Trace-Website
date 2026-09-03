@@ -1085,7 +1085,9 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
    Deliberately not a floating rail pinned to the side of the window. That is a
    pattern for lists that never end, it covers content at every scroll position
    rather than at one, and it would be more intrusive than what it replaced,
-   not less. Two pages do not need a control that follows you. */
+   not less. Two pages do not need a control that follows you. What they did
+   need, as of 3 Sep 2026, was a second copy at the top: see .insights-toolbar
+   below. The margin here is the bottom copy's; the top copy zeroes it. */
 .insights-pager{
   display:flex;align-items:center;gap:.5rem;
   width:fit-content;max-width:100%;
@@ -1344,6 +1346,21 @@ a.insight-row-kicker:hover{color:var(--dark);text-decoration:underline}
 .insights-count{
   max-width:800px;margin:0 auto .35rem;font-size:.78rem;color:var(--muted);
   letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+/* The toolbar: the count on the left, the top copy of the pager on the right,
+   one line at the width of the rows. Since 3 Sep 2026, when the pager was
+   asked for at the top as well as the bottom. The toolbar carries the column
+   width and the bottom margin, so the count inside it drops its own, and the
+   top pager drops the gutter arithmetic and the 2.75rem it needs below the
+   list, because the toolbar already puts it in the column.
+
+   flex-wrap so that on a phone, where the count and the pager will not share
+   360px, the pager goes to its own line rather than being squeezed; the
+   existing mobile rule then centres it there. */
+.insights-toolbar{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  gap:.5rem 1rem;max-width:800px;margin:0 auto .5rem}
+.insights-toolbar .insights-count{margin:0}
+.insights-pager--top{margin:0}
 @media(max-width:600px){
   /* 104px still reads as a picture at arm's length and leaves a 200px text
      column on a 360px screen, which is where a two-line headline stops

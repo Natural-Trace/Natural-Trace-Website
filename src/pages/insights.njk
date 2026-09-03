@@ -67,8 +67,20 @@ permalink: "{% if pagination.pageNumber == 0 %}/insights/{% else %}/insights/pag
     {#- CNA's "Showing 15 of 166", in full this time. With the archive across
         pages the first half is a real answer: it says where this page sits in
         the whole, which is what a reader deciding whether to press Older
-        wants to know. -#}
-    <p class="insights-count">Showing {{ firstIndex }}&ndash;{{ lastIndex }} of {{ total }} article{% if total != 1 %}s{% endif %}</p>
+        wants to know.
+
+        The pager shares the line with it, on the right. It is here as well as
+        below the rows since 3 Sep 2026, at Bryan's request: a reader who can
+        tell from the first row that this is not the page they want should
+        not have to scroll ten rows to say so. One line, not two, because the
+        count and the pager answer the same question, "where am I in this". -#}
+    <div class="insights-toolbar">
+      <p class="insights-count">Showing {{ firstIndex }}&ndash;{{ lastIndex }} of {{ total }} article{% if total != 1 %}s{% endif %}</p>
+      {% if pagination.pages.length > 1 %}
+      {% set pagerSlot = "top" %}
+      {% include "partials/insights-pager.njk" %}
+      {% endif %}
+    </div>
 
     <div class="insights-rows">
       {% for post in posts %}
@@ -86,40 +98,9 @@ permalink: "{% if pagination.pageNumber == 0 %}/insights/{% else %}/insights/pag
     </div>
 
     {% if pagination.pages.length > 1 %}
-    {#- Newer / Older rather than Previous / Next, because the list is in date
-        order and that is the direction a reader is actually moving in. The
-        step at either end stays in the layout as an inert span so the numbers
-        do not shift sideways between the first page and the second. -#}
-    <nav class="insights-pager" aria-label="Insights pages">
-      {% if pagination.href.previous %}
-      <a class="insights-pager-step" href="{{ pagination.href.previous }}" rel="prev">
-        <span aria-hidden="true">&larr;</span> Newer
-      </a>
-      {% else %}
-      <span class="insights-pager-step is-off"><span aria-hidden="true">&larr;</span> Newer</span>
-      {% endif %}
-
-      <ol class="insights-pager-numbers">
-        {% for entry in pagination.pages %}
-        <li>
-          {% if loop.index0 == pagination.pageNumber %}
-          <span class="insights-pager-num is-current" aria-current="page">{{ loop.index }}</span>
-          {% else %}
-          <a class="insights-pager-num" href="{{ pagination.hrefs[loop.index0] }}"
-             aria-label="Page {{ loop.index }}">{{ loop.index }}</a>
-          {% endif %}
-        </li>
-        {% endfor %}
-      </ol>
-
-      {% if pagination.href.next %}
-      <a class="insights-pager-step" href="{{ pagination.href.next }}" rel="next">
-        Older <span aria-hidden="true">&rarr;</span>
-      </a>
-      {% else %}
-      <span class="insights-pager-step is-off">Older <span aria-hidden="true">&rarr;</span></span>
-      {% endif %}
-    </nav>
+    {#- The second copy. The markup and the reasons are in the partial. -#}
+    {% set pagerSlot = "bottom" %}
+    {% include "partials/insights-pager.njk" %}
     {% endif %}
 
     {% else %}
