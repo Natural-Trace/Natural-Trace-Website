@@ -1,132 +1,36 @@
-# Third-party integrations
-#
-# IMPORTANT: everything in this file is compiled into the public site and is
-# readable by anyone. Only put values here that are safe to publish.
-#
-# A HubSpot portal ID and form GUID are safe to publish. HubSpot designs them
-# to be used from a browser. A HubSpot private-app token, API key, or access
-# token is NOT. Never put one in this file or anywhere else in this repo.
-#
-# Setup instructions: docs/hubspot-setup.md
-
 hubspot:
-  # Master switch. Submissions only go to HubSpot when this is true AND both
-  # portal_id and form_guid are filled in. While it is off, the contact form
-  # falls back to opening the visitor's email client (see fallback below).
-  #
-  # Switched on 7 Aug 2026, after the contact page was changed to match what the
-  # form on HubSpot's side actually demands:
-  #   company, firstname, lastname, message, email, jobtitle   all required
-  #
-  # Job Title was added to the contact page and Company made required, because a
-  # blank value is never sent and HubSpot rejects the submission when a required
-  # field is absent. Both jobtitle and inquiry_type were confirmed to be accepted
-  # by posting a deliberately incomplete payload: the only complaint that came
-  # back was the one field held out on purpose.
   enabled: true
-
-  # HubSpot Hub ID. Find it in HubSpot under
-  # Settings -> Account Management -> Account Defaults, or in the URL after
-  # /contacts/ when logged in.
   portal_id: "23458507"
-
-  # The form's GUID. Create a form in HubSpot under Marketing -> Forms, then
-  # take the value from Share -> Embed code, or from the form's URL.
-  form_guid: "cd8bec61-cb79-4cf5-8100-553d068bb2db"
-
-  # Data centre the portal is hosted in. Natural Trace is on na2. Others are
-  # na1 (the original US region, which uses unsuffixed hostnames) and eu1.
-  # It is visible in HubSpot's own embed code and in app URLs.
-  # Getting it wrong sends submissions to a region that has never heard of the
-  # form, so it fails rather than misfiling anything.
-  region: "na2"
-
-  # Maps this site's form fields to HubSpot contact property names.
-  # Left of the colon is the field on the website. Do not change those.
-  # Right of the colon is the HubSpot internal property name.
-  #
-  # firstname/lastname/email/company/message are HubSpot defaults and work
-  # out of the box. inquiry_type is NOT a default: either create a custom
-  # contact property with that internal name, or leave the value empty ("")
-  # and that field will simply not be sent.
+  form_guid: cd8bec61-cb79-4cf5-8100-553d068bb2db
+  region: na2
   field_map:
-    firstName: "firstname"
-    lastName: "lastname"
-    email: "email"
-    company: "company"
-    jobTitle: "jobtitle"
-    inquiryType: "inquiry_type"
-    message: "message"
-
-# Used when HubSpot is switched off, not yet configured, or unreachable.
-# The form opens the visitor's email client with their message pre-filled so
-# that an inquiry is never silently lost.
+    firstName: firstname
+    lastName: lastname
+    email: email
+    company: company
+    jobTitle: jobtitle
+    inquiryType: inquiry_type
+    message: message
 fallback:
-  email: "info@natural-trace.com"
-  subject_prefix: "Website inquiry"
-
-# The internship form on the Careers page has no CRM behind it: it opens the
-# applicant's email client. The address used to be written into
-# assets/js/main.js, which meant changing it needed a developer and nobody
-# would notice it was wrong until applications stopped arriving. It lives here
-# now so it can be changed from the CMS panel.
+  email: info@natural-trace.com
+  subject_prefix: Website inquiry
 careers:
-  internship_email: "info@natural-trace.com"
-  internship_subject_prefix: "Internship Application"
-
-# Sitewide behaviour tracking
-# The HubSpot tracking script runs on every page once portal_id above is set
-# AND the visitor has accepted cookies. It sets cookies, so it must not load
-# before consent: the privacy policy promises consent, and the 30 July review
-# recorded the missing banner as an open defect. The banner below closes that.
+  internship_email: info@natural-trace.com
+  internship_subject_prefix: Internship Application
 tracking:
-  # Master switch for the sitewide script. Needs hubspot.portal_id as well.
   enabled: true
-
-consent:
-  # Set false to remove the banner. Doing so also stops tracking loading at all,
-  # because there would be no consent to rely on.
-  enabled: true
-  message: "We use cookies to understand how visitors use this site. You can decline and everything will still work."
-  accept_label: "Accept"
-  decline_label: "Decline"
-  policy_label: "Privacy Policy"
-  policy_url: "/privacy/"
-
-# Cloudflare Web Analytics
-#
-# Added 26 Aug 2026, during IP Week, because the stand exposed a hole: the QR
-# worker counts every scan, but once a visitor reaches the site nothing records
-# what they do next. HubSpot would, and does not, because it only loads after
-# someone accepts the cookie banner and nobody standing at a booth does that.
-#
-# This one is not gated behind consent, deliberately. It sets no cookies, writes
-# nothing to the device and does not fingerprint or follow anyone between sites,
-# which is the entire reason it was chosen over GA4: GA4 sets cookies, so it
-# would have to sit behind the same banner and would measure the same tiny
-# minority. The privacy policy says what is collected.
-#
-# The token is public. It ships in the page HTML on every request, so it is not
-# a secret and belongs here rather than in a Cloudflare secret. It is NOT an API
-# token and grants nothing.
-#
-# Get it from dash.cloudflare.com, Web Analytics, Add a site. Until it is set
-# nothing loads at all.
 cloudflare_analytics:
   enabled: true
-  token: "52b365746a03473d90b434df96d01af0"
-
-# PostHog product analytics
-#
-# Cookieless until the visitor taps Accept on the banner, cookied after. That is
-# why it loads on every page like Cloudflare rather than behind the banner like
-# HubSpot. The reasoning is written above the loader in src/_includes/base.njk
-# and setup is in docs/posthog-setup.md, deliberately not here: this file is
-# editable in the CMS and a save deletes every comment in it.
-#
-# The token is the public project key and ships in every page. Not an API key.
-# Do not switch on until the privacy policy names PostHog.
+  token: 52b365746a03473d90b434df96d01af0
 posthog:
-  enabled: false
-  token: "phc_xkVrChQStQzqRyeqQBJA9KQDH4GfmagxcJo9sLAgLDpW"
-  region: "eu"
+  enabled: true
+  token: phc_xkVrChQStQzqRyeqQBJA9KQDH4GfmagxcJo9sLAgLDpW
+  region: eu
+consent:
+  enabled: true
+  message: We use cookies to understand how visitors use this site. You can
+    decline and everything will still work.
+  accept_label: Accept
+  decline_label: Decline
+  policy_label: Privacy Policy
+  policy_url: /privacy/
