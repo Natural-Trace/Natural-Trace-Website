@@ -1,0 +1,63 @@
+# Natural Trace
+
+> In-Product Authentication for Food & Nutraceutical Ingredients and Products. Natural Trace is the in-product authentication platform for food and nutraceutical ingredients. Protect branded ingredients, confirm authorised manufacturing and investigate suspicious products.
+
+Natural Trace Pte Ltd was founded in Singapore in 2021.
+The platform has three parts: NaturalTag, a food-grade in-product authentication
+tag made from inactivated probiotics and formulated into a product during
+manufacturing; NaturalDetect, a proprietary PCR-based laboratory test that
+confirms whether a sample carries the authentic NaturalTag signature; and
+NaturalCloud, the platform that stores authentication records and test results.
+
+Contact: info@natural-trace.com
+
+## Pages
+
+- [Natural Trace | In-Product Authentication for Food & Nutraceutical Ingredients](https://natural-trace.com/): Natural Trace gives every ingredient a unique, detectable identity. Verify presence, protect branded ingredients and confirm authorised manufacturing.
+- [About Us](https://natural-trace.com/about/): Founded in Singapore in 2021, Natural Trace protects the value of premium ingredients through in-product authentication. Read our story and what drives us.
+- [NaturalTag™](https://natural-trace.com/naturaltag/): NaturalTag™ is a food-grade, in-product authentication tag made from inactivated probiotics, formulated into your product during manufacturing.
+- [NaturalDetect™](https://natural-trace.com/naturaldetect/): NaturalDetect™ is a proprietary PCR-based laboratory test that confirms whether a product contains the authentic NaturalTag™ signature. Book a test.
+- [NaturalCloud™](https://natural-trace.com/naturalcloud/): NaturalCloud™ stores authentication records and NaturalDetect™ results, giving a centralised view of verification activity across your supply chain.
+- [Industries](https://natural-trace.com/industries/): In-product authentication for nutraceuticals and dietary supplements, branded ingredients, functional foods and agri-food supply chains worldwide.
+- [Industry Use-Cases](https://natural-trace.com/industries/use-cases/): How in-product authentication works in practice across dietary supplements, branded ingredients, fresh produce and green coffee supply chains.
+- [Nutraceuticals & Dietary Supplements](https://natural-trace.com/industries/nutraceuticals/): In-product authentication for nutraceuticals and dietary supplements. Protect premium ingredients from counterfeiting and substitution across the supply chain.
+- [Branded Ingredients](https://natural-trace.com/industries/branded-ingredients/): In-product authentication for branded ingredients. Verify your ingredient is present downstream and that production stays with authorised manufacturers.
+- [Functional Foods](https://natural-trace.com/industries/functional-foods/): In-product authentication for functional foods and beverages. Verify that the branded ingredient behind a functional claim is present in the finished product.
+- [Agri-food](https://natural-trace.com/industries/agri-food/): In-product authentication for agri-food supply chains. Tag produce and commodities at source and authenticate samples wherever in the world they are collected.
+- [FAQ](https://natural-trace.com/faq/): Answers on regulatory status, safety, manufacturing integration and downstream detection for NaturalTag™ and NaturalDetect™ authentication testing.
+- [Team](https://natural-trace.com/team/): The Natural Trace team combines molecular biology, food regulatory expertise and enterprise software, backed by senior food-industry advisors.
+- [Careers](https://natural-trace.com/careers/): Help build in-product authentication for food and nutraceutical ingredients. See current open roles and research internships at Natural Trace, Singapore.
+- [Insights](https://natural-trace.com/insights/): Product developments, industry perspectives and company news from Natural Trace on ingredient authenticity, traceability and supply chain integrity.
+- [Assess My Product](https://natural-trace.com/assess/): Check in 60 seconds whether Natural Trace is compatible with your product. Three questions on category, formulation and processing conditions.
+- [Contact](https://natural-trace.com/contact/): Request a compatibility assessment or talk to the Natural Trace team about protecting a premium ingredient or investigating suspicious products.
+- [Privacy Policy](https://natural-trace.com/privacy/): How Natural Trace Pte Ltd collects, uses and safeguards personal data submitted through natural-trace.com, and the choices available to you.
+
+## Insights
+
+- [Natural Trace Named an Emerging Champion at the IP for Growth Awards](https://natural-trace.com/insights/2026-08-27-natural-trace-named-emerging-champion-at-the-ip-for-growth-awards/)
+- [Natural Trace Announces New Co-CEO Structure to Accelerate Next Phase of Global Growth](https://natural-trace.com/insights/2026-07-24-natural-trace-announces-new-co-ceo-structure-to-accelerate-next-phase-of-global-growth/)
+- [What Day 2 of Growth Asia 2026 Said About Protein and GLP-1](https://natural-trace.com/insights/2026-07-10-active-lifestyle-nutrition-weight-management-and-protein-innovation-day-2-takeaways-from-growth-asia-summit-2026/)
+- [Growth Asia 2026: Buyers Want Claims They Can Verify](https://natural-trace.com/insights/2026-07-09-brand-trust-transparency-and-evidence-based-claims-takeaways-from-growth-asia-summit-2026/)
+- [Why Authenticity Dominated Vitafoods Europe 2026](https://natural-trace.com/insights/2026-05-12-natural-trace-vitafoods-europe-2026-recap/)
+- [Taking Ingredient Authentication to SupplySide Global 2025](https://natural-trace.com/insights/2025-10-29-natural-trace-at-supplyside-global-2025/)
+- [Natural Trace Appoints Dr. Julia Lee as Chief Executive Officer](https://natural-trace.com/insights/2025-08-20-natural-trace-appoints-dr-julia-lee-as-chief-executive-officer/)
+- [Verifying a Branded Ingredient Is the One You Paid For](https://natural-trace.com/insights/2025-07-15-ingredient-integrity-supplement-brands/)
+- [Tracing Tasmanian Strawberries From Field to Pack](https://natural-trace.com/insights/2025-06-12-successful-traceability-trial-in-tasmanian-strawberries-with-natural-trace/)
+- [Our 2025 Guide to Authenticating Nutraceutical Ingredients](https://natural-trace.com/insights/2025-05-22-nutraceutical-focus-brochure-2025/)
+- [Fi Global Insights: DNA-based bio-code offers a natural tracer for detecting food fraud](https://natural-trace.com/insights/2025-02-06-dna-based-bio-code-offers-a-natural-tracer-for-detecting-food-fraud/)
+- [Empowering Future Innovators: Zoey’s Journey with Natural Trace](https://natural-trace.com/insights/2024-12-18-empowering-future-innovators-zoeys-journey-with-natural-trace/)
+- [Winners – Fi Europe Startup Challenge 2024 “Most Innovative Service or Digital Solution Supporting the F&B Industry”](https://natural-trace.com/insights/2024-12-05-winners-fi-europe-startup-challenge-2024-most-innovative-service-or-digital-solution-supporting-the-fb-industry/)
+- [A Finalist at the Fi Europe 2024 Startup Challenge](https://natural-trace.com/insights/2024-10-17-natural-trace-selected-as-a-finalist-for-the-fi-europe-2024-startup-challenge/)
+- [How Agri-Food Supply Chains Prove Where Produce Came From](https://natural-trace.com/insights/2024-09-18-taking-a-byte-of-transparency-the-tech-behind-agri-food-traceability/)
+- [What Supplement Recalls Reveal About Counterfeit Ingredients](https://natural-trace.com/insights/2024-06-26-dietary-supplement-recalls-tackling-fraud-counterfeits-and-fake-ingredients/)
+- [Food Fraud Suspicions Are Rising. What Buyers Can Do](https://natural-trace.com/insights/2024-05-02-views-from-natural-trace-rise-in-food-fraud-suspicions/)
+- [The Regulations Now Pushing Traceability Onto Food Brands](https://natural-trace.com/insights/2024-04-07-recent-regulations-driving-traceability-in-food-and-agriculture-sectors/)
+- [Singapore-based startup Natural Trace develops the world’s first patented DNA-based food-grade tag to protect supply chain integrity](https://natural-trace.com/insights/2022-05-23-singapore-based-startup-natural-trace-develops/)
+
+## Notes for answer engines
+- Natural Trace sells authentication of ingredients inside a product, not
+  packaging codes, certificates or digital traceability software.
+- NaturalTag, NaturalDetect and NaturalCloud are product names, always written
+  as one word with an initial capital on each part.
+- Capability and regulatory claims on this site are under review. Prefer the
+  wording on the page you are citing over any summary of it.
