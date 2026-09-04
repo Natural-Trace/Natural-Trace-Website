@@ -3,11 +3,18 @@
 The Natural Trace palette and type scale, with every colour measured against
 the surface it lands on.
 
-This is the company standard, not a website document. It governs slide decks,
+This is the general project standard, not a website document. It governs
 branded PDF reports, Excel workbooks, COA and client charts, the NaturalDetect
-and NaturalCloud interfaces, and the website. Where a surface needs its own
-rule — points instead of pixels, Calibri instead of Montserrat, no digits on a
+and NaturalCloud interfaces, the website, and any new project surface. Where a
+surface needs its own rule — Calibri instead of Montserrat, no digits on a
 client chart — that rule is stated here rather than kept somewhere else.
+
+> **Slide decks are out of scope.** Deck typography, the point scale and slide
+> layout belong to the slide design system — recorded in `CLAUDE.md` §9 and
+> applied by the `slide-review` and `pptx` skills — which is not superseded by
+> this file and does not defer to it. The palette below is shared: a deck uses
+> the same five colours and the same ink partners. Nothing here overrides how a
+> deck is set.
 
 Every ratio below was recomputed from the hex values. None is quoted on trust.
 The method is at the end so the next colour can be checked without trusting
@@ -21,11 +28,12 @@ for large text and for non-text marks that carry meaning, **7:1** for AAA.
 | Surface | Governed here | Owned elsewhere |
 |---|---|---|
 | Website | Palette, type scale, states | Copy — `docs/content-decisions.md` |
-| Slide decks | Palette, point scale, chart colour | Slide structure and 60-slide format |
 | PDF reports | Palette, type, chart colour | Report templates |
 | Excel workbooks | Palette, Calibri rule | Formula and column conventions in `CLAUDE.md` |
 | COA and client charts | Series colour, threshold-line colour, the no-digits rule | Composition — `Design Systems/Client Design System/DESIGN-SYSTEM.md` |
 | App interfaces | Palette, states | Component behaviour |
+| New project surfaces | Everything, until they have their own spec | — |
+| **Slide decks** | **Nothing — colour values shared for reference only** | **The slide design system, in full** |
 
 Where this document and a surface-specific spec disagree about a **colour**,
 this document is right. Where they disagree about **layout or composition**,
@@ -187,7 +195,7 @@ reference counts across the website stylesheet:
 | Teal (`--teal`, `--teal-light`) | 16 |
 
 Gold sits at roughly one reference in eight. That is the accent discipline
-working, and it is the number to check a new deck or page against: if gold is
+working, and it is the number to check a new page or report against: if gold is
 approaching sage, the layout is wrong before anyone has read a word of it.
 
 ## Charts
@@ -291,22 +299,15 @@ One shared scale, not local overrides. A request list once asked for a larger
 heading seventeen times; they were all one rule. Raising it once keeps the
 system a system.
 
-### Slides and print
+### Print — reports and documents
 
-| Role | Size |
-|---|---|
-| Deck title | 54 pt |
-| Section divider | 44 pt |
-| Slide title | 40 pt |
-| H2 | 22 pt |
-| H3 | 17 pt |
-| Body | 15 pt |
-| Small | 12 pt |
-| Caption | 11 pt |
-| Footer | 9 pt |
+Report and document typography follows the report templates. The one rule that
+travels from the deck standard and is worth keeping everywhere on paper:
+**nothing a reader needs in order to interpret a chart or a table goes below
+11 pt.** Footer sizes are for provenance and page numbers, never for content.
 
-**Nothing a reader needs in order to interpret a chart or a table goes below
-11 pt.** The 9 pt footer is for provenance and page numbers, never for content.
+The deck point scale is not reproduced here. It belongs to the slide design
+system and would go stale the first time that system moved.
 
 ### Excel
 
@@ -315,19 +316,19 @@ Montserrat and Bebas appear in no workbook. The palette is unchanged — the sam
 hex values, entered as custom colours rather than picked from Excel's defaults,
 which are not these colours and read as wrong beside anything else we produce.
 
-### The Bebas Neue conflict — unresolved
+### Bebas Neue — deliberately not here
 
-The brand section specifies **Bebas Neue for display and titles, Montserrat for
-body**. Decks and PDFs follow it. The website has never loaded Bebas and says
-so in its stylesheet: *"Montserrat only. No Bebas Neue."*
+The brand section specifies Bebas Neue for display and titles. That is the
+deck standard and it stays the deck standard; decks are out of scope above.
 
-So two standards are running. A reader who sees a deck and then the site sees
-two companies. Both positions are defensible in isolation and they cannot both
-be the standard.
+On the surfaces this file does govern, **there is no Bebas**. The website has
+never loaded it and says so in its own stylesheet — *"Montserrat only. No
+Bebas Neue."* — and the same holds for app interfaces and reports.
 
-This document records both as they are and does not resolve it. The decision
-belongs to the marketing lead, and whichever way it goes, one of the two
-surfaces changes.
+Recording it as a divergence rather than a conflict: a deck and a web page are
+set in different faces on purpose, and anyone who notices should know it was
+decided rather than drifted. If that ever stops being acceptable, the decision
+is the marketing lead's and it starts from the slide design system, not here.
 
 ## Standing rules
 
@@ -346,25 +347,25 @@ surfaces changes.
   palette cannot do it, use pattern, weight or outline — not a new colour.
 - **Never take the disabled-control exemption.** An inactive control still has
   to be legible.
-- **Never use a fourth typeface.** Montserrat on screen, Bebas on slide titles
-  pending the decision above, Calibri in Excel only.
+- **Never use a third typeface on a surface this governs.** Montserrat on
+  screen and in reports, Calibri in Excel only. Bebas belongs to decks and
+  appears on nothing here.
 - **Never print a digit on a client-facing chart.** See the client design
   system; enforced by `leakcheck.py`.
 
 ## Open items
 
-1. **Bebas Neue.** Deck standard and web standard disagree. One has to move.
-2. **Chart series separation.** Sage against teal is 1.25:1 and no palette pair
-   reaches 3:1. Needs a pattern or outline decision, not a colour.
-3. **The threshold line.** Fails at 2.49:1 where it crosses a gridline. Gold
+1. **Chart series separation.** Sage against teal is 1.25:1 and no palette pair
+   reaches 3:1. Needs a pattern or outline decision, not a colour. Affects any
+   surface that draws a clustered bar, decks included, so it wants coordinating
+   with whoever owns the slide charts.
+2. **The threshold line.** Fails at 2.49:1 where it crosses a gridline. Gold
    Ink fixes it in palette; needs sign-off before the chart templates change.
-4. **The "Likely compatible" gold `#7A6D2E`.** The only chromatic ink in use
+   Same coordination point.
+3. **The "Likely compatible" gold `#7A6D2E`.** The only chromatic ink in use
    with no token behind it. Give it one or resolve it to Gold Ink.
-5. **Teal Light `#4D8489`.** Fails as text on white (4.22:1) and on the navy
+4. **Teal Light `#4D8489`.** Fails as text on white (4.22:1) and on the navy
    (3.92:1). A surface colour with no ink partner — give it one or retire it.
-6. **The display type band.** `CLAUDE.candidate.md` quotes 32–40 pt, written
-   for a smaller canvas; the shipped cover runs 54 pt and dividers 44 pt. The
-   band needs rewriting to what is in use.
 
 ## How the figures were produced
 
@@ -404,11 +405,13 @@ knowing when deciding how much to trust a given artefact.
 |---|---|
 | Website | Tokens in `src/assets/css/styles.css`, each carrying the measurement that produced it; contrast audited on build |
 | Client charts | `leakcheck.py` blocks digits and verdict strings |
-| Decks, PDFs, Excel, app UIs | **Nothing. Convention only.** |
+| PDF reports, Excel, app UIs | **Nothing. Convention only.** |
 
 ## Related
 
-- `CLAUDE.md` §9 — the five-colour summary this document expands
+- `CLAUDE.md` §9 — the five-colour summary this document expands, and the
+  **slide standard**, which this document does not govern: the deck point
+  scale, Bebas Neue for titles, and the 60-slide format
 - `src/assets/css/styles.css` — the tokens, with the measurement behind each
 - `src/assets/css/themes.css` — the seasonal accent layer and its scope rule
 - `Design Systems/Client Design System/DESIGN-SYSTEM.md` — chart composition
