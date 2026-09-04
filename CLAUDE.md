@@ -291,3 +291,13 @@ matter for the quiz work:
   Read it before changing hero or challenge copy; it carries the one constraint
   that spans two fields ("counterfeit" appears in the hero claims and in the
   fourth value card, and the two have to move together)
+- `brand-standard.md` (in `docs/`) — the **company-wide** colour and type
+  standard, not a website document: it governs decks, PDF reports, Excel,
+  charts and the app interfaces as well. It lives here because this is the one
+  surface where the palette is enforced in code rather than by convention, and
+  the tokens in `styles.css` are where its figures were verified. Read it
+  before adding a colour anywhere. Two things it settles that are easy to get
+  wrong: a brand colour and a text colour are not the same object (which is why
+  `--sage-ink` and `--gold-ink` exist), and gold is directional — `--gold-light`
+  is text on dark only, `--gold-ink` on light only, and swapping them passes a
+  screenshot audit
