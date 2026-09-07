@@ -12,7 +12,7 @@
  * rather than when someone happens to click it.
  */
 import { readdir, readFile, stat } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join, relative, dirname } from 'node:path';
 
 const ROOT = process.argv[2] || '_site';
@@ -68,6 +68,42 @@ function decodePath(p) {
   try { return decodeURIComponent(p); } catch { return p; }
 }
 
+/* The site's own origin, read out of the homepage canonical rather than out of
+   src/_data/site.yml, because this script has no dependencies and so cannot
+   parse YAML. Taking it from the build has a second benefit: it follows
+   site.url on its own if the domain ever moves again, which is precisely the
+   event that created the fault below.
+
+   Why this exists. Until 7 Sep 2026 a URL went on the external list on the
+   strength of its scheme alone, whatever the host. But a link written as
+   https://natural-trace.com/... is one of our own pages wearing a different
+   coat: it was never resolved on disk, AND it was skipped by default, because
+   the external pass only runs under --external. Two PDFs carried over from
+   WordPress pointed at https://natural-trace.com/wp-content/uploads/... and
+   404'd on the live site for three weeks with every check green. Written
+   relative, they would have been caught on the first run after the migration.
+
+   Null if the canonical cannot be read, in which case the old scheme-only
+   behaviour applies and nothing is worse than it was. */
+const OWN_ORIGIN = (() => {
+  try {
+    const home = readFileSync(join(ROOT, 'index.html'), 'utf8');
+    const m = home.match(/<link rel="canonical" href="(https?:\/\/[^/"]+)/);
+    return m ? m[1] : null;
+  } catch { return null; }
+})();
+
+/* Absolute URL on our own origin -> the site-relative path it really is.
+   Null for anything genuinely outbound, so the caller's external branch is
+   unchanged. Canonicals and og:url resolve through here too; that is harmless,
+   because they name the page they sit on, which exists by definition. */
+function ownPath(raw) {
+  if (!OWN_ORIGIN) return null;
+  const url = raw.startsWith('//') ? `https:${raw}` : raw;
+  if (url === OWN_ORIGIN) return '/';
+  return url.startsWith(`${OWN_ORIGIN}/`) ? url.slice(OWN_ORIGIN.length) : null;
+}
+
 const externals = new Set();
 /* Collected while walking the pages, resolved once every page has been read. */
 const fragmentLinks = [];
@@ -78,10 +114,18 @@ for (const f of pages) {
   for (const m of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
     const raw = m[1];
     if (/^(mailto:|tel:|javascript:|#|data:)/.test(raw)) continue;
-    if (/^https?:\/\//.test(raw) || raw.startsWith('//')) { externals.add(raw.replace(/^\/\//, 'https://')); continue; }
     // The site's own origin appears in canonicals and Open Graph tags. It is
-    // not an outbound link and pinging it from CI tells us nothing.
-    const clean = decodePath(raw.split(/[?#]/)[0]);
+    // not an outbound link and pinging it from CI tells us nothing, so it is
+    // folded back to a path and resolved on disk like any internal link.
+    // raw is kept for the error message: report what is in the HTML, not the
+    // rewritten form, or the reader cannot find the line to fix.
+    let target = raw;
+    if (/^https?:\/\//.test(raw) || raw.startsWith('//')) {
+      const own = ownPath(raw);
+      if (own === null) { externals.add(raw.replace(/^\/\//, 'https://')); continue; }
+      target = own;
+    }
+    const clean = decodePath(target.split(/[?#]/)[0]);
     if (!clean) continue;
     const abs = clean.startsWith('/') ? join(ROOT, clean) : join(dirname(f), clean);
     const ok = existsSync(abs) || existsSync(join(abs, 'index.html')) || existsSync(`${abs}.html`);
@@ -94,7 +138,7 @@ for (const f of pages) {
        resolved, the page loaded, and the reader landed at the top of a page
        that no longer contained what they clicked for. Nothing complained,
        because the file was still there. The nav alone carries seven of these. */
-    const frag = raw.split('#')[1];
+    const frag = target.split('#')[1];
     if (frag) fragmentLinks.push({ page, raw, frag: decodePath(frag), abs });
   }
 
@@ -113,8 +157,13 @@ for (const f of pages) {
   for (const m of html.matchAll(/--[\w-]+\s*:\s*url\((['"]?)([^'")]+)\1\)/g)) {
     const raw = m[2].trim();
     if (/^(data:|#)/.test(raw)) continue;
-    if (/^https?:\/\//.test(raw) || raw.startsWith('//')) { externals.add(raw.replace(/^\/\//, 'https://')); continue; }
-    const clean = decodePath(raw.split(/[?#]/)[0]);
+    let target = raw;
+    if (/^https?:\/\//.test(raw) || raw.startsWith('//')) {
+      const own = ownPath(raw);
+      if (own === null) { externals.add(raw.replace(/^\/\//, 'https://')); continue; }
+      target = own;
+    }
+    const clean = decodePath(target.split(/[?#]/)[0]);
     if (!clean) continue;
     const abs = clean.startsWith('/') ? join(ROOT, clean) : join(dirname(f), clean);
     if (!existsSync(abs)) note(`broken CSS background on ${page}: ${raw}`);
