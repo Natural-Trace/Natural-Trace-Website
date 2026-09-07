@@ -44,6 +44,6 @@ Tel:<a style="color: #5e644a;" href="tel:+6591711042" target="_blank" rel="noope
 <p><strong>About Natural Trace</strong></p>
 <p>Natural Trace was founded by Dr Chantal Roth and Prof Lukas Muller in 2022. The company developed NaturalTag, the world’s first food-safe in-product tag solution, using DNA genetic sequencing technology to assure traceability and transparency at every step of the supply chain. NaturalTag works with the in-house cloud-based database for consumers to quickly access information on the ingredients’ origins.</p>
 <p>For more information, please visit: <a style="color: #5e644a;" href="https://natural-trace.com" target="_blank" rel="noopener">natural-trace.com</a></p>
-<p><a href="https://natural-trace.com/wp-content/uploads/2022/05/Natural-Trace-launch-press-release_Final.pdf" target="_blank" rel="noopener"><br />
+<p><a href="/assets/docs/natural-trace-launch-press-release-2022.pdf" target="_blank" rel="noopener"><br />
 <strong>Download</strong></a></p>
 {% endraw %}

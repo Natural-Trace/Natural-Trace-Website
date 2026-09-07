@@ -279,6 +279,33 @@ module.exports = function(eleventyConfig) {
     // and forgets the domain on any deploy that lacks it, so it has to be in
     // the build output, not just in the repository settings.
     eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
+
+    /* Legacy WordPress asset paths, republished at the URL they had before the
+       migration so that inbound links from press coverage, LinkedIn posts and
+       old email still resolve.
+
+       These cannot go in src/_data/redirects.yml, for two separate reasons and
+       either one is fatal. First, redirect.njk builds its permalink as
+       `{{ rule.from }}index.html`, which assumes `from` names a directory: a
+       rule ending .pdf would be written to ...Final.pdfindex.html. Second,
+       even with the permalink fixed, a redirect rule ships an HTML page, and
+       GitHub Pages sets the content type from the extension. The browser would
+       be handed markup labelled application/pdf and show nothing useful.
+       Serving the real bytes at both paths is the only mechanism that works
+       without a server, which we do not have.
+
+       Cost is a duplicate copy of each file in the build. At 168 KB that is
+       not worth a cleverer scheme.
+
+       The 2025 Nutraceutical Focus Brochure belongs here too. It is missing
+       because the only archived copy is truncated and unreadable; marketing
+       are sending the original. Add the file to src/assets/docs/, add its line
+       below, and repoint the href in
+       src/insights/2025-05-22-nutraceutical-focus-brochure-2025.md. */
+    eleventyConfig.addPassthroughCopy({
+      "src/assets/docs/natural-trace-launch-press-release-2022.pdf":
+        "wp-content/uploads/2022/05/Natural-Trace-launch-press-release_Final.pdf",
+    });
   }
   eleventyConfig.addWatchTarget("src/assets/");
 
