@@ -4,6 +4,24 @@ pagination:
   data: collections.tagPages
   size: 1
   alias: t
+  # Eleventy adds only the FIRST page of a paginated template to collections.
+  # This template is paginated one topic per page, so without this flag exactly
+  # one of the six topic archives existed as far as collections.all was
+  # concerned, and src/sitemap.njk iterates collections.all. The sitemap listed
+  # /insights/tag/company-news/ and silently omitted the other five: valid XML,
+  # a clean build, no warning anywhere, and five real indexable pages missing
+  # from the file whose entire job is to list them.
+  #
+  # Found on 7 September 2026 while reading a Search Console export. Nothing
+  # reported it because nothing could: an incomplete sitemap is not an error,
+  # it is a shorter file.
+  #
+  # collections.all has exactly one consumer, sitemap.njk, so widening it here
+  # affects the sitemap and nothing else. The Insights pager is deliberately
+  # left alone: /insights/ is in the sitemap and /insights/page/2/ is not,
+  # which is the normal treatment for a paginated series whose articles are
+  # each listed in their own right.
+  addAllPagesToCollections: true
 permalink: "/insights/tag/{{ t.slug }}/"
 eleventyComputed:
   # | safe on all three, and it is not optional once a topic contains an
