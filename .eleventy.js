@@ -352,6 +352,12 @@ module.exports = function(eleventyConfig) {
          again is a copy decision and has not been made here. */
       "src/assets/docs/recent-regulations-traceability-2024.pdf":
         "wp-content/uploads/2024/04/Recent-Regulations-Driving-Traceability-in-Food-and-Agriculture-Sectors-.pdf",
+      /* Supplied by marketing on 7 Sep 2026, which is the only way it could
+         have been: the sole Internet Archive capture is truncated at exactly
+         5 MiB and will not open, and the real file is 6,086,709 bytes. The
+         crawler cap is the whole reason that copy was unusable. */
+      "src/assets/docs/nutraceutical-focus-brochure-2025.pdf":
+        "wp-content/uploads/2025/05/Natural-Trace-Nutraceutical-Focus-Brochure-2025.pdf",
     });
   }
   eleventyConfig.addWatchTarget("src/assets/");

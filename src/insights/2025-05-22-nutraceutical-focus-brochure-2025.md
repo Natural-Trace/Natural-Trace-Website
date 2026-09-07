@@ -42,5 +42,5 @@ tags:
 </ul>
 <p data-start="823" data-end="969">Whether you&#8217;re a manufacturer, brand owner, or contract partner, Natural Trace offers the tools to protect your products and build trust throughout your supply chain.</p>
 <p data-start="823" data-end="969">Access the full brochure here:</p>
-<p data-start="823" data-end="969"><a href="https://natural-trace.com/wp-content/uploads/2025/05/Natural-Trace-Nutraceutical-Focus-Brochure-2025.pdf"><img decoding="async" class="alignnone size-medium wp-image-7780" src="/assets/images/insights/nutraceutical-focus-brochure-2025-1.jpg" alt="" width="212" height="300" /></a></p>
+<p data-start="823" data-end="969"><a href="/assets/docs/nutraceutical-focus-brochure-2025.pdf"><img decoding="async" class="alignnone size-medium wp-image-7780" src="/assets/images/insights/nutraceutical-focus-brochure-2025-1.jpg" alt="" width="212" height="300" /></a></p>
 {% endraw %}
