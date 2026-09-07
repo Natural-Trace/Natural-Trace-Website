@@ -376,3 +376,25 @@ rules:
     to: "/insights/2025-07-15-ingredient-integrity-supplement-brands/"
   - from: "/2025/10/29/page/2/"
     to: "/insights/2025-10-29-natural-trace-at-supplyside-global-2025/"
+
+  # The bare form of the same archives, added a few hours after the block above
+  # on 7 September 2026. They were missed the first time for a reason worth
+  # writing down, because it will happen again.
+  #
+  # The Search Console export that produced the rules above is the "Not found
+  # (404)" list, and these four were not on it. They were filed under "Excluded
+  # by noindex tag" instead, because src/404.njk carries a noindex meta: Google
+  # fetched the 404 page, saw the tag, and classified by the tag rather than by
+  # the status code. So a genuinely broken URL sat in the bucket that is
+  # otherwise entirely intentional redirect stubs, where nobody would look.
+  #
+  # If you are ever chasing missing redirects, read both buckets. A 404 on this
+  # site does not necessarily appear under Not found.
+  - from: "/2025/05/22/"
+    to: "/insights/2025-05-22-nutraceutical-focus-brochure-2025/"
+  - from: "/2025/07/15/"
+    to: "/insights/2025-07-15-ingredient-integrity-supplement-brands/"
+  - from: "/2025/10/29/"
+    to: "/insights/2025-10-29-natural-trace-at-supplyside-global-2025/"
+  - from: "/2026/07/24/"
+    to: "/insights/2026-07-24-natural-trace-announces-new-co-ceo-structure-to-accelerate-next-phase-of-global-growth/"
