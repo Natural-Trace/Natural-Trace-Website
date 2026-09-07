@@ -116,6 +116,45 @@ module.exports = function(eleventyConfig) {
     (pages || []).find(p => p.url === url) || {}
   );
 
+  /* The breadcrumb trail for a page, as [{name, url}], for the BreadcrumbList
+     in partials/structured-data.njk.
+
+     Why this exists at all: the WordPress site emitted BreadcrumbList through
+     Yoast, this build emitted none, and Search Console's valid breadcrumb count
+     decayed from about 22 to 0 between the migration on 12 Aug 2026 and 5 Sep,
+     when it was noticed. Nothing failed, because Invalid stayed at 0 the whole
+     way down. Absent structured data is not invalid structured data, so no
+     report goes red and the healthcheck, which only checks that JSON-LD parses,
+     had no opinion either.
+
+     Built from the URL rather than from front matter so no page has to declare
+     anything, and it cannot drift from where the page actually sits.
+
+     The one rule that matters: a level is included ONLY if a real page exists
+     at that path. /insights/tag/company-news/ would otherwise produce a crumb
+     for /insights/tag/, which is not a page and 404s. Google wants breadcrumb
+     items to be places a reader can go. Skipping the gap yields
+     Home > Insights > Company News, which is also what a person would say.
+
+     Names come from `title`, not `seoTitle`: the crumb wants "About Us", not
+     "About Us | Natural Trace". Redirect stubs never reach here because
+     redirect.njk does not extend base.njk. */
+  eleventyConfig.addFilter("breadcrumbTrail", (url, all) => {
+    if (typeof url !== "string" || !url.startsWith("/")) return [];
+    const titles = new Map();
+    for (const p of all || []) {
+      if (p.url) titles.set(p.url, p.data?.title);
+    }
+    const trail = [{ name: "Home", url: "/" }];
+    let acc = "/";
+    for (const seg of url.split("/").filter(Boolean)) {
+      acc += `${seg}/`;
+      const title = titles.get(acc);
+      if (title) trail.push({ name: String(title), url: acc });
+    }
+    return trail;
+  });
+
   /* A pasted LinkedIn post address, turned into the address LinkedIn's own
      embed player answers on. "Copy link to post" hands out two shapes and we
      have no say over which one an editor gets:

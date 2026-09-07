@@ -1,6 +1,12 @@
 {#- Organisation + WebSite structured data, emitted on every page.
     Facts only: name, founding year, location, contact, profiles. No capability
     claims here, so nothing in this block needs claim sign-off. -#}
+{#- The breadcrumb trail, built from the URL by the breadcrumbTrail filter in
+    .eleventy.js; see the comment there for how levels are chosen and why this
+    was missing until 7 Sep 2026. A trail of one is the home page and gets no
+    BreadcrumbList: a breadcrumb naming only itself tells a reader nothing and
+    Google ignores it. -#}
+{%- set trail = page.url | breadcrumbTrail(collections.all) -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -40,8 +46,21 @@
       "name": {{ seoTitle | dump | safe }},
       "description": {{ seoDescription | dump | safe }},
       "isPartOf": { "@id": {{ (site.url + "/#website") | dump | safe }} },
-      "about": { "@id": {{ (site.url + "/#organization") | dump | safe }} }
-    }
+      "about": { "@id": {{ (site.url + "/#organization") | dump | safe }} }{% if trail | length > 1 %},
+      "breadcrumb": { "@id": {{ (site.url + page.url + "#breadcrumb") | dump | safe }} }{% endif %}
+    }{% if trail | length > 1 %},
+    {
+      "@type": "BreadcrumbList",
+      "@id": {{ (site.url + page.url + "#breadcrumb") | dump | safe }},
+      "itemListElement": [{% for crumb in trail %}
+        {
+          "@type": "ListItem",
+          "position": {{ loop.index }},
+          "name": {{ crumb.name | dump | safe }},
+          "item": {{ (site.url + crumb.url) | dump | safe }}
+        }{% if not loop.last %},{% endif %}{% endfor %}
+      ]
+    }{% endif %}
   ]
 }
 </script>
