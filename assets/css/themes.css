@@ -1,0 +1,275 @@
+/* Seasonal themes: an accent layer, not a redesign.
+   ---------------------------------------------------------------------------
+   Definitions and dates: src/_data/themes.yml
+   Detector: the inline script in src/_includes/base.njk, which sets
+   data-theme on <html> from the visitor's local date before first paint.
+
+   Scope is deliberate. A theme may recolour the hero scrim and add the strip
+   above the footer. It may not touch body text, cards, forms, buttons or any
+   call to action. That rule is what keeps a theme from making the actual pitch
+   harder to read, and it is why these files are separate: nothing in here can
+   break styles.css, and the whole layer is removed by deleting one <link>.
+
+   Every colour below is chosen against white text and measured, not eyeballed.
+   The figures in the comments are contrast ratios against #fff.
+   --------------------------------------------------------------------------- */
+
+/* ---------- the strip above the footer ---------------------------------- */
+
+/* Every enabled theme renders its strip and all of them are hidden. CSS shows
+   the one whose key matches. There is no JavaScript in this, so it cannot
+   flash or arrive late. CSS cannot compare two attributes to each other, so
+   each theme needs its own line here. */
+.theme-ribbon{display:none}
+html[data-theme="space"] .theme-ribbon[data-theme-for="space"],
+html[data-theme="sg"]    .theme-ribbon[data-theme-for="sg"],
+html[data-theme="xmas"]  .theme-ribbon[data-theme-for="xmas"]{display:block}
+
+.theme-ribbon-inner{
+  display:flex;align-items:center;gap:1.25rem;
+  padding:1.15rem 2rem;
+}
+.theme-ribbon-mark{flex:0 0 auto;width:118px;height:34px;background-repeat:no-repeat;background-position:left center}
+.theme-ribbon-text{
+  margin:0;font-family:'Montserrat',sans-serif;
+  font-size:.98rem;line-height:1.55;color:#fff;
+}
+.theme-ribbon-text strong{font-weight:600}
+.theme-ribbon-note{font-weight:400;color:rgba(255,255,255,.84)}
+
+@media(max-width:720px){
+  .theme-ribbon-inner{flex-direction:column;align-items:flex-start;gap:.7rem;padding:1.1rem 1.25rem}
+  .theme-ribbon-text{font-size:.92rem}
+  .theme-ribbon-mark{width:96px;height:28px;background-size:contain}
+}
+
+/* A decorative strip is not something anyone needs on paper. */
+@media print{.theme-ribbon{display:none !important}}
+
+
+/* ---------- what every dark hero gets ----------------------------------- */
+/* The homepage hero goes dark under every theme, and --sage on top of it is
+   the one thing on that screen that looks like it belongs to a different site.
+   So the treatment lives here rather than in each theme: white button, white
+   headline accent, white ticks, and each theme supplies only the label colour.
+   A theme added later inherits this and cannot forget it.
+
+   This is the one place a theme touches a button, which the rule at the top of
+   this file otherwise forbids. Deliberate, and scoped to the homepage hero.
+
+   The headline accent is normally a gold gradient painted through
+   background-clip:text, which is the one element the contrast audit cannot
+   measure from a screenshot. Solid white is both right here and measurable, so
+   under any theme that blind spot closes. */
+html[data-theme] .hero.hero-lab .btn-primary{background:#fff}
+html[data-theme] .hero.hero-lab .btn-primary:hover{background:#F2F2EE}
+html[data-theme] .hero.hero-lab h1 em{
+  background:none;-webkit-background-clip:border-box;background-clip:border-box;
+  color:#fff;-webkit-text-fill-color:#fff;
+}
+html[data-theme] .hero.hero-lab .hero-ticks li::before{border-color:#fff}
+
+/* Label colours, measured on white: 11.1:1, 14.8:1 and 13.4:1. */
+html[data-theme="sg"]    .hero.hero-lab .btn-primary{color:#7A0C15}
+html[data-theme="space"] .hero.hero-lab .btn-primary{color:#131A45}
+html[data-theme="xmas"]  .hero.hero-lab .btn-primary{color:#0E2A1B}
+
+
+/* ---------- 4 May: space ------------------------------------------------ */
+/* Not Star Wars, and it must not become Star Wars. Disney holds registered
+   marks on both spellings of "May the 4th be with you", and the risk sits in
+   the exact phrases and in Star Wars imagery placed next to a 4 May reference.
+   No character, no lightsaber silhouette, no green glow, no wording. */
+
+html[data-theme="space"] .theme-ribbon[data-theme-for="space"]{
+  /* #0B1030 against white is 17.6:1 */
+  background:linear-gradient(100deg,#0B1030 0%,#141a4a 62%,#1d2560 100%);
+}
+html[data-theme="space"] .theme-ribbon-mark{
+  background-image:
+    radial-gradient(2.6px 2.6px at 8px 10px,  rgba(255,255,255,.95),transparent 62%),
+    radial-gradient(1.8px 1.8px at 24px 24px, rgba(255,255,255,.75),transparent 62%),
+    radial-gradient(3.4px 3.4px at 43px 13px, rgba(255,255,255,1),  transparent 62%),
+    radial-gradient(1.7px 1.7px at 60px 26px, rgba(255,255,255,.65),transparent 62%),
+    radial-gradient(2.5px 2.5px at 76px 8px,  rgba(255,255,255,.9), transparent 62%),
+    radial-gradient(2px   2px   at 93px 20px, rgba(255,255,255,.78),transparent 62%),
+    radial-gradient(3px   3px   at 111px 12px,rgba(255,255,255,.95),transparent 62%);
+}
+
+/* Homepage hero. The scrim is the only surface that changes; the photograph
+   underneath and every element on top are untouched.
+   rgba(7,10,28,.95) over the photo measures 18.4:1 against white. */
+html[data-theme="space"] .hero.hero-lab{
+  background-image:
+    linear-gradient(100deg,
+      rgba(7,10,28,.95) 0%,
+      rgba(10,14,40,.90) 44%,
+      rgba(26,31,78,.62) 100%),
+    var(--hero-bg,url('/assets/images/ingredients-lab.webp'));
+}
+
+/* Starfield. A pseudo-element rather than another background layer, because
+   .hero-lab already stacks two and every one added has to be matched in four
+   other comma-separated lists. z-index 1 keeps it under .hero-content, which
+   is z-index 2. */
+html[data-theme="space"] .hero.hero-lab::after{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  /* Star brightness is capped, and the cap is not a taste decision.
+
+     On a phone the hero copy runs the full width, so a star inevitably lands
+     inside a line of text. The contrast audit measures the brightest pixel in
+     each line box, which is correct: it cannot tell a decorative dot from a
+     background wash, and neither can a rule that says white text needs a dark
+     backdrop. Bright stars put a 2.4:1 pixel under the headline.
+
+     White at .34 over this scrim composites to about #6a6d80, which carries
+     white body text at 4.9:1, so the brightest possible star still clears the
+     line. They read as stars because the field around them is nearly black,
+     not because they are bright. */
+  background-image:
+    radial-gradient(1.9px 1.9px at 12% 18%, rgba(255,255,255,.30),transparent 62%),
+    radial-gradient(1.4px 1.4px at 26% 62%, rgba(255,255,255,.20),transparent 62%),
+    radial-gradient(2.4px 2.4px at 38% 12%, rgba(255,255,255,.34),transparent 62%),
+    radial-gradient(1.5px 1.5px at 47% 78%, rgba(255,255,255,.18),transparent 62%),
+    radial-gradient(2px   2px   at 61% 28%, rgba(255,255,255,.28),transparent 62%),
+    radial-gradient(1.4px 1.4px at 69% 66%, rgba(255,255,255,.22),transparent 62%),
+    radial-gradient(2.6px 2.6px at 78% 16%, rgba(255,255,255,.34),transparent 62%),
+    radial-gradient(1.7px 1.7px at 86% 47%, rgba(255,255,255,.25),transparent 62%),
+    radial-gradient(1.4px 1.4px at 93% 74%, rgba(255,255,255,.18),transparent 62%),
+    radial-gradient(2.1px 2.1px at 55% 90%, rgba(255,255,255,.26),transparent 62%),
+    radial-gradient(1.6px 1.6px at 19% 40%, rgba(255,255,255,.22),transparent 62%),
+    radial-gradient(1.9px 1.9px at 33% 34%, rgba(255,255,255,.26),transparent 62%),
+    radial-gradient(1.5px 1.5px at 72% 86%, rgba(255,255,255,.20),transparent 62%),
+    radial-gradient(2.2px 2.2px at 89% 24%, rgba(255,255,255,.30),transparent 62%);
+}
+
+/* The three solution pages and the FAQ are the only other pages with a hero.
+   .hero-overlay is styled in styles.css but no page renders it, so a rule for
+   it themed nothing; it was removed rather than left looking like coverage.
+
+   The solution heroes are a pale wash over --offwhite carrying dark text, so
+   only the hue moves. At 13% over near-white the text contrast barely shifts,
+   and the audit confirms it. The product watermark on each keeps its own brand
+   colour: it is a logo, not decoration. */
+html[data-theme="space"] .hero-tag{background:linear-gradient(180deg,rgba(26,31,78,.13),var(--offwhite) 78%)}
+html[data-theme="space"] .hero-detect{background:linear-gradient(180deg,rgba(26,31,78,.13),var(--offwhite) 78%)}
+html[data-theme="space"] .hero-cloud{background:linear-gradient(180deg,rgba(26,31,78,.15),var(--offwhite) 78%)}
+/* #0B1030 against white is 17.6:1 */
+html[data-theme="space"] .faq-page-hero{background:#0B1030}
+
+
+/* ---------- Singapore National Day -------------------------------------- */
+/* Flag colours and a crescent-and-stars motif. Never the flag.
+
+   The National Symbols Regulations 2023 allow a business to use the National
+   Flag for commercial or decorative purposes between 1 July and 30 September,
+   but prohibit a modified or distorted design of it. Nothing here is presented
+   as a flag: the motif is spaced along a strip at mixed sizes, which is not
+   the canton arrangement, and it is never stretched, wrapped or animated.
+
+   The red is deepened from the flag red on purpose. #EE2536 carries white text
+   at 4.2:1, which is under the 4.5 that body text needs. #A5101C measures
+   7.8:1, still unmistakably the same red family. */
+
+html[data-theme="sg"] .theme-ribbon[data-theme-for="sg"]{
+  background:linear-gradient(100deg,#9C0F1A 0%,#A5101C 55%,#B81525 100%);
+}
+html[data-theme="sg"] .theme-ribbon-mark{
+  /* One crescent, five stars. Do not add to either count.
+
+     The crescent is two arcs, not two circles with fill-rule evenodd. Evenodd
+     was the bug in the first version: the part of the punch-out circle that
+     hangs outside the disc sits inside exactly one subpath, so it fills, and
+     what should have been a crescent came out as a ring with a notch.
+
+     Geometry rather than eyeballing. Outer circle r=14 at (17,17). The horns
+     are placed at x=6 from the centre, which puts them near 1 and 5 o'clock
+     and leaves a 130 degree opening. The spine is 8 units, 29% of the
+     diameter, which is what the flag's crescent measures. Those two numbers
+     then fix the punch-out circle: r=12.67 offset 6.67 to the right. Change a
+     number and re-derive the other two; do not nudge the path by hand.
+
+     The stars stay spaced along the strip at mixed sizes. That is not the
+     canton arrangement, and it is the reason this is a motif rather than a
+     modified flag. */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 118 34' fill='%23fff'%3E%3Cpath d='M23 4.35A14 14 0 1 0 23 29.65A12.67 12.67 0 1 1 23 4.35Z'/%3E%3Cpath d='M46 6l1.4 4.2h4.4l-3.6 2.6 1.4 4.3-3.6-2.7-3.6 2.7 1.4-4.3-3.6-2.6h4.4z'/%3E%3Cpath d='M64 20l1 3.1h3.3l-2.7 1.9.9 3.1-2.5-1.9-2.6 1.9 1-3.1-2.7-1.9h3.3z' opacity='.9'/%3E%3Cpath d='M80 7l1.6 4.9h5.2l-4.2 3 1.6 4.9-4.2-3-4.2 3 1.6-4.9-4.2-3h5.2z'/%3E%3Cpath d='M98 22l.9 2.8h3l-2.4 1.7.9 2.8-2.4-1.8-2.4 1.8.9-2.8-2.4-1.7h3z' opacity='.85'/%3E%3Cpath d='M110 8l1.2 3.5h3.7l-3 2.2 1.1 3.5-3-2.2-3 2.2 1.2-3.5-3-2.2h3.6z' opacity='.95'/%3E%3C/svg%3E");
+}
+
+/* rgba(120,14,24,.96) over the photo measures 12.9:1 against white. */
+html[data-theme="sg"] .hero.hero-lab{
+  background-image:
+    linear-gradient(100deg,
+      rgba(120,14,24,.96) 0%,
+      rgba(142,16,28,.90) 44%,
+      rgba(196,26,44,.60) 100%),
+    var(--hero-bg,url('/assets/images/ingredients-lab.webp'));
+}
+html[data-theme="sg"] .hero-tag{background:linear-gradient(180deg,rgba(165,16,28,.13),var(--offwhite) 78%)}
+html[data-theme="sg"] .hero-detect{background:linear-gradient(180deg,rgba(165,16,28,.13),var(--offwhite) 78%)}
+html[data-theme="sg"] .hero-cloud{background:linear-gradient(180deg,rgba(165,16,28,.15),var(--offwhite) 78%)}
+/* #9C0F1A against white is 8.2:1.
+   The two lines inside this hero do NOT come free with it. On --charcoal the
+   label is --sage-light and the subtitle is white at .6 alpha, and both clear
+   the line. On red they do not: the audit measured the label at 2.57:1 and the
+   subtitle at 3.76:1. A sage label on a red field was the wrong colour anyway.
+   Label to near-white, subtitle up to .82, which measures 5.8:1. */
+html[data-theme="sg"] .faq-page-hero{background:#9C0F1A}
+html[data-theme="sg"] .faq-page-hero .section-label{color:rgba(255,255,255,.92)}
+html[data-theme="sg"] .faq-page-hero p{color:rgba(255,255,255,.82)}
+
+
+/* ---------- Christmas --------------------------------------------------- */
+/* Deep evergreen rather than the obvious red, for two reasons. Singapore
+   already owns red on this site and two red themes would be hard to tell
+   apart, and a pine green sits closer to a brand built on sage and gold
+   without collapsing into it: #0E2A1B is far darker and cooler than --sage.
+
+   No Santa, no reindeer, no wordmark from anyone else. Snowflakes only, which
+   nobody owns. */
+
+html[data-theme="xmas"] .theme-ribbon[data-theme-for="xmas"]{
+  /* #0E2A1B against white is 16.9:1 */
+  background:linear-gradient(100deg,#0E2A1B 0%,#123724 58%,#17482D 100%);
+}
+html[data-theme="xmas"] .theme-ribbon-mark{
+  /* Six-arm snowflakes at mixed sizes. Stroked, not filled, so they stay light
+     against the green instead of reading as blobs at 34px tall. */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 118 34' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'%3E%3Cg transform='translate(15 17) scale(1.5)'%3E%3Cpath d='M0-8V8M-6.9-4L6.9 4M-6.9 4L6.9-4M0-8l-2.2 2.4M0-8l2.2 2.4M0 8l-2.2-2.4M0 8l2.2-2.4'/%3E%3C/g%3E%3Cg transform='translate(45 11) scale(0.9)'%3E%3Cpath d='M0-8V8M-6.9-4L6.9 4M-6.9 4L6.9-4'/%3E%3C/g%3E%3Cg transform='translate(70 23) scale(0.75)'%3E%3Cpath d='M0-8V8M-6.9-4L6.9 4M-6.9 4L6.9-4'/%3E%3C/g%3E%3Cg transform='translate(94 12) scale(1.1)'%3E%3Cpath d='M0-8V8M-6.9-4L6.9 4M-6.9 4L6.9-4M0-8l-2.2 2.4M0-8l2.2 2.4'/%3E%3C/g%3E%3Cg transform='translate(112 25) scale(0.6)'%3E%3Cpath d='M0-8V8M-6.9-4L6.9 4M-6.9 4L6.9-4'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* rgba(10,32,20,.95) over the photo measures 17.2:1 against white. */
+html[data-theme="xmas"] .hero.hero-lab{
+  background-image:
+    linear-gradient(100deg,
+      rgba(10,32,20,.95) 0%,
+      rgba(14,44,28,.90) 44%,
+      rgba(24,72,46,.62) 100%),
+    var(--hero-bg,url('/assets/images/ingredients-lab.webp'));
+}
+
+/* Snow. Capped at .34 alpha for exactly the reason the starfield is: on a
+   phone the hero copy runs the full width, a flake lands inside a line of
+   text, and the audit measures the brightest pixel in each line box. Nothing
+   here moves; falling snow would be motion a visitor cannot stop. */
+html[data-theme="xmas"] .hero.hero-lab::after{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:
+    radial-gradient(2.2px 2.2px at 14% 20%, rgba(255,255,255,.32),transparent 62%),
+    radial-gradient(1.6px 1.6px at 28% 58%, rgba(255,255,255,.22),transparent 62%),
+    radial-gradient(2.6px 2.6px at 41% 14%, rgba(255,255,255,.34),transparent 62%),
+    radial-gradient(1.7px 1.7px at 52% 74%, rgba(255,255,255,.20),transparent 62%),
+    radial-gradient(2.3px 2.3px at 64% 30%, rgba(255,255,255,.30),transparent 62%),
+    radial-gradient(1.6px 1.6px at 73% 62%, rgba(255,255,255,.24),transparent 62%),
+    radial-gradient(2.8px 2.8px at 81% 18%, rgba(255,255,255,.34),transparent 62%),
+    radial-gradient(1.9px 1.9px at 89% 45%, rgba(255,255,255,.26),transparent 62%),
+    radial-gradient(1.5px 1.5px at 95% 70%, rgba(255,255,255,.20),transparent 62%),
+    radial-gradient(2.1px 2.1px at 58% 88%, rgba(255,255,255,.28),transparent 62%),
+    radial-gradient(1.7px 1.7px at 22% 38%, rgba(255,255,255,.24),transparent 62%),
+    radial-gradient(2px   2px   at 35% 84%, rgba(255,255,255,.26),transparent 62%);
+}
+
+html[data-theme="xmas"] .hero-tag{background:linear-gradient(180deg,rgba(24,72,46,.13),var(--offwhite) 78%)}
+html[data-theme="xmas"] .hero-detect{background:linear-gradient(180deg,rgba(24,72,46,.13),var(--offwhite) 78%)}
+html[data-theme="xmas"] .hero-cloud{background:linear-gradient(180deg,rgba(24,72,46,.15),var(--offwhite) 78%)}
+/* #0E2A1B against white is 16.9:1 */
+html[data-theme="xmas"] .faq-page-hero{background:#0E2A1B}

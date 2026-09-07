@@ -1,0 +1,855 @@
+/* Scroll-reveal animations were removed on 6 Aug 2026. Sections are painted by
+   the browser on load rather than faded in by JavaScript as you scroll. */
+
+/* The splash intro was removed on 7 Aug 2026. The home page opens on the
+   hero. */
+
+/* Active nav state */
+/* Whether this is the home page comes from the body class the template sets,
+   not from the URL.
+
+   It used to be worked out by taking the last segment of the path, and that is
+   wrong the moment the site is not served from the root. In production it is
+   served from /Natural-Trace-Website/, so the last segment of the home page URL
+   is "Natural-Trace-Website", which is neither "home" nor empty. The navigation
+   therefore loaded in its scrolled state on the home page: a white bar on the
+   dark hero, every time, for anyone arriving from another page.
+
+   Then the scroll handler, whose own path test did match, removed the class on
+   the first scroll event and put it back at 60px. That was the flicker.
+
+   Both faults came from the same line, and neither could be reproduced locally,
+   where the site is served from the root and the last segment is empty. The
+   body class is set by base.njk from page.url against sitePathPrefix, so it is
+   right wherever the site is served from. */
+window.addEventListener('DOMContentLoaded', function() {
+  var isHome = document.body.classList.contains('page-home');
+  var navbar = document.getElementById('navbar');
+
+  /* A tab is active on its own page and on any page beneath it. The last
+     segment alone was enough while every page was top-level; once Industries
+     had /industries/nutraceuticals/ and friends (2 Sep 2026) the last segment
+     named the sub-page and no tab lit, which was already true of
+     /industries/use-cases/ and had gone unnoticed. The parent segments are
+     checked as well, so /industries/agri-food/ and /insights/<article>/ light
+     their tab. A site path prefix adds a segment that matches no tab. */
+  var path = window.location.pathname.replace(/\/$/, '');
+  var segments = path.split('/');
+  var pageName = isHome ? 'home' : (segments.pop() || 'home');
+  document.querySelectorAll('.nav-links a[data-page]').forEach(function(a) {
+    var name = a.getAttribute('data-page');
+    if (name === pageName || segments.indexOf(name) !== -1) a.classList.add('active');
+  });
+
+  /* Every page but the home page opens on a pale section, so the navigation
+     starts in its scrolled colours and stays there. */
+  if (!isHome) {
+    if (navbar) navbar.classList.add('scrolled');
+    return;
+  }
+
+  /* On the home page it follows the scroll. Registered here rather than at the
+     top level so it is never attached on a page that does not use it, and
+     passive because it only reads scrollY. */
+  var onScroll = function() {
+    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 60);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  /* A reload partway down the page restores the scroll position before this
+     runs, so the state has to be set once rather than waited for. */
+  onScroll();
+});
+
+/* Parallax hero and the scroll-driven counter were removed on 6 Aug 2026.
+   The parallax wrote a transform on every scroll event with no throttling, and
+   nothing on the site uses the .count element the counter observed. */
+
+/* Contact form
+ *
+ * Where a submission goes is configured in src/_data/integrations.yml and
+ * handed to this file on the form's data- attributes, so turning HubSpot on is
+ * a config change and needs no code change here.
+ *
+ * Until HubSpot is configured, or if a HubSpot request fails, the message is
+ * handed to the visitor's email client. An inquiry is never silently dropped.
+ */
+function readContactConfig(form) {
+  var d = form.dataset;
+  var map = {};
+  try { map = JSON.parse(d.hsMap || '{}') || {}; } catch (err) { map = {}; }
+  var portal = (d.hsPortal || '').trim();
+  var guid = (d.hsForm || '').trim();
+  return {
+    hubspotReady: d.hsEnabled === 'true' && !!portal && !!guid,
+    portal: portal,
+    guid: guid,
+    region: (d.hsRegion || 'na1').trim() || 'na1',
+    map: map,
+    email: (d.fallbackEmail || '').trim(),
+    subject: (d.fallbackSubject || 'Website inquiry').trim()
+  };
+}
+
+function contactFormEndpoint(cfg) {
+  var host = cfg.region === 'na1' ? 'api.hsforms.com' : 'api-' + cfg.region + '.hsforms.com';
+  return 'https://' + host + '/submissions/v3/integration/submit/' + cfg.portal + '/' + cfg.guid;
+}
+
+function showContactState(id) {
+  var form = document.getElementById('contactForm');
+  if (form) form.style.display = 'none';
+  ['formSuccess', 'formFallback', 'formError'].forEach(function(stateId) {
+    var el = document.getElementById(stateId);
+    if (el) el.style.display = (stateId === id) ? 'block' : 'none';
+  });
+}
+
+function submitContactViaEmail(cfg, data) {
+  if (!cfg.email) { showContactState('formError'); return; }
+  var name = [data.get('firstName'), data.get('lastName')].filter(Boolean).join(' ');
+  var body = [
+    'Name: ' + name,
+    'Email: ' + (data.get('email') || ''),
+    'Company: ' + (data.get('company') || ''),
+    'Job title: ' + (data.get('jobTitle') || ''),
+    'Inquiry type: ' + (data.get('inquiryType') || ''),
+    '',
+    data.get('message') || ''
+  ].join('\n');
+  window.location.href = 'mailto:' + cfg.email +
+    '?subject=' + encodeURIComponent(cfg.subject + (name ? ' - ' + name : '')) +
+    '&body=' + encodeURIComponent(body);
+  showContactState('formFallback');
+}
+
+function submitContactToHubspot(cfg, data, form) {
+  var fields = [];
+  Object.keys(cfg.map).forEach(function(field) {
+    var property = (cfg.map[field] || '').trim();
+    var value = data.get(field);
+    // An empty mapping in integrations.yml means "do not send this field".
+    if (!property || !value) return;
+    fields.push({ objectTypeId: '0-1', name: property, value: String(value) });
+  });
+
+  var btn = form.querySelector('.form-submit');
+  if (btn) btn.disabled = true;
+
+  fetch(contactFormEndpoint(cfg), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      submittedAt: Date.now(),
+      fields: fields,
+      context: { pageUri: window.location.href, pageName: document.title }
+    })
+  }).then(function(res) {
+    if (!res.ok) throw new Error('HubSpot responded ' + res.status);
+    showContactState('formSuccess');
+  }).catch(function(err) {
+    if (window.console) console.error('Contact form: HubSpot submission failed.', err);
+    submitContactViaEmail(cfg, data);
+  }).then(function() {
+    if (btn) btn.disabled = false;
+  });
+}
+
+function handleContactSubmit(e) {
+  e.preventDefault();
+  var form = document.getElementById('contactForm');
+  if (!form) return false;
+  var data = new FormData(form);
+
+  // Honeypot: only a bot fills a field a human cannot see. Show the normal
+  // success state so the bot learns nothing, and send nothing.
+  if (data.get('_botcheck')) { showContactState('formSuccess'); return false; }
+
+  var cfg = readContactConfig(form);
+  if (cfg.hubspotReady) { submitContactToHubspot(cfg, data, form); }
+  else { submitContactViaEmail(cfg, data); }
+  return false;
+}
+
+function switchCareersTab(tab) {
+  document.querySelectorAll('.careers-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.careers-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('careers-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function handleInternshipSubmit(e) {
+  e.preventDefault();
+  var form = document.getElementById('internshipForm');
+  var data = new FormData(form);
+  /* Address and subject come from _data/integrations.yml via the form's data
+     attributes, so they can be changed in the CMS without touching this file.
+     The fallback here is only a guard against the attribute going missing. */
+  var to = (form.dataset.internshipEmail || '').trim() || 'info@natural-trace.com';
+  var subjectPrefix = (form.dataset.internshipSubject || '').trim() || 'Internship Application';
+  var body = 'New internship application from ' + data.get('firstName') + ' ' + data.get('lastName') +
+    '%0D%0AEmail: ' + data.get('email') +
+    '%0D%0AUniversity: ' + data.get('university') +
+    '%0D%0AArea of Interest: ' + data.get('interest') +
+    '%0D%0A%0D%0A' + data.get('message');
+  window.location.href = 'mailto:' + to + '?subject=' +
+    encodeURIComponent(subjectPrefix + ' - ' + data.get('firstName') + ' ' + data.get('lastName')) +
+    '&body=' + body;
+  form.style.display = 'none';
+  document.getElementById('internshipSuccess').style.display = 'block';
+  return false;
+}
+
+/* Team modal: data injected from team.json via template on team page */
+function openTeamModal(idx) {
+  if (typeof teamData === 'undefined' || !teamData[idx]) return;
+  var d = teamData[idx];
+  document.getElementById('modalName').textContent = d.name;
+  document.getElementById('modalRole').textContent = d.role;
+  document.getElementById('modalLoc').textContent = d.location || '';
+  var prefix = (typeof basePrefix !== 'undefined' && basePrefix !== '/') ? basePrefix.replace(/\/$/, '') : '';
+  document.getElementById('modalPhoto').src = d.photo.startsWith('/') ? prefix + d.photo : d.photo;
+  var ll = document.getElementById('modalLinkedin');
+  if (d.linkedin) { ll.href = d.linkedin; ll.style.display = ''; } else { ll.style.display = 'none'; }
+  var eduHtml = '';
+  if (d.education && d.education.length) {
+    d.education.forEach(function(e) { eduHtml += '<span class="tm-edu-item">' + e + '</span>'; });
+  }
+  // No placeholder. A profile with no education listed simply shows nothing,
+  // rather than telling the reader to go and look somewhere else.
+  document.getElementById('modalEdu').innerHTML = eduHtml;
+  var bioHtml = '';
+  if (d.bio && d.bio.length) d.bio.forEach(function(b) { bioHtml += '<li>' + b + '</li>'; });
+  document.getElementById('modalBio').innerHTML = bioHtml;
+  document.getElementById('teamModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeTeamModal() {
+  document.getElementById('teamModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeTeamModal(); });
+var teamModalEl = document.getElementById('teamModal');
+if (teamModalEl) teamModalEl.addEventListener('click', function(e) { if (e.target === this) closeTeamModal(); });
+
+/* FAQ functions */
+function toggleFaqItem(btn) {
+  var item = btn.parentElement;
+  var wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
+}
+
+function filterFaq(cat) {
+  document.querySelectorAll('.faq-cat-btn').forEach(function(b) { b.classList.remove('active'); });
+  event.target.classList.add('active');
+  document.querySelectorAll('.faq-item').forEach(function(item) {
+    if (cat === 'all' || item.dataset.cat === cat) { item.style.display = ''; }
+    else { item.style.display = 'none'; }
+  });
+}
+
+/* ===== Compatibility Quiz ===== */
+(function() {
+  /* furthest is the highest step reached this pass, 1 to 3 and then 4 for
+     the result. It exists for the analytics below: a step counts as
+     completed the first time it is left going forwards, so Back and a
+     second Next do not show one visitor finishing step 1 twice. */
+  var state = { step: 0, furthest: 0, category: null, formulations: [], temp: null, ph: null };
+  var lastOutcome = null;
+
+  var categories = [
+    { id: 'vitamins', name: 'Vitamins & Minerals', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><rect x="14" y="6" width="12" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="2"/><line x1="14" y1="20" x2="26" y2="20" stroke="currentColor" stroke-width="2"/></svg>' },
+    { id: 'omega', name: 'Omega-3 & Fish Oil', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><ellipse cx="20" cy="20" rx="14" ry="9" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="20" r="3" fill="currentColor"/></svg>' },
+    { id: 'probiotics', name: 'Probiotics & Gut Health', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><circle cx="15" cy="18" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="25" cy="22" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="13" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>' },
+    { id: 'joint', name: 'Joint & Bone', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><line x1="12" y1="28" x2="28" y2="12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="10" cy="30" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="30" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="2"/></svg>' },
+    { id: 'collagen', name: 'Collagen & Beauty', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><path d="M20 6 C10 10, 10 30, 20 34 C30 30, 30 10, 20 6Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>' },
+    { id: 'herbal', name: 'Herbal & Botanical', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><path d="M20 34 V18 M14 22 Q20 14, 26 22 M10 28 Q20 18, 30 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' },
+    { id: 'sports', name: 'Sports Nutrition', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><circle cx="20" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="2"/><line x1="8" y1="20" x2="32" y2="20" stroke="currentColor" stroke-width="2"/><line x1="20" y1="8" x2="20" y2="32" stroke="currentColor" stroke-width="2"/></svg>' },
+    { id: 'immune', name: 'Immune Support', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><path d="M20 8 L22 16 L30 16 L24 21 L26 29 L20 24 L14 29 L16 21 L10 16 L18 16Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>' },
+    { id: 'weight', name: 'Weight Management', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><rect x="10" y="14" width="20" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15 14 V10 Q20 6, 25 10 V14" fill="none" stroke="currentColor" stroke-width="2"/></svg>' },
+    { id: 'ingredients', name: 'Specialty Food Ingredients', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><path d="M8 26 L20 10 L32 26Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><line x1="8" y1="30" x2="32" y2="30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' },
+    { id: 'specialty', name: 'Specialty Health', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><path d="M14 18 Q20 10, 26 18 Q26 26, 20 32 Q14 26, 14 18Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>' },
+    { id: 'functional', name: 'Functional Foods', icon: '<svg viewBox="0 0 40 40" width="32" height="32"><path d="M12 28 Q12 16, 20 12 Q28 16, 28 28Z" fill="none" stroke="currentColor" stroke-width="2"/><line x1="20" y1="12" x2="20" y2="8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' }
+  ];
+
+  var formulations = [
+    { id: 'tablet', name: 'Compressed Tablet' },
+    { id: 'capsule', name: 'Hard Capsule' },
+    { id: 'softgel', name: 'Softgel' },
+    { id: 'gummy', name: 'Gummy' },
+    { id: 'chewable', name: 'Chewable' },
+    { id: 'powder', name: 'Powder / Sachet' },
+    { id: 'liquid', name: 'Liquid / Syrup' },
+    { id: 'effervescent', name: 'Effervescent' },
+    { id: 'lozenge', name: 'Lozenge' },
+    { id: 'bar', name: 'Bar' },
+    { id: 'rtd', name: 'RTD Beverage' },
+    { id: 'drops', name: 'Drops' }
+  ];
+
+  /* Which forms each category offers.
+
+     Two gaps were found on 11 Aug by testing the evidence rows against it
+     rather than by reading it. Vitamins & Minerals did not offer liquid or
+     drops, which rules out children's D3 drops, B12 liquid and every vitamin
+     syrup, and Specialty Health did not offer effervescent. Both are ordinary
+     products, both have been through the lab, and neither could be described
+     in the quiz. */
+  var catFormMap = {
+    vitamins: ['tablet','capsule','softgel','gummy','chewable','powder','effervescent','liquid','drops'],
+    omega: ['softgel','capsule','liquid','gummy','drops'],
+    probiotics: ['capsule','powder','chewable','liquid','gummy'],
+    joint: ['tablet','capsule','softgel','powder','liquid'],
+    collagen: ['powder','liquid','capsule','gummy'],
+    herbal: ['capsule','tablet','liquid','powder','drops'],
+    sports: ['powder','capsule','bar','rtd','tablet'],
+    immune: ['tablet','capsule','gummy','effervescent','lozenge','liquid'],
+    weight: ['powder','capsule','bar','rtd','liquid'],
+    ingredients: ['powder','liquid','capsule','tablet','bar','rtd'],
+    specialty: ['capsule','tablet','softgel','liquid','gummy','effervescent','powder'],
+    functional: ['powder','liquid','bar','rtd','gummy','capsule']
+  };
+
+  /* The temperature and pH bands used to be written here: below 40, 40-65,
+     65-100, above 100, and neutral / mildly acidic / very acidic / alkaline.
+     They were not the bands the compatibility guide screens on, and two of
+     them straddled a threshold, so "very acidic, pH under 4" covered both a pH
+     the guide calls medium risk and one it calls high. There was no honest way
+     to score an answer like that. The bands now match the guide exactly and
+     come from src/_data/assess.yml with the rest of the content.
+
+     Everything degrades gracefully. No model in the page, and the quiz behaves
+     as it did before: it collects the answers and thanks you for them. */
+  var model = null;
+  try {
+    var raw = document.getElementById('compatModel');
+    if (raw) model = JSON.parse(raw.textContent);
+  } catch (e) { model = null; }
+
+  var tempOptions = (model && model.temp) || [
+    { label: 'Below 60°C' }, { label: '60 to 100°C' }, { label: 'Above 100°C' }
+  ];
+  var phOptions = (model && model.ph) || [
+    { label: 'pH 5 to 9' }, { label: 'pH 3 to 5, or 9 to 11' }, { label: 'Below pH 3, or above pH 11' }
+  ];
+  var formulationRisk = (model && model.formulationRisk) || {};
+  var evidence = (model && model.evidence) || [];
+
+  function el(id) { return document.getElementById(id); }
+
+  /* Analytics. Added 3 Sep 2026.
+
+     PostHog, when it is switched on in the CMS, is on the page before this
+     file runs (base.njk) and captures clicks by itself. What it cannot see is
+     what a click meant: which category, how many formats, which bands, what
+     verdict came out. These named events carry that, so the open questions
+     about the quiz can be answered from what visitors actually enter rather
+     than from the 1,088-row answer key.
+
+     Sent: the category id, the format ids, the band labels tapped, the
+     outcome key, and whether a lab evidence row decided it. Not sent: the
+     risk counts. Those are the scoring, and the reason to collect inputs and
+     outcomes is to be able to re-score them under a different band later.
+     Nothing typed is sent because nothing is typed; every answer is a tap on
+     a fixed option.
+
+     When PostHog is off, window.posthog is undefined and every call here is
+     a no-op. When it is on but array.js has not arrived yet, the stub queues
+     the call. The CTA click is followed by a page change; posthog-js flushes
+     on pagehide with sendBeacon, which is what makes that event survive. */
+  function track(name, props) {
+    try {
+      if (window.posthog && typeof window.posthog.capture === 'function') window.posthog.capture(name, props);
+    } catch (e) {}
+  }
+  function answers() {
+    return {
+      category: state.category,
+      formats: state.formulations.slice(),
+      format_count: state.formulations.length,
+      temp_band: state.temp === null ? null : tempOptions[state.temp].label,
+      ph_band: state.ph === null ? null : phOptions[state.ph].label
+    };
+  }
+  function completed(step) {
+    if (step <= state.furthest) return;
+    state.furthest = step;
+    var props = answers();
+    props.step = step;
+    track('quiz_step_completed', props);
+  }
+
+  function renderCategories() {
+    var grid = el('compatCategories');
+    if (!grid) return;
+    grid.innerHTML = '';
+    categories.forEach(function(cat) {
+      var card = document.createElement('div');
+      card.className = 'compat-card';
+      card.setAttribute('data-id', cat.id);
+      card.innerHTML = '<div class="compat-card-icon">' + cat.icon + '</div><span class="compat-card-label">' + cat.name + '</span>';
+      card.onclick = function() { selectCard('compatCategories', cat.id); state.category = cat.id; el('compatNext1').classList.add('visible'); };
+      grid.appendChild(card);
+    });
+  }
+
+  function renderFormulations() {
+    var grid = el('compatFormulations');
+    if (!grid) return;
+    var allowed = catFormMap[state.category] || formulations.map(function(f) { return f.id; });
+    grid.innerHTML = '';
+    state.formulations = [];
+    formulations.forEach(function(form) {
+      if (allowed.indexOf(form.id) < 0) return;
+      var card = document.createElement('div');
+      card.className = 'compat-card';
+      card.setAttribute('data-id', form.id);
+      card.innerHTML = '<span class="compat-card-label">' + form.name + '</span>';
+      card.onclick = function() {
+        card.classList.toggle('selected');
+        var idx = state.formulations.indexOf(form.id);
+        if (idx >= 0) { state.formulations.splice(idx, 1); } else { state.formulations.push(form.id); }
+        if (state.formulations.length > 0) { el('compatNext2').classList.add('visible'); } else { el('compatNext2').classList.remove('visible'); }
+      };
+      grid.appendChild(card);
+    });
+  }
+
+  function renderConditions() {
+    var tg = el('compatTempOptions'); var pg = el('compatPhOptions');
+    if (!tg || !pg) return;
+    tg.innerHTML = ''; pg.innerHTML = '';
+    tempOptions.forEach(function(opt, i) {
+      var btn = document.createElement('button');
+      btn.className = 'compat-condition-btn';
+      btn.textContent = opt.label;
+      btn.onclick = function() { selectCondition('compatTempOptions', i); state.temp = i; checkStep3Ready(); };
+      tg.appendChild(btn);
+    });
+    phOptions.forEach(function(opt, i) {
+      var btn = document.createElement('button');
+      btn.className = 'compat-condition-btn';
+      btn.textContent = opt.label;
+      btn.onclick = function() { selectCondition('compatPhOptions', i); state.ph = i; checkStep3Ready(); };
+      pg.appendChild(btn);
+    });
+  }
+
+  function selectCard(gridId, id) {
+    var cards = el(gridId).querySelectorAll('.compat-card');
+    cards.forEach(function(c) { c.classList.remove('selected'); });
+    var target = el(gridId).querySelector('[data-id="' + id + '"]');
+    if (target) target.classList.add('selected');
+  }
+
+  function selectCondition(groupId, idx) {
+    var btns = el(groupId).querySelectorAll('.compat-condition-btn');
+    btns.forEach(function(b) { b.classList.remove('selected'); });
+    btns[idx].classList.add('selected');
+  }
+
+  function checkStep3Ready() {
+    if (state.temp !== null && state.ph !== null) {
+      el('compatNext3').classList.add('visible');
+    }
+  }
+
+  function showScreen(id) {
+    var screens = document.querySelectorAll('.compat-screen');
+    screens.forEach(function(s) { s.classList.remove('active'); });
+    var target = el(id);
+    if (target) target.classList.add('active');
+  }
+
+  window.compatStart = function() {
+    el('compatProgress').style.display = 'flex';
+    renderCategories();
+    showScreen('compatStep1');
+    updateProgress(1);
+    state.step = 1;
+    track('quiz_started');
+  };
+
+  window.compatGoStep = function(step) {
+    /* Going forward leaves the previous step complete; going back leaves
+       nothing complete. completed() ignores a step already counted. */
+    if (step > state.step) completed(step - 1);
+    state.step = step;
+    if (step === 1) {
+      showScreen('compatStep1');
+      updateProgress(1);
+    } else if (step === 2) {
+      renderFormulations();
+      el('compatNext2').classList.remove('visible');
+      showScreen('compatStep2');
+      updateProgress(2);
+    } else if (step === 3) {
+      renderConditions();
+      el('compatNext3').classList.remove('visible');
+      showScreen('compatStep3');
+      updateProgress(3);
+    }
+  };
+
+  /* The verdict.
+
+     Worst case wins, and a second medium is enough to move a product down a
+     band. That is deliberate. Two separate things that each stress DNA are not
+     the same risk as one, and the guide's own answer to a flagged product is to
+     test it rather than to reason about it.
+
+     There is no "not compatible" outcome. Not because it cannot happen: the
+     guide is explicit that below pH 3 the tag is likely incompatible. It is
+     because a website that has never seen the formulation is not in a position
+     to say so, and because the honest version of that answer is the same
+     action either way, which is send us a sample. The bottom band says the
+     thing that stresses DNA is there and that it needs testing. */
+  function verdict() {
+    var counts = { low: 0, medium: 0, high: 0 };
+
+    /* This used to collect the labels as well and publish them under "What
+       drove this". It counts only now: the visitor gets a verdict and a next
+       step, not a list of what is wrong with their product. Removed 11 Aug
+       2026 on request. */
+    function note(opt) {
+      if (!opt) return;
+      var risk = opt.risk || 'low';
+      counts[risk] = (counts[risk] || 0) + 1;
+    }
+
+    note(tempOptions[state.temp]);
+    note(phOptions[state.ph]);
+    /* Worst of the selected forms, not an average. A product made in four
+       formats is only as straightforward as its hardest one. */
+    var order = { low: 0, medium: 1, high: 2 };
+    var worstForm = null;
+    (state.formulations || []).forEach(function(fid) {
+      var r = formulationRisk[fid];
+      if (!r) return;
+      if (worstForm === null || order[r] > order[worstForm]) worstForm = r;
+    });
+    if (worstForm) note({ risk: worstForm });
+
+    var key = 'compatible';
+    if (counts.high > 0 || counts.medium > 1) { key = 'testing'; }
+    else if (counts.medium === 1) { key = 'conditions'; }
+
+    /* Evidence beats inference.
+
+       The bands above are a screen: they reason from pH, heat and product form
+       to a likely answer. An entry in the evidence list is not a screen, it is
+       a product in this category and this format that went through the lab and
+       either worked or did not. Where one exists it should move the answer,
+       because a tested result is better information than a rule.
+
+       A pass lifts a "compatible with conditions" to compatible. It does not
+       lift a "testing required": something in that answer is at high risk or
+       two things are at medium, and one adjacent success is not enough to
+       wave that through.
+
+       A failure drops the answer to "testing required" whatever the bands
+       said. That direction is not symmetric on purpose. Being wrong about a
+       yes costs a client a failed trial; being wrong about a no costs a
+       conversation. */
+    var proven = null;
+    for (var i = 0; i < evidence.length; i++) {
+      var e = evidence[i];
+      if (e.category !== state.category) continue;
+      if (!e.forms || !e.forms.some(function(f) { return state.formulations.indexOf(f) >= 0; })) continue;
+      if (e.outcome === 'not-compatible') { proven = 'not-compatible'; break; }
+      if (e.outcome === 'compatible') { proven = 'compatible'; }
+    }
+    if (proven === 'not-compatible') { key = 'testing'; }
+    else if (proven === 'compatible' && key === 'conditions') { key = 'compatible'; }
+
+    return { key: key, proven: proven };
+  }
+
+  /* Seasonal headline for the result screen, if a theme is running today.
+
+     Only the headline. The badge, the body, the evidence line and the call to
+     action stay exactly as written, so a themed day changes the tone of one
+     sentence and nothing about what the quiz tells someone or where it sends
+     them. Any failure here falls through to the normal copy. */
+  function themedTitles() {
+    try {
+      var key = document.documentElement.getAttribute('data-theme');
+      if (!key) { return null; }
+      var raw = document.getElementById('compatThemeCopy');
+      if (!raw) { return null; }
+      var list = JSON.parse(raw.textContent) || [];
+      for (var i = 0; i < list.length; i++) {
+        if (list[i] && list[i].key === key && list[i].enabled) { return list[i].quiz || null; }
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  window.compatShowResult = function() {
+    var out = verdict();
+    var outcomes = (model && model.outcomes) || {};
+    var o = outcomes[out.key];
+    el('compatProgress').style.display = 'none';
+
+    completed(3);
+    state.step = 4;
+    lastOutcome = out.key;
+    var props = answers();
+    props.outcome = out.key;
+    props.evidence = out.proven || 'none';
+    track('quiz_result_shown', props);
+
+    if (!o) {
+      /* No model, so no verdict. Falls back to the screen that was here
+         before rather than showing an empty result. */
+      showScreen('compatResult');
+      return;
+    }
+
+    var badge = el('compatResultBadge');
+    badge.textContent = o.label;
+    badge.className = 'compat-badge compat-badge-' + out.key;
+    var themed = themedTitles();
+    el('compatResultTitle').textContent =
+      (themed && themed[out.key]) ? themed[out.key] : o.title;
+    el('compatResultBody').textContent = o.body;
+
+    var ev = el('compatResultEvidence');
+    if (ev) {
+      var labels = (model && model.evidenceLabels) || {};
+      if (out.proven === 'compatible') { ev.textContent = labels.compatible || ''; ev.className = 'compat-evidence compat-evidence-yes'; }
+      else if (out.proven === 'not-compatible') { ev.textContent = labels.notCompatible || ''; ev.className = 'compat-evidence compat-evidence-no'; }
+      else { ev.textContent = ''; ev.className = 'compat-evidence'; }
+    }
+    showScreen('compatResult');
+  };
+
+  function updateProgress(step) {
+    el('compatStepLabel').textContent = 'Step ' + step + ' of 3';
+    el('compatProgressFill').style.width = (step * 33) + '%';
+  }
+
+  // Initialize
+  renderCategories();
+
+  /* The result screen's call to action is a plain link to the contact page.
+     Which outcome it was clicked from is the number that matters: it says
+     whether "Testing required" sends people to us or sends them away. */
+  var resultCta = document.querySelector('#compatResult .compat-cta');
+  if (resultCta) {
+    resultCta.addEventListener('click', function() {
+      var props = answers();
+      props.outcome = lastOutcome;
+      track('quiz_cta_clicked', props);
+    });
+  }
+})();
+
+
+/* Autoplaying video, for people who have asked for less of it.
+
+   The NaturalCloud panel loops an eleven second recording with no controls,
+   which is what was asked for and is also, for anyone sensitive to motion,
+   eleven seconds of movement they cannot stop. WCAG 2.2.2 asks that anything
+   moving for more than five seconds can be paused.
+
+   So the operating system setting decides. Nobody who has not asked for
+   reduced motion notices this code at all; anyone who has gets the first
+   frame, a play button, and the choice. The check is live rather than
+   read-once, because the setting can be changed while the page is open.
+
+   Attributes rather than a class, because autoplay and controls are what the
+   browser actually reads. */
+window.addEventListener('DOMContentLoaded', function() {
+  var videos = document.querySelectorAll('video[autoplay]');
+  if (!videos.length || !window.matchMedia) return;
+  var query = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function apply() {
+    for (var i = 0; i < videos.length; i++) {
+      var v = videos[i];
+      if (query.matches) {
+        v.autoplay = false;
+        v.controls = true;
+        v.pause();
+      } else {
+        v.controls = false;
+        /* play() rejects when a browser blocks autoplay for its own reasons.
+           Nothing to do about that here, and an unhandled rejection in the
+           console helps nobody. */
+        var p = v.play();
+        if (p && p.catch) p.catch(function() {});
+      }
+    }
+  }
+
+  apply();
+  if (query.addEventListener) query.addEventListener('change', apply);
+  else if (query.addListener) query.addListener(apply);
+});
+
+/* Closing the phone menu.
+ *
+ * The menu is opened by a class on .nav-links and there was nothing that took
+ * it off again except the hamburger. That is fine for a link to another page,
+ * because the reload drops the class with the document. It is not fine for the
+ * in-page links: Our Story, and the four industry anchors, jump within a page
+ * that is already loaded, so the menu stayed open, full height, over a page
+ * that had just scrolled underneath it. That is what a phone user sees as "it
+ * covers the screen and scrolling moves the page behind it".
+ *
+ * Three ways out, all of them what a phone user will try: tap a link, tap off
+ * the menu, press Escape. The hamburger keeps working as before; its inline
+ * handler is deliberately left alone so the menu still opens if this file
+ * fails to load.
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  var links = document.querySelector('.nav-links');
+  var toggle = document.querySelector('.nav-toggle');
+  if (!links) return;
+
+  function close() { links.classList.remove('show'); }
+  function isOpen() { return links.classList.contains('show'); }
+
+  links.addEventListener('click', function (e) {
+    var el = e.target;
+    while (el && el !== links) {
+      if (el.tagName === 'A') { close(); return; }
+      el = el.parentNode;
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!isOpen()) return;
+    if (links.contains(e.target)) return;
+    if (toggle && toggle.contains(e.target)) return;
+    close();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && isOpen()) close();
+  });
+});
+
+/* Loading a LinkedIn post, once someone has asked for it.
+ *
+ * The strip at the foot of the Insights page ships as cards with a button, not
+ * as frames. This swaps a card's contents for the frame when it is pressed.
+ *
+ * Do not "simplify" this by putting the iframe straight in the template. The
+ * frame is a LinkedIn page: the moment it loads, LinkedIn sets its cookies on
+ * everyone who opened /insights/, including the people who declined in the
+ * consent bar. That bar asks about how visitors use this site, meaning our own
+ * analytics, and it is gated properly in consent.njk. Nothing there covers
+ * handing a visitor to LinkedIn without asking, and reading it as though it
+ * did would make the wording on the bar false. Pressing the button is the ask.
+ *
+ * The address is on the card as data-embed-src, already turned into LinkedIn's
+ * embed form by the linkedinEmbed filter at build time, so a bad paste has
+ * already failed the build long before this runs.
+ *
+ * Height is fixed at 620px. LinkedIn's frames do not size themselves to their
+ * contents unless you also load LinkedIn's script, which is the tracking this
+ * whole arrangement exists to avoid. 620px holds an ordinary post; a longer
+ * one scrolls inside its own frame.
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  var cards = document.querySelectorAll('.linkedin-embed');
+  if (!cards.length) return;
+
+  for (var i = 0; i < cards.length; i++) {
+    (function (card) {
+      var button = card.querySelector('.linkedin-embed-load');
+      if (!button) return;
+
+      button.addEventListener('click', function () {
+        var frame = document.createElement('iframe');
+        frame.src = card.getAttribute('data-embed-src');
+        frame.title = card.getAttribute('data-embed-title') || 'LinkedIn post';
+        frame.setAttribute('loading', 'lazy');
+        frame.setAttribute('frameborder', '0');
+        frame.setAttribute('allowfullscreen', '');
+
+        card.innerHTML = '';
+        card.appendChild(frame);
+        card.classList.add('is-loaded');
+      });
+    })(cards[i]);
+  }
+});
+
+/* ===== Event jar cards (/scan/): which way the row still moves =====
+   The two card rows swipe on a phone. The hint underneath says so; it cannot
+   say whether there is anything left to reach in a given direction, which is
+   the part that matters once someone has started moving. Two indicators sit
+   over the ends of each row and are shown only while there is more that way.
+
+   Scroll position is not available to CSS, so this is script, and it is written
+   to fail safe: if it never runs, both indicators stay hidden and the row still
+   swipes exactly as it did. Nothing here is the only route to anything.
+
+   The 4px tolerance is not decoration either. scrollLeft is fractional on a
+   zoomed or high-density display, so a row scrolled fully right can report a
+   maximum a fraction of a pixel short of scrollWidth - clientWidth, and a strict
+   comparison leaves the right-hand arrow lit at the end of the row, pointing at
+   nothing. */
+document.addEventListener('DOMContentLoaded', function () {
+  var rows = document.querySelectorAll('.scan-swipe > .scan-cards, .scan-swipe > .vp-grid');
+
+  function watch(row) {
+    var wrap = row.parentElement;
+    function update() {
+      var max = row.scrollWidth - row.clientWidth;
+      // Under 4px of travel means the row is not a carousel at this width, so
+      // neither indicator belongs on screen.
+      var scrolls = max > 4;
+      wrap.classList.toggle('can-left', scrolls && row.scrollLeft > 4);
+      wrap.classList.toggle('can-right', scrolls && row.scrollLeft < max - 4);
+    }
+    row.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    /* Run again once the photographs are in. They are lazy, so the row's
+       scrollWidth is smaller before they arrive than after, and a state worked
+       out from the first number would be wrong by the time anyone looked. */
+    window.addEventListener('load', update);
+    update();
+  }
+
+  for (var i = 0; i < rows.length; i++) watch(rows[i]);
+});
+
+
+/* ---------------------------------------------------------------------------
+   The topic control above the Insights list and on each tag archive.
+
+   The control ships hidden in the markup and is unhidden here, so a visitor
+   with no JavaScript never sees a select that does nothing. Every archive is
+   still reachable without it, through the kicker on each row.
+
+   It navigates rather than filters, since 3 September 2026. Until then it
+   showed and hid rows on the single Insights page. The page is paginated
+   now, and a filter that can only see the rows in front of it would report
+   two Food Fraud articles while the third sat on page two. Each option
+   carries its archive in data-href, written by the template from the same
+   collection that builds the archives, so the two cannot disagree. The
+   ?topic= query string went with the filter; the redirect that used it now
+   points at the archive directly.
+
+   A same-page choice is a no-op rather than a reload: picking the topic you
+   are already reading should do nothing, not flash the page.
+--------------------------------------------------------------------------- */
+document.addEventListener('DOMContentLoaded', function () {
+  var filter = document.getElementById('insights-filter');
+  var select = document.getElementById('insights-topic');
+  if (!filter || !select) return;
+
+  filter.hidden = false;
+
+  select.addEventListener('change', function () {
+    var opt = select.options[select.selectedIndex];
+    var href = opt && opt.getAttribute('data-href');
+    if (href && href !== window.location.pathname) window.location.href = href;
+  });
+});
