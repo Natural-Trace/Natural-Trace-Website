@@ -822,8 +822,31 @@ footer{background:var(--charcoal);color:rgba(255,255,255,.75);padding:4rem 0 2re
 .footer-col h4{font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.55);margin-bottom:1.25rem}
 .footer-col ul{list-style:none}
 .footer-col li{margin-bottom:.6rem}
-.footer-col a{font-size:.9rem;color:rgba(255,255,255,.5);transition:color .2s,padding-left .2s;cursor:pointer}
-.footer-col a:hover{color:#fff;padding-left:4px}
+/* The nudge on hover is a transform on an inline-block, not padding-left on an
+   inline box, and the difference is only visible on a link long enough to wrap.
+
+   padding-left on an inline element is applied once, at the start edge of the
+   first line box. It is leading padding for the whole inline box, not padding
+   on each line fragment, so a link that wraps shifts its first line and leaves
+   the rest where it was. Every footer link fits on one line except
+   "Nutraceuticals & Dietary Supplements", where "Supplements" wraps: on hover
+   the first line moved and that word sat still. Reported 7 Sep 2026.
+
+   transform needs display:inline-block, because it does not apply to
+   non-replaced inline boxes at all. That is also why the padding version was
+   written in the first place — swapping in translateX alone would have done
+   nothing here.
+
+   translateX rather than the padding it replaces, because transform does not
+   affect layout. Padding on an inline-block narrows the content box by 4px,
+   and on a link that is already wrapping, 4px is enough to move where it
+   breaks: hovering would reflow the text it is trying to point at. */
+.footer-col a{font-size:.9rem;color:rgba(255,255,255,.5);display:inline-block;transition:color .2s,transform .2s;cursor:pointer}
+.footer-col a:hover{color:#fff;transform:translateX(4px)}
+@media(prefers-reduced-motion:reduce){
+  .footer-col a{transition:color .2s}
+  .footer-col a:hover{transform:none}
+}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
 .footer-bottom p{font-size:.8rem}
 .footer-social{display:flex;gap:.75rem}
