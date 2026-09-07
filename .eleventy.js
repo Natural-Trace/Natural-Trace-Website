@@ -305,6 +305,14 @@ module.exports = function(eleventyConfig) {
     eleventyConfig.addPassthroughCopy({
       "src/assets/docs/natural-trace-launch-press-release-2022.pdf":
         "wp-content/uploads/2022/05/Natural-Trace-launch-press-release_Final.pdf",
+      /* Nothing on the site links to this one. It surfaced on 7 Sep 2026 in a
+         Search Console 404 export, still being crawled two years after the
+         article it belongs to, so the only people reaching it are following an
+         external link or a search result. Restored at its old address for
+         them; whether the 7 Apr 2024 article should carry a download link
+         again is a copy decision and has not been made here. */
+      "src/assets/docs/recent-regulations-traceability-2024.pdf":
+        "wp-content/uploads/2024/04/Recent-Regulations-Driving-Traceability-in-Food-and-Agriculture-Sectors-.pdf",
     });
   }
   eleventyConfig.addWatchTarget("src/assets/");

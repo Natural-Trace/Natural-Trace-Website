@@ -302,3 +302,77 @@ rules:
     to: "/insights/"
   - from: "/insights/tag/press-release/"
     to: "/insights/tag/company-news/"
+
+  # Legacy WordPress archive pagination and date archives.
+  #
+  # Added 7 September 2026 from a Search Console "Not found (404)" export of
+  # sixteen URLs. Fourteen are below, one is a PDF restored in .eleventy.js,
+  # and the sixteenth is the 2025 brochure PDF, still waiting on the original
+  # file from marketing.
+  #
+  # These mark the exact boundary of the enumeration described at the top of
+  # this file. The rules there were taken from the WordPress sitemaps on
+  # 4 August 2026, and a WordPress sitemap lists /tag/food-fraud-prevention/
+  # but not its /page/2/, and omits date archives altogether. Google knew the
+  # wider set because it had crawled the live site, which is always a superset
+  # of the sitemap. The result was that every base archive URL in the export
+  # already redirected and not one paginated variant did.
+  #
+  # There is no catch-all. GitHub Pages has no server-side redirects, so every
+  # rule here is a real file on disk, and /page/N/ is an unbounded space. Only
+  # the URLs Google has actually reported are listed. If more surface later,
+  # add those rather than trying to enumerate the space.
+
+  # Tag archive pagination. Same target as each base rule above.
+  - from: "/tag/product-provenance/page/3/"
+    to: "/insights/"
+  - from: "/tag/clean-label-verification/page/2/"
+    to: "/insights/"
+  - from: "/tag/vitafoods-europe-2025/page/2/"
+    to: "/insights/"
+  - from: "/tag/food-fraud-prevention/page/2/"
+    to: "/insights/"
+  - from: "/tag/supplement-traceability/page/3/"
+    to: "/insights/"
+
+  # Category archive pagination.
+  - from: "/category/uncategorized/page/3/"
+    to: "/insights/"
+  - from: "/category/research-blog/page/2/"
+    to: "/insights/"
+
+  # Author archive pagination. The base rule for this author is above and has
+  # been in the repository since 4 August; this adds no name that was not
+  # already here, and the address was public on the old site for years.
+  - from: "/author/kirsty-hall/page/3/"
+    to: "/team/"
+
+  # WordPress search results, page two. Google reported this as
+  # /page/2/?s={search_term_string}, with the placeholder from the old search
+  # form template taken literally rather than filled in. A static host cannot
+  # match on a query string and ignores it outright, so a rule at the path
+  # catches every query that lands there. The path is free: the Insights pager
+  # lives at /insights/page/2/, not at the root.
+  - from: "/page/2/"
+    to: "/insights/"
+
+  # Date archives. WordPress published one of these per day it had a post, and
+  # every day in the export carries exactly one article, so each of these can
+  # point at the piece it actually names instead of at the index. That is what
+  # the note at the top of this file asks for: the blanket /insights/ target is
+  # a holding position for articles that had not been ported, and these have.
+  # Someone following a five-year-old link to a specific day lands on the thing
+  # they were looking for.
+  #
+  # The three carrying /page/N/ are pagination over a single-post day, so they
+  # never held anything beyond page one and go to the same article.
+  - from: "/2024/10/17/"
+    to: "/insights/2024-10-17-natural-trace-selected-as-a-finalist-for-the-fi-europe-2024-startup-challenge/"
+  - from: "/2026/05/12/"
+    to: "/insights/2026-05-12-natural-trace-vitafoods-europe-2026-recap/"
+  - from: "/2025/05/22/page/2/"
+    to: "/insights/2025-05-22-nutraceutical-focus-brochure-2025/"
+  - from: "/2025/07/15/page/3/"
+    to: "/insights/2025-07-15-ingredient-integrity-supplement-brands/"
+  - from: "/2025/10/29/page/2/"
+    to: "/insights/2025-10-29-natural-trace-at-supplyside-global-2025/"
