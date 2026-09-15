@@ -1,3 +1,16 @@
+/* This must be the only Eleventy config file in the repository root.
+ *
+ * Until 15 Sep 2026 an eleventy.config.js sat beside this one, two lines long,
+ * re-exporting this file "as a single source of truth". Eleventy never loaded
+ * it (.eleventy.js is first in its search order) but --serve still walked it.
+ * The watcher spiders the require() graph of every candidate config name at
+ * once and unions the results, so the shim's one dependency, this file, was
+ * recorded as a dependency of this file too. A graph with a self-edge throws
+ * the first time it is read, which is the first file change of any kind, and
+ * the error blamed the file that had changed. Six weeks of `npm start` dying
+ * on the first edit came down to that. Do not add eleventy.config.js,
+ * eleventy.config.cjs or eleventy.config.mjs back.
+ */
 const yaml = require("js-yaml");
 const fs = require("node:fs");
 const crypto = require("node:crypto");
