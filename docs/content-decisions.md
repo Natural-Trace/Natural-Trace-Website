@@ -295,7 +295,7 @@ first time an editor saves one. This section is where the reasons live.
 Rebuilt on 3 Sep 2026 from commit `5577ec4`, the last one that still carried
 the comments, after PostHog was switched on through the CMS and Decap wrote
 the file back without them. The panel is **HubSpot & Contact Form**, under
-Site & SEO Settings, and it is the only panel that touches this file.
+Settings (labelled "Site & SEO Settings" until 15 Sep 2026), and it is the only panel that touches this file.
 
 Everything in the file is compiled into the public site and readable by
 anyone. A HubSpot portal ID, a form GUID, a Cloudflare site token and a

@@ -126,17 +126,29 @@ collections:
             name: "hero"
             widget: "object"
             collapsed: true
+            # `summary` puts the section's own headline in the collapsed bar, so the
+            # contents page reads the way the page does instead of as a list of
+            # section names. Object fields take the same templates as lists. A
+            # long text value is truncated; an empty one leaves the label and a
+            # dash. Added to every numbered section on 15 Sep 2026.
+            summary: "1. Hero — {{fields.title_line1}} {{fields.title_line2}}"
             hint: "The first screen a visitor sees: headline, positioning line, the ticked claims and the two buttons."
             fields:
-              - {label: "Background image", name: "bg_image", widget: "image", hint: "Tinted to the brand navy by CSS, so it comes out navy whatever colour it starts as. Landscape, 1600px wide or more. A busy or bright picture is fine, the tint handles it."}
-              - {label: "Background image description", name: "bg_image_alt", widget: "string", hint: "Not displayed and not read aloud — the background is decorative, so screen readers skip it. Kept as a note of what the picture shows, for whoever chooses the next one."}
-              - {label: "Product image", name: "image", widget: "image", hint: "The picture beside the headline."}
-              - {label: "Product image description", name: "image_alt", widget: "string", hint: "Read aloud by screen readers and shown if the image fails to load. Describe what is in it."}
               - {label: "Headline, first line", name: "title_line1", widget: "string"}
               - {label: "Headline, second line (italic)", name: "title_line2", widget: "string"}
               - {label: "Positioning line", name: "slogan", widget: "string", hint: "Shown in bold on its own line above the description. Verbatim from the copy guide — do not shorten it without Kirsty's sign-off. Write the ampersand as &amp; with &nbsp; either side, so it cannot be left stranded at the end of a line on a phone."}
               - {label: "Description", name: "desc", widget: "text"}
-              - {label: "Ticked claims", name: "claims", widget: "list", field: {label: "Claim", name: "claim", widget: "string"}, hint: "Shown as a ticked list, so start each one with a capital."}
+              # Words first, pictures second. Until 15 Sep 2026 these four image
+              # fields came first, so opening Home put an editor in front of two
+              # image pickers before any copy. The order here is only what the
+              # panel shows; the page is unchanged. Decap writes keys back in
+              # field order, so the next save of home.yml moves these four keys
+              # down the hero block. That is a cosmetic diff, not a content change.
+              - {label: "Background image", name: "bg_image", widget: "image", hint: "Tinted to the brand navy by CSS, so it comes out navy whatever colour it starts as. Landscape, 1600px wide or more. A busy or bright picture is fine, the tint handles it."}
+              - {label: "Background image description", name: "bg_image_alt", widget: "string", hint: "Not displayed and not read aloud — the background is decorative, so screen readers skip it. Kept as a note of what the picture shows, for whoever chooses the next one."}
+              - {label: "Product image", name: "image", widget: "image", hint: "The picture beside the headline."}
+              - {label: "Product image description", name: "image_alt", widget: "string", hint: "Read aloud by screen readers and shown if the image fails to load. Describe what is in it."}
+              - {label: "Ticked claims", name: "claims", widget: "list", label_singular: "claim", field: {label: "Claim", name: "claim", widget: "string"}, hint: "Shown as a ticked list, so start each one with a capital."}
               - {label: "Closing phrase after the claims", name: "claims_coda", widget: "string", required: false, hint: "Deliberately empty since 12 Aug — it used to repeat what the description already says. The line disappears when this is empty and comes back when it is filled, with no code change."}
               - {label: "Primary button text", name: "cta", widget: "string"}
               - label: "Primary button link"
@@ -155,6 +167,10 @@ collections:
             name: "challenge"
             widget: "object"
             collapsed: true
+            # The subtitle, not the headline: the headline carries a <br>, which
+            # the bar would print literally, and the small label above it just
+            # says "The Challenge" again.
+            summary: "2. The Challenge — {{fields.subtitle | truncate(70)}}"
             hint: "The band directly under the hero that states the problem, as three points side by side."
             fields:
               - {label: "Small label above the headline", name: "label", widget: "string"}
@@ -163,6 +179,7 @@ collections:
               - label: "Points"
                 name: "points"
                 widget: "list"
+                label_singular: "point"
                 summary: "{{fields.text}}"
                 hint: "Three reads best. They sit side by side, so keep each one to a single short sentence."
                 fields:
@@ -174,6 +191,7 @@ collections:
             name: "value_prop"
             widget: "object"
             collapsed: true
+            summary: "3. Why Customers Choose Us — {{fields.title}}"
             hint: "The card grid answering the challenge above. Each card pairs a customer problem with what Natural Trace does about it."
             fields:
               - {label: "Small label above the headline", name: "label", widget: "string"}
@@ -183,6 +201,7 @@ collections:
               - label: "Cards"
                 name: "cards"
                 widget: "list"
+                label_singular: "card"
                 summary: "{{fields.title}}"
                 fields:
                   - {label: "Card title", name: "title", widget: "string"}
@@ -196,6 +215,7 @@ collections:
             name: "how_it_works"
             widget: "object"
             collapsed: true
+            summary: "4. How It Works — {{fields.title}}"
             hint: "The numbered steps. This section also appears on the NaturalTag page, built from these same words, so editing it here changes both places."
             fields:
               - {label: "Small label above the headline", name: "label", widget: "string"}
@@ -211,12 +231,13 @@ collections:
                   - {label: "Title", name: "title", widget: "string"}
                   - {label: "Description", name: "description", widget: "text"}
               - {label: "Detail link text", name: "features_label", widget: "string", hint: "The line a visitor clicks to open the list below it."}
-              - {label: "Detail points", name: "features", widget: "list", field: {label: "Point", name: "point", widget: "string"}}
+              - {label: "Detail points", name: "features", widget: "list", label_singular: "detail point", field: {label: "Point", name: "point", widget: "string"}}
 
           - label: "5. Industries"
             name: "industries"
             widget: "object"
             collapsed: true
+            summary: "5. Industries — {{fields.title}}"
             hint: "The tiles linking out to the industry pages."
             fields:
               - {label: "Small label above the headline", name: "label", widget: "string"}
@@ -224,6 +245,7 @@ collections:
               - label: "Tiles"
                 name: "tiles"
                 widget: "list"
+                label_singular: "tile"
                 summary: "{{fields.name}}"
                 fields:
                   - {label: "Name", name: "name", widget: "string"}
@@ -240,6 +262,7 @@ collections:
             name: "partners"
             widget: "object"
             collapsed: true
+            summary: "6. Partner logos — {{fields.label}}"
             hint: "The scrolling logo rail below the industry tiles."
             fields:
               - {label: "Small label above the rail", name: "label", widget: "string"}
@@ -259,6 +282,7 @@ collections:
             name: "insights"
             widget: "object"
             collapsed: true
+            summary: "7. Latest from Insights — {{fields.title}}"
             hint: "The strip of recent articles near the bottom. The articles themselves are pulled in automatically, so publishing one updates this section with no work here."
             fields:
               - {label: "Heading", name: "title", widget: "string"}
@@ -268,6 +292,7 @@ collections:
             name: "final_cta"
             widget: "object"
             collapsed: true
+            summary: "8. Closing call to action — {{fields.title}}"
             hint: "The last band on the page, above the footer."
             fields:
               - {label: "Headline", name: "title", widget: "string"}
@@ -301,6 +326,9 @@ collections:
             name: "hero"
             widget: "object"
             collapsed: true
+            # The intro, not the headline: the headline carries a <br> and the
+            # subtitle an &nbsp;, and the bar would print both literally.
+            summary: "1. Hero — {{fields.intro | truncate(70)}}"
             hint: "The opening band: heading, the two intro paragraphs, the photograph and the button."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -322,28 +350,32 @@ collections:
             name: "story"
             widget: "object"
             collapsed: true
+            # The question, not the headline: the headline carries a <br>.
+            summary: "2. Our story — {{fields.question | truncate(70)}}"
             hint: "The founding story, told as a question and an answer."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
             - {label: "Heading", name: "title", widget: "string", hint: "Type <br> where you want the headline to break onto a new line."}
             - {label: "Opening question", name: "question", widget: "text"}
-            - {label: "Paragraphs", name: "body", widget: "list", field: {label: "Paragraph", name: "para", widget: "text"}}
+            - {label: "Paragraphs", name: "body", widget: "list", label_singular: "paragraph", field: {label: "Paragraph", name: "para", widget: "text"}}
 
           - label: "3. Why we exist"
             name: "why"
             widget: "object"
             collapsed: true
+            summary: "3. Why we exist — {{fields.title}}"
             hint: "The band with the full-width background photograph behind it."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
             - {label: "Heading", name: "title", widget: "string"}
             - {label: "Background photograph", name: "bg_image", widget: "image", required: false, hint: "Sits behind the section, tinted to the brand navy so white text stays readable. A wide landscape photograph works best. Leave empty for a plain dark background."}
-            - {label: "Paragraphs", name: "body", widget: "list", field: {label: "Paragraph", name: "para", widget: "text"}}
+            - {label: "Paragraphs", name: "body", widget: "list", label_singular: "paragraph", field: {label: "Paragraph", name: "para", widget: "text"}}
 
           - label: "4. Vision"
             name: "vision"
             widget: "object"
             collapsed: true
+            summary: "4. Vision — {{fields.text | truncate(70)}}"
             hint: "One line. Sits beside the mission."
             fields:
             - {label: "Small label", name: "label", widget: "string"}
@@ -353,6 +385,7 @@ collections:
             name: "mission"
             widget: "object"
             collapsed: true
+            summary: "5. Mission — {{fields.text | truncate(70)}}"
             hint: "Sits beside the vision."
             fields:
             - {label: "Small label", name: "label", widget: "string"}
@@ -363,6 +396,7 @@ collections:
             name: "different"
             widget: "object"
             collapsed: true
+            summary: "6. What makes us different — {{fields.title}}"
             hint: "The card grid."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -370,6 +404,7 @@ collections:
             - label: "Cards"
               name: "cards"
               widget: "list"
+              label_singular: "card"
               summary: "{{fields.title}}"
               fields:
                 - {label: "Title", name: "title", widget: "string"}
@@ -379,6 +414,7 @@ collections:
             name: "choose"
             widget: "object"
             collapsed: true
+            summary: "7. Why customers choose us — {{fields.title}}"
             hint: "The grouped list of reasons. Several registered claims live in here, so check docs/claim-review.yml before rewording any of them."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -386,25 +422,28 @@ collections:
             - label: "Groups"
               name: "groups"
               widget: "list"
+              label_singular: "group"
               summary: "{{fields.title}}"
               fields:
                 - {label: "Group Title", name: "title", widget: "string", hint: "Write the ampersand as &amp; and put &nbsp; either side of it, so the heading cannot break with the & left at the end of a line."}
-                - {label: "Items", name: "items", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+                - {label: "Items", name: "items", widget: "list", label_singular: "item", field: {label: "Item", name: "item", widget: "string"}}
 
           - label: "8. Product matrices"
             name: "matrices"
             widget: "object"
             collapsed: true
+            summary: "8. Product matrices — {{fields.title}}"
             hint: "The list of product types the tag has been used in."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
             - {label: "Heading", name: "title", widget: "string", hint: "CLAIM REVIEW: the 20+ figure has not been signed off. Do not publish this section without approval."}
-            - {label: "Product types", name: "items", widget: "list", field: {label: "Category", name: "item", widget: "string"}}
+            - {label: "Product types", name: "items", widget: "list", label_singular: "product type", field: {label: "Category", name: "item", widget: "string"}}
 
           - label: "9. Closing call to action"
             name: "final_cta"
             widget: "object"
             collapsed: true
+            summary: "9. Closing call to action — {{fields.title}}"
             hint: "The last band on the page, above the footer."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
@@ -443,8 +482,8 @@ collections:
               - {label: "Location", name: "location", widget: "string", required: false}
               - {label: "Photo", name: "photo", widget: "image", media_folder: "/src/assets/team", public_folder: "/assets/team", hint: "A square headshot works best. It is cropped to a circle."}
               - {label: "LinkedIn profile", name: "linkedin", widget: "string", required: false, hint: "Full address, starting https://. Leave empty and no icon appears."}
-              - {label: "Education", name: "education", widget: "list", required: false, field: {label: "Degree", name: "degree", widget: "string"}}
-              - {label: "Biography", name: "bio", widget: "list", hint: "One point per line. They appear as separate paragraphs when someone opens this person.", field: {label: "Paragraph", name: "point", widget: "string"}}
+              - {label: "Education", name: "education", widget: "list", label_singular: "qualification", required: false, field: {label: "Degree", name: "degree", widget: "string"}}
+              - {label: "Biography", name: "bio", widget: "list", label_singular: "paragraph", hint: "One point per line. They appear as separate paragraphs when someone opens this person.", field: {label: "Paragraph", name: "point", widget: "string"}}
               - {label: "Position in the list", name: "order", widget: "number", hint: "Lower numbers appear first. Only matters relative to the other people in the same section."}
 
   # Insights: news, updates, and articles
@@ -457,6 +496,7 @@ collections:
             name: "intro"
             widget: "object"
             collapsed: true
+            summary: "1. Page introduction — {{fields.title}}"
             hint: "The heading, the opening paragraph, and the wording on the two tabs below it."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -480,6 +520,7 @@ collections:
             - label: "Positions"
               name: "positions"
               widget: "list"
+              label_singular: "position"
               summary: "{{fields.title}} ({{fields.location}})"
               required: false
               fields:
@@ -506,7 +547,7 @@ collections:
                 - {label: "Heading", name: "title", widget: "string"}
                 - {label: "Description", name: "description", widget: "text"}
                 - {label: "Expectations heading", name: "expectations_label", widget: "string"}
-                - {label: "Expectations", name: "expectations", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+                - {label: "Expectations", name: "expectations", widget: "list", label_singular: "expectation", field: {label: "Item", name: "item", widget: "string"}}
                 - {label: "Location", name: "location", widget: "string"}
 
             - label: "Application form"
@@ -530,7 +571,7 @@ collections:
                 - {label: "Message: placeholder", name: "message_placeholder", widget: "string"}
                 - {label: "Submit button", name: "submit_text", widget: "string"}
 
-            - {label: "Areas of interest", name: "areas", widget: "list", field: {label: "Area", name: "area", widget: "string"}}
+            - {label: "Areas of interest", name: "areas", widget: "list", label_singular: "area of interest", field: {label: "Area", name: "area", widget: "string"}}
 
             - label: "Confirmation message"
               name: "success"
@@ -555,6 +596,7 @@ collections:
             name: "hero"
             widget: "object"
             collapsed: true
+            summary: "1. Hero — {{fields.title}}"
             hint: "The opening band: the product name, the one-line description, and the photograph or logo panel beside it."
             fields:
             - {label: "Small label above the title", name: "label", widget: "string"}
@@ -592,24 +634,27 @@ collections:
             name: "why"
             widget: "object"
             collapsed: true
+            summary: "2. Why it matters — {{fields.title}}"
             hint: "The reasons band under the hero."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Points", name: "items", widget: "list", field: {label: "Item", name: "item", widget: "string"}}
+            - {label: "Points", name: "items", widget: "list", label_singular: "point", field: {label: "Item", name: "item", widget: "string"}}
 
           - label: "3. What it does"
             name: "features"
             widget: "object"
             collapsed: true
+            summary: "3. What it does — {{fields.title}}"
             hint: "The list of capabilities."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Points", name: "items", widget: "list", field: {label: "Feature", name: "feature", widget: "string"}}
+            - {label: "Points", name: "items", widget: "list", label_singular: "point", field: {label: "Feature", name: "feature", widget: "string"}}
 
           - label: "4. Product matrices"
             name: "matrices"
             widget: "object"
             collapsed: true
+            summary: "4. Product matrices — {{fields.title}}"
             hint: "The grouped list of product types the tag has been used in."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -617,6 +662,7 @@ collections:
             - label: "Groups"
               name: "items"
               widget: "list"
+              label_singular: "group"
               summary: "{{fields.group}}"
               fields:
                 - {label: "Group", name: "group", widget: "string"}
@@ -626,6 +672,7 @@ collections:
             name: "video"
             widget: "object"
             collapsed: true
+            summary: "5. Video — {{fields.title}}"
             hint: "The explainer video and the words around it."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -637,6 +684,7 @@ collections:
             name: "final_cta"
             widget: "object"
             collapsed: true
+            summary: "6. Closing call to action — {{fields.text}}"
             hint: "The last band on the page, above the footer."
             fields:
             - {label: "Button text", name: "text", widget: "string"}
@@ -656,6 +704,7 @@ collections:
             name: "hero"
             widget: "object"
             collapsed: true
+            summary: "1. Hero — {{fields.title}}"
             hint: "The opening band: the product name, the one-line description, and the photograph or logo panel beside it."
             fields:
             - {label: "Small label above the title", name: "label", widget: "string"}
@@ -693,15 +742,17 @@ collections:
             name: "features"
             widget: "object"
             collapsed: true
+            summary: "2. What it does — {{fields.title}}"
             hint: "The list of capabilities below the hero."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Points", name: "items", widget: "list", field: {label: "Feature", name: "feature", widget: "string"}}
+            - {label: "Points", name: "items", widget: "list", label_singular: "point", field: {label: "Feature", name: "feature", widget: "string"}}
 
           - label: "3. Closing call to action"
             name: "final_cta"
             widget: "object"
             collapsed: true
+            summary: "3. Closing call to action — {{fields.primary}}"
             hint: "The last band on the page, above the footer."
             fields:
             - {label: "Primary button text", name: "primary", widget: "string"}
@@ -728,6 +779,7 @@ collections:
             name: "hero"
             widget: "object"
             collapsed: true
+            summary: "1. Hero — {{fields.title}}"
             hint: "The opening band: the product name, the one-line description, and the photograph or logo panel beside it."
             fields:
             - {label: "Small label above the title", name: "label", widget: "string"}
@@ -768,15 +820,17 @@ collections:
             name: "features"
             widget: "object"
             collapsed: true
+            summary: "2. What it does — {{fields.title}}"
             hint: "The list of capabilities below the hero."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Points", name: "items", widget: "list", field: {label: "Benefit", name: "benefit", widget: "string"}}
+            - {label: "Points", name: "items", widget: "list", label_singular: "point", field: {label: "Benefit", name: "benefit", widget: "string"}}
 
           - label: "3. Closing call to action"
             name: "final_cta"
             widget: "object"
             collapsed: true
+            summary: "3. Closing call to action — {{fields.primary}}"
             hint: "The last band on the page, above the footer."
             fields:
             - {label: "Primary button text", name: "primary", widget: "string"}
@@ -803,6 +857,7 @@ collections:
             name: "intro"
             widget: "object"
             collapsed: true
+            summary: "1. Page introduction — {{fields.title}}"
             hint: "The heading and standfirst at the top of the FAQ page."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -818,6 +873,7 @@ collections:
             - label: "Filter categories"
               name: "categories"
               widget: "list"
+              label_singular: "category"
               summary: "{{fields.label}}"
               fields:
                 - {label: "Internal name", name: "id", widget: "string", hint: "Used to link questions to this tab. Changing it detaches every question filed under it, so leave it alone unless you are also updating the questions."}
@@ -825,6 +881,7 @@ collections:
             - label: "Questions"
               name: "questions"
               widget: "list"
+              label_singular: "question"
               summary: "{{fields.question}}"
               fields:
                 - label: "Which tab"
@@ -839,6 +896,7 @@ collections:
             name: "final_cta"
             widget: "object"
             collapsed: true
+            summary: "3. Closing call to action — {{fields.title}}"
             hint: "The last band on the page, above the footer."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
@@ -857,6 +915,7 @@ collections:
             name: "intro"
             widget: "object"
             collapsed: true
+            summary: "1. Page introduction — {{fields.title}}"
             hint: "The heading and standfirst at the top of the Industries page."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -872,6 +931,7 @@ collections:
             - label: "Sectors"
               name: "items"
               widget: "list"
+              label_singular: "sector"
               summary: "{{fields.name}}"
               fields:
                 - {label: "Internal name", name: "id", widget: "string", hint: "An anchor on the card, so an old link like /industries/#agri-food still lands on it. Changing it breaks those links."}
@@ -889,6 +949,7 @@ collections:
             name: "final_cta"
             widget: "object"
             collapsed: true
+            summary: "3. Closing call to action — {{fields.title}}"
             hint: "The last band on the page, above the footer."
             fields:
             - {label: "Small label", name: "label", widget: "string"}
@@ -917,6 +978,7 @@ collections:
             name: "hero"
             widget: "object"
             collapsed: true
+            summary: "1. Hero — {{fields.title}}"
             hint: "The opening band of the Nutraceuticals & Dietary Supplements page: the industry name, its one-line description, the intro paragraph, two buttons and the photograph beside them."
             fields:
             - {label: "Small label above the title", name: "label", widget: "string"}
@@ -963,29 +1025,32 @@ collections:
             name: "challenge"
             widget: "object"
             collapsed: true
+            summary: "2. The challenge — {{fields.title}}"
             hint: "The left-hand card under the hero: the problems this industry faces. Leads with the customer's problem, before the technology."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+            - {label: "Points", name: "items", widget: "list", label_singular: "point", field: {label: "Point", name: "item", widget: "string"}}
 
           - label: "3. How Natural Trace helps"
             name: "value"
             widget: "object"
             collapsed: true
+            summary: "3. How Natural Trace helps — {{fields.title}}"
             hint: "The right-hand card under the hero: what Natural Trace does about each of those problems."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+            - {label: "Points", name: "items", widget: "list", label_singular: "point", field: {label: "Point", name: "item", widget: "string"}}
 
           - label: "4. In practice"
             name: "use_cases"
             widget: "object"
             collapsed: true
+            summary: "4. In practice — {{fields.title}}"
             hint: "Which of the Industry Use-Cases to show on this page. The cases themselves are edited under Industry Use-Cases; this only picks them. The band is left out of the page when the list is empty."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Cases to show", name: "sectors", widget: "list", required: false, field: {label: "Sector", name: "sector", widget: "string"}, hint: "Type the Sector of each case exactly as it appears in Industry Use-Cases, for example Agri-food: Green Coffee. A case whose sector does not match is silently not shown."}
+            - {label: "Cases to show", name: "sectors", widget: "list", label_singular: "case", required: false, field: {label: "Sector", name: "sector", widget: "string"}, hint: "Type the Sector of each case exactly as it appears in Industry Use-Cases, for example Agri-food: Green Coffee. A case whose sector does not match is silently not shown."}
             - {label: "Link text to all use cases", name: "all_text", widget: "string"}
             - label: "Link to all use cases"
               name: "all_url"
@@ -997,6 +1062,7 @@ collections:
             name: "formats"
             widget: "object"
             collapsed: true
+            summary: "5. Validated products — {{fields.title}}"
             hint: "The dark band: the validated products that apply to this industry, in groups, with one sentence under the heading."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -1005,6 +1071,7 @@ collections:
             - label: "Groups"
               name: "items"
               widget: "list"
+              label_singular: "group"
               summary: "{{fields.group}}"
               hint: "Two or three groups. Two are shown side by side, three across."
               fields:
@@ -1015,6 +1082,7 @@ collections:
             name: "final_cta"
             widget: "object"
             collapsed: true
+            summary: "6. Closing call to action — {{fields.title}}"
             hint: "The last band on the page, above the footer."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
@@ -1041,6 +1109,7 @@ collections:
             name: "hero"
             widget: "object"
             collapsed: true
+            summary: "1. Hero — {{fields.title}}"
             hint: "The opening band of the Branded Ingredients page: the industry name, its one-line description, the intro paragraph, two buttons and the photograph beside them."
             fields:
             - {label: "Small label above the title", name: "label", widget: "string"}
@@ -1087,29 +1156,32 @@ collections:
             name: "challenge"
             widget: "object"
             collapsed: true
+            summary: "2. The challenge — {{fields.title}}"
             hint: "The left-hand card under the hero: the problems this industry faces. Leads with the customer's problem, before the technology."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+            - {label: "Points", name: "items", widget: "list", label_singular: "point", field: {label: "Point", name: "item", widget: "string"}}
 
           - label: "3. How Natural Trace helps"
             name: "value"
             widget: "object"
             collapsed: true
+            summary: "3. How Natural Trace helps — {{fields.title}}"
             hint: "The right-hand card under the hero: what Natural Trace does about each of those problems."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+            - {label: "Points", name: "items", widget: "list", label_singular: "point", field: {label: "Point", name: "item", widget: "string"}}
 
           - label: "4. In practice"
             name: "use_cases"
             widget: "object"
             collapsed: true
+            summary: "4. In practice — {{fields.title}}"
             hint: "Which of the Industry Use-Cases to show on this page. The cases themselves are edited under Industry Use-Cases; this only picks them. The band is left out of the page when the list is empty."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Cases to show", name: "sectors", widget: "list", required: false, field: {label: "Sector", name: "sector", widget: "string"}, hint: "Type the Sector of each case exactly as it appears in Industry Use-Cases, for example Agri-food: Green Coffee. A case whose sector does not match is silently not shown."}
+            - {label: "Cases to show", name: "sectors", widget: "list", label_singular: "case", required: false, field: {label: "Sector", name: "sector", widget: "string"}, hint: "Type the Sector of each case exactly as it appears in Industry Use-Cases, for example Agri-food: Green Coffee. A case whose sector does not match is silently not shown."}
             - {label: "Link text to all use cases", name: "all_text", widget: "string"}
             - label: "Link to all use cases"
               name: "all_url"
@@ -1121,6 +1193,7 @@ collections:
             name: "formats"
             widget: "object"
             collapsed: true
+            summary: "5. Validated products — {{fields.title}}"
             hint: "The dark band: the validated products that apply to this industry, in groups, with one sentence under the heading."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -1129,6 +1202,7 @@ collections:
             - label: "Groups"
               name: "items"
               widget: "list"
+              label_singular: "group"
               summary: "{{fields.group}}"
               hint: "Two or three groups. Two are shown side by side, three across."
               fields:
@@ -1139,6 +1213,7 @@ collections:
             name: "final_cta"
             widget: "object"
             collapsed: true
+            summary: "6. Closing call to action — {{fields.title}}"
             hint: "The last band on the page, above the footer."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
@@ -1165,6 +1240,7 @@ collections:
             name: "hero"
             widget: "object"
             collapsed: true
+            summary: "1. Hero — {{fields.title}}"
             hint: "The opening band of the Functional Foods page: the industry name, its one-line description, the intro paragraph, two buttons and the photograph beside them."
             fields:
             - {label: "Small label above the title", name: "label", widget: "string"}
@@ -1211,29 +1287,32 @@ collections:
             name: "challenge"
             widget: "object"
             collapsed: true
+            summary: "2. The challenge — {{fields.title}}"
             hint: "The left-hand card under the hero: the problems this industry faces. Leads with the customer's problem, before the technology."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+            - {label: "Points", name: "items", widget: "list", label_singular: "point", field: {label: "Point", name: "item", widget: "string"}}
 
           - label: "3. How Natural Trace helps"
             name: "value"
             widget: "object"
             collapsed: true
+            summary: "3. How Natural Trace helps — {{fields.title}}"
             hint: "The right-hand card under the hero: what Natural Trace does about each of those problems."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+            - {label: "Points", name: "items", widget: "list", label_singular: "point", field: {label: "Point", name: "item", widget: "string"}}
 
           - label: "4. In practice"
             name: "use_cases"
             widget: "object"
             collapsed: true
+            summary: "4. In practice — {{fields.title}}"
             hint: "Which of the Industry Use-Cases to show on this page. The cases themselves are edited under Industry Use-Cases; this only picks them. The band is left out of the page when the list is empty."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Cases to show", name: "sectors", widget: "list", required: false, field: {label: "Sector", name: "sector", widget: "string"}, hint: "Type the Sector of each case exactly as it appears in Industry Use-Cases, for example Agri-food: Green Coffee. A case whose sector does not match is silently not shown."}
+            - {label: "Cases to show", name: "sectors", widget: "list", label_singular: "case", required: false, field: {label: "Sector", name: "sector", widget: "string"}, hint: "Type the Sector of each case exactly as it appears in Industry Use-Cases, for example Agri-food: Green Coffee. A case whose sector does not match is silently not shown."}
             - {label: "Link text to all use cases", name: "all_text", widget: "string"}
             - label: "Link to all use cases"
               name: "all_url"
@@ -1245,6 +1324,7 @@ collections:
             name: "formats"
             widget: "object"
             collapsed: true
+            summary: "5. Validated products — {{fields.title}}"
             hint: "The dark band: the validated products that apply to this industry, in groups, with one sentence under the heading."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -1253,6 +1333,7 @@ collections:
             - label: "Groups"
               name: "items"
               widget: "list"
+              label_singular: "group"
               summary: "{{fields.group}}"
               hint: "Two or three groups. Two are shown side by side, three across."
               fields:
@@ -1263,6 +1344,7 @@ collections:
             name: "final_cta"
             widget: "object"
             collapsed: true
+            summary: "6. Closing call to action — {{fields.title}}"
             hint: "The last band on the page, above the footer."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
@@ -1289,6 +1371,7 @@ collections:
             name: "hero"
             widget: "object"
             collapsed: true
+            summary: "1. Hero — {{fields.title}}"
             hint: "The opening band of the Agri-food page: the industry name, its one-line description, the intro paragraph, two buttons and the photograph beside them."
             fields:
             - {label: "Small label above the title", name: "label", widget: "string"}
@@ -1335,29 +1418,32 @@ collections:
             name: "challenge"
             widget: "object"
             collapsed: true
+            summary: "2. The challenge — {{fields.title}}"
             hint: "The left-hand card under the hero: the problems this industry faces. Leads with the customer's problem, before the technology."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+            - {label: "Points", name: "items", widget: "list", label_singular: "point", field: {label: "Point", name: "item", widget: "string"}}
 
           - label: "3. How Natural Trace helps"
             name: "value"
             widget: "object"
             collapsed: true
+            summary: "3. How Natural Trace helps — {{fields.title}}"
             hint: "The right-hand card under the hero: what Natural Trace does about each of those problems."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Points", name: "items", widget: "list", field: {label: "Point", name: "item", widget: "string"}}
+            - {label: "Points", name: "items", widget: "list", label_singular: "point", field: {label: "Point", name: "item", widget: "string"}}
 
           - label: "4. In practice"
             name: "use_cases"
             widget: "object"
             collapsed: true
+            summary: "4. In practice — {{fields.title}}"
             hint: "Which of the Industry Use-Cases to show on this page. The cases themselves are edited under Industry Use-Cases; this only picks them. The band is left out of the page when the list is empty."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
             - {label: "Heading", name: "title", widget: "string"}
-            - {label: "Cases to show", name: "sectors", widget: "list", required: false, field: {label: "Sector", name: "sector", widget: "string"}, hint: "Type the Sector of each case exactly as it appears in Industry Use-Cases, for example Agri-food: Green Coffee. A case whose sector does not match is silently not shown."}
+            - {label: "Cases to show", name: "sectors", widget: "list", label_singular: "case", required: false, field: {label: "Sector", name: "sector", widget: "string"}, hint: "Type the Sector of each case exactly as it appears in Industry Use-Cases, for example Agri-food: Green Coffee. A case whose sector does not match is silently not shown."}
             - {label: "Link text to all use cases", name: "all_text", widget: "string"}
             - label: "Link to all use cases"
               name: "all_url"
@@ -1369,6 +1455,7 @@ collections:
             name: "formats"
             widget: "object"
             collapsed: true
+            summary: "5. Validated products — {{fields.title}}"
             hint: "The dark band: the validated products that apply to this industry, in groups, with one sentence under the heading."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -1377,6 +1464,7 @@ collections:
             - label: "Groups"
               name: "items"
               widget: "list"
+              label_singular: "group"
               summary: "{{fields.group}}"
               hint: "Two or three groups. Two are shown side by side, three across."
               fields:
@@ -1387,6 +1475,7 @@ collections:
             name: "final_cta"
             widget: "object"
             collapsed: true
+            summary: "6. Closing call to action — {{fields.title}}"
             hint: "The last band on the page, above the footer."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
@@ -1414,6 +1503,7 @@ collections:
             name: "intro"
             widget: "object"
             collapsed: true
+            summary: "1. Page introduction — {{fields.title}}"
             hint: "The heading and standfirst at the top of the Use Cases page."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -1429,6 +1519,7 @@ collections:
             - label: "Cases"
               name: "items"
               widget: "list"
+              label_singular: "case"
               summary: "{{fields.sector}} — {{fields.title}}"
               fields:
                 - {label: "Sector", name: "sector", widget: "string"}
@@ -1446,6 +1537,7 @@ collections:
             name: "final_cta"
             widget: "object"
             collapsed: true
+            summary: "3. Closing call to action — {{fields.title}}"
             hint: "The last band on the page, above the footer."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
@@ -1574,6 +1666,7 @@ collections:
           - label: "Posts"
             name: "posts"
             widget: "list"
+            label_singular: "post"
             max: 3
             summary: "{{fields.title}}"
             hint: "Shown in the order they are in here, so keep the newest at the top. Three is the most that will fit; delete the oldest rather than letting the list grow. With nothing in this list the whole section disappears from the page, which is the right thing to do if there is nothing worth showing. Only posts that anyone can see will work: if a post is set so that only people signed in to LinkedIn can read it, visitors get a sign-in box instead of the post."
@@ -1598,6 +1691,7 @@ collections:
             name: "intro"
             widget: "object"
             collapsed: true
+            summary: "1. Page introduction — {{fields.title}}"
             hint: "The heading, standfirst and the two blocks of contact detail beside the form."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -1606,6 +1700,7 @@ collections:
             - label: "Contact detail blocks"
               name: "info_items"
               widget: "list"
+              label_singular: "contact detail"
               summary: "{{fields.label}}"
               fields:
                 - {label: "Label", name: "label", widget: "string"}
@@ -1651,6 +1746,7 @@ collections:
             - label: "Enquiry types"
               name: "types"
               widget: "list"
+              label_singular: "enquiry type"
               summary: "{{fields.label}}"
               fields:
                 - {label: "Value sent to HubSpot", name: "value", widget: "string"}
@@ -1662,6 +1758,7 @@ collections:
             name: "success"
             widget: "object"
             collapsed: true
+            summary: "3. Message after a successful send — {{fields.title}}"
             fields:
               - {label: "Heading", name: "title", widget: "string"}
               - {label: "Message", name: "message", widget: "text"}
@@ -1674,6 +1771,7 @@ collections:
             name: "fallback"
             widget: "object"
             collapsed: true
+            summary: "4. Message when the form falls back to email — {{fields.title}}"
             fields:
               - {label: "Heading", name: "title", widget: "string"}
               - {label: "Message", name: "message", widget: "text"}
@@ -1684,6 +1782,7 @@ collections:
             name: "error"
             widget: "object"
             collapsed: true
+            summary: "5. Message when the form fails — {{fields.title}}"
             fields:
               - {label: "Heading", name: "title", widget: "string"}
               - {label: "Message", name: "message", widget: "text"}
@@ -1694,6 +1793,7 @@ collections:
             name: "cta"
             widget: "object"
             collapsed: true
+            summary: "6. Closing call to action — {{fields.title}}"
             fields:
               - {label: "Section Label", name: "section_label", widget: "string"}
               - {label: "Heading", name: "title", widget: "string"}
@@ -1715,6 +1815,7 @@ collections:
             name: "intro"
             widget: "object"
             collapsed: true
+            summary: "1. Page introduction — {{fields.title}}"
             hint: "The heading above the quiz on the Assess My Product page."
             fields:
             - {label: "Small label above the heading", name: "label", widget: "string"}
@@ -1725,6 +1826,7 @@ collections:
             name: "welcome"
             widget: "object"
             collapsed: true
+            summary: "2. Start screen — {{fields.title}}"
             hint: "What a visitor sees before answering anything."
             fields:
             - {label: "Heading", name: "title", widget: "string"}
@@ -1735,6 +1837,7 @@ collections:
             name: "questions"
             widget: "object"
             collapsed: true
+            summary: "3. The three questions — {{fields.step1}}"
             hint: "The wording of each step. The answer options themselves are in section 7."
             fields:
             - {label: "Question 1", name: "step1", widget: "string"}
@@ -1748,6 +1851,7 @@ collections:
             name: "navigation"
             widget: "object"
             collapsed: true
+            summary: "4. Next and Back buttons — {{fields.next}} / {{fields.back}}"
             hint: "The wording on the two buttons that move between steps."
             fields:
             - {label: "Next button", name: "next", widget: "string"}
@@ -1757,6 +1861,7 @@ collections:
             name: "confirm"
             widget: "object"
             collapsed: true
+            summary: "5. Between the last answer and the result — {{fields.title}}"
             hint: "The short holding screen after the third question."
             fields:
             - {label: "Heading", name: "title", widget: "string", required: false, hint: "No longer shown. Kept so the old wording is not lost if the verdict is ever switched off."}
@@ -1766,6 +1871,7 @@ collections:
             name: "result"
             widget: "object"
             collapsed: true
+            summary: "6. The result screen — {{fields.cta}}"
             hint: "The wording of all three results, plus the note and the button under them. Two of these are registered claims, so check docs/claim-review.yml before rewording a badge or a heading."
             fields:
             - {label: "Button text", name: "cta", widget: "string"}
@@ -1939,12 +2045,13 @@ collections:
             name: "opening"
             widget: "object"
             collapsed: true
+            summary: "1. Opening — {{fields.title}}"
             hint: "The first thing someone sees after scanning. Say plainly that one jar carries the tag and the other does not: the printed stand card already shows a tick and a cross, so there is nothing left to keep back."
             fields:
               - {label: "Small label above the headline", name: "label", widget: "string"}
               - {label: "Headline", name: "title", widget: "string", hint: "A question, not an answer. \"Which one is which?\""}
               - {label: "Opening paragraph", name: "lead", widget: "text", hint: "One line, setting up the comparison. The three ways the jars match go in the list below."}
-              - {label: "The three ways they match", name: "identical", widget: "list", hint: "One short line each, shown as bullets under the opening paragraph.", field: {label: "Line", name: "line", widget: "string"}}
+              - {label: "The three ways they match", name: "identical", widget: "list", label_singular: "line", hint: "One short line each, shown as bullets under the opening paragraph.", field: {label: "Line", name: "line", widget: "string"}}
               - {label: "Closing paragraph", name: "closing", widget: "text", hint: "The point of the comparison: one jar can prove where it came from."}
               - {label: "Photograph of both powders", name: "image", widget: "image", hint: "The two powders together. Square works best here."}
               - {label: "Photograph description", name: "image_alt", widget: "string", hint: "What is in the picture, for anyone using a screen reader. Describe the powders without saying which is which."}
@@ -2001,7 +2108,11 @@ collections:
           - {label: "Button link", name: "cta_url", widget: "string", hint: "Where the button goes. /contact/ unless there is a reason otherwise."}
 
   - name: "settings"
-    label: "Site & SEO Settings"
+    label: "Settings"
+    # "Settings", not "Site & SEO Settings": a sidebar entry that opens with an
+    # acronym tells a non-technical editor nothing about what is inside. The
+    # three files under it still say what each one is for. Renamed 15 Sep 2026;
+    # the entry name is unchanged, so draft branches and the audit are unaffected.
     files:
       # SITE SETTINGS
       - name: "site"
@@ -2023,7 +2134,7 @@ collections:
           - {label: "Contact Email", name: "email", widget: "string"}
           - {label: "Logo", name: "logo", widget: "image"}
           - {label: "CTA panel watermark", name: "cta_mark", widget: "image", required: false, hint: "The faint brand mark in the top right of every green call-to-action panel. Only its shape is used, the colour comes from the panel, so use a flat single-colour graphic on a transparent background. Leave empty for a plain circle."}
-          - {label: "Social Profile URLs", name: "social", widget: "list", field: {label: "URL", name: "url", widget: "string"}}
+          - {label: "Social Profile URLs", name: "social", widget: "list", label_singular: "profile link", field: {label: "URL", name: "url", widget: "string"}}
           - label: "Google Search Console token"
             name: "google_site_verification"
             widget: "string"
@@ -2039,10 +2150,10 @@ collections:
           - {label: "Allow AI training crawlers", name: "allow_ai_training", widget: "boolean", hint: "Lets OpenAI, Anthropic, Google and Common Crawl collect pages to train future AI models. Leave off until the copy claims are signed off: anything used for training cannot be corrected or withdrawn later."}
 
 
-  # ── SEO: titles and descriptions ─────
+  # ── Google search titles and descriptions ─────
       # SEO: page titles and meta descriptions
       - name: "seo"
-        label: "SEO: titles and descriptions"
+        label: "Google search titles and descriptions"
         file: "src/_data/seo.yml"
         fields:
           # "url" is how an entry is matched to a page. It was a free text box,
@@ -2052,6 +2163,7 @@ collections:
           - label: "Search engine listings"
             name: "pages"
             widget: "list"
+            label_singular: "listing"
             collapsed: true
             summary: "{{fields.url}}  {{fields.title}}"
             fields:
