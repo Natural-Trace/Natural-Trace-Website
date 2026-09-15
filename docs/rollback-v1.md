@@ -106,6 +106,17 @@ reproduced on the machine of whoever is investigating it.
 These carry mail, mail authentication and two separate hosts. None of them are
 part of the cutover in either direction.
 
+Two `google-site-verification` rows sit on `@` and they are not
+interchangeable. The `f7iKoY…` one was already in the zone before the cutover
+and verifies a Search Console property under an account that has not been
+identified; leave it. The `fBEjiM…` one was added on 15 September 2026 for the
+Domain property `sc-domain:natural-trace.com`, created that day so that
+ownership of Search Console no longer rests on a meta tag inside the site
+build. Deleting either row silently de-verifies whichever property depends on
+it, and Google drops every user that owner had delegated access to. That is
+exactly what happened when the WordPress-era verification disappeared with
+the old site in August.
+
 | Type | Name | Value | TTL |
 | --- | --- | --- | --- |
 | MX | `@` | `1 aspmx.l.google.com` | 3600 |
@@ -114,6 +125,7 @@ part of the cutover in either direction.
 | MX | `@` | `10 alt3.aspmx.l.google.com` | 3600 |
 | MX | `@` | `10 alt4.aspmx.l.google.com` | 3600 |
 | TXT | `@` | `google-site-verification=f7iKoYlAt3oRfAwWBxIxRqKUx5tH_W_YS4BUEH3xzaM` | 300 |
+| TXT | `@` | `google-site-verification=fBEjiMaipIEP6wqRdfm2-R46Y4TykAXiO879C9mxWpw` | 300 |
 | TXT | `@` | `v=spf1 include:_spf.google.com include:23458507.spf08.hubspotemail.net -all` | 300 |
 | TXT | `_dmarc` | `v=DMARC1;p=none;sp=none;adkim=r;aspf=r;pct=100` | 14400 |
 | CNAME | `hs1-23458507._domainkey` | `natural--trace-com.hs07a.dkim.hubspotemail.net` | 300 |
