@@ -49,6 +49,12 @@ Budget about ten minutes.
    - open an article: the field label you are editing is teal with white text,
      "Save" is teal, and the right-hand pane shows the article in the site's own
      fonts and styles rather than a list of fields
+   - open Home: one full-width column of fields and no right-hand pane at all.
+     The preview is switched off everywhere except Insights by `editor:` at the
+     top of `config.yml`. If a pane has come back, the upgrade changed how that
+     setting is read
+   - the Insights list: newest article first with its date in the row, and
+     "Filter by" offering the six topics and Pinned
 5. Anything still Decap blue, or any block of styling that has reverted to
    Decap's defaults, means a component was renamed. Find the new name in the
    browser's element inspector (the class will read `css-<hash>-<NewName>`) and
@@ -64,8 +70,9 @@ not a data risk the way an old server would be.
 Delete the `<link rel="stylesheet" href="theme.css" />` line from
 `src/admin/index.html` and push. The panel goes back to stock Decap: plain, blue,
 and fully working. Nothing in the CMS depends on the theme. Same for
-`preview.js`: remove the `<script>` tag and the editor falls back to Decap's
-default preview pane.
+`preview.js`: remove the `<script>` tag and the Insights editor falls back to
+Decap's default preview pane. The other editors have no preview pane to fall
+back to; that is `editor: preview: false` in `config.yml`, not this file.
 
 That is deliberate. Both files are decoration over a working panel, not part of
 it.

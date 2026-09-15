@@ -47,6 +47,34 @@ public_folder: "/assets/images/uploads"
 
 publish_mode: editorial_workflow
 
+# No preview pane, except on Insights articles, which turn it back on below.
+#
+# Decap splits every editor in two and redraws the right-hand side on every
+# keystroke. Only Insights has a preview worth having (admin/preview.js draws
+# the article with the site's own stylesheet). Every other entry got Decap's
+# generic dump of every field printed again, which on Home meant the hero
+# photograph at full size filling the right half of the screen, and every text
+# box squeezed into the left half to make room for it.
+#
+# Be clear about what this does and does not fix. Measured 15 Sep 2026 on
+# Decap's in-memory test backend with a copy of home.yml: about 78 ms per
+# keystroke with the preview off, about 82 ms with it on. The typing lag on
+# the big page entries is Decap redrawing the whole form on every keystroke,
+# and no setting in this file changes that. What this does buy is the full
+# width, and not loading the site stylesheet, fonts and every image in the
+# entry into a hidden frame each time an entry is opened.
+#
+# Taken from Pages CMS (github.com/pages-cms/pages-cms), evaluated 15 Sep 2026:
+# its editor is a single full-width column with no preview, and that is most of
+# why it feels faster. The rest of Pages CMS was not adopted. It commits
+# straight to the branch with no pull request, which would skip the claim check
+# and the collision warning, and it deletes YAML comments exactly as Decap does.
+#
+# Collection-level `editor:` overrides this, and a file entry's own `editor:`
+# overrides its collection. Both are read by the pinned 3.15.1 build.
+editor:
+  preview: false
+
 collections:
   # The sidebar mirrors the website navigation: Home, About, Solutions,
   # Industries, Insights, then Contact and the settings. A group opens to
@@ -1437,8 +1465,39 @@ collections:
     folder: "src/insights"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    summary: "{{title}}"
-    sortable_fields: ["date", "title"]
+    # The rest of the panel has its preview turned off (see `editor:` at the
+    # top of this file). This is the one collection with a real one.
+    editor:
+      preview: true
+    # The date is in the list row because two articles can share a headline
+    # shape, and "which one is the recent one" should not need a click.
+    summary: "{{title}} · {{date | date('D MMM YYYY')}}"
+    # Newest first by default, the same order as the Insights page. Without
+    # `default_sort` Decap opens the list in file-name order, which starts at
+    # 2022 and puts the article someone is most likely looking for at the
+    # bottom.
+    sortable_fields:
+      - {field: "date", label: "Date", default_sort: "desc"}
+      - {field: "title", label: "Headline"}
+    # Topic filters and grouping, taken from the list view in Pages CMS. Decap
+    # tests each pattern as a regular expression against the stored value, and
+    # a list of tags is tested as one piece of text, so "Food Fraud" matches an
+    # article carrying it among others. The patterns must stay spelled exactly
+    # as the tag options further down; rename a tag there and rename it here in
+    # the same commit, or its filter silently shows nothing.
+    #
+    # The grouping pattern takes the first four digits of the date, which is
+    # the year whether Decap holds the date as text or as a parsed date.
+    view_filters:
+      - {label: "Company News", field: "tags", pattern: "Company News"}
+      - {label: "Industry Events", field: "tags", pattern: "Industry Events"}
+      - {label: "Science & Evidence", field: "tags", pattern: "Science & Evidence"}
+      - {label: "Food Fraud", field: "tags", pattern: "Food Fraud"}
+      - {label: "Ingredient Authenticity", field: "tags", pattern: "Ingredient Authenticity"}
+      - {label: "Regulation", field: "tags", pattern: "Regulation"}
+      - {label: "Pinned", field: "pinned", pattern: "true"}
+    view_groups:
+      - {label: "Published", field: "date", pattern: "\\d{4}"}
     media_folder: "/src/assets/images/insights"
     public_folder: "/assets/images/insights"
     fields:
