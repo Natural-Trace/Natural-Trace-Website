@@ -1,0 +1,354 @@
+/* ---------------------------------------------------------------------------
+   Natural Trace theme for the Decap CMS admin panel.
+
+   READ THIS BEFORE EDITING.
+
+   Decap does not support theming. The only branding it offers as a supported
+   configuration option is the logo (`logo` in admin/config.yml). Everything
+   below overrides Decap's own internal styles.
+
+   Decap builds class names with Emotion, in the form
+
+       css-<hash>-<ComponentName>
+
+   The hash changes on every Decap release; the component name does not. So
+   every selector here matches the component name and ignores the hash:
+
+       [class*="-SidebarNavLink"]        survives a hash change
+       .css-1x2y3z-SidebarNavLink        breaks on the next release
+
+   Two rules learned the hard way, both from measuring the rendered page:
+
+   1. Substring matching is greedy. [class*="-LoginButton"] also matches
+      IconWrapper-LoginButtonIcon, which put button padding on the GitHub icon
+      and collapsed it to zero width. Match enough of the name to be unique
+      ("-LoginButton-button", "-ListCard-") and check what else contains it.
+
+   2. Emotion injects its <style> into <head> at runtime, after this file has
+      loaded, so an equal-specificity rule here loses. Every selector below is
+      prefixed with #nc-root to add an id and win. Removing that prefix silently
+      stops the rule applying; it does not error.
+
+   This couples the file to Decap's component names. If a release renames a
+   component, that rule stops applying: the panel falls back to Decap's own
+   styling and stays fully usable, it just stops looking like Natural Trace.
+   Because of that, admin/index.html pins an exact Decap version instead of a
+   range. Do not move the pin without re-checking this file. Procedure is in
+   docs/cms-admin-theme.md.
+
+   Palette is copied from src/assets/css/styles.css so panel and site cannot
+   drift apart.
+
+   Verified against Decap 3.15.1 (decap-cms-core 3.17.1) on 7 Aug 2026.
+--------------------------------------------------------------------------- */
+
+:root {
+  --nt-teal: #3B666B;
+  --nt-teal-light: #4D8489;
+  --nt-dark: #1A1E2E;
+  --nt-offwhite: #F5F6F1;
+  --nt-text: #2C3345;
+  --nt-muted: #6B7280;
+  --nt-line: #E2E4DC;
+  --nt-font: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Type -------------------------------------------------------------------- */
+
+/* "html body", not "body": Decap sets the page background in a global Emotion
+   rule injected after this file, so a bare "body" selector ties on specificity
+   and loses. See note 2 at the top. */
+html body {
+  background: var(--nt-offwhite);
+  color: var(--nt-text);
+  font-family: var(--nt-font);
+}
+
+#nc-root,
+#nc-root h1, #nc-root h2, #nc-root h3, #nc-root h4, #nc-root h5, #nc-root h6,
+#nc-root p, #nc-root span, #nc-root li, #nc-root a, #nc-root label,
+#nc-root button, #nc-root input, #nc-root select, #nc-root textarea,
+#nc-root td, #nc-root th {
+  font-family: var(--nt-font);
+}
+
+/* Put the monospace back where it belongs: the markdown source editor and any
+   code the editor types. The blanket rule above would otherwise make code
+   unreadable. */
+#nc-root pre,
+#nc-root code,
+#nc-root .CodeMirror,
+#nc-root .CodeMirror span {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Login screen ------------------------------------------------------------ */
+
+#nc-root [class*="-StyledAuthenticationPage"] {
+  background: var(--nt-dark);
+  background-image: radial-gradient(circle at 50% 0%, #24293D 0%, var(--nt-dark) 60%);
+  color: #fff;
+}
+
+/* The image Decap renders from logo.src in config.yml. */
+#nc-root [class*="-CustomIconWrapper"] img {
+  max-width: 240px;
+  height: auto;
+}
+
+/* "-LoginButton-button" not "-LoginButton": see note 1 at the top. */
+#nc-root [class*="-LoginButton-button"] {
+  background: var(--nt-teal);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: .01em;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+}
+
+#nc-root [class*="-LoginButton-button"]:hover:not(:disabled) {
+  background: var(--nt-teal-light);
+}
+
+#nc-root [class*="-GoBackButtonStyle"] {
+  color: rgba(255, 255, 255, .6);
+}
+
+#nc-root [class*="-GoBackButtonStyle"]:hover {
+  color: #fff;
+}
+
+/* Decap's own mark at the foot of the login screen. Kept, because Decap is the
+   software running this panel and saying so is honest, but toned down so it
+   does not read as Natural Trace branding. Delete this rule to restore it, or
+   add display:none to remove it. */
+#nc-root [class*="-NetlifyCreditIcon"] {
+  opacity: .28;
+  filter: grayscale(1) brightness(2.4);
+}
+
+/* Header ------------------------------------------------------------------ */
+
+#nc-root header {
+  background: var(--nt-dark);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .06), 0 6px 24px rgba(26, 30, 46, .12);
+}
+
+/* Decap sizes this image with width:100%, so it takes whatever width the
+   wrapper gives it and object-fit letterboxes the wordmark inside. Setting a
+   height and releasing the width lets the image keep its own 363x139 shape and
+   the flex wrapper size itself around it. */
+#nc-root [class*="-AppHeaderLogo"] img,
+#nc-root header img[alt="Logo"] {
+  padding: 0;
+  height: 24px;
+  width: auto;
+  max-width: none;
+  max-height: none;
+  display: block;
+}
+
+/* Decap's own 20px of breathing room lived on the img as padding, which had to
+   go for the sizing above to work. It moves here. */
+#nc-root [class*="-AppHeaderLogo"] {
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
+  margin-right: .25rem;
+  border-right: 1px solid rgba(255, 255, 255, .12);
+}
+
+#nc-root header [class*="-AppHeaderNavLink"],
+#nc-root header [class*="-AppHeaderButton"],
+#nc-root header [class*="-AppHeaderSiteLink"] {
+  color: rgba(255, 255, 255, .68);
+  font-weight: 500;
+}
+
+#nc-root header [class*="-AppHeaderNavLink"]:hover,
+#nc-root header [class*="-AppHeaderButton"]:hover,
+#nc-root header [class*="-AppHeaderSiteLink"]:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, .07);
+}
+
+#nc-root header .header-link-active {
+  color: #fff;
+  background: rgba(255, 255, 255, .11);
+}
+
+#nc-root header [class*="-IconWrapper"] {
+  color: inherit;
+}
+
+/* Quick add is dark grey by default, which vanishes on a dark bar. */
+#nc-root [class*="-AppHeaderQuickNewButton"] {
+  background: var(--nt-teal);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+#nc-root [class*="-AppHeaderQuickNewButton"]:hover {
+  background: var(--nt-teal-light);
+}
+
+/* Sidebar ----------------------------------------------------------------- */
+
+#nc-root [class*="-SidebarContainer"] {
+  border: 1px solid var(--nt-line);
+  border-radius: 10px;
+  box-shadow: 0 4px 24px rgba(26, 30, 46, .05);
+}
+
+#nc-root [class*="-SidebarHeading"] {
+  color: var(--nt-dark);
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+#nc-root [class*="-SidebarNavLink"] {
+  color: var(--nt-text);
+  border-left: 3px solid transparent;
+  border-radius: 0 6px 6px 0;
+}
+
+#nc-root [class*="-SidebarNavLink"]:hover {
+  background: rgba(59, 102, 107, .07);
+  color: var(--nt-teal);
+}
+
+#nc-root [class*="-SidebarNavLink"].sidebar-active {
+  background: rgba(59, 102, 107, .1);
+  color: var(--nt-teal);
+  border-left-color: var(--nt-teal);
+  font-weight: 600;
+}
+
+#nc-root [class*="-SidebarNavLink"] svg {
+  fill: currentColor;
+}
+
+/* Search ------------------------------------------------------------------ */
+
+#nc-root [class*="-SearchContainer"] {
+  border-radius: 8px;
+}
+
+#nc-root [class*="-SearchInput"]:focus {
+  outline: 2px solid rgba(59, 102, 107, .35);
+  outline-offset: 1px;
+}
+
+/* Collection list --------------------------------------------------------- */
+
+#nc-root [class*="-CollectionTopHeading"] {
+  color: var(--nt-dark);
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+#nc-root [class*="-CollectionTopContainer"] {
+  border: 1px solid var(--nt-line);
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+/* "-ListCard-" not "-ListCard": the trailing hyphen keeps this off
+   ListCardLink and ListCardTitle. See note 1 at the top. */
+#nc-root [class*="-ListCard-"] {
+  border: 1px solid var(--nt-line);
+  border-radius: 10px;
+  box-shadow: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+#nc-root [class*="-ListCard-"]:hover {
+  border-color: var(--nt-teal);
+  box-shadow: 0 6px 20px rgba(26, 30, 46, .07);
+}
+
+#nc-root [class*="-ListCardTitle"] {
+  color: var(--nt-dark);
+  font-weight: 600;
+}
+
+/* Editor ------------------------------------------------------------------ */
+
+#nc-root [class*="-SaveButton"] {
+  background: var(--nt-teal);
+  color: #fff;
+  font-weight: 600;
+}
+
+#nc-root [class*="-SaveButton"]:hover:not(:disabled) {
+  background: var(--nt-teal-light);
+}
+
+#nc-root [class*="-FieldLabel"] {
+  color: var(--nt-text);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Field labels. Decap gives every one of them its accent blue with dark text on
+   top, which is close to unreadable; this fixes the contrast as well as the
+   colour. The tripled name in the selector is Decap's, not a typo. */
+#nc-root [class*="-FieldLabel-fieldLabel"] {
+  background: var(--nt-teal);
+  color: #fff;
+}
+
+/* Remaining accent-blue controls in the editor: the preview show/hide and
+   resize buttons, the image picker buttons, and the Rich Text / Markdown
+   toggle. */
+#nc-root [class*="-EditorToggle"],
+#nc-root [class*="-ToolbarToggleLabel"] {
+  color: var(--nt-teal);
+}
+
+#nc-root [class*="-FileWidgetButton"] {
+  background: rgba(59, 102, 107, .1);
+  color: var(--nt-teal);
+}
+
+#nc-root [class*="-FileWidgetButton"]:hover {
+  background: rgba(59, 102, 107, .18);
+}
+
+/* The on/off switches. This rule used to paint the track teal unconditionally,
+ * which was meant for the Rich Text / Markdown toggle in the editor toolbar but
+ * matched the boolean widget's track as well. Decap signals a boolean's state
+ * with the track colour, grey for off and coloured for on, so overriding both
+ * states to one colour removed the only difference between them. All that was
+ * left was which side the knob sat on, and the two crawler switches on the Site
+ * Settings screen were read as identical. Reported 18 Aug: "which one is on and
+ * which is off".
+ *
+ * Removed rather than replaced with a state-aware selector. Decap builds these
+ * class names at runtime and the boolean's checked state is not reliably
+ * expressed in a way a stylesheet can hook, so a guessed selector would risk
+ * showing "on" as grey, which is worse than a control that is not brand teal.
+ * Decap's own colours are left to do the job they were designed for. */
+
+#nc-root [class*="-ToolbarContainer"] {
+  border-bottom: 1px solid var(--nt-line);
+}
+
+#nc-root [class*="-BackCollection"],
+#nc-root [class*="-BackStatus"] {
+  color: var(--nt-muted);
+}
+
+#nc-root [class*="-EditorContainer"] [class*="-ControlPaneContainer"] {
+  background: #fff;
+}
+
+/* The preview pane is an iframe. Its contents are styled by the site's own
+   stylesheet, loaded in admin/preview.js via CMS.registerPreviewStyle. */
+#nc-root [class*="-PreviewPaneContainer"],
+#nc-root [class*="-PreviewPaneFrame"] {
+  border-left: 1px solid var(--nt-line);
+  background: #fff;
+}
