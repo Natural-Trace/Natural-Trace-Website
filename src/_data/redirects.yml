@@ -303,6 +303,57 @@ rules:
   - from: "/insights/tag/press-release/"
     to: "/insights/tag/company-news/"
 
+  # The other thirteen tags retired in that same change, added 17 September
+  # 2026 after Search Console failed the "Not found (404)" validation on
+  # 16 September. Only the two rules above were written on 2 September. These
+  # thirteen were left to 404 for a fortnight.
+  #
+  # Nothing caught them, and the reason is worth keeping. They were never in
+  # sitemap.xml: until c167fc7 only the first tag archive reached
+  # collections.all, so the sitemap listed one tag page out of six and the
+  # healthcheck had nothing to compare a missing rule against. An absent URL
+  # is not an error, it is a shorter file. Google had found them the other
+  # way, through the topic link printed on every article, and kept crawling
+  # them after the pages stopped existing.
+  #
+  # Targets are derived, not chosen. Each old tag points at the topic archive
+  # its own article carries today. Twelve of the thirteen were keywords on the
+  # two Growth Asia Summit write-ups, and both are Industry Events now.
+  # Research Blog was a WordPress category on the ingredient integrity piece,
+  # which is Ingredient Authenticity.
+  #
+  # None of them lands on /insights/. Every one has a real successor archive,
+  # and dropping a reader on an unfiltered index when a filtered one exists
+  # loses the thing they clicked. That is the same reasoning that sent Press
+  # Release to Company News rather than to the index; only "News" goes to the
+  # index, because a catch-all on twelve of twenty articles has no successor.
+  - from: "/insights/tag/active-lifestyle-nutrition/"
+    to: "/insights/tag/industry-events/"
+  - from: "/insights/tag/berry-bioactives/"
+    to: "/insights/tag/industry-events/"
+  - from: "/insights/tag/clean-label/"
+    to: "/insights/tag/industry-events/"
+  - from: "/insights/tag/food-authentication/"
+    to: "/insights/tag/industry-events/"
+  - from: "/insights/tag/functional-foods/"
+    to: "/insights/tag/industry-events/"
+  - from: "/insights/tag/glp-1-companion-products/"
+    to: "/insights/tag/industry-events/"
+  - from: "/insights/tag/ingredient-verification/"
+    to: "/insights/tag/industry-events/"
+  - from: "/insights/tag/nutraceutical-authentication/"
+    to: "/insights/tag/industry-events/"
+  - from: "/insights/tag/nutraceuticals/"
+    to: "/insights/tag/industry-events/"
+  - from: "/insights/tag/protein-innovation/"
+    to: "/insights/tag/industry-events/"
+  - from: "/insights/tag/research-blog/"
+    to: "/insights/tag/ingredient-authenticity/"
+  - from: "/insights/tag/supply-chain-transparency/"
+    to: "/insights/tag/industry-events/"
+  - from: "/insights/tag/weight-management/"
+    to: "/insights/tag/industry-events/"
+
   # Legacy WordPress archive pagination and date archives.
   #
   # Added 7 September 2026 from a Search Console "Not found (404)" export of

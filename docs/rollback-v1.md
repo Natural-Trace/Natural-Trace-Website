@@ -130,10 +130,6 @@ the old site in August.
 | TXT | `_dmarc` | `v=DMARC1;p=none;sp=none;adkim=r;aspf=r;pct=100` | 14400 |
 | CNAME | `hs1-23458507._domainkey` | `natural--trace-com.hs07a.dkim.hubspotemail.net` | 300 |
 | CNAME | `hs2-23458507._domainkey` | `natural--trace-com.hs07b.dkim.hubspotemail.net` | 300 |
-| A | `dev` | `217.21.74.49` | 1800 |
-| AAAA | `dev` | `2a02:4780:3:711:0:2a16:dc3:2` | 1800 |
-| A | `staging` | `217.21.74.49` | 1800 |
-| AAAA | `staging` | `2a02:4780:3:711:0:2a16:dc3:2` | 1800 |
 | A | `ftp` | `217.21.74.49` | 14400 |
 | CNAME | `autoconfig.mail.hostpoint.ch` | `autoconfig.mail.hostpoint.ch` | 300 |
 | CNAME | `autoconfig-nonssl.mail.hostpoint.ch` | `autoconfig-nonssl.mail.hostpoint.ch` | 300 |
@@ -144,8 +140,45 @@ mail. Deleting an MX row stops mail arriving. Deleting the SPF or either DKIM
 row sends outbound mail to spam folders, which is worse, because it fails
 silently and nobody reports the email they never received.
 
-`dev`, `staging` and `ftp` still point at Hostinger and are unrelated to the
-website. They are the reason the Hostinger plan must not be cancelled.
+`ftp` still points at Hostinger and is unrelated to the website. It is the
+reason the Hostinger plan must not be cancelled: the WordPress install behind
+it holds 185 media items, the only surviving copy of the pre-cutover archive.
+It serves no web content, answering 403 over HTTP and nothing over HTTPS, so
+it is not reachable by a crawler and is left alone.
+
+**`dev` and `staging` were deleted on 17 September 2026** and the four rows
+that carried them are gone from the table above. They are recorded here
+rather than in the table because the table is what a restore is built from,
+and putting them back is the one thing a restore must not do:
+
+| Type | Name | Value | TTL |
+| --- | --- | --- | --- |
+| A | `dev` | `217.21.74.49` | 1800 |
+| AAAA | `dev` | `2a02:4780:3:711:0:2a16:dc3:2` | 1800 |
+| A | `staging` | `217.21.74.49` | 1800 |
+| AAAA | `staging` | `2a02:4780:3:711:0:2a16:dc3:2` | 1800 |
+
+Both pointed at the old WordPress site, which never went away in August: it
+moved to `staging.natural-trace.com` and stayed live on WordPress 6.6.1 with
+Elementor, a reachable `/wp-login.php`, a working `/sitemap_index.xml` and
+Site Kit by Google still installed. Its `robots.txt` said `Disallow: /`, which
+stops a crawl but does not stop indexing, and a page Google cannot fetch is a
+page whose canonical Google cannot read.
+
+That is what produced the 16 September Search Console notice, **Duplicate
+without user-selected canonical**. It arrived the day after the Domain
+property `sc-domain:natural-trace.com` was verified, because a Domain property
+covers every subdomain and a URL-prefix property does not. The old site had
+been sitting there the whole time, invisible to the property we were watching.
+
+Site Kit is also the likely answer to the unidentified Search Console owner
+described above. It verifies ownership from inside the WordPress install, and
+that install is still running.
+
+The install and its media are untouched. Only the two hostnames were removed,
+so recovery is one record, and the Hostinger panel reaches the site without
+either of them. Verified NXDOMAIN on both Google and Cloudflare resolvers
+afterwards, with `ftp` and the apex confirmed unchanged in the same pass.
 
 The three `hostpoint.ch` rows point at themselves and appear to be leftovers
 from an earlier host. They do nothing. Leave them; today is not the day.
