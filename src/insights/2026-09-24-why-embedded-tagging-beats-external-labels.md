@@ -48,7 +48,7 @@ For a nutraceutical brand owner who pays for a specific, differentiated ingredie
 
 ## What it does not do
 
-Embedded tagging verifies identity and origin. It does not measure how much of an ingredient is present, and it does not replace the quality testing a brand already runs.
+Embedded tagging verifies identity and origin. It is not a dosage test, and it does not replace the quality testing a brand already runs.
 
 It also has to be set up product by product. Oils, powders, fresh produce and capsules all behave differently during sample preparation and testing, so every new product starts with a compatibility check before a tag goes into production.
 
