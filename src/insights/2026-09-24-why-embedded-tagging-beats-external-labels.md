@@ -32,7 +32,7 @@ Labels are still useful. They are fast, cheap and understood by everyone who han
 
 Embedded tagging starts at the other end. It marks the ingredient instead of the container.
 
-NaturalTag is itself a food-grade, non-GMO food ingredient. It is formulated into the ingredient at its source and becomes part of the product. When the ingredient is repacked or blended downstream, the tag goes with it, because it is in it.
+NaturalTag is itself a food-grade, non-GMO, probiotic-based ingredient. It is formulated into the ingredient at its source and becomes part of the product. When the ingredient is repacked or blended downstream, the tag goes with it, because it is in it.
 
 Checking works on a sample of the product. NaturalDetect looks for the tag in that sample using polymerase chain reaction (PCR), a standard laboratory testing method used widely across the food industry. We call this PCR-based verification. The question it answers is direct: did this material come from the tagged source?
 
