@@ -7,242 +7,242 @@
   "cta_url": "/contact/",
   "members": [
     {
+      "bio": [
+        "Lead research and product development, operations and IP management "
+      ],
+      "education": [
+        "Bachelors in Biomedical Science, University of Western Australia",
+        "Masters in IP and Innovation Management, Singapore University of Social Sciences"
+      ],
       "name": "Alrik Tan",
+      "order": 1,
+      "photo": "/assets/team/Team Members/Alrik Tan.webp",
+      "location": "Singapore",
       "role": "Co-CEO & Chief Scientific Officer",
       "type": "leadership",
-      "location": "Singapore",
-      "photo": "/assets/team/Team Members/Alrik Tan.webp",
-      "linkedin": "https://www.linkedin.com/in/alrik-tan-b083404b/",
-      "education": [
-        "Masters Innovation & IP Management, SUSS"
-      ],
-      "bio": [
-        "Recognised on the IAM Strategy 300 list for intellectual property strategy (2024, 2025)",
-        "Oversees scientific strategy, assay development, and IP protection"
-      ],
-      "order": 1
+      "linkedin": "https://www.linkedin.com/in/alrik-tan-b083404b/"
     },
     {
-      "name": "Kirsty Hall",
-      "role": "Co-CEO & Chief Commercial Officer",
-      "type": "leadership",
-      "location": "Australia",
-      "photo": "/assets/team/Team Members/Kirsty Hall.webp",
-      "linkedin": "https://www.linkedin.com/in/kirsty-hall-277346171/",
-      "education": [
-        "Bachelor of Health Science (Environmental Health), University of Tasmania"
-      ],
       "bio": [
         "Leads commercial and marketing strategy, brand positioning, and regulatory compliance"
       ],
-      "order": 2
+      "education": [
+        "Bachelor of Health Science (Environmental Health), University of Tasmania"
+      ],
+      "name": "Kirsty Hall",
+      "order": 2,
+      "photo": "/assets/team/Team Members/Kirsty Hall.webp",
+      "location": "Australia",
+      "role": "Co-CEO & Chief Commercial Officer",
+      "type": "leadership",
+      "linkedin": "https://www.linkedin.com/in/kirsty-hall-277346171/"
     },
     {
-      "name": "Markus Helms",
-      "role": "Chief Financial Officer",
-      "type": "leadership",
-      "location": "Singapore",
-      "photo": "/assets/team/advisors/Markus Helms.webp",
-      "linkedin": "https://www.linkedin.com/in/markus-helms-75b8313b2/",
-      "education": [
-        "Master in International Management, ESCP Business School"
-      ],
       "bio": [
         "Partner and CFO at Blue InCube, venture builder",
         "Senior advisor and investor"
       ],
-      "order": 3
+      "education": [
+        "Master in International Management, ESCP Business School"
+      ],
+      "name": "Markus Helms",
+      "order": 3,
+      "photo": "/assets/team/advisors/Markus Helms.webp",
+      "location": "Singapore",
+      "role": "Chief Financial Officer",
+      "type": "leadership",
+      "linkedin": "https://www.linkedin.com/in/markus-helms-75b8313b2/"
     },
     {
-      "name": "Alex Bond",
-      "role": "Director of Business Development US",
-      "type": "leadership",
-      "location": "United States",
-      "photo": "/assets/team/Team Members/Alex Bond.webp",
-      "linkedin": "https://www.linkedin.com/in/alexbond1",
-      "education": [
-        "MS International Affairs & Global Enterprise, University of Utah"
-      ],
       "bio": [
         "Commercial strategy and market development in life sciences and nutraceuticals",
         "BD leadership across international supplement and ingredient companies",
         "Speaks six languages"
       ],
-      "order": 4
+      "education": [
+        "MS International Affairs & Global Enterprise, University of Utah"
+      ],
+      "name": "Alex Bond",
+      "order": 4,
+      "photo": "/assets/team/Team Members/Alex Bond.webp",
+      "location": "United States",
+      "role": "Director of Business Development US",
+      "type": "leadership",
+      "linkedin": "https://www.linkedin.com/in/alexbond1"
     },
     {
-      "name": "Bryan Yan Ng",
-      "role": "Research & Operations Officer",
-      "type": "leadership",
-      "location": "Singapore",
-      "photo": "/assets/team/Team Members/Bryan Yan Ng.webp",
-      "linkedin": "https://linkedin.com/in/bryan-yan-ng-43020b11a",
-      "education": [
-        "Bachelor of Biomedical Science, La Trobe University"
-      ],
       "bio": [
         "Leads qPCR assay development, data pipeline validation, and laboratory operations",
         "Developed the NaturalDetect confidence-calling pipeline and threshold optimisation system",
         "Manages wet lab protocols, client sample testing, and cross-reactivity analysis"
       ],
-      "order": 5
+      "education": [
+        "Bachelor of Biomedical Science, La Trobe University"
+      ],
+      "name": "Bryan Yan Ng",
+      "order": 5,
+      "photo": "/assets/team/Team Members/Bryan Yan Ng.webp",
+      "location": "Singapore",
+      "role": "Research & Operations Officer",
+      "type": "leadership",
+      "linkedin": "https://linkedin.com/in/bryan-yan-ng-43020b11a"
     },
     {
-      "name": "Ying Xiang Tan",
-      "role": "Bioinformatics Engineer",
-      "type": "leadership",
-      "location": "Singapore",
-      "photo": "/assets/team/Team Members/Ying Xiang Tan.webp",
-      "linkedin": "https://linkedin.com/in/yingxiangtan",
-      "education": [
-        "BSc Mathematical Sciences (Statistics), Nanyang Technological University"
-      ],
       "bio": [
         "Designs and maintains bioinformatics pipelines for species identification",
         "Develops computational tools for genomic data analysis and primer design",
         "Supports database architecture and sequence alignment workflows"
       ],
-      "order": 6
+      "education": [
+        "BSc Mathematical Sciences (Statistics), Nanyang Technological University"
+      ],
+      "name": "Ying Xiang Tan",
+      "order": 6,
+      "photo": "/assets/team/Team Members/Ying Xiang Tan.webp",
+      "location": "Singapore",
+      "role": "Bioinformatics Engineer",
+      "type": "leadership",
+      "linkedin": "https://linkedin.com/in/yingxiangtan"
     },
     {
-      "name": "Cindy Seah",
-      "role": "Finance Executive",
-      "type": "leadership",
-      "location": "Singapore",
-      "photo": "/assets/team/Team Members/Cindy Seah.webp",
-      "linkedin": null,
-      "education": [],
       "bio": [
         "Manages financial operations, reporting, and corporate governance",
         "Oversees budgeting, grant compliance, and investor reporting"
       ],
-      "order": 7
+      "education": [],
+      "name": "Cindy Seah",
+      "order": 7,
+      "photo": "/assets/team/Team Members/Cindy Seah.webp",
+      "location": "Singapore",
+      "role": "Finance Executive",
+      "type": "leadership",
+      "linkedin": null
     },
     {
-      "name": "CL Goh",
-      "role": "Co-founder & Executive Director",
-      "type": "advisor",
-      "location": "Singapore",
-      "photo": "/assets/team/advisors/CL Goh.webp",
-      "linkedin": "https://www.linkedin.com/in/clgoh1/",
-      "education": [],
       "bio": [
         "Entrepreneur and business leader with M&A, strategy and BD expertise",
         "Industrial, robotics, advanced manufacturing, supply chain, health and foodtech",
         "Venture builder and Managing Partner, Blue InCube Ventures"
       ],
-      "order": 8
+      "education": [],
+      "name": "CL Goh",
+      "order": 8,
+      "photo": "/assets/team/advisors/CL Goh.webp",
+      "location": "Singapore",
+      "role": "Co-founder & Executive Director",
+      "type": "advisor",
+      "linkedin": "https://www.linkedin.com/in/clgoh1/"
     },
     {
-      "name": "Dr. Chantal Roth",
-      "role": "Co-founder",
-      "type": "advisor",
-      "location": "Switzerland",
-      "photo": "/assets/team/advisors/Chantal Roth.webp",
-      "linkedin": "https://www.linkedin.com/in/chantal-roth/",
-      "education": [
-        "PhD Computer Science (Computational Biology), ETH Zurich"
-      ],
       "bio": [
         "Senior Scientific Software Engineer at Thermo Fisher Scientific",
         "Specialises in algorithms development, complex problem solving, visualisation, and AI-assisted development"
       ],
-      "order": 9
-    },
-    {
-      "name": "Prof. Lukas Mueller",
+      "education": [
+        "PhD Computer Science (Computational Biology), ETH Zurich"
+      ],
+      "name": "Dr. Chantal Roth",
+      "order": 9,
+      "photo": "/assets/team/advisors/Chantal Roth.webp",
+      "location": "Switzerland",
       "role": "Co-founder",
       "type": "advisor",
-      "location": "United States",
-      "photo": "/assets/team/advisors/Lukas Mueller.webp",
-      "linkedin": "https://www.linkedin.com/in/lukasmueller/",
-      "education": [],
+      "linkedin": "https://www.linkedin.com/in/chantal-roth/"
+    },
+    {
       "bio": [
         "Professor at Boyce Thompson Institute for Plant Research, Cornell University",
         "Expertise in plant genomics and computational biology"
       ],
-      "order": 10
+      "education": [],
+      "name": "Prof. Lukas Mueller",
+      "order": 10,
+      "photo": "/assets/team/advisors/Lukas Mueller.webp",
+      "location": "United States",
+      "role": "Co-founder",
+      "type": "advisor",
+      "linkedin": "https://www.linkedin.com/in/lukasmueller/"
     },
     {
-      "name": "Dr. Alex Wild",
-      "role": "Investor & Advisor",
-      "type": "advisor",
-      "location": "Switzerland",
-      "photo": "/assets/team/advisors/Alex Wild.webp",
-      "linkedin": "https://www.linkedin.com/in/alexwild/",
-      "education": [
-        "PhD, ETH Zurich",
-        "MBA, IMD Business School"
-      ],
       "bio": [
         "Global Head of Operations at Givaudan, overseeing manufacturing sites across North America, South America, and Europe",
         "Active in sustainability initiatives and operational excellence programmes"
       ],
-      "order": 11
-    },
-    {
-      "name": "Christian Wiegele",
+      "education": [
+        "PhD, ETH Zurich",
+        "MBA, IMD Business School"
+      ],
+      "name": "Dr. Alex Wild",
+      "order": 11,
+      "photo": "/assets/team/advisors/Alex Wild.webp",
+      "location": "Switzerland",
       "role": "Investor & Advisor",
       "type": "advisor",
-      "location": "Singapore",
-      "photo": "/assets/team/advisors/Christian Wiegele.webp",
-      "linkedin": "https://www.linkedin.com/in/christianwiegele/",
-      "education": [
-        "Master's, WU Vienna University of Economics and Business"
-      ],
+      "linkedin": "https://www.linkedin.com/in/alexwild/"
+    },
+    {
       "bio": [
         "Commercial CFO at Perfetti Van Melle",
         "20+ years of commercial finance experience across FMCG"
       ],
-      "order": 12
+      "education": [
+        "Master's, WU Vienna University of Economics and Business"
+      ],
+      "name": "Christian Wiegele",
+      "order": 12,
+      "photo": "/assets/team/advisors/Christian Wiegele.webp",
+      "location": "Singapore",
+      "role": "Investor & Advisor",
+      "type": "advisor",
+      "linkedin": "https://www.linkedin.com/in/christianwiegele/"
     },
     {
-      "name": "Dr. Elizabeth Lewis",
-      "role": "Food Safety & Regulatory Advisor",
-      "type": "advisor",
-      "location": "United Kingdom",
-      "photo": "/assets/team/advisors/Elizabeth Lewis.webp",
-      "linkedin": "https://www.linkedin.com/in/elizabeth-lewis-1461648/",
-      "education": [
-        "PhD Bioinorganic Chemistry, University of York"
-      ],
       "bio": [
         "Scientific and Regulatory Adviser at NutraSteward",
         "Expertise in regulatory science and quality standards for food and nutraceuticals"
       ],
-      "order": 13
+      "education": [
+        "PhD Bioinorganic Chemistry, University of York"
+      ],
+      "name": "Dr. Elizabeth Lewis",
+      "order": 13,
+      "photo": "/assets/team/advisors/Elizabeth Lewis.webp",
+      "location": "United Kingdom",
+      "role": "Food Safety & Regulatory Advisor",
+      "type": "advisor",
+      "linkedin": "https://www.linkedin.com/in/elizabeth-lewis-1461648/"
     },
     {
-      "name": "Dr. Felix Maurer",
-      "role": "Investor & Advisor",
-      "type": "advisor",
-      "location": "Switzerland",
-      "photo": "/assets/team/advisors/Felix Maurer.webp",
-      "linkedin": "https://www.linkedin.com/in/felixmaurer/",
-      "education": [
-        "Executive MBA, University of St. Gallen"
-      ],
       "bio": [
         "Senior executive in nutraceutical and pharmaceutical supply chain management",
         "Extensive experience in GMP manufacturing and quality systems"
       ],
-      "order": 14
+      "education": [
+        "Executive MBA, University of St. Gallen"
+      ],
+      "name": "Dr. Felix Maurer",
+      "order": 14,
+      "photo": "/assets/team/advisors/Felix Maurer.webp",
+      "location": "Switzerland",
+      "role": "Investor & Advisor",
+      "type": "advisor",
+      "linkedin": "https://www.linkedin.com/in/felixmaurer/"
     },
     {
-      "name": "John Simmons",
-      "role": "Advisor",
-      "type": "advisor",
-      "location": "United States",
-      "photo": "/assets/team/advisors/John Simmons.webp",
-      "linkedin": "https://www.linkedin.com/in/johnsimmons/",
-      "education": [
-        "PhD Organic Chemistry"
-      ],
       "bio": [
         "Head of Intellectual Property at Givaudan",
         "UK, European and Swiss Patent Attorney"
       ],
-      "order": 15
+      "education": [
+        "PhD Organic Chemistry"
+      ],
+      "name": "John Simmons",
+      "order": 15,
+      "photo": "/assets/team/advisors/John Simmons.webp",
+      "location": "United States",
+      "role": "Advisor",
+      "type": "advisor",
+      "linkedin": "https://www.linkedin.com/in/johnsimmons/"
     }
   ]
 }
