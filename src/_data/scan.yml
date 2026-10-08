@@ -25,8 +25,7 @@ opening:
     - "Identical in texture"
     - "Identical on the label"
   closing: >-
-    The difference is not something you can see. NaturalTag™ is what allows
-    origin to be shown at all.
+    NaturalTag™ is what allows origin to be shown at all.
   image: /assets/images/scan-both.webp
   image_alt: "Two cones of brown powder side by side, alike in colour and texture"
 
@@ -52,8 +51,7 @@ reveal:
 
 question_title: "Appearance is not evidence"
 question_body: >-
-  These two are identical in colour and texture. Even where powders do differ,
-  the difference proves nothing on its own: shade varies between batches,
+  Even where powders do differ, the difference proves nothing on its own: shade varies between batches,
   suppliers and seasons for entirely legitimate reasons.
 
 answer_title: "NaturalTag™ provides the evidence"
