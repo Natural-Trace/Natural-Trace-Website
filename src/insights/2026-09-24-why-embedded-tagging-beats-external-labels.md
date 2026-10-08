@@ -34,7 +34,7 @@ Embedded tagging starts at the other end.
 
 NaturalTag is itself a food-grade, non-GMO, probiotic-based ingredient. It is formulated into the ingredient at its source and becomes part of the product. When the ingredient is repacked or blended downstream, the tag goes with it.
 
-Checking works on a sample of the product. NaturalDetect looks for the tag in that sample using polymerase chain reaction (PCR), a standard laboratory testing method used widely across the food industry. The result says whether this material came from the tagged source.
+Checking works on a sample of the product. NaturalDetect looks for the tag in that sample using polymerase chain reaction (PCR), a standard laboratory testing method used widely across the food industry. The result can verify whether your product is tagged.
 
 ## What changes for a buyer
 
