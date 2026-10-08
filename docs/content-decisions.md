@@ -218,7 +218,12 @@ both places together.
   Exist" (agri-food, first three sentences).
 - `challenge.items`: "Why authentication matters today" (Section 2), the
   "Customer problem" column of Alex Wild's five-use-case table, and the About
-  page's "Our Story".
+  page's "Our Story". Our Story was cut on 8 Oct 2026 to remove AI-writing
+  tells ("Simple Question", the five-item investment list, "That challenge
+  inspired Natural Trace", the closing restatement of the hero claims), and
+  the two branded-ingredients challenge items lifted from it were changed to
+  match in the same commit. **Not yet in the Copy Guide and not yet seen by
+  Kirsty.** If she rejects it, revert both files together.
 - `value.items`: the "Natural Trace value" column of the same table, the
   Section 3 value pillars, NaturalTag's "Why NaturalTag" list, the How It Works
   bullets, and the About page's "What Makes Us Different".
