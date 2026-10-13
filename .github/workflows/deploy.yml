@@ -64,7 +64,13 @@ jobs:
         with:
           node-version: 20
 
-      - run: npm install
+      # npm ci, not npm install, since 13 Oct 2026. install resolves every
+      # dependency afresh against whatever the registry is serving that minute,
+      # so a build could pick up a version nobody had seen, which is how npm
+      # supply-chain attacks reach a site. ci installs exactly what is in
+      # package-lock.json, and fails if the lockfile and package.json disagree.
+      # Update dependencies on a laptop with npm install, then commit the lock.
+      - run: npm ci
 
       - run: npx @11ty/eleventy
         env:

@@ -91,9 +91,20 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
     enough for anything that speaks RSS to find /feed.xml on its own. -#}
 <link rel="alternate" type="application/rss+xml" title="{{ site.name }} Insights" href="{{ site.url }}/feed.xml">
 <link rel="icon" type="image/png" href="/assets/logos/NT icon without logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+{#- Fonts are served from this site, not Google. Loading them from
+    fonts.googleapis.com sent every visitor's IP to Google before the consent
+    banner had even drawn. See the note at the top of fonts.css. The two
+    preloads are the body weights, so the first paint does not wait on CSS to
+    discover them. -#}
+<link rel="preload" href="/assets/fonts/montserrat/montserrat-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/montserrat/montserrat-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/fonts.css?v={{ assetVersions.css }}">
+{#- Browsers already default to strict-origin-when-cross-origin, so this
+    changes nothing today. It is here so the policy is stated rather than
+    inherited: a page URL can carry a quiz answer or a campaign tag, and only
+    the origin should ever leave for another site. GitHub Pages cannot send
+    the header, which is why it is a meta tag. -#}
+<meta name="referrer" content="strict-origin-when-cross-origin">
 {# ?v= is a content hash, set in .eleventy.js. Without it a returning
    visitor keeps the stylesheet they cached last time, which is how a fixed
    layout can stay broken on screen after a deploy. #}
@@ -191,11 +202,20 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
    opt_in_capturing() on slow venue wifi and not lose the choice. Do not trim
    the method list: a method missing from it is dropped, not queued.
 
-   Session replay is deliberately not configured here. Whether it records at
-   all is a switch in the PostHog project settings, and on_reject already
-   refuses to record anyone who has not accepted. Inputs are masked by default,
-   which covers the contact form. Click capture, rage clicks and heatmaps need
-   no cookie and work for everyone.
+   Session replay is off in this code until the visitor accepts, 13 Oct 2026.
+   It used to be left to the dashboard switch plus on_reject, which does hold,
+   but it meant the one setting that decides whether a visitor is recorded
+   lived only in a vendor's web page, where anyone with access could widen it
+   and nothing here would change. disable_session_recording stops the SDK
+   starting the recorder by itself; startSessionRecording() below, and in
+   decide() in partials/consent.njk, starts it only for an accepted visitor.
+   Without arguments it still obeys the project's ingestion controls, so the
+   URL blocklist (/contact and /admin, set 13 Oct) and the allowed recording
+   domain (natural-trace.com only) still apply on top. maskAllInputs is stated
+   here as well as in the project settings so that switching it off there does
+   not unmask the form. The contact form also carries ph-no-capture, which
+   keeps it out of recordings and autocapture whatever the settings say. Click
+   capture, rage clicks and heatmaps need no cookie and work for everyone.
 
    The token is the public project key, published in every page like the
    Cloudflare one. It is not an API key and grants nothing. #}
@@ -208,6 +228,8 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
     cookieless_mode: 'on_reject',
     person_profiles: 'identified_only',
     enable_heatmaps: true,
+    disable_session_recording: true,
+    session_recording: { maskAllInputs: true },
     /* The automatic pageview fires inside init(), while on_reject still has
        consent as "pending", and a pending event is discarded rather than
        held. Seen on the live site on 3 Sep 2026: a cookieless visit
@@ -220,8 +242,12 @@ for(var i=0;i<T.length;i++){var s=T[i].s,e=T[i].e;
      honoured on every page, including ones where the banner is not shown. */
   var choice = null;
   try { choice = localStorage.getItem('nt-consent'); } catch (e) {}
-  if (choice === 'accepted') posthog.opt_in_capturing();
-  else posthog.opt_out_capturing();
+  if (choice === 'accepted') {
+    posthog.opt_in_capturing();
+    posthog.startSessionRecording();
+  } else {
+    posthog.opt_out_capturing();
+  }
   posthog.capture('$pageview');
 })();
 </script>
