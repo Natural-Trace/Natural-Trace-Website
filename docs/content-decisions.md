@@ -222,8 +222,10 @@ both places together.
   tells ("Simple Question", the five-item investment list, "That challenge
   inspired Natural Trace", the closing restatement of the hero claims), and
   the two branded-ingredients challenge items lifted from it were changed to
-  match in the same commit. **Not yet in the Copy Guide and not yet seen by
-  Kirsty.** If she rejects it, revert both files together.
+  match in the same commit. Bryan approved it for publication on 13 Oct, and
+  it is in the updated Copy Guide of that date ("Natural Trace Website Copy
+  Guide 2026 (updated 13 Oct)", Google Drive). **Kirsty has not reviewed it
+  yet.** If she rejects it, revert both files together.
 - `value.items`: the "Natural Trace value" column of the same table, the
   Section 3 value pillars, NaturalTag's "Why NaturalTag" list, the How It Works
   bullets, and the About page's "What Makes Us Different".
