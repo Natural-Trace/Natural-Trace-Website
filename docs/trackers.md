@@ -70,6 +70,11 @@ Set on 13 Oct 2026, on a public repository:
   `wrangler deploy`** from that folder. Merging does not deploy it.
 - **HubSpot's form has no CAPTCHA.** The site's only spam check is a honeypot
   field. reCAPTCHA is a setting on the form in HubSpot.
+- **The record of processing and the request procedure are drafts.**
+  `docs/processing-record.md` (GDPR Art. 30) and `docs/privacy-requests.md`
+  list what still needs confirming: DPAs with each vendor, transfer safeguards,
+  retention periods, the legal basis for cookieless analytics, an EU
+  representative.
 - **The breach plan is a draft.** `docs/breach-plan.md` needs the CEO to fill
   in the roles, agree it, and set up the private contact sheet it refers to.
 - **No security headers beyond Referrer-Policy.** GitHub Pages cannot send
