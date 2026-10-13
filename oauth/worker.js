@@ -40,7 +40,11 @@ function startLogin(url, env) {
 
   const authorize = new URL("https://github.com/login/oauth/authorize");
   authorize.searchParams.set("client_id", env.GITHUB_CLIENT_ID);
-  authorize.searchParams.set("scope", url.searchParams.get("scope") || "repo,user");
+  // The scope is fixed here, not taken from the query string. It used to be
+  // whatever the popup URL asked for, defaulting to "repo,user", so a crafted
+  // link could ask GitHub for more than the CMS needs. Decap's GitHub backend
+  // needs repo and nothing else. 13 Oct 2026.
+  authorize.searchParams.set("scope", "repo");
   authorize.searchParams.set("state", state);
 
   return new Response(null, {
@@ -101,15 +105,31 @@ function handToCms(status, payload, env) {
   const allowed = (env.ALLOWED_ORIGINS || "")
     .split(",").map(s => s.trim()).filter(Boolean);
 
+  // Fail closed. An empty ALLOWED_ORIGINS used to mean "answer anyone", which
+  // turns this into a token dispenser for any site that opens the popup. With
+  // no allow list there is now nobody to hand a token to. 13 Oct 2026.
+  if (!allowed.length) {
+    return new Response("CMS sign-in is not configured: ALLOWED_ORIGINS is empty.", {
+      status: 500,
+      headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" },
+    });
+  }
+
+  // Both values are written into an inline script. JSON.stringify does not
+  // escape "<", so a payload containing "</script>" (an error description, in
+  // practice) could close the tag early. The six characters \u003c are not
+  // markup, and the script still reads them as "<".
+  const js = v => JSON.stringify(v).replace(/</g, "\\u003c");
+
   const body = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Signing you in</title></head>
 <body style="font-family:system-ui,sans-serif;padding:2rem;color:#2C3345">
 <p>Signing you in, this window closes itself.</p>
 <script>
 (function () {
-  var allowed = ${JSON.stringify(allowed)};
-  var message = 'authorization:${PROVIDER}:${status}:' + ${JSON.stringify(JSON.stringify(payload))};
+  var allowed = ${js(allowed)};
+  var message = 'authorization:${PROVIDER}:${status}:' + ${js(JSON.stringify(payload))};
   function reply(e) {
-    if (allowed.length && allowed.indexOf(e.origin) === -1) return;
+    if (allowed.indexOf(e.origin) === -1) return;
     window.opener.postMessage(message, e.origin);
     window.removeEventListener('message', reply, false);
   }

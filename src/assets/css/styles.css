@@ -1964,11 +1964,21 @@ a.insight-row-kicker:hover{color:var(--dark);text-decoration:underline}
 .consent a{color:var(--gold-light);text-decoration:underline;text-underline-offset:2px}
 .consent-actions{display:flex;gap:.6rem;flex:0 0 auto}
 .consent button{font-family:'Montserrat',sans-serif;font-size:.83rem;font-weight:600;padding:.55rem 1.2rem;border-radius:8px;cursor:pointer;transition:all .25s;border:1px solid transparent}
-.consent-accept{background:var(--sage);color:#fff}
-.consent-accept:hover{background:var(--sage-light)}
-.consent-decline{background:transparent;color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.22)}
-.consent-decline:hover{border-color:rgba(255,255,255,.5);color:#fff}
+/* Accept and Decline are styled identically, 13 Oct 2026. Decline used to be
+   a faint outline beside a solid Accept, which is the pattern the EDPB cookie
+   banner taskforce and the CNIL name as steering the visitor. Same fill, same
+   weight, same size; only the words differ. Decline comes first in the markup
+   and so first in the tab order. */
+.consent-accept,.consent-decline{background:var(--sage);color:#fff}
+.consent-accept:hover,.consent-decline:hover{background:var(--sage-light)}
 @media(max-width:520px){.consent{padding:1rem}.consent-actions{width:100%}.consent button{flex:1}}
+/* "Cookie settings" in the footer is a button, because it opens the consent
+   bar rather than going anywhere, dressed to sit in the list of links. */
+.footer-linkbtn{background:none;border:0;padding:0;font-family:inherit;font-size:.9rem;color:rgba(255,255,255,.5);cursor:pointer;text-align:left;transition:color .2s}
+.footer-linkbtn:hover{color:#fff}
+/* Collection notice above the contact form's Send button. */
+.form-privacy{font-size:.82rem;line-height:1.55;color:var(--muted);margin:.25rem 0 1rem}
+.form-privacy a{color:var(--sage-ink);text-decoration:underline;text-underline-offset:2px}
 
 
 /* Link out to a section that used to live on this page. Quiet on purpose: it is

@@ -24,6 +24,9 @@
         <li><a href="/careers/">Careers</a></li>
         <li><a href="/insights/">Insights</a></li>
         <li><a href="/privacy/">Privacy Policy</a></li>
+        {%- if integrations.consent.enabled %}
+        <li><button type="button" class="footer-linkbtn" onclick="window.ntOpenConsent && window.ntOpenConsent()">Cookie settings</button></li>
+        {%- endif %}
       </ul></div>
     </div>
     <div class="footer-bottom">

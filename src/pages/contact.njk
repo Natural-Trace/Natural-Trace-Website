@@ -23,7 +23,11 @@ permalink: /contact/
       <div class="contact-form">
         <h3>{{ contact.form.labels.title }}</h3>
         <p>{{ contact.form.labels.subtitle }}</p>
-        <form id="contactForm"
+        {#- ph-no-capture keeps the whole form out of PostHog session replay and
+            autocapture, whatever the project settings say. Inputs were already
+            masked; this also removes the labels, the chosen topic and the
+            field the visitor clicked. 13 Oct 2026. -#}
+        <form id="contactForm" class="ph-no-capture"
               onsubmit="return handleContactSubmit(event)"
               data-hs-enabled="{{ integrations.hubspot.enabled }}"
               data-hs-portal="{{ integrations.hubspot.portal_id }}"
@@ -87,6 +91,11 @@ permalink: /contact/
               <input type="text" name="_botcheck" tabindex="-1" autocomplete="off">
             </label>
           </div>
+          {%- if contact.form.labels.privacy_notice %}
+          {#- The privacy policy promises notice "at or before the point of
+              collection", and until 13 Oct the form gave none. -#}
+          <p class="form-privacy">{{ contact.form.labels.privacy_notice }} <a href="/privacy/">Privacy Policy</a></p>
+          {%- endif %}
           <button type="submit" class="form-submit">{{ contact.form.labels.submit_text }}</button>
         </form>
         <div class="form-success" id="formSuccess">

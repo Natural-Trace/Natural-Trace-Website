@@ -39,7 +39,8 @@
      edit here. */
   var base = window.location.pathname.replace(/admin\/?$/, '');
 
-  CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+  /* Self-hosted since 13 Oct 2026, like the site; was Google Fonts. */
+  CMS.registerPreviewStyle(base + 'assets/css/fonts.css');
   CMS.registerPreviewStyle(base + 'assets/css/styles.css');
 
   /* Preview-only corrections. The article page is designed to sit under a fixed
