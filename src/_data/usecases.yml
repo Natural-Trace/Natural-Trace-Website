@@ -35,7 +35,10 @@ cases:
       challenge: "A coffee farm wanted to maintain confidence in product authenticity as green coffee beans passed through multiple international trading partners."
       solution: "Coffee was tagged before export, so samples collected overseas could be authenticated."
       outcome: "Importers, distributors and brand owners gained greater confidence in product origin throughout international supply chains."
-      image: "https://images.unsplash.com/photo-1565273975921-c884f2b703df?w=800&q=80"
+      # Served from the site since 13 Oct 2026, for the same reasons as the
+      # supplements picture above, and because the hotlink sent every visitor's
+      # IP to Unsplash before any consent choice. Same photo, 800px webp.
+      image: "/assets/images/usecase-green-coffee.webp"
       image_alt: "Sacks of green coffee beans"
 
   challenge_label: "Challenge"

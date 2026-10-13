@@ -11,7 +11,7 @@
 {% set wantHubSpot = integrations.tracking.enabled and hsPortal %}
 {% set wantPostHog = integrations.posthog.enabled and integrations.posthog.token %}
 {% if integrations.consent.enabled and (wantHubSpot or wantPostHog) %}
-<div class="consent" id="consentBar" hidden>
+<div class="consent" id="consentBar" role="region" aria-label="Cookie choice" hidden>
   <p>{{ integrations.consent.message }} <a href="{{ integrations.consent.policy_url }}">{{ integrations.consent.policy_label }}</a></p>
   <div class="consent-actions">
     <button type="button" class="consent-decline" id="consentDecline">{{ integrations.consent.decline_label }}</button>
@@ -44,8 +44,18 @@
   var choice = null;
   try { choice = localStorage.getItem(KEY); } catch (e) {}
 
+  /* Global Privacy Control, and the older Do Not Track, are a visitor saying
+     no before being asked. With either one set and no choice stored, the bar
+     is not shown and the visitor is treated as having declined: HubSpot never
+     loads and PostHog stays cookieless, which is what no-choice already means
+     in base.njk. Nothing is written to storage, so turning the signal off
+     brings the bar back. The "Cookie settings" link in the footer still opens
+     it, so someone sending GPC can still choose to accept. Added 13 Oct 2026. */
+  var signalledNo = navigator.globalPrivacyControl === true ||
+    navigator.doNotTrack === '1' || window.doNotTrack === '1';
+
   if (choice === 'accepted') { loadAnalytics(); }
-  else if (choice !== 'declined' && bar) { bar.hidden = false; }
+  else if (choice !== 'declined' && !signalledNo && bar) { bar.hidden = false; }
 
   function decide(value) {
     try { localStorage.setItem(KEY, value); } catch (e) {}
@@ -55,14 +65,41 @@
        to a cookie; Decline tells it to stay as it is. Both queue safely if
        array.js has not arrived yet, because the stub records the call. */
     if (window.posthog) {
-      if (value === 'accepted') posthog.opt_in_capturing();
-      else posthog.opt_out_capturing();
+      if (value === 'accepted') {
+        posthog.opt_in_capturing();
+        posthog.startSessionRecording();
+      } else {
+        posthog.stopSessionRecording();
+        posthog.opt_out_capturing();
+      }
     }
   }
+
+  /* Withdrawing consent has to be as easy as giving it (GDPR Art. 7(3)), and
+     until 13 Oct there was no way back once a choice was stored: the bar never
+     returned. The footer's "Cookie settings" button calls this to show the bar
+     again with focus on it. Choosing Decline there stops replay at once and
+     returns PostHog to cookieless. HubSpot's cookies, once set, stay until the
+     visitor clears them; the reload after a change of mind stops HubSpot
+     loading again. */
+  window.ntOpenConsent = function () {
+    if (!bar) return;
+    bar.hidden = false;
+    var first = document.getElementById('consentDecline');
+    if (first) first.focus();
+  };
   var a = document.getElementById('consentAccept');
   var d = document.getElementById('consentDecline');
-  if (a) a.addEventListener('click', function () { decide('accepted'); });
-  if (d) d.addEventListener('click', function () { decide('declined'); });
+  var before = choice;
+  function choose(value) {
+    decide(value);
+    /* A visitor who had accepted and now declines has HubSpot already running
+       on this page. Reloading is the only way to unload it. */
+    if (before === 'accepted' && value === 'declined') location.reload();
+    before = value;
+  }
+  if (a) a.addEventListener('click', function () { choose('accepted'); });
+  if (d) d.addEventListener('click', function () { choose('declined'); });
 })();
 </script>
 {% endif %}

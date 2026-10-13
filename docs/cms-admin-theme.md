@@ -38,7 +38,11 @@ decision someone makes and then checks.
 Budget about ten minutes.
 
 1. Check what is current: <https://github.com/decaporg/decap-cms/releases>
-2. Change the version in `src/admin/index.html` to the new one. One number.
+2. Change the version in `src/admin/index.html` to the new one, **and the
+   `integrity` hash beside it in the same edit.** The command to get the hash is
+   in the comment above the script tag. Change the number without the hash and
+   the browser refuses the new file: the panel shows a blank page and the
+   console says the digest did not match. That is the hash doing its job.
 3. Build and serve the site locally, or push to a branch and open its preview.
 4. Log in to `/admin/` and look at, in this order:
    - the login screen: dark background, white Natural Trace wordmark, teal

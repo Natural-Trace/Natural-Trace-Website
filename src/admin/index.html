@@ -13,17 +13,18 @@
        entry, every draft and the login check come from, and it is the host the
        panel spends most of its loading time waiting on.
 
-       api.github.com carries `crossorigin` and unpkg does not, on purpose. A
-       preconnect is only reused by a request made in the same CORS mode:
-       Decap's API calls are cross-origin fetches, the script tag is a plain
-       no-CORS load. Get either one wrong and the browser opens a second
-       connection anyway and the hint does nothing. -->
-  <link rel="preconnect" href="https://unpkg.com">
+       Both carry `crossorigin`. A preconnect is only reused by a request made
+       in the same CORS mode: Decap's API calls are cross-origin fetches, and
+       since 13 Oct the script tag is one too, because it carries an integrity
+       hash (see below) and SRI on a cross-origin script needs CORS. Get either
+       one wrong and the browser opens a second connection anyway and the hint
+       does nothing. -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://api.github.com" crossorigin>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Same self-hosted Montserrat as the site. Google Fonts was dropped on
+       13 Oct; see the note at the top of that file. -->
+  <link rel="stylesheet" href="../assets/css/fonts.css" />
 
   <!-- Natural Trace styling for the panel. See the notes at the top of that
        file before changing it, and before changing the version pin below. -->
@@ -41,8 +42,22 @@
 
     To upgrade, follow docs/cms-admin-theme.md. It is a five minute job and it
     ends with someone looking at the panel.
+
+    The integrity hash, added 13 Oct 2026, is what makes the pin a guarantee
+    rather than a request. A version number tells unpkg which file to send; it
+    does not stop unpkg, or anyone who compromises it, sending a different file
+    under that name. This page holds an editor's GitHub token with write access
+    to the repository, so a swapped script could push to main. With the hash,
+    the browser refuses any file that is not byte for byte the one checked on
+    13 Oct, and the panel fails to load instead.
+
+    An upgrade must change the hash in the same edit. Get it with:
+      curl -sL https://unpkg.com/decap-cms@<version>/dist/decap-cms.js | openssl dgst -sha384 -binary | openssl base64 -A
+    and prefix the output with "sha384-".
   -->
-  <script src="https://unpkg.com/decap-cms@3.15.1/dist/decap-cms.js"></script>
+  <script src="https://unpkg.com/decap-cms@3.15.1/dist/decap-cms.js"
+          integrity="sha384-in6eHztHveqQ7uMZ1fDaKlDmacQLFuLH2wWrFTiymyuS8zQ5bixwL8U3AeRi8h/L"
+          crossorigin="anonymous"></script>
 
   <!-- Must load after the line above: it calls into window.CMS. -->
   <script src="preview.js"></script>

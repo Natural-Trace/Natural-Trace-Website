@@ -35,6 +35,7 @@ form:
     message_label: "Message"
     message_placeholder: "Tell us about your project or requirements..."
     submit_text: "Send Message"
+    privacy_notice: "We use these details only to reply to your message. They are stored in HubSpot, the system we use to manage enquiries."
 
   types:
     - value: "NaturalTag Integration"

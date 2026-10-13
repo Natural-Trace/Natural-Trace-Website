@@ -1737,6 +1737,7 @@ collections:
                 - {label: "Message: label", name: "message_label", widget: "string"}
                 - {label: "Message: placeholder", name: "message_placeholder", widget: "string"}
                 - {label: "Submit button", name: "submit_text", widget: "string"}
+                - {label: "Privacy note above the button", name: "privacy_notice", widget: "text", required: false, hint: "One or two sentences telling the visitor what happens to what they type. A link to the Privacy Policy is added after it automatically. If you name a new system here, the Privacy Policy has to name it too."}
 
             # WARNING: "Value sent to HubSpot" is data, not copy. It is written to
             # the inquiry_type property on the contact record. Changing it changes
