@@ -11,10 +11,6 @@ tags:
   - Company News
 ---
 
-We're excited to launch our Insights page, where we'll be sharing updates on our technology, industry developments, and the latest from the Natural Trace team.
-
-## What to Expect
-
-Stay tuned for articles covering supply chain traceability, food authentication technology, and how NaturalTag and NaturalDetect are helping brands verify product origin and authenticity at every stage of the supply chain.
+This is where we post company news, product updates and write-ups from the events we attend. Expect articles on supply chain traceability, ingredient authentication, and how brands use NaturalTag and NaturalDetect to verify where a product came from.
 
 Have a question or topic you'd like us to cover? [Get in touch](/contact/).

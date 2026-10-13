@@ -35,7 +35,7 @@ shape of those two pages, so it is worth deciding rather than assuming.
 
 Not faults. Listed so nobody tries to fix them.
 
-- `/about/` **From a Simple Question<br>to a New Approach** carries an explicit
+- `/about/` **From One Question<br>to a New Approach** carries an explicit
   line break in `about.yml`.
 - `/about/` **Designed for Real-World Manufacturing. Backed by Science.** is two
   sentences. Running them together on one line loses the pause the full stop is

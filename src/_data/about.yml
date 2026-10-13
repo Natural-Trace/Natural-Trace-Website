@@ -41,13 +41,11 @@ hero:
 story:
   # Our Story
   label: "Our Story"
-  title: "From a Simple Question<br>to a New Approach"
+  title: "From One Question<br>to a New Approach"
   question: "What happens to an ingredient's identity once it leaves the control of the company that created it?"
   body:
-    - "Behind every differentiated ingredient is significant investment in research, formulation, manufacturing, intellectual property, and customer trust. Yet once that ingredient enters a wider production network, proving that it is still present, and distinguishing it from generic alternatives, can become increasingly difficult."
-    - "That challenge inspired Natural Trace."
-    - "Founded in Singapore in 2021, Natural Trace set out to create a new approach to authentication: one in which a unique, verifiable identity is incorporated directly into the ingredient."
-    - "Today, our technology helps companies protect their ingredients, verify manufacturing sources, and investigate products when identity or presence is questioned."
+    - "Building a differentiated ingredient is expensive. Once it enters a wider production network, proving it is still there, and telling it apart from generic alternatives, gets harder."
+    - "Natural Trace was founded in Singapore in 2021 to build that identity into the ingredient itself."
 
 why:
   # Why We Exist

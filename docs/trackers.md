@@ -57,17 +57,21 @@ Set on 13 Oct 2026, on a public repository:
   required, on purpose: Decap publishes by merging its own pull requests and
   CMS editors cannot work around a required review.
 
+## Closed
+
+- **natural-trace.netlify.app was deleted on 13 Oct 2026.** It had been
+  serving the old privacy policy with no consent banner and a git-gateway
+  `/admin/`. The address now returns 404. Netlify's GitHub app access to the
+  repository should be removed too, so nothing can rebuild it.
+- **The CMS sign-in Worker was deployed on 13 Oct 2026** (version
+  `472ac025`), with the hardening from `oauth/`.
+
 ## Not yet done
 
 - **The privacy policy** does not yet name GitHub, Google (until 13 Oct) or
   Unsplash, says nothing about legal basis, transfers, retention or the right
   to complain, and its effective date predates PostHog and HubSpot. That is a
   rewrite for Kirsty and a lawyer, not a code change.
-- **natural-trace.netlify.app is still live**: old privacy policy, no consent
-  banner, a git-gateway `/admin/`. It needs unpublishing in the Netlify
-  dashboard.
-- **The CMS sign-in Worker changes in `oauth/` are not live until someone runs
-  `wrangler deploy`** from that folder. Merging does not deploy it.
 - **HubSpot's form has no CAPTCHA.** The site's only spam check is a honeypot
   field. reCAPTCHA is a setting on the form in HubSpot.
 - **The record of processing and the request procedure are drafts.**
