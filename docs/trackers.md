@@ -70,8 +70,8 @@ Set on 13 Oct 2026, on a public repository:
   `wrangler deploy`** from that folder. Merging does not deploy it.
 - **HubSpot's form has no CAPTCHA.** The site's only spam check is a honeypot
   field. reCAPTCHA is a setting on the form in HubSpot.
-- **There is no breach plan.** Singapore's PDPA gives three calendar days to
-  notify the PDPC once a breach is assessed as notifiable; GDPR gives 72 hours.
+- **The breach plan is a draft.** `docs/breach-plan.md` needs the CEO to fill
+  in the roles, agree it, and set up the private contact sheet it refers to.
 - **No security headers beyond Referrer-Policy.** GitHub Pages cannot send
   them. A real CSP, HSTS and frame protection need Cloudflare (or similar) in
   front of the site.
