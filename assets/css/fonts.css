@@ -1,0 +1,27 @@
+/* Montserrat, served from this site instead of Google Fonts. 13 Oct 2026.
+
+   Until now every page linked fonts.googleapis.com, which made every visitor's
+   browser contact Google before any consent choice, handing over their IP
+   address and user agent. A German court (LG München I, 3 O 17493/20) held
+   exactly that to be an unlawful transfer, and the consent banner could not
+   help: the font loaded before the banner was even drawn.
+
+   The files are @fontsource/montserrat 5.3.0, the same files Google serves,
+   latin subset only. The site's text is English with the odd ™, ° and accented
+   name, all of which latin covers; anything outside it falls back to the system
+   sans named in styles.css, the same as it would have with Google. Licence is
+   the SIL Open Font License, kept beside the files as OFL.txt.
+
+   Seven faces, matching what the Google link asked for: 300 to 800 upright and
+   400 italic. The CMS panel loads this file too (src/admin/index.html) and uses
+   a subset of the same weights.
+
+   font-display: swap keeps Google's behaviour: text renders in the fallback at
+   once and swaps when the face arrives, rather than staying invisible. */
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:300;font-display:swap;src:url(/assets/fonts/montserrat/montserrat-latin-300-normal.woff2) format('woff2')}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/montserrat/montserrat-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Montserrat';font-style:italic;font-weight:400;font-display:swap;src:url(/assets/fonts/montserrat/montserrat-latin-400-italic.woff2) format('woff2')}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/montserrat/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/montserrat/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/montserrat/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:800;font-display:swap;src:url(/assets/fonts/montserrat/montserrat-latin-800-normal.woff2) format('woff2')}

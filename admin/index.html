@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Content Manager | Natural Trace</title>
+  <link rel="icon" href="../assets/logos/NT%20icon%20without%20logo.png" />
+
+  <!-- Open the connections the panel is about to need while the page is still
+       parsing, rather than one after another once Decap has started. unpkg
+       serves the 1.4 MB Decap script below. api.github.com is where every
+       entry, every draft and the login check come from, and it is the host the
+       panel spends most of its loading time waiting on.
+
+       Both carry `crossorigin`. A preconnect is only reused by a request made
+       in the same CORS mode: Decap's API calls are cross-origin fetches, and
+       since 13 Oct the script tag is one too, because it carries an integrity
+       hash (see below) and SRI on a cross-origin script needs CORS. Get either
+       one wrong and the browser opens a second connection anyway and the hint
+       does nothing. -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://api.github.com" crossorigin>
+
+  <!-- Same self-hosted Montserrat as the site. Google Fonts was dropped on
+       13 Oct; see the note at the top of that file. -->
+  <link rel="stylesheet" href="../assets/css/fonts.css" />
+
+  <!-- Natural Trace styling for the panel. See the notes at the top of that
+       file before changing it, and before changing the version pin below. -->
+  <link rel="stylesheet" href="theme.css" />
+</head>
+<body>
+  <!--
+    The Decap version is pinned exactly, not to a range.
+
+    It used to load decap-cms@^3.0.0, which means "whatever unpkg is serving
+    today". That is fine for a panel with no customisation and wrong for this
+    one: theme.css and preview.js both target Decap's internals, so a release
+    published at any hour could change the panel Kirsty logs into with nobody
+    having touched this repository.
+
+    To upgrade, follow docs/cms-admin-theme.md. It is a five minute job and it
+    ends with someone looking at the panel.
+
+    The integrity hash, added 13 Oct 2026, is what makes the pin a guarantee
+    rather than a request. A version number tells unpkg which file to send; it
+    does not stop unpkg, or anyone who compromises it, sending a different file
+    under that name. This page holds an editor's GitHub token with write access
+    to the repository, so a swapped script could push to main. With the hash,
+    the browser refuses any file that is not byte for byte the one checked on
+    13 Oct, and the panel fails to load instead.
+
+    An upgrade must change the hash in the same edit. Get it with:
+      curl -sL https://unpkg.com/decap-cms@<version>/dist/decap-cms.js | openssl dgst -sha384 -binary | openssl base64 -A
+    and prefix the output with "sha384-".
+  -->
+  <script src="https://unpkg.com/decap-cms@3.15.1/dist/decap-cms.js"
+          integrity="sha384-in6eHztHveqQ7uMZ1fDaKlDmacQLFuLH2wWrFTiymyuS8zQ5bixwL8U3AeRi8h/L"
+          crossorigin="anonymous"></script>
+
+  <!-- Must load after the line above: it calls into window.CMS. -->
+  <script src="preview.js"></script>
+</body>
+</html>
