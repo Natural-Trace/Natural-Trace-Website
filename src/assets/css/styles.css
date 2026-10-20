@@ -215,6 +215,15 @@ h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:-.02
    different faults and need different checks.
    --------------------------------------------------------------------------- */
 .nav-links{display:flex;align-items:center;gap:2.25rem;list-style:none}
+/* FAQ became its own top-level tab on 20 Oct 2026, the sixth item in the row.
+   Measured at the time: between 769px (the burger stops at 768) and about
+   850px the row no longer fit, and "Request Assessment" was the item that gave
+   way, wrapping onto two lines inside a 61px-tall pill. The button keeps one
+   line, and the gaps close up across the narrow desktop band instead, which
+   is where the room has to come from. Layout only, no colour, so the
+   !important map above is unaffected. */
+.nav-cta{white-space:nowrap}
+@media(min-width:769px) and (max-width:1000px){.nav-links{gap:1.4rem}}
 .nav-links a{font-size:.88rem;font-weight:500;transition:color .3s,transform .2s;position:relative;cursor:pointer}
 #navbar:not(.scrolled) .nav-links a{color:rgba(255,255,255,.8)}
 #navbar.scrolled .nav-links a{color:#4B5563}
