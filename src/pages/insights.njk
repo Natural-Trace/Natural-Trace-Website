@@ -51,7 +51,7 @@ permalink: "{% if pagination.pageNumber == 0 %}/insights/{% else %}/insights/pag
     <div class="insights-header">
       <span class="section-label">Insights</span>
       <h1>News &amp; Updates{% if pagination.pageNumber > 0 %} <span class="insights-page-of">page {{ pagination.pageNumber + 1 }}</span>{% endif %}</h1>
-      <p class="insights-subtitle">The latest from Natural Trace: product developments, industry perspectives and company news.</p>
+      <p class="insights-subtitle">Company news, product updates and event write-ups from Natural Trace.</p>
     </div>
 
     {% set total = collections.insightsRegular.length + collections.insightsPinned.length %}
@@ -105,8 +105,8 @@ permalink: "{% if pagination.pageNumber == 0 %}/insights/{% else %}/insights/pag
 
     {% else %}
     <div class="insights-empty">
-      <h2>Coming Soon</h2>
-      <p>We're preparing our first insights. Check back soon for news, updates, and industry perspectives from the Natural Trace team.</p>
+      <h2>No articles yet</h2>
+      <p>The first ones are on their way.</p>
     </div>
     {% endif %}
   </div>

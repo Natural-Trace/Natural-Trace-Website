@@ -23,7 +23,7 @@ content:
       answer: "NaturalTag™ is composed entirely of inactivated probiotics that are already widely used in food and dietary supplement production. These inactivated probiotics are compatible with global food regulatory frameworks."
     - category: "regulatory"
       question: "Does it meet Non-GMO requirements?"
-      answer: "Yes. NaturalTag™ uses naturally occurring organisms with no genetic modification. Fully compatible with Non-GMO certification standards."
+      answer: "Yes. NaturalTag™ uses naturally occurring organisms with no genetic modification, so it is compatible with Non-GMO certification standards."
     - category: "regulatory"
       question: "Which countries or regions can I use it in?"
       # Rewritten 18 Aug 2026, before search indexing was switched on.
@@ -46,7 +46,7 @@ content:
       # move a still-unresolved claim onto the most quotable page we have.
       # Restore a substantive answer once the regulatory position is signed off;
       # the original wording is preserved above so nothing is lost.
-      answer: "Regulatory requirements differ by market and by product category, so we confirm the position for each product rather than stating a blanket one. Tell us your product type and the markets you sell into, and we will come back with the position for your case."
+      answer: "Regulatory requirements differ by market and by product category, so there is no single answer for every product. Tell us your product type and the markets you sell into, and we will confirm the position for your case."
 
     # Safety
     - category: "safety"
@@ -63,7 +63,7 @@ content:
     # Integration
     - category: "integration"
       question: "Will I need to change my manufacturing process?"
-      answer: "NaturalTag™ integrates into existing mixing and formulation processes with minimal process disruption."
+      answer: "Usually not. NaturalTag™ is added during your existing mixing or formulation steps."
     - category: "integration"
       question: "How long does onboarding take?"
       answer: "Typical onboarding takes 4 to 6 weeks: compatibility testing, validation, and integration."
@@ -74,7 +74,7 @@ content:
     # Detection
     - category: "detection"
       question: "How is the NaturalTag™ detected downstream?"
-      answer: "NaturalTag™ is detected by collecting a product sample and analysing it using our proprietary NaturalDetect™ test method. The test confirms whether the authentic NaturalTag™ signature is present with high specificity, providing objective results without the need for subjective interpretation."
+      answer: "NaturalTag™ is detected by collecting a product sample and analysing it using our proprietary NaturalDetect™ test method. The test confirms whether the authentic NaturalTag™ signature is present with high specificity. The result is called by a fixed rule, not by an analyst's judgement."
     - category: "detection"
       question: "Can the NaturalTag™ be removed, transferred, or counterfeited?"
       # CLAIM REVIEW: prohibited impossibility claim, retired 30 July
