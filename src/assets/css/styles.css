@@ -328,10 +328,11 @@ body.page-home #navbar:not(.scrolled) .nav-toggle{color:#fff}
 /* The visible window MUST stay narrower than one set of logos. If it is wider,
    the tail of one set and the head of the next are on screen together and the
    same partner appears at both ends of the rail. Eight logos make a set about
-   1528px wide, so 960px leaves a wide margin and still holds five logos at a
-   time. If partners ever drop below six, drop this figure to match: measure one
+   1528px wide at 40px tall; at 52px (20 Oct 2026, to give the rail more
+   presence) it measured 1742px at a 1440px viewport, so 1100px still leaves a
+   wide margin and holds five or six logos at a time. If partners ever drop below six, drop this figure to match: measure one
    .trust-set in devtools and keep this number below it. */
-.trust-marquee{max-width:960px;margin:0 auto;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%)}
+.trust-marquee{max-width:1100px;margin:0 auto;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%)}
 .trust-track{display:flex;width:max-content;animation:trustRail 48s linear infinite}
 .trust-set{display:flex;align-items:center}
 /* Hovering or tabbing into the rail stops it, so a logo can actually be clicked. */
@@ -343,9 +344,9 @@ body.page-home #navbar:not(.scrolled) .nav-toggle{color:#fff}
   .trust-set+.trust-set{display:none}
   .trust-set{flex-wrap:wrap;justify-content:center}
 }
-.trust-logo{display:inline-flex;align-items:center;justify-content:center;height:44px;margin-right:4.5rem;transition:transform .3s ease}
+.trust-logo{display:inline-flex;align-items:center;justify-content:center;height:56px;margin-right:4.5rem;transition:transform .3s ease}
 @media(max-width:640px){.trust-logo{margin-right:3rem}}
-.trust-logo img{height:40px;width:auto;max-width:140px;display:block;object-fit:contain;filter:none;opacity:.92;transition:opacity .3s ease,transform .3s ease}
+.trust-logo img{height:52px;width:auto;max-width:170px;display:block;object-fit:contain;filter:none;opacity:1;transition:opacity .3s ease,transform .3s ease}
 .trust-logo:hover img{opacity:1;transform:scale(1.08)}
 
 /* About */
@@ -2900,4 +2901,51 @@ section[id],form[id],[id].anchor-target{scroll-margin-top:96px}
   @media(prefers-reduced-motion:reduce){
     .scan-swipe-edge{transition:none}
   }
+}
+
+/* Press, focus and touch, 20 Oct 2026.
+
+   The site already answers a mouse: buttons lift, value cards rise, industry
+   tiles zoom and show their description, partner logos grow. It did not
+   answer anything else. A click left the button lifted, as if nothing had
+   happened. Tabbing through the page showed the browser's default ring on
+   some controls and nothing distinguishable on others. And on a tablet, where
+   there is no hover, the industry descriptions were never seen at all.
+
+   These are the replies to those three. Asked for on 20 Oct as a way to make
+   the site feel less static without bringing back the scroll fade-ins removed
+   on 6 Aug: everything here responds to the visitor, nothing plays on its
+   own. Nothing is added to elements that do nothing when clicked, such as the
+   challenge points, because a hover state on them would promise a link. */
+
+/* Press. The lift drops most of the way back and the button gives a little,
+   fast, so the click is felt. Placed after every .btn-*:hover rule, which
+   it has to beat at equal specificity. */
+.btn:active{transform:translateY(-1px) scale(.98);box-shadow:none;transition-duration:.08s}
+.industry-card:active img{transform:scale(1.05);transition-duration:.15s}
+.trust-logo:active img{transform:scale(1.02)}
+
+/* Keyboard focus gets the same lift as hover plus a visible ring. Sage dark
+   on the light sections; on the navy hero sage dark disappears, so it takes
+   gold light, which is cleared for use on dark only. */
+.btn:focus-visible{outline:2px solid var(--sage-dark);outline-offset:3px;transform:translateY(-3px)}
+.hero.hero-lab .btn:focus-visible{outline-color:var(--gold-light)}
+.industry-card:focus-visible{outline:2px solid var(--sage-dark);outline-offset:3px}
+.industry-card:focus-visible img{transform:scale(1.1)}
+.industry-card:focus-visible h3{transform:translateY(-4px)}
+.industry-card:focus-visible p{max-height:8rem;opacity:1;margin-top:.35rem;transform:translateY(0)}
+.trust-logo:focus-visible{outline:2px solid var(--sage-dark);outline-offset:6px;border-radius:4px}
+
+/* Touch screens wide enough to fit it get the industry description shown
+   outright, since the hover that reveals it never comes. Not on a phone:
+   two across there is a 148px card, the title already takes three lines,
+   and the description would push it out of the top of the scrim. The card
+   is a link, so a tap still takes the visitor to the page that says it. */
+@media(hover:none) and (min-width:769px){
+  .industry-card p{max-height:8rem;opacity:1;margin-top:.35rem;transform:none}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .btn:active,.btn:focus-visible{transform:none}
+  .industry-card:active img,.industry-card:focus-visible img{transform:none}
 }
